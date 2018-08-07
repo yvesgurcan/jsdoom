@@ -1,3 +1,5 @@
 module.exports = {
-    clientFolder: 'client',
+    clientEntryPoint: './',
+    clientSourceFolder: 'client/src',
+    serverFolder: 'server',
 };

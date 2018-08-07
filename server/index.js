@@ -1,17 +1,15 @@
 const { createServer } = require('http');
 const { readFileSync } = require('fs');
-const authorizeFetchFile = require('./authorizeFetchFile');
-const {
-    clientFolder,
-} = require("./constants");
-const {
-    serveFile,
-    internalServerError,
-    notFound,
-} = require("./responses");
-
 
 const server = createServer((req, res) => {
+    const authorizeFetchFile = require('./authorizeFetchFile');
+    const { clientEntryPoint } = require("./constants");
+    const {
+        serveFile,
+        internalServerError,
+        notFound,
+    } = require("./responses");
+
     try {
         const {
             method,
@@ -25,7 +23,7 @@ const server = createServer((req, res) => {
 
         let path = url.slice(1, length);
         if (!path) path = 'index.html';
-        const clientPath = `${clientFolder}/${path}`;
+        const clientPath = `${clientEntryPoint}/${path}`;
 
         let file;
         try {
