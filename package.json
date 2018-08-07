@@ -1,5 +1,14 @@
 {
     "scripts": {
-        "start": "nodemon server"
+        "start": "node server",
+        "dev": "npm run dev:server & npm run dev:client",
+        "dev:server": "nodemon server",
+        "dev:client": "webpack --mode development --watch --config client/webpack.config.js",
+        "build": "npm run build:client",
+        "build:client": "webpack --mode production --config client/webpack.config.js"
+    },
+    "devDependencies": {
+        "webpack": "^4.16.5",
+        "webpack-cli": "^3.1.0"
     }
 }
