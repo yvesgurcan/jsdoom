@@ -1,0 +1,62 @@
+
+<html>
+    <head>
+    <title>JavaScript Wolfenstein 3D Engine</title>
+    
+    <style>
+    
+    div#minimapcontainer {
+    
+    }
+    canvas#minimap {
+     position : absolute;
+    }
+    canvas#minimapobjects {
+     position : absolute;
+    }
+    
+    div#floor {
+     position : absolute;
+     width : 100%;
+     height : 100%;
+     background-color : rgb(128,128,128);
+    }
+    
+    div#ceiling {
+     position : absolute;
+     width : 100%;
+     height : 50%;
+     background-color : rgb(96,96,96);
+    }
+    
+    
+    #screen {
+     position : relative;
+     width : 100%;
+     height : 400px;
+     border : 1px solid black;
+     overflow : hidden;
+    }
+    
+    </style>
+    
+    <script src="excanvas.js" type="text/javascript"></script>
+    
+    </head>
+    <body>
+    
+    <div id="screen">
+        <div id="floor"></div>
+        <div id="ceiling"></div>
+    </div>
+    
+    <div id="minimapcontainer">
+        <canvas id="minimap"></canvas>
+        <canvas id="minimapobjects"></canvas>
+    </div>
+
+    <script src="engine/initScreen.js" type="text/javascript"></script>
+    <script src="engine/bindKeys.js" type="text/javascript"></script>  
+    <script src="engine/index.js" type="text/javascript"></script>
+    
+    </body>
