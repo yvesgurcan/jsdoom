@@ -58,25 +58,9 @@ var twoPI = Math.PI * 2;
 
 var numTextures = 4;
 
-function init() {
 
-    mapWidth = map[0].length;
-    mapHeight = map.length;
-
-    bindKeys();
-
-    initScreen();
-
-    drawMiniMap();
-
-    gameCycle();
-}
 
 var screenStrips = [];
-
-
-
-
 
 function gameCycle() {
 

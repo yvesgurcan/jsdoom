@@ -1,5 +1,5 @@
 // bind keyboard events to game functions (movement, etc)
-function bindKeys() {
+export default () => {
 
     document.onkeydown = function(e) {
         e = e || window.event;
@@ -38,4 +38,4 @@ function bindKeys() {
                 break;
         }
     }
-}
+};
