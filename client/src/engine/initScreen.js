@@ -1,14 +1,14 @@
 import getElementById from './getElementById';
 import createElement from './createElement';
-import {
-    screenWidth,
-    stripWidth,
-} from './constants';
+import { stripWidth } from './constants';
 import store from './store';
-const { dispatch } = store;
+const { dispatch, getState } = store;
 
 export default () => {
 	let screen = getElementById('screen');
+
+    const { screen: screenState } = getState();
+    const { width: screenWidth } = screenState;
 
     let strips = [];
 	for (let i = 0; i < screenWidth; i += stripWidth) {

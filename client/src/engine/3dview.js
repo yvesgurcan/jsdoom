@@ -4,10 +4,7 @@ import {
     mapHeight,
 } from './map';
 import {
-    screenHeight,
     stripWidth,
-    viewDist,
-    numRays,
     twoPI,
     numTextures,
 } from './constants';
@@ -18,12 +15,15 @@ const { getState } = store;
 export function castRays() {
 	var stripIdx = 0;
 
+    const { screen } = getState();
+    const { numRays, viewDist } = screen;
+
 	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?
-		var rayScreenPos = (-numRays/2 + i) * stripWidth;
+		var rayScreenPos = (-numRays / 2 + i) * stripWidth;
 
 		// the distance from the viewer to the point on the screen, simply Pythagoras.
-		var rayViewDist = Math.sqrt(rayScreenPos*rayScreenPos + viewDist*viewDist);
+		var rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
 
 		// the angle of the ray, relative to the viewing direction.
 		// right triangle: a = sin(A) * c
@@ -77,6 +77,9 @@ export function castSingleRay(rayAngle, stripIdx) {
 
 	var x = right ? Math.ceil(player.x) : Math.floor(player.x);	// starting horizontal position, at one of the edges of the current map block
 	var y = player.y + (x - player.x) * slope;			// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.
+
+    const { screen } = getState();
+    const { height: screenHeight } = screen;
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
 		var wallX = Math.floor(x + (right ? 0 : -1));
@@ -141,43 +144,47 @@ export function castSingleRay(rayAngle, stripIdx) {
 	if (dist) {
 		drawRay(xHit, yHit);
 
-        const { screen: { strips } } = getState();
+        const { screen } = getState();
+        const { strips, viewDist } = screen;
 
-		var strip = strips[stripIdx];
+        if (stripIdx < strips.length) {
+            let strip = strips[stripIdx];
 
-		dist = Math.sqrt(dist);
+            dist = Math.sqrt(dist);
 
-		// use perpendicular distance to adjust for fish eye
-		// distorted_dist = correct_dist / cos(relative_angle_of_ray)
-		dist = dist * Math.cos(player.rot - rayAngle);
+            // use perpendicular distance to adjust for fish eye
+            // distorted_dist = correct_dist / cos(relative_angle_of_ray)
+            dist = dist * Math.cos(player.rot - rayAngle);
 
-		// now calc the position, height and width of the wall strip
+            // now calc the position, height and width of the wall strip
 
-		// "real" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
-		// thus the height on the screen is equal to wall_height_real * viewDist / dist
+            // "real" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
+            // thus the height on the screen is equal to wall_height_real * viewDist / dist
 
-		var height = Math.round(viewDist / dist);
+            var height = Math.round(viewDist / dist);
 
-		// width is the same, but we have to stretch the texture to a factor of stripWidth to make it fill the strip correctly
-		var width = height * stripWidth;
+            // width is the same, but we have to stretch the texture to a factor of stripWidth to make it fill the strip correctly
+            var width = height * stripWidth;
 
-		// top placement is easy since everything is centered on the x-axis, so we simply move
-		// it half way down the screen and then half the wall height back up.
-		var top = Math.round((screenHeight - height) / 2);
+            // top placement is easy since everything is centered on the x-axis, so we simply move
+            // it half way down the screen and then half the wall height back up.
+            var top = Math.round(((screenHeight / 2) - height) / 2);
 
-		strip.style.height = height+"px";
-		strip.style.top = top+"px";
+            strip.style.height = height+"px";
+            strip.style.top = top+"px";
 
-		strip.img.style.height = Math.floor(height * numTextures) + "px";
-		strip.img.style.width = Math.floor(width*2) +"px";
-		strip.img.style.top = -Math.floor(height * (wallType-1)) + "px";
+            strip.img.style.height = Math.floor(height * numTextures) + "px";
+            strip.img.style.width = Math.floor(width*2) +"px";
+            strip.img.style.top = -Math.floor(height * (wallType-1)) + "px";
 
-		var texX = Math.round(textureX*width);
+            var texX = Math.round(textureX*width);
 
-		if (texX > width - stripWidth)
-			texX = width - stripWidth;
+            if (texX > width - stripWidth)
+                texX = width - stripWidth;
 
-		strip.img.style.left = -texX + "px";
+            strip.img.style.left = -texX + "px";
+            
+        }
 
 	}
 
