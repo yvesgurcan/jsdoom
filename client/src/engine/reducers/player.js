@@ -11,7 +11,7 @@ const initState = {
     moveSpeed : 0.18,
     // how much does the player rotate each step/update (in radians)
     rotSpeed : 6 * Math.PI / 180	
-}
+};
 
 export default (prevState = initState, action) => {
     const {
