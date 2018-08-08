@@ -1,4 +1,5 @@
 {
+    "version": "0.0.1",
     "scripts": {
         "start": "node server",
         "dev": "npm run dev:server & npm run dev:client",
