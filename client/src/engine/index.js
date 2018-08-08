@@ -82,10 +82,10 @@ function bindKeys() {
 }
 
 function initScreen() {
-	var screen = $("screen");
+	let screen = $("screen");
 
 	for (let i = 0; i < screenWidth; i += stripWidth) {
-		var strip = dc("div");
+		let strip = dc("div");
 		strip.style.position = "absolute";
 		strip.style.left = i + "px";
 		strip.style.width = stripWidth+"px";
@@ -99,8 +99,9 @@ function initScreen() {
 		img.style.position = "absolute";
 		img.style.left = "0px";
 
-		strip.appendChild(img);
-		strip.img = img;	// assign the image to a property on the strip element so we have easy access to the image later
+        strip.appendChild(img);
+        // assign the image to a property on the strip element so we have easy access to the image later
+		strip.img = img;	
 
 		screenStrips.push(strip);
 		screen.appendChild(strip);
@@ -160,6 +161,9 @@ function castRays() {
 		// right triangle: a = sin(A) * c
 		var rayAngle = Math.asin(rayScreenPos / rayViewDist);
 
+
+        const { player } = getState();
+
 		castSingleRay(
 			player.rot + rayAngle, 	// add the players viewing direction to get the angle in world space
 			stripIdx++
@@ -200,6 +204,8 @@ function castSingleRay(rayAngle, stripIdx) {
 	var slope = angleSin / angleCos; 	// the slope of the straight line made by the ray
 	var dXVer = right ? 1 : -1; 	// we move either 1 map unit to the left or right
 	var dYVer = dXVer * slope; 	// how much to move up or down
+
+    const { player } = getState();
 
 	var x = right ? Math.ceil(player.x) : Math.floor(player.x);	// starting horizontal position, at one of the edges of the current map block
 	var y = player.y + (x - player.x) * slope;			// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.
