@@ -1,7 +1,6 @@
-import store from './store';
-const { getState, dispatch } = store;
 import $ from './getElementById';
 import dc from './createElement';
+import bindKeys from './bindKeys';
 import {
     map,
     mapWidth,
@@ -17,63 +16,21 @@ import {
     twoPI,
     numTextures,
 } from './constants';
+import store from './store';
+const { getState, dispatch } = store;
 
 function init() {
 	bindKeys();
-
 	initScreen();
-
 	drawMiniMap();
-
-	gameCycle();
+	gameLoop();
 }
 
-var screenStrips = [];
-
-// bind keyboard events to game functions (movement, etc)
-function bindKeys() {
-	document.onkeydown = function(e) {
-		e = e || window.event;
-
-		switch (e.keyCode) {
-
-            case 38:
-                dispatch({ type: 'PLAYER_MOVE_FORWARD' });
-				break;
-
-			case 40:
-                dispatch({ type: 'PLAYER_MOVE_BACKWARD' });
-				break;
-
-			case 37:
-                dispatch({ type: 'PLAYER_TURN_LEFT' });
-				break;
-
-			case 39:
-                dispatch({ type: 'PLAYER_TURN_RIGHT' });
-				break;
-		}
-	}
-
-	document.onkeyup = function(e) {
-		e = e || window.event;
-
-		switch (e.keyCode) {
-			case 38:
-            case 40:
-                dispatch({ type: 'PLAYER_MOVE_STOP' });
-				break;
-			case 37:
-			case 39:
-                dispatch({ type: 'PLAYER_TURN_STOP' });
-				break;
-		}
-	}
-}
 
 function initScreen() {
 	let screen = $("screen");
 
+    let strips = [];
 	for (let i = 0; i < screenWidth; i += stripWidth) {
 		let strip = dc("div");
 		strip.style.position = "absolute";
@@ -93,20 +50,20 @@ function initScreen() {
         // assign the image to a property on the strip element so we have easy access to the image later
 		strip.img = img;	
 
-		screenStrips.push(strip);
-		screen.appendChild(strip);
-	}
+		strips.push(strip);
+        screen.appendChild(strip);
+    }
+    dispatch({ type: 'SCREEN_SET_STRIPS', strips });
 
 }
 
-function gameCycle() {
+function gameLoop() {
 	move();
-
 	updateMiniMap();
-
-	castRays();
-
-	setTimeout(gameCycle,1000/30); // aim for 30 FPS
+    castRays();
+    
+    // frames per second
+	setTimeout(gameLoop,1000/45); 
 }
 
 function move() {
@@ -261,9 +218,11 @@ function castSingleRay(rayAngle, stripIdx) {
 	}
 
 	if (dist) {
-		//drawRay(xHit, yHit);
+		drawRay(xHit, yHit);
 
-		var strip = screenStrips[stripIdx];
+        const { screen: { strips } } = getState();
+
+		var strip = strips[stripIdx];
 
 		dist = Math.sqrt(dist);
 
