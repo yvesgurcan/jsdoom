@@ -1,706 +1,4 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	function hotDisposeChunk(chunkId) {
-/******/ 		delete installedChunks[chunkId];
-/******/ 	}
-/******/ 	var parentHotUpdateCallback = window["webpackHotUpdate"];
-/******/ 	window["webpackHotUpdate"] = // eslint-disable-next-line no-unused-vars
-/******/ 	function webpackHotUpdateCallback(chunkId, moreModules) {
-/******/ 		hotAddUpdateChunk(chunkId, moreModules);
-/******/ 		if (parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
-/******/ 	} ;
-/******/
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	function hotDownloadUpdateChunk(chunkId) {
-/******/ 		var head = document.getElementsByTagName("head")[0];
-/******/ 		var script = document.createElement("script");
-/******/ 		script.charset = "utf-8";
-/******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 		;
-/******/ 		head.appendChild(script);
-/******/ 	}
-/******/
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	function hotDownloadManifest(requestTimeout) {
-/******/ 		requestTimeout = requestTimeout || 10000;
-/******/ 		return new Promise(function(resolve, reject) {
-/******/ 			if (typeof XMLHttpRequest === "undefined") {
-/******/ 				return reject(new Error("No browser support"));
-/******/ 			}
-/******/ 			try {
-/******/ 				var request = new XMLHttpRequest();
-/******/ 				var requestPath = __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json";
-/******/ 				request.open("GET", requestPath, true);
-/******/ 				request.timeout = requestTimeout;
-/******/ 				request.send(null);
-/******/ 			} catch (err) {
-/******/ 				return reject(err);
-/******/ 			}
-/******/ 			request.onreadystatechange = function() {
-/******/ 				if (request.readyState !== 4) return;
-/******/ 				if (request.status === 0) {
-/******/ 					// timeout
-/******/ 					reject(
-/******/ 						new Error("Manifest request to " + requestPath + " timed out.")
-/******/ 					);
-/******/ 				} else if (request.status === 404) {
-/******/ 					// no update available
-/******/ 					resolve();
-/******/ 				} else if (request.status !== 200 && request.status !== 304) {
-/******/ 					// other failure
-/******/ 					reject(new Error("Manifest request to " + requestPath + " failed."));
-/******/ 				} else {
-/******/ 					// success
-/******/ 					try {
-/******/ 						var update = JSON.parse(request.responseText);
-/******/ 					} catch (e) {
-/******/ 						reject(e);
-/******/ 						return;
-/******/ 					}
-/******/ 					resolve(update);
-/******/ 				}
-/******/ 			};
-/******/ 		});
-/******/ 	}
-/******/
-/******/ 	var hotApplyOnUpdate = true;
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "34184e864b29882833cb";
-/******/ 	var hotRequestTimeout = 10000;
-/******/ 	var hotCurrentModuleData = {};
-/******/ 	var hotCurrentChildModule;
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentParents = [];
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentParentsTemp = [];
-/******/
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	function hotCreateRequire(moduleId) {
-/******/ 		var me = installedModules[moduleId];
-/******/ 		if (!me) return __webpack_require__;
-/******/ 		var fn = function(request) {
-/******/ 			if (me.hot.active) {
-/******/ 				if (installedModules[request]) {
-/******/ 					if (installedModules[request].parents.indexOf(moduleId) === -1) {
-/******/ 						installedModules[request].parents.push(moduleId);
-/******/ 					}
-/******/ 				} else {
-/******/ 					hotCurrentParents = [moduleId];
-/******/ 					hotCurrentChildModule = request;
-/******/ 				}
-/******/ 				if (me.children.indexOf(request) === -1) {
-/******/ 					me.children.push(request);
-/******/ 				}
-/******/ 			} else {
-/******/ 				console.warn(
-/******/ 					"[HMR] unexpected require(" +
-/******/ 						request +
-/******/ 						") from disposed module " +
-/******/ 						moduleId
-/******/ 				);
-/******/ 				hotCurrentParents = [];
-/******/ 			}
-/******/ 			return __webpack_require__(request);
-/******/ 		};
-/******/ 		var ObjectFactory = function ObjectFactory(name) {
-/******/ 			return {
-/******/ 				configurable: true,
-/******/ 				enumerable: true,
-/******/ 				get: function() {
-/******/ 					return __webpack_require__[name];
-/******/ 				},
-/******/ 				set: function(value) {
-/******/ 					__webpack_require__[name] = value;
-/******/ 				}
-/******/ 			};
-/******/ 		};
-/******/ 		for (var name in __webpack_require__) {
-/******/ 			if (
-/******/ 				Object.prototype.hasOwnProperty.call(__webpack_require__, name) &&
-/******/ 				name !== "e" &&
-/******/ 				name !== "t"
-/******/ 			) {
-/******/ 				Object.defineProperty(fn, name, ObjectFactory(name));
-/******/ 			}
-/******/ 		}
-/******/ 		fn.e = function(chunkId) {
-/******/ 			if (hotStatus === "ready") hotSetStatus("prepare");
-/******/ 			hotChunksLoading++;
-/******/ 			return __webpack_require__.e(chunkId).then(finishChunkLoading, function(err) {
-/******/ 				finishChunkLoading();
-/******/ 				throw err;
-/******/ 			});
-/******/
-/******/ 			function finishChunkLoading() {
-/******/ 				hotChunksLoading--;
-/******/ 				if (hotStatus === "prepare") {
-/******/ 					if (!hotWaitingFilesMap[chunkId]) {
-/******/ 						hotEnsureUpdateChunk(chunkId);
-/******/ 					}
-/******/ 					if (hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 						hotUpdateDownloaded();
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 		fn.t = function(value, mode) {
-/******/ 			if (mode & 1) value = fn(value);
-/******/ 			return __webpack_require__.t(value, mode & ~1);
-/******/ 		};
-/******/ 		return fn;
-/******/ 	}
-/******/
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	function hotCreateModule(moduleId) {
-/******/ 		var hot = {
-/******/ 			// private stuff
-/******/ 			_acceptedDependencies: {},
-/******/ 			_declinedDependencies: {},
-/******/ 			_selfAccepted: false,
-/******/ 			_selfDeclined: false,
-/******/ 			_disposeHandlers: [],
-/******/ 			_main: hotCurrentChildModule !== moduleId,
-/******/
-/******/ 			// Module API
-/******/ 			active: true,
-/******/ 			accept: function(dep, callback) {
-/******/ 				if (typeof dep === "undefined") hot._selfAccepted = true;
-/******/ 				else if (typeof dep === "function") hot._selfAccepted = dep;
-/******/ 				else if (typeof dep === "object")
-/******/ 					for (var i = 0; i < dep.length; i++)
-/******/ 						hot._acceptedDependencies[dep[i]] = callback || function() {};
-/******/ 				else hot._acceptedDependencies[dep] = callback || function() {};
-/******/ 			},
-/******/ 			decline: function(dep) {
-/******/ 				if (typeof dep === "undefined") hot._selfDeclined = true;
-/******/ 				else if (typeof dep === "object")
-/******/ 					for (var i = 0; i < dep.length; i++)
-/******/ 						hot._declinedDependencies[dep[i]] = true;
-/******/ 				else hot._declinedDependencies[dep] = true;
-/******/ 			},
-/******/ 			dispose: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			addDisposeHandler: function(callback) {
-/******/ 				hot._disposeHandlers.push(callback);
-/******/ 			},
-/******/ 			removeDisposeHandler: function(callback) {
-/******/ 				var idx = hot._disposeHandlers.indexOf(callback);
-/******/ 				if (idx >= 0) hot._disposeHandlers.splice(idx, 1);
-/******/ 			},
-/******/
-/******/ 			// Management API
-/******/ 			check: hotCheck,
-/******/ 			apply: hotApply,
-/******/ 			status: function(l) {
-/******/ 				if (!l) return hotStatus;
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			addStatusHandler: function(l) {
-/******/ 				hotStatusHandlers.push(l);
-/******/ 			},
-/******/ 			removeStatusHandler: function(l) {
-/******/ 				var idx = hotStatusHandlers.indexOf(l);
-/******/ 				if (idx >= 0) hotStatusHandlers.splice(idx, 1);
-/******/ 			},
-/******/
-/******/ 			//inherit from previous dispose call
-/******/ 			data: hotCurrentModuleData[moduleId]
-/******/ 		};
-/******/ 		hotCurrentChildModule = undefined;
-/******/ 		return hot;
-/******/ 	}
-/******/
-/******/ 	var hotStatusHandlers = [];
-/******/ 	var hotStatus = "idle";
-/******/
-/******/ 	function hotSetStatus(newStatus) {
-/******/ 		hotStatus = newStatus;
-/******/ 		for (var i = 0; i < hotStatusHandlers.length; i++)
-/******/ 			hotStatusHandlers[i].call(null, newStatus);
-/******/ 	}
-/******/
-/******/ 	// while downloading
-/******/ 	var hotWaitingFiles = 0;
-/******/ 	var hotChunksLoading = 0;
-/******/ 	var hotWaitingFilesMap = {};
-/******/ 	var hotRequestedFilesMap = {};
-/******/ 	var hotAvailableFilesMap = {};
-/******/ 	var hotDeferred;
-/******/
-/******/ 	// The update info
-/******/ 	var hotUpdate, hotUpdateNewHash;
-/******/
-/******/ 	function toModuleId(id) {
-/******/ 		var isNumber = +id + "" === id;
-/******/ 		return isNumber ? +id : id;
-/******/ 	}
-/******/
-/******/ 	function hotCheck(apply) {
-/******/ 		if (hotStatus !== "idle") {
-/******/ 			throw new Error("check() is only allowed in idle status");
-/******/ 		}
-/******/ 		hotApplyOnUpdate = apply;
-/******/ 		hotSetStatus("check");
-/******/ 		return hotDownloadManifest(hotRequestTimeout).then(function(update) {
-/******/ 			if (!update) {
-/******/ 				hotSetStatus("idle");
-/******/ 				return null;
-/******/ 			}
-/******/ 			hotRequestedFilesMap = {};
-/******/ 			hotWaitingFilesMap = {};
-/******/ 			hotAvailableFilesMap = update.c;
-/******/ 			hotUpdateNewHash = update.h;
-/******/
-/******/ 			hotSetStatus("prepare");
-/******/ 			var promise = new Promise(function(resolve, reject) {
-/******/ 				hotDeferred = {
-/******/ 					resolve: resolve,
-/******/ 					reject: reject
-/******/ 				};
-/******/ 			});
-/******/ 			hotUpdate = {};
-/******/ 			var chunkId = "main";
-/******/ 			// eslint-disable-next-line no-lone-blocks
-/******/ 			{
-/******/ 				/*globals chunkId */
-/******/ 				hotEnsureUpdateChunk(chunkId);
-/******/ 			}
-/******/ 			if (
-/******/ 				hotStatus === "prepare" &&
-/******/ 				hotChunksLoading === 0 &&
-/******/ 				hotWaitingFiles === 0
-/******/ 			) {
-/******/ 				hotUpdateDownloaded();
-/******/ 			}
-/******/ 			return promise;
-/******/ 		});
-/******/ 	}
-/******/
-/******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	function hotAddUpdateChunk(chunkId, moreModules) {
-/******/ 		if (!hotAvailableFilesMap[chunkId] || !hotRequestedFilesMap[chunkId])
-/******/ 			return;
-/******/ 		hotRequestedFilesMap[chunkId] = false;
-/******/ 		for (var moduleId in moreModules) {
-/******/ 			if (Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				hotUpdate[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if (--hotWaitingFiles === 0 && hotChunksLoading === 0) {
-/******/ 			hotUpdateDownloaded();
-/******/ 		}
-/******/ 	}
-/******/
-/******/ 	function hotEnsureUpdateChunk(chunkId) {
-/******/ 		if (!hotAvailableFilesMap[chunkId]) {
-/******/ 			hotWaitingFilesMap[chunkId] = true;
-/******/ 		} else {
-/******/ 			hotRequestedFilesMap[chunkId] = true;
-/******/ 			hotWaitingFiles++;
-/******/ 			hotDownloadUpdateChunk(chunkId);
-/******/ 		}
-/******/ 	}
-/******/
-/******/ 	function hotUpdateDownloaded() {
-/******/ 		hotSetStatus("ready");
-/******/ 		var deferred = hotDeferred;
-/******/ 		hotDeferred = null;
-/******/ 		if (!deferred) return;
-/******/ 		if (hotApplyOnUpdate) {
-/******/ 			// Wrap deferred object in Promise to mark it as a well-handled Promise to
-/******/ 			// avoid triggering uncaught exception warning in Chrome.
-/******/ 			// See https://bugs.chromium.org/p/chromium/issues/detail?id=465666
-/******/ 			Promise.resolve()
-/******/ 				.then(function() {
-/******/ 					return hotApply(hotApplyOnUpdate);
-/******/ 				})
-/******/ 				.then(
-/******/ 					function(result) {
-/******/ 						deferred.resolve(result);
-/******/ 					},
-/******/ 					function(err) {
-/******/ 						deferred.reject(err);
-/******/ 					}
-/******/ 				);
-/******/ 		} else {
-/******/ 			var outdatedModules = [];
-/******/ 			for (var id in hotUpdate) {
-/******/ 				if (Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 					outdatedModules.push(toModuleId(id));
-/******/ 				}
-/******/ 			}
-/******/ 			deferred.resolve(outdatedModules);
-/******/ 		}
-/******/ 	}
-/******/
-/******/ 	function hotApply(options) {
-/******/ 		if (hotStatus !== "ready")
-/******/ 			throw new Error("apply() is only allowed in ready status");
-/******/ 		options = options || {};
-/******/
-/******/ 		var cb;
-/******/ 		var i;
-/******/ 		var j;
-/******/ 		var module;
-/******/ 		var moduleId;
-/******/
-/******/ 		function getAffectedStuff(updateModuleId) {
-/******/ 			var outdatedModules = [updateModuleId];
-/******/ 			var outdatedDependencies = {};
-/******/
-/******/ 			var queue = outdatedModules.slice().map(function(id) {
-/******/ 				return {
-/******/ 					chain: [id],
-/******/ 					id: id
-/******/ 				};
-/******/ 			});
-/******/ 			while (queue.length > 0) {
-/******/ 				var queueItem = queue.pop();
-/******/ 				var moduleId = queueItem.id;
-/******/ 				var chain = queueItem.chain;
-/******/ 				module = installedModules[moduleId];
-/******/ 				if (!module || module.hot._selfAccepted) continue;
-/******/ 				if (module.hot._selfDeclined) {
-/******/ 					return {
-/******/ 						type: "self-declined",
-/******/ 						chain: chain,
-/******/ 						moduleId: moduleId
-/******/ 					};
-/******/ 				}
-/******/ 				if (module.hot._main) {
-/******/ 					return {
-/******/ 						type: "unaccepted",
-/******/ 						chain: chain,
-/******/ 						moduleId: moduleId
-/******/ 					};
-/******/ 				}
-/******/ 				for (var i = 0; i < module.parents.length; i++) {
-/******/ 					var parentId = module.parents[i];
-/******/ 					var parent = installedModules[parentId];
-/******/ 					if (!parent) continue;
-/******/ 					if (parent.hot._declinedDependencies[moduleId]) {
-/******/ 						return {
-/******/ 							type: "declined",
-/******/ 							chain: chain.concat([parentId]),
-/******/ 							moduleId: moduleId,
-/******/ 							parentId: parentId
-/******/ 						};
-/******/ 					}
-/******/ 					if (outdatedModules.indexOf(parentId) !== -1) continue;
-/******/ 					if (parent.hot._acceptedDependencies[moduleId]) {
-/******/ 						if (!outdatedDependencies[parentId])
-/******/ 							outdatedDependencies[parentId] = [];
-/******/ 						addAllToSet(outdatedDependencies[parentId], [moduleId]);
-/******/ 						continue;
-/******/ 					}
-/******/ 					delete outdatedDependencies[parentId];
-/******/ 					outdatedModules.push(parentId);
-/******/ 					queue.push({
-/******/ 						chain: chain.concat([parentId]),
-/******/ 						id: parentId
-/******/ 					});
-/******/ 				}
-/******/ 			}
-/******/
-/******/ 			return {
-/******/ 				type: "accepted",
-/******/ 				moduleId: updateModuleId,
-/******/ 				outdatedModules: outdatedModules,
-/******/ 				outdatedDependencies: outdatedDependencies
-/******/ 			};
-/******/ 		}
-/******/
-/******/ 		function addAllToSet(a, b) {
-/******/ 			for (var i = 0; i < b.length; i++) {
-/******/ 				var item = b[i];
-/******/ 				if (a.indexOf(item) === -1) a.push(item);
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// at begin all updates modules are outdated
-/******/ 		// the "outdated" status can propagate to parents if they don't accept the children
-/******/ 		var outdatedDependencies = {};
-/******/ 		var outdatedModules = [];
-/******/ 		var appliedUpdate = {};
-/******/
-/******/ 		var warnUnexpectedRequire = function warnUnexpectedRequire() {
-/******/ 			console.warn(
-/******/ 				"[HMR] unexpected require(" + result.moduleId + ") to disposed module"
-/******/ 			);
-/******/ 		};
-/******/
-/******/ 		for (var id in hotUpdate) {
-/******/ 			if (Object.prototype.hasOwnProperty.call(hotUpdate, id)) {
-/******/ 				moduleId = toModuleId(id);
-/******/ 				/** @type {TODO} */
-/******/ 				var result;
-/******/ 				if (hotUpdate[id]) {
-/******/ 					result = getAffectedStuff(moduleId);
-/******/ 				} else {
-/******/ 					result = {
-/******/ 						type: "disposed",
-/******/ 						moduleId: id
-/******/ 					};
-/******/ 				}
-/******/ 				/** @type {Error|false} */
-/******/ 				var abortError = false;
-/******/ 				var doApply = false;
-/******/ 				var doDispose = false;
-/******/ 				var chainInfo = "";
-/******/ 				if (result.chain) {
-/******/ 					chainInfo = "\nUpdate propagation: " + result.chain.join(" -> ");
-/******/ 				}
-/******/ 				switch (result.type) {
-/******/ 					case "self-declined":
-/******/ 						if (options.onDeclined) options.onDeclined(result);
-/******/ 						if (!options.ignoreDeclined)
-/******/ 							abortError = new Error(
-/******/ 								"Aborted because of self decline: " +
-/******/ 									result.moduleId +
-/******/ 									chainInfo
-/******/ 							);
-/******/ 						break;
-/******/ 					case "declined":
-/******/ 						if (options.onDeclined) options.onDeclined(result);
-/******/ 						if (!options.ignoreDeclined)
-/******/ 							abortError = new Error(
-/******/ 								"Aborted because of declined dependency: " +
-/******/ 									result.moduleId +
-/******/ 									" in " +
-/******/ 									result.parentId +
-/******/ 									chainInfo
-/******/ 							);
-/******/ 						break;
-/******/ 					case "unaccepted":
-/******/ 						if (options.onUnaccepted) options.onUnaccepted(result);
-/******/ 						if (!options.ignoreUnaccepted)
-/******/ 							abortError = new Error(
-/******/ 								"Aborted because " + moduleId + " is not accepted" + chainInfo
-/******/ 							);
-/******/ 						break;
-/******/ 					case "accepted":
-/******/ 						if (options.onAccepted) options.onAccepted(result);
-/******/ 						doApply = true;
-/******/ 						break;
-/******/ 					case "disposed":
-/******/ 						if (options.onDisposed) options.onDisposed(result);
-/******/ 						doDispose = true;
-/******/ 						break;
-/******/ 					default:
-/******/ 						throw new Error("Unexception type " + result.type);
-/******/ 				}
-/******/ 				if (abortError) {
-/******/ 					hotSetStatus("abort");
-/******/ 					return Promise.reject(abortError);
-/******/ 				}
-/******/ 				if (doApply) {
-/******/ 					appliedUpdate[moduleId] = hotUpdate[moduleId];
-/******/ 					addAllToSet(outdatedModules, result.outdatedModules);
-/******/ 					for (moduleId in result.outdatedDependencies) {
-/******/ 						if (
-/******/ 							Object.prototype.hasOwnProperty.call(
-/******/ 								result.outdatedDependencies,
-/******/ 								moduleId
-/******/ 							)
-/******/ 						) {
-/******/ 							if (!outdatedDependencies[moduleId])
-/******/ 								outdatedDependencies[moduleId] = [];
-/******/ 							addAllToSet(
-/******/ 								outdatedDependencies[moduleId],
-/******/ 								result.outdatedDependencies[moduleId]
-/******/ 							);
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 				if (doDispose) {
-/******/ 					addAllToSet(outdatedModules, [result.moduleId]);
-/******/ 					appliedUpdate[moduleId] = warnUnexpectedRequire;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// Store self accepted outdated modules to require them later by the module system
-/******/ 		var outdatedSelfAcceptedModules = [];
-/******/ 		for (i = 0; i < outdatedModules.length; i++) {
-/******/ 			moduleId = outdatedModules[i];
-/******/ 			if (
-/******/ 				installedModules[moduleId] &&
-/******/ 				installedModules[moduleId].hot._selfAccepted
-/******/ 			)
-/******/ 				outdatedSelfAcceptedModules.push({
-/******/ 					module: moduleId,
-/******/ 					errorHandler: installedModules[moduleId].hot._selfAccepted
-/******/ 				});
-/******/ 		}
-/******/
-/******/ 		// Now in "dispose" phase
-/******/ 		hotSetStatus("dispose");
-/******/ 		Object.keys(hotAvailableFilesMap).forEach(function(chunkId) {
-/******/ 			if (hotAvailableFilesMap[chunkId] === false) {
-/******/ 				hotDisposeChunk(chunkId);
-/******/ 			}
-/******/ 		});
-/******/
-/******/ 		var idx;
-/******/ 		var queue = outdatedModules.slice();
-/******/ 		while (queue.length > 0) {
-/******/ 			moduleId = queue.pop();
-/******/ 			module = installedModules[moduleId];
-/******/ 			if (!module) continue;
-/******/
-/******/ 			var data = {};
-/******/
-/******/ 			// Call dispose handlers
-/******/ 			var disposeHandlers = module.hot._disposeHandlers;
-/******/ 			for (j = 0; j < disposeHandlers.length; j++) {
-/******/ 				cb = disposeHandlers[j];
-/******/ 				cb(data);
-/******/ 			}
-/******/ 			hotCurrentModuleData[moduleId] = data;
-/******/
-/******/ 			// disable module (this disables requires from this module)
-/******/ 			module.hot.active = false;
-/******/
-/******/ 			// remove module from cache
-/******/ 			delete installedModules[moduleId];
-/******/
-/******/ 			// when disposing there is no need to call dispose handler
-/******/ 			delete outdatedDependencies[moduleId];
-/******/
-/******/ 			// remove "parents" references from all children
-/******/ 			for (j = 0; j < module.children.length; j++) {
-/******/ 				var child = installedModules[module.children[j]];
-/******/ 				if (!child) continue;
-/******/ 				idx = child.parents.indexOf(moduleId);
-/******/ 				if (idx >= 0) {
-/******/ 					child.parents.splice(idx, 1);
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// remove outdated dependency from module children
-/******/ 		var dependency;
-/******/ 		var moduleOutdatedDependencies;
-/******/ 		for (moduleId in outdatedDependencies) {
-/******/ 			if (
-/******/ 				Object.prototype.hasOwnProperty.call(outdatedDependencies, moduleId)
-/******/ 			) {
-/******/ 				module = installedModules[moduleId];
-/******/ 				if (module) {
-/******/ 					moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 					for (j = 0; j < moduleOutdatedDependencies.length; j++) {
-/******/ 						dependency = moduleOutdatedDependencies[j];
-/******/ 						idx = module.children.indexOf(dependency);
-/******/ 						if (idx >= 0) module.children.splice(idx, 1);
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// Not in "apply" phase
-/******/ 		hotSetStatus("apply");
-/******/
-/******/ 		hotCurrentHash = hotUpdateNewHash;
-/******/
-/******/ 		// insert new code
-/******/ 		for (moduleId in appliedUpdate) {
-/******/ 			if (Object.prototype.hasOwnProperty.call(appliedUpdate, moduleId)) {
-/******/ 				modules[moduleId] = appliedUpdate[moduleId];
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// call accept handlers
-/******/ 		var error = null;
-/******/ 		for (moduleId in outdatedDependencies) {
-/******/ 			if (
-/******/ 				Object.prototype.hasOwnProperty.call(outdatedDependencies, moduleId)
-/******/ 			) {
-/******/ 				module = installedModules[moduleId];
-/******/ 				if (module) {
-/******/ 					moduleOutdatedDependencies = outdatedDependencies[moduleId];
-/******/ 					var callbacks = [];
-/******/ 					for (i = 0; i < moduleOutdatedDependencies.length; i++) {
-/******/ 						dependency = moduleOutdatedDependencies[i];
-/******/ 						cb = module.hot._acceptedDependencies[dependency];
-/******/ 						if (cb) {
-/******/ 							if (callbacks.indexOf(cb) !== -1) continue;
-/******/ 							callbacks.push(cb);
-/******/ 						}
-/******/ 					}
-/******/ 					for (i = 0; i < callbacks.length; i++) {
-/******/ 						cb = callbacks[i];
-/******/ 						try {
-/******/ 							cb(moduleOutdatedDependencies);
-/******/ 						} catch (err) {
-/******/ 							if (options.onErrored) {
-/******/ 								options.onErrored({
-/******/ 									type: "accept-errored",
-/******/ 									moduleId: moduleId,
-/******/ 									dependencyId: moduleOutdatedDependencies[i],
-/******/ 									error: err
-/******/ 								});
-/******/ 							}
-/******/ 							if (!options.ignoreErrored) {
-/******/ 								if (!error) error = err;
-/******/ 							}
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// Load self accepted modules
-/******/ 		for (i = 0; i < outdatedSelfAcceptedModules.length; i++) {
-/******/ 			var item = outdatedSelfAcceptedModules[i];
-/******/ 			moduleId = item.module;
-/******/ 			hotCurrentParents = [moduleId];
-/******/ 			try {
-/******/ 				__webpack_require__(moduleId);
-/******/ 			} catch (err) {
-/******/ 				if (typeof item.errorHandler === "function") {
-/******/ 					try {
-/******/ 						item.errorHandler(err);
-/******/ 					} catch (err2) {
-/******/ 						if (options.onErrored) {
-/******/ 							options.onErrored({
-/******/ 								type: "self-accept-error-handler-errored",
-/******/ 								moduleId: moduleId,
-/******/ 								error: err2,
-/******/ 								originalError: err
-/******/ 							});
-/******/ 						}
-/******/ 						if (!options.ignoreErrored) {
-/******/ 							if (!error) error = err2;
-/******/ 						}
-/******/ 						if (!error) error = err;
-/******/ 					}
-/******/ 				} else {
-/******/ 					if (options.onErrored) {
-/******/ 						options.onErrored({
-/******/ 							type: "self-accept-errored",
-/******/ 							moduleId: moduleId,
-/******/ 							error: err
-/******/ 						});
-/******/ 					}
-/******/ 					if (!options.ignoreErrored) {
-/******/ 						if (!error) error = err;
-/******/ 					}
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		// handle errors in accept handlers and self accepted module load
-/******/ 		if (error) {
-/******/ 			hotSetStatus("fail");
-/******/ 			return Promise.reject(error);
-/******/ 		}
-/******/
-/******/ 		hotSetStatus("idle");
-/******/ 		return new Promise(function(resolve) {
-/******/ 			resolve(outdatedModules);
-/******/ 		});
-/******/ 	}
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -715,14 +13,11 @@
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
-/******/ 			exports: {},
-/******/ 			hot: hotCreateModule(moduleId),
-/******/ 			parents: (hotCurrentParentsTemp = hotCurrentParents, hotCurrentParents = [], hotCurrentParentsTemp),
-/******/ 			children: []
+/******/ 			exports: {}
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -784,25 +79,46 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
-/******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire("./client/src/engine/index.js")(__webpack_require__.s = "./client/src/engine/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./client/src/engine/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./client/src/engine/bindKeys.js":
-/*!***************************************!*\
-  !*** ./client/src/engine/bindKeys.js ***!
-  \***************************************/
+/***/ "./client/src/engine/constants.js":
+/*!****************************************!*\
+  !*** ./client/src/engine/constants.js ***!
+  \****************************************/
+/*! exports provided: miniMapScale, screenWidth, screenHeight, stripWidth, fov, numRays, fovHalf, viewDist, twoPI, numTextures */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"miniMapScale\", function() { return miniMapScale; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"screenWidth\", function() { return screenWidth; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"screenHeight\", function() { return screenHeight; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"stripWidth\", function() { return stripWidth; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"fov\", function() { return fov; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"numRays\", function() { return numRays; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"fovHalf\", function() { return fovHalf; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"viewDist\", function() { return viewDist; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"twoPI\", function() { return twoPI; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"numTextures\", function() { return numTextures; });\nconst miniMapScale = 8;\n\nconst screenWidth = 320;\nconst screenHeight = 200;\n\nconst stripWidth = 2;\nconst fov = 60 * Math.PI / 180;\n\nconst numRays = Math.ceil(screenWidth / stripWidth);\nconst fovHalf = fov / 2;\n\nconst viewDist = (screenWidth/2) / Math.tan((fov / 2));\n\nconst twoPI = Math.PI * 2;\n\nconst numTextures = 4;\n\n\n//# sourceURL=webpack:///./client/src/engine/constants.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/createElement.js":
+/*!********************************************!*\
+  !*** ./client/src/engine/createElement.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// bind keyboard events to game functions (movement, etc)\n/* harmony default export */ __webpack_exports__[\"default\"] = (() => {\n\n    document.onkeydown = function(e) {\n        e = e || window.event;\n\n        switch (e.keyCode) { // which key was pressed?\n\n            case 38: // up, move player forward, ie. increase speed\n                player.speed = 1;\n                break;\n\n            case 40: // down, move player backward, set negative speed\n                player.speed = -1;\n                break;\n\n            case 37: // left, rotate player left\n                player.dir = -1;\n                break;\n\n            case 39: // right, rotate player right\n                player.dir = 1;\n                break;\n        }\n    }\n\n    document.onkeyup = function(e) {\n        e = e || window.event;\n\n        switch (e.keyCode) {\n            case 38:\n            case 40:\n                player.speed = 0;\t// stop the player movement when up/down key is released\n                break;\n            case 37:\n            case 39:\n                player.dir = 0;\n                break;\n        }\n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/bindKeys.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(tag) { return document.createElement(tag); });;\n\n//# sourceURL=webpack:///./client/src/engine/createElement.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/getElementById.js":
+/*!*********************************************!*\
+  !*** ./client/src/engine/getElementById.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(id) { return document.getElementById(id); });;\n\n\n//# sourceURL=webpack:///./client/src/engine/getElementById.js?");
 
 /***/ }),
 
@@ -814,7 +130,113 @@ eval("__webpack_require__.r(__webpack_exports__);\n// bind keyboard events to ga
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bindKeys__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bindKeys */ \"./client/src/engine/bindKeys.js\");\n\n\nconsole.log('yo')\n\nfunction init() {\n\n    mapWidth = map[0].length;\n    mapHeight = map.length;\n\n\n    Object(_bindKeys__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n\n    initScreen();\n\n    drawMiniMap();\n\n    gameCycle();\n}\n\n\n//# sourceURL=webpack:///./client/src/engine/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ \"./client/src/engine/store.js\");\n/* harmony import */ var _getElementById__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getElementById */ \"./client/src/engine/getElementById.js\");\n/* harmony import */ var _createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createElement */ \"./client/src/engine/createElement.js\");\n/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map */ \"./client/src/engine/map.js\");\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants */ \"./client/src/engine/constants.js\");\n\n\n\n\n\n\nvar player = {\n\tx : 16,\t\t\t// current x, y position\n\ty : 10,\n\tdir : 0,\t\t// the direction that the player is turning, either -1 for left or 1 for right.\n\trot : 0,\t\t// the current angle of rotation\n\tspeed : 0,\t\t// is the playing moving forward (speed = 1) or backwards (speed = -1).\n\tmoveSpeed : 0.18,\t// how far (in map units) does the player move each step/update\n\trotSpeed : 6 * Math.PI / 180\t// how much does the player rotate each step/update (in radians)\n}\n\nfunction init() {\n\tbindKeys();\n\n\tinitScreen();\n\n\tdrawMiniMap();\n\n\tgameCycle();\n}\n\nvar screenStrips = [];\n\nfunction initScreen() {\n\tvar screen = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"screen\");\n\n\tfor (let i = 0; i < _constants__WEBPACK_IMPORTED_MODULE_4__[\"screenWidth\"]; i += _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"]) {\n\t\tvar strip = Object(_createElement__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(\"div\");\n\t\tstrip.style.position = \"absolute\";\n\t\tstrip.style.left = i + \"px\";\n\t\tstrip.style.width = _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"]+\"px\";\n\t\tstrip.style.height = \"0px\";\n\t\tstrip.style.overflow = \"hidden\";\n\n\t\tstrip.style.backgroundColor = \"magenta\";\n\n\t\tvar img = new Image();\n\t\timg.src = (window.opera ? \"walls-19-colors.png\" : \"walls.png\");\n\t\timg.style.position = \"absolute\";\n\t\timg.style.left = \"0px\";\n\n\t\tstrip.appendChild(img);\n\t\tstrip.img = img;\t// assign the image to a property on the strip element so we have easy access to the image later\n\n\t\tscreenStrips.push(strip);\n\t\tscreen.appendChild(strip);\n\t}\n\n}\n\n// bind keyboard events to game functions (movement, etc)\nfunction bindKeys() {\n\tdocument.onkeydown = function(e) {\n\t\te = e || window.event;\n\n\t\tswitch (e.keyCode) { // which key was pressed?\n\n\t\t\tcase 38: // up, move player forward, ie. increase speed\n\t\t\t\tplayer.speed = 1;\n\t\t\t\tbreak;\n\n\t\t\tcase 40: // down, move player backward, set negative speed\n\t\t\t\tplayer.speed = -1;\n\t\t\t\tbreak;\n\n\t\t\tcase 37: // left, rotate player left\n\t\t\t\tplayer.dir = -1;\n\t\t\t\tbreak;\n\n\t\t\tcase 39: // right, rotate player right\n\t\t\t\tplayer.dir = 1;\n\t\t\t\tbreak;\n\t\t}\n\t}\n\n\tdocument.onkeyup = function(e) {\n\t\te = e || window.event;\n\n\t\tswitch (e.keyCode) {\n\t\t\tcase 38:\n\t\t\tcase 40:\n\t\t\t\tplayer.speed = 0;\t// stop the player movement when up/down key is released\n\t\t\t\tbreak;\n\t\t\tcase 37:\n\t\t\tcase 39:\n\t\t\t\tplayer.dir = 0;\n\t\t\t\tbreak;\n\t\t}\n\t}\n}\n\nfunction gameCycle() {\n\tmove();\n\n\tupdateMiniMap();\n\n\tcastRays();\n\n\tsetTimeout(gameCycle,1000/30); // aim for 30 FPS\n}\n\n\nfunction castRays() {\n\tvar stripIdx = 0;\n\n\tfor (let i = 0; i < _constants__WEBPACK_IMPORTED_MODULE_4__[\"numRays\"]; i++) {\n\t\t// where on the screen does ray go through?\n\t\tvar rayScreenPos = (-_constants__WEBPACK_IMPORTED_MODULE_4__[\"numRays\"]/2 + i) * _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"];\n\n\t\t// the distance from the viewer to the point on the screen, simply Pythagoras.\n\t\tvar rayViewDist = Math.sqrt(rayScreenPos*rayScreenPos + _constants__WEBPACK_IMPORTED_MODULE_4__[\"viewDist\"]*_constants__WEBPACK_IMPORTED_MODULE_4__[\"viewDist\"]);\n\n\t\t// the angle of the ray, relative to the viewing direction.\n\t\t// right triangle: a = sin(A) * c\n\t\tvar rayAngle = Math.asin(rayScreenPos / rayViewDist);\n\n\t\tcastSingleRay(\n\t\t\tplayer.rot + rayAngle, \t// add the players viewing direction to get the angle in world space\n\t\t\tstripIdx++\n\t\t);\n\t}\n}\n\nfunction castSingleRay(rayAngle, stripIdx) {\n\t// first make sure the angle is between 0 and 360 degrees\n\trayAngle %= _constants__WEBPACK_IMPORTED_MODULE_4__[\"twoPI\"];\n\tif (rayAngle < 0) rayAngle += _constants__WEBPACK_IMPORTED_MODULE_4__[\"twoPI\"];\n\n\t// moving right/left? up/down? Determined by which quadrant the angle is in.\n\tvar right = (rayAngle > _constants__WEBPACK_IMPORTED_MODULE_4__[\"twoPI\"] * 0.75 || rayAngle < _constants__WEBPACK_IMPORTED_MODULE_4__[\"twoPI\"] * 0.25);\n\tvar up = (rayAngle < 0 || rayAngle > Math.PI);\n\n\tvar wallType = 0;\n\n\t// only do these once\n\tvar angleSin = Math.sin(rayAngle);\n\tvar angleCos = Math.cos(rayAngle);\n\n\tvar dist = 0;\t// the distance to the block we hit\n\tvar xHit = 0; \t// the x and y coord of where the ray hit the block\n\tvar yHit = 0;\n\n\tvar textureX;\t// the x-coord on the texture of the block, ie. what part of the texture are we going to render\n\tvar wallX;\t// the (x,y) map coords of the block\n\tvar wallY;\n\n\tvar wallIsHorizontal = false;\n\n\t// first check against the vertical map/wall lines\n\t// we do this by moving to the right or left edge of the block we're standing in\n\t// and then moving in 1 map unit steps horizontally. The amount we have to move vertically\n\t// is determined by the slope of the ray, which is simply defined as sin(angle) / cos(angle).\n\n\tvar slope = angleSin / angleCos; \t// the slope of the straight line made by the ray\n\tvar dXVer = right ? 1 : -1; \t// we move either 1 map unit to the left or right\n\tvar dYVer = dXVer * slope; \t// how much to move up or down\n\n\tvar x = right ? Math.ceil(player.x) : Math.floor(player.x);\t// starting horizontal position, at one of the edges of the current map block\n\tvar y = player.y + (x - player.x) * slope;\t\t\t// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.\n\n\twhile (x >= 0 && x < _map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"] && y >= 0 && y < _map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"]) {\n\t\tvar wallX = Math.floor(x + (right ? 0 : -1));\n\t\tvar wallY = Math.floor(y);\n\n\t\t// is this point inside a wall block?\n\t\tif (_map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][wallY][wallX] > 0) {\n\t\t\tvar distX = x - player.x;\n\t\t\tvar distY = y - player.y;\n\t\t\tdist = distX*distX + distY*distY;\t// the distance from the player to this point, squared.\n\n\t\t\twallType = _map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][wallY][wallX]; // we'll remember the type of wall we hit for later\n\t\t\ttextureX = y % 1;\t// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.\n\t\t\tif (!right) textureX = 1 - textureX; // if we're looking to the left side of the map, the texture should be reversed\n\n\t\t\txHit = x;\t// save the coordinates of the hit. We only really use these to draw the rays on minimap.\n\t\t\tyHit = y;\n\n\t\t\twallIsHorizontal = true;\n\n\t\t\tbreak;\n\t\t}\n\t\tx += dXVer;\n\t\ty += dYVer;\n\t}\n\n\n\n\t// now check against horizontal lines. It's basically the same, just \"turned around\".\n\t// the only difference here is that once we hit a map block,\n\t// we check if there we also found one in the earlier, vertical run. We'll know that if dist != 0.\n\t// If so, we only register this hit if this distance is smaller.\n\n\tvar slope = angleCos / angleSin;\n\tvar dYHor = up ? -1 : 1;\n\tvar dXHor = dYHor * slope;\n\tvar y = up ? Math.floor(player.y) : Math.ceil(player.y);\n\tvar x = player.x + (y - player.y) * slope;\n\n\twhile (x >= 0 && x < _map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"] && y >= 0 && y < _map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"]) {\n\t\tvar wallY = Math.floor(y + (up ? -1 : 0));\n\t\tvar wallX = Math.floor(x);\n\t\tif (_map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][wallY][wallX] > 0) {\n\t\t\tvar distX = x - player.x;\n\t\t\tvar distY = y - player.y;\n\t\t\tvar blockDist = distX*distX + distY*distY;\n\t\t\tif (!dist || blockDist < dist) {\n\t\t\t\tdist = blockDist;\n\t\t\t\txHit = x;\n\t\t\t\tyHit = y;\n\n\t\t\t\twallType = _map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][wallY][wallX];\n\t\t\t\ttextureX = x % 1;\n\t\t\t\tif (up) textureX = 1 - textureX;\n\t\t\t}\n\t\t\tbreak;\n\t\t}\n\t\tx += dXHor;\n\t\ty += dYHor;\n\t}\n\n\tif (dist) {\n\t\t//drawRay(xHit, yHit);\n\n\t\tvar strip = screenStrips[stripIdx];\n\n\t\tdist = Math.sqrt(dist);\n\n\t\t// use perpendicular distance to adjust for fish eye\n\t\t// distorted_dist = correct_dist / cos(relative_angle_of_ray)\n\t\tdist = dist * Math.cos(player.rot - rayAngle);\n\n\t\t// now calc the position, height and width of the wall strip\n\n\t\t// \"real\" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,\n\t\t// thus the height on the screen is equal to wall_height_real * viewDist / dist\n\n\t\tvar height = Math.round(_constants__WEBPACK_IMPORTED_MODULE_4__[\"viewDist\"] / dist);\n\n\t\t// width is the same, but we have to stretch the texture to a factor of stripWidth to make it fill the strip correctly\n\t\tvar width = height * _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"];\n\n\t\t// top placement is easy since everything is centered on the x-axis, so we simply move\n\t\t// it half way down the screen and then half the wall height back up.\n\t\tvar top = Math.round((_constants__WEBPACK_IMPORTED_MODULE_4__[\"screenHeight\"] - height) / 2);\n\n\t\tstrip.style.height = height+\"px\";\n\t\tstrip.style.top = top+\"px\";\n\n\t\tstrip.img.style.height = Math.floor(height * _constants__WEBPACK_IMPORTED_MODULE_4__[\"numTextures\"]) + \"px\";\n\t\tstrip.img.style.width = Math.floor(width*2) +\"px\";\n\t\tstrip.img.style.top = -Math.floor(height * (wallType-1)) + \"px\";\n\n\t\tvar texX = Math.round(textureX*width);\n\n\t\tif (texX > width - _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"])\n\t\t\ttexX = width - _constants__WEBPACK_IMPORTED_MODULE_4__[\"stripWidth\"];\n\n\t\tstrip.img.style.left = -texX + \"px\";\n\n\t}\n\n}\n\nfunction drawRay(rayX, rayY) {\n\tvar miniMapObjects = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"minimapobjects\");\n\tvar objectCtx = miniMapObjects.getContext(\"2d\");\n\n\tobjectCtx.strokeStyle = \"rgba(0,100,0,0.3)\";\n\tobjectCtx.lineWidth = 0.5;\n\tobjectCtx.beginPath();\n\tobjectCtx.moveTo(player.x * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"], player.y * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]);\n\tobjectCtx.lineTo(\n\t\trayX * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"],\n\t\trayY * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]\n\t);\n\tobjectCtx.closePath();\n\tobjectCtx.stroke();\n}\n\nfunction move() {\n\tvar moveStep = player.speed * player.moveSpeed;\t// player will move this far along the current direction vector\n\n\tplayer.rot += player.dir * player.rotSpeed; // add rotation if player is rotating (player.dir != 0)\n\n\t// make sure the angle is between 0 and 360 degrees\n\t//while (player.rot < 0) player.rot += twoPI;\n\t//while (player.rot >= twoPI) player.rot -= twoPI;\n\n\tvar newX = player.x + Math.cos(player.rot) * moveStep;\t// calculate new player position with simple trigonometry\n\tvar newY = player.y + Math.sin(player.rot) * moveStep;\n\n\tif (isBlocking(newX, newY)) {\t// are we allowed to move to the new position?\n\t\treturn; // no, bail out.\n\t}\n\n\tplayer.x = newX; // set new position\n\tplayer.y = newY;\n}\n\nfunction isBlocking(x,y) {\n\t// first make sure that we cannot move outside the boundaries of the level\n\tif (y < 0 || y >= _map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"] || x < 0 || x >= _map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"])\n\t\treturn true;\n\n\t// return true if the map block is not 0, ie. if there is a blocking wall.\n\treturn (_map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][Math.floor(y)][Math.floor(x)] != 0);\n}\n\nfunction updateMiniMap() {\n\tvar miniMapObjects = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"minimapobjects\");\n\n\tvar objectCtx = miniMapObjects.getContext(\"2d\");\n\tminiMapObjects.width = miniMapObjects.width;\n\n\tobjectCtx.fillStyle = \"red\";\n\tobjectCtx.fillRect(\t\t// draw a dot at the current player position\n\t\tplayer.x * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"] - 2,\n\t\tplayer.y * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"] - 2,\n\t\t4, 4\n\t);\n\n\tobjectCtx.strokeStyle = \"red\";\n\tobjectCtx.beginPath();\n\tobjectCtx.moveTo(player.x * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"], player.y * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]);\n\tobjectCtx.lineTo(\n\t\t(player.x + Math.cos(player.rot) * 4) * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"],\n\t\t(player.y + Math.sin(player.rot) * 4) * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]\n\t);\n\tobjectCtx.closePath();\n\tobjectCtx.stroke();\n}\n\nfunction drawMiniMap() {\n\t// draw the topdown view minimap\n\n\tvar miniMap = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"minimap\");\t\t\t// the actual map\n\tvar miniMapCtr = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"minimapcontainer\");\t\t// the container div element\n\tvar miniMapObjects = Object(_getElementById__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(\"minimapobjects\");\t// the canvas used for drawing the objects on the map (player character, etc)\n\n\tminiMap.width = _map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"] * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"];\t// resize the internal canvas dimensions\n\tminiMap.height = _map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"] * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"];\t// of both the map canvas and the object canvas\n\tminiMapObjects.width = miniMap.width;\n\tminiMapObjects.height = miniMap.height;\n\n\tvar w = (_map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"] * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]) + \"px\" \t// minimap CSS dimensions\n\tvar h = (_map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"] * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]) + \"px\"\n\tminiMap.style.width = miniMapObjects.style.width = miniMapCtr.style.width = w;\n\tminiMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;\n\n\tvar ctx = miniMap.getContext(\"2d\");\n\n\tctx.fillStyle = \"white\";\n\tctx.fillRect(0,0,miniMap.width,miniMap.height);\n\n\t// loop through all blocks on the map\n\tfor (var y=0;y<_map__WEBPACK_IMPORTED_MODULE_3__[\"mapHeight\"];y++) {\n\t\tfor (var x=0;x<_map__WEBPACK_IMPORTED_MODULE_3__[\"mapWidth\"];x++) {\n\n\t\t\tvar wall = _map__WEBPACK_IMPORTED_MODULE_3__[\"map\"][y][x];\n\n\t\t\tif (wall > 0) { // if there is a wall block at this (x,y) ...\n\n\t\t\t\tctx.fillStyle = \"rgb(200,200,200)\";\n\t\t\t\tctx.fillRect(\t\t\t\t// ... then draw a block on the minimap\n\t\t\t\t\tx * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"],\n\t\t\t\t\ty * _constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"],\n\t\t\t\t\t_constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"],_constants__WEBPACK_IMPORTED_MODULE_4__[\"miniMapScale\"]\n\t\t\t\t);\n\n\t\t\t}\n\t\t}\n\t}\n\n\tupdateMiniMap();\n}\n\nsetTimeout(init, 1);\n\n\n//# sourceURL=webpack:///./client/src/engine/index.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/map.js":
+/*!**********************************!*\
+  !*** ./client/src/engine/map.js ***!
+  \**********************************/
+/*! exports provided: map, mapWidth, mapHeight */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"map\", function() { return map; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"mapWidth\", function() { return mapWidth; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"mapHeight\", function() { return mapHeight; });\nconst map = [\n\t[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],\n\t[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,3,0,3,0,0,1,1,1,2,1,1,1,1,1,2,1,1,1,2,1,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,3,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1],\n\t[1,0,0,3,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,3,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],\n\t[1,0,0,3,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1],\n\t[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,0,0,0,0,3,3,3,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],\n\t[1,0,0,0,0,0,0,0,0,3,3,3,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,0,0,0,0,3,3,3,0,0,3,3,3,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1],\n\t[1,0,0,0,0,0,0,0,0,3,3,3,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,4,0,0,4,2,0,2,2,2,2,2,2,2,2,0,2,4,4,0,0,4,0,0,0,0,0,0,0,1],\n\t[1,0,0,4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,0,1],\n\t[1,0,0,4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,0,1],\n\t[1,0,0,4,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,4,0,0,0,0,0,0,0,1],\n\t[1,0,0,4,3,3,4,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,3,4,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],\n\t[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]\n];\n\nconst mapWidth = map[0].length;\nconst mapHeight = map.length;\n\n\n//# sourceURL=webpack:///./client/src/engine/map.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/reducers/index.js":
+/*!*********************************************!*\
+  !*** ./client/src/engine/reducers/index.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/redux */ \"./node_modules/redux/es/redux.js\");\n/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./player */ \"./client/src/engine/reducers/player.js\");\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(_node_modules_redux__WEBPACK_IMPORTED_MODULE_0__[\"combineReducers\"])({\n    player: _player__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n}));\n\n//# sourceURL=webpack:///./client/src/engine/reducers/index.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/reducers/player.js":
+/*!**********************************************!*\
+  !*** ./client/src/engine/reducers/player.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nconst initState = {\n    x : 16,\n    y : 10,\n    // the direction that the player is turning, either -1 for left or 1 for right.\n    dir : 0,\n    // the current angle of rotation\t\n    rot : 0,\n    // is the playing moving forward (speed = 1) or backwards (speed = -1).\t\n    speed : 0,\n    // how far (in map units) does the player move each step/update\n    moveSpeed : 0.18,\n    // how much does the player rotate each step/update (in radians)\n    rotSpeed : 6 * Math.PI / 180\t\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((prevState = initState, action) => {\n    const nextState = { ...prevState };\n\n    switch(action.type) {\n        case 'PLAYER_MOVE_FORWARD': {\n            return {\n                ...prevState,\n                speed: 1,\n            };\n        }\n        case 'PLAYER_MOVE_BACKWARD': {\n            return {\n                ...prevState,\n                speed: -1,\n            };\n        }\n        case 'PLAYER_MOVE_STOP': {\n            return {\n                ...prevState,\n                speed: 0,\n            };\n        }\n        case 'PLAYER_TURN_LEFT': {\n            return {\n                ...prevState,\n                dir: -1,\n            };\n        }\n        case 'PLAYER_TURN_RIGHT': {\n            return {\n                ...prevState,\n                dir: 1,\n            };\n        }\n        case 'PLAYER_TURN_STOP': {\n            return {\n                ...prevState,\n                dir: 0,\n            };\n        }\n        default: {\n            return nextState;\n        }\n    }\n\n    return nextState;\n\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/reducers/player.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/store.js":
+/*!************************************!*\
+  !*** ./client/src/engine/store.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ \"./node_modules/redux/es/redux.js\");\n/* harmony import */ var _reducers___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reducers/ */ \"./client/src/engine/reducers/index.js\");\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__[\"createStore\"])(\n    _reducers___WEBPACK_IMPORTED_MODULE_1__[\"default\"], /* preloadedState, */\n    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()\n));\n \n\n//# sourceURL=webpack:///./client/src/engine/store.js?");
+
+/***/ }),
+
+/***/ "./node_modules/redux/es/redux.js":
+/*!****************************************!*\
+  !*** ./node_modules/redux/es/redux.js ***!
+  \****************************************/
+/*! exports provided: createStore, combineReducers, bindActionCreators, applyMiddleware, compose, __DO_NOT_USE__ActionTypes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createStore\", function() { return createStore; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"combineReducers\", function() { return combineReducers; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"bindActionCreators\", function() { return bindActionCreators; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"applyMiddleware\", function() { return applyMiddleware; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compose\", function() { return compose; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"__DO_NOT_USE__ActionTypes\", function() { return ActionTypes; });\n/* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! symbol-observable */ \"./node_modules/symbol-observable/es/index.js\");\n\n\n/**\n * These are private action types reserved by Redux.\n * For any unknown actions, you must return the current state.\n * If the current state is undefined, you must return the initial state.\n * Do not reference these action types directly in your code.\n */\nvar ActionTypes = {\n  INIT: '@@redux/INIT' + Math.random().toString(36).substring(7).split('').join('.'),\n  REPLACE: '@@redux/REPLACE' + Math.random().toString(36).substring(7).split('').join('.')\n};\n\nvar _typeof = typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\" ? function (obj) {\n  return typeof obj;\n} : function (obj) {\n  return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj;\n};\n\nvar _extends = Object.assign || function (target) {\n  for (var i = 1; i < arguments.length; i++) {\n    var source = arguments[i];\n\n    for (var key in source) {\n      if (Object.prototype.hasOwnProperty.call(source, key)) {\n        target[key] = source[key];\n      }\n    }\n  }\n\n  return target;\n};\n\n/**\n * @param {any} obj The object to inspect.\n * @returns {boolean} True if the argument appears to be a plain object.\n */\nfunction isPlainObject(obj) {\n  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || obj === null) return false;\n\n  var proto = obj;\n  while (Object.getPrototypeOf(proto) !== null) {\n    proto = Object.getPrototypeOf(proto);\n  }\n\n  return Object.getPrototypeOf(obj) === proto;\n}\n\n/**\n * Creates a Redux store that holds the state tree.\n * The only way to change the data in the store is to call `dispatch()` on it.\n *\n * There should only be a single store in your app. To specify how different\n * parts of the state tree respond to actions, you may combine several reducers\n * into a single reducer function by using `combineReducers`.\n *\n * @param {Function} reducer A function that returns the next state tree, given\n * the current state tree and the action to handle.\n *\n * @param {any} [preloadedState] The initial state. You may optionally specify it\n * to hydrate the state from the server in universal apps, or to restore a\n * previously serialized user session.\n * If you use `combineReducers` to produce the root reducer function, this must be\n * an object with the same shape as `combineReducers` keys.\n *\n * @param {Function} [enhancer] The store enhancer. You may optionally specify it\n * to enhance the store with third-party capabilities such as middleware,\n * time travel, persistence, etc. The only store enhancer that ships with Redux\n * is `applyMiddleware()`.\n *\n * @returns {Store} A Redux store that lets you read the state, dispatch actions\n * and subscribe to changes.\n */\nfunction createStore(reducer, preloadedState, enhancer) {\n  var _ref2;\n\n  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {\n    enhancer = preloadedState;\n    preloadedState = undefined;\n  }\n\n  if (typeof enhancer !== 'undefined') {\n    if (typeof enhancer !== 'function') {\n      throw new Error('Expected the enhancer to be a function.');\n    }\n\n    return enhancer(createStore)(reducer, preloadedState);\n  }\n\n  if (typeof reducer !== 'function') {\n    throw new Error('Expected the reducer to be a function.');\n  }\n\n  var currentReducer = reducer;\n  var currentState = preloadedState;\n  var currentListeners = [];\n  var nextListeners = currentListeners;\n  var isDispatching = false;\n\n  function ensureCanMutateNextListeners() {\n    if (nextListeners === currentListeners) {\n      nextListeners = currentListeners.slice();\n    }\n  }\n\n  /**\n   * Reads the state tree managed by the store.\n   *\n   * @returns {any} The current state tree of your application.\n   */\n  function getState() {\n    if (isDispatching) {\n      throw new Error('You may not call store.getState() while the reducer is executing. ' + 'The reducer has already received the state as an argument. ' + 'Pass it down from the top reducer instead of reading it from the store.');\n    }\n\n    return currentState;\n  }\n\n  /**\n   * Adds a change listener. It will be called any time an action is dispatched,\n   * and some part of the state tree may potentially have changed. You may then\n   * call `getState()` to read the current state tree inside the callback.\n   *\n   * You may call `dispatch()` from a change listener, with the following\n   * caveats:\n   *\n   * 1. The subscriptions are snapshotted just before every `dispatch()` call.\n   * If you subscribe or unsubscribe while the listeners are being invoked, this\n   * will not have any effect on the `dispatch()` that is currently in progress.\n   * However, the next `dispatch()` call, whether nested or not, will use a more\n   * recent snapshot of the subscription list.\n   *\n   * 2. The listener should not expect to see all state changes, as the state\n   * might have been updated multiple times during a nested `dispatch()` before\n   * the listener is called. It is, however, guaranteed that all subscribers\n   * registered before the `dispatch()` started will be called with the latest\n   * state by the time it exits.\n   *\n   * @param {Function} listener A callback to be invoked on every dispatch.\n   * @returns {Function} A function to remove this change listener.\n   */\n  function subscribe(listener) {\n    if (typeof listener !== 'function') {\n      throw new Error('Expected the listener to be a function.');\n    }\n\n    if (isDispatching) {\n      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');\n    }\n\n    var isSubscribed = true;\n\n    ensureCanMutateNextListeners();\n    nextListeners.push(listener);\n\n    return function unsubscribe() {\n      if (!isSubscribed) {\n        return;\n      }\n\n      if (isDispatching) {\n        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');\n      }\n\n      isSubscribed = false;\n\n      ensureCanMutateNextListeners();\n      var index = nextListeners.indexOf(listener);\n      nextListeners.splice(index, 1);\n    };\n  }\n\n  /**\n   * Dispatches an action. It is the only way to trigger a state change.\n   *\n   * The `reducer` function, used to create the store, will be called with the\n   * current state tree and the given `action`. Its return value will\n   * be considered the **next** state of the tree, and the change listeners\n   * will be notified.\n   *\n   * The base implementation only supports plain object actions. If you want to\n   * dispatch a Promise, an Observable, a thunk, or something else, you need to\n   * wrap your store creating function into the corresponding middleware. For\n   * example, see the documentation for the `redux-thunk` package. Even the\n   * middleware will eventually dispatch plain object actions using this method.\n   *\n   * @param {Object} action A plain object representing “what changed”. It is\n   * a good idea to keep actions serializable so you can record and replay user\n   * sessions, or use the time travelling `redux-devtools`. An action must have\n   * a `type` property which may not be `undefined`. It is a good idea to use\n   * string constants for action types.\n   *\n   * @returns {Object} For convenience, the same action object you dispatched.\n   *\n   * Note that, if you use a custom middleware, it may wrap `dispatch()` to\n   * return something else (for example, a Promise you can await).\n   */\n  function dispatch(action) {\n    if (!isPlainObject(action)) {\n      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');\n    }\n\n    if (typeof action.type === 'undefined') {\n      throw new Error('Actions may not have an undefined \"type\" property. ' + 'Have you misspelled a constant?');\n    }\n\n    if (isDispatching) {\n      throw new Error('Reducers may not dispatch actions.');\n    }\n\n    try {\n      isDispatching = true;\n      currentState = currentReducer(currentState, action);\n    } finally {\n      isDispatching = false;\n    }\n\n    var listeners = currentListeners = nextListeners;\n    for (var i = 0; i < listeners.length; i++) {\n      var listener = listeners[i];\n      listener();\n    }\n\n    return action;\n  }\n\n  /**\n   * Replaces the reducer currently used by the store to calculate the state.\n   *\n   * You might need this if your app implements code splitting and you want to\n   * load some of the reducers dynamically. You might also need this if you\n   * implement a hot reloading mechanism for Redux.\n   *\n   * @param {Function} nextReducer The reducer for the store to use instead.\n   * @returns {void}\n   */\n  function replaceReducer(nextReducer) {\n    if (typeof nextReducer !== 'function') {\n      throw new Error('Expected the nextReducer to be a function.');\n    }\n\n    currentReducer = nextReducer;\n    dispatch({ type: ActionTypes.REPLACE });\n  }\n\n  /**\n   * Interoperability point for observable/reactive libraries.\n   * @returns {observable} A minimal observable of state changes.\n   * For more information, see the observable proposal:\n   * https://github.com/tc39/proposal-observable\n   */\n  function observable() {\n    var _ref;\n\n    var outerSubscribe = subscribe;\n    return _ref = {\n      /**\n       * The minimal observable subscription method.\n       * @param {Object} observer Any object that can be used as an observer.\n       * The observer object should have a `next` method.\n       * @returns {subscription} An object with an `unsubscribe` method that can\n       * be used to unsubscribe the observable from the store, and prevent further\n       * emission of values from the observable.\n       */\n      subscribe: function subscribe(observer) {\n        if ((typeof observer === 'undefined' ? 'undefined' : _typeof(observer)) !== 'object' || observer === null) {\n          throw new TypeError('Expected the observer to be an object.');\n        }\n\n        function observeState() {\n          if (observer.next) {\n            observer.next(getState());\n          }\n        }\n\n        observeState();\n        var unsubscribe = outerSubscribe(observeState);\n        return { unsubscribe: unsubscribe };\n      }\n    }, _ref[symbol_observable__WEBPACK_IMPORTED_MODULE_0__[\"default\"]] = function () {\n      return this;\n    }, _ref;\n  }\n\n  // When a store is created, an \"INIT\" action is dispatched so that every\n  // reducer returns their initial state. This effectively populates\n  // the initial state tree.\n  dispatch({ type: ActionTypes.INIT });\n\n  return _ref2 = {\n    dispatch: dispatch,\n    subscribe: subscribe,\n    getState: getState,\n    replaceReducer: replaceReducer\n  }, _ref2[symbol_observable__WEBPACK_IMPORTED_MODULE_0__[\"default\"]] = observable, _ref2;\n}\n\n/**\n * Prints a warning in the console if it exists.\n *\n * @param {String} message The warning message.\n * @returns {void}\n */\nfunction warning(message) {\n  /* eslint-disable no-console */\n  if (typeof console !== 'undefined' && typeof console.error === 'function') {\n    console.error(message);\n  }\n  /* eslint-enable no-console */\n  try {\n    // This error was thrown as a convenience so that if you enable\n    // \"break on all exceptions\" in your console,\n    // it would pause the execution at this line.\n    throw new Error(message);\n  } catch (e) {} // eslint-disable-line no-empty\n}\n\nfunction getUndefinedStateErrorMessage(key, action) {\n  var actionType = action && action.type;\n  var actionDescription = actionType && 'action \"' + String(actionType) + '\"' || 'an action';\n\n  return 'Given ' + actionDescription + ', reducer \"' + key + '\" returned undefined. ' + 'To ignore an action, you must explicitly return the previous state. ' + 'If you want this reducer to hold no value, you can return null instead of undefined.';\n}\n\nfunction getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {\n  var reducerKeys = Object.keys(reducers);\n  var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';\n\n  if (reducerKeys.length === 0) {\n    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';\n  }\n\n  if (!isPlainObject(inputState)) {\n    return 'The ' + argumentName + ' has unexpected type of \"' + {}.toString.call(inputState).match(/\\s([a-z|A-Z]+)/)[1] + '\". Expected argument to be an object with the following ' + ('keys: \"' + reducerKeys.join('\", \"') + '\"');\n  }\n\n  var unexpectedKeys = Object.keys(inputState).filter(function (key) {\n    return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];\n  });\n\n  unexpectedKeys.forEach(function (key) {\n    unexpectedKeyCache[key] = true;\n  });\n\n  if (action && action.type === ActionTypes.REPLACE) return;\n\n  if (unexpectedKeys.length > 0) {\n    return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('\"' + unexpectedKeys.join('\", \"') + '\" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('\"' + reducerKeys.join('\", \"') + '\". Unexpected keys will be ignored.');\n  }\n}\n\nfunction assertReducerShape(reducers) {\n  Object.keys(reducers).forEach(function (key) {\n    var reducer = reducers[key];\n    var initialState = reducer(undefined, { type: ActionTypes.INIT });\n\n    if (typeof initialState === 'undefined') {\n      throw new Error('Reducer \"' + key + '\" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined. If you don\\'t want to set a value for this reducer, ' + 'you can use null instead of undefined.');\n    }\n\n    var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');\n    if (typeof reducer(undefined, { type: type }) === 'undefined') {\n      throw new Error('Reducer \"' + key + '\" returned undefined when probed with a random type. ' + ('Don\\'t try to handle ' + ActionTypes.INIT + ' or other actions in \"redux/*\" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined, but can be null.');\n    }\n  });\n}\n\n/**\n * Turns an object whose values are different reducer functions, into a single\n * reducer function. It will call every child reducer, and gather their results\n * into a single state object, whose keys correspond to the keys of the passed\n * reducer functions.\n *\n * @param {Object} reducers An object whose values correspond to different\n * reducer functions that need to be combined into one. One handy way to obtain\n * it is to use ES6 `import * as reducers` syntax. The reducers may never return\n * undefined for any action. Instead, they should return their initial state\n * if the state passed to them was undefined, and the current state for any\n * unrecognized action.\n *\n * @returns {Function} A reducer function that invokes every reducer inside the\n * passed object, and builds a state object with the same shape.\n */\nfunction combineReducers(reducers) {\n  var reducerKeys = Object.keys(reducers);\n  var finalReducers = {};\n  for (var i = 0; i < reducerKeys.length; i++) {\n    var key = reducerKeys[i];\n\n    if (true) {\n      if (typeof reducers[key] === 'undefined') {\n        warning('No reducer provided for key \"' + key + '\"');\n      }\n    }\n\n    if (typeof reducers[key] === 'function') {\n      finalReducers[key] = reducers[key];\n    }\n  }\n  var finalReducerKeys = Object.keys(finalReducers);\n\n  var unexpectedKeyCache = void 0;\n  if (true) {\n    unexpectedKeyCache = {};\n  }\n\n  var shapeAssertionError = void 0;\n  try {\n    assertReducerShape(finalReducers);\n  } catch (e) {\n    shapeAssertionError = e;\n  }\n\n  return function combination() {\n    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n    var action = arguments[1];\n\n    if (shapeAssertionError) {\n      throw shapeAssertionError;\n    }\n\n    if (true) {\n      var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);\n      if (warningMessage) {\n        warning(warningMessage);\n      }\n    }\n\n    var hasChanged = false;\n    var nextState = {};\n    for (var _i = 0; _i < finalReducerKeys.length; _i++) {\n      var _key = finalReducerKeys[_i];\n      var reducer = finalReducers[_key];\n      var previousStateForKey = state[_key];\n      var nextStateForKey = reducer(previousStateForKey, action);\n      if (typeof nextStateForKey === 'undefined') {\n        var errorMessage = getUndefinedStateErrorMessage(_key, action);\n        throw new Error(errorMessage);\n      }\n      nextState[_key] = nextStateForKey;\n      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;\n    }\n    return hasChanged ? nextState : state;\n  };\n}\n\nfunction bindActionCreator(actionCreator, dispatch) {\n  return function () {\n    return dispatch(actionCreator.apply(this, arguments));\n  };\n}\n\n/**\n * Turns an object whose values are action creators, into an object with the\n * same keys, but with every function wrapped into a `dispatch` call so they\n * may be invoked directly. This is just a convenience method, as you can call\n * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.\n *\n * For convenience, you can also pass a single function as the first argument,\n * and get a function in return.\n *\n * @param {Function|Object} actionCreators An object whose values are action\n * creator functions. One handy way to obtain it is to use ES6 `import * as`\n * syntax. You may also pass a single function.\n *\n * @param {Function} dispatch The `dispatch` function available on your Redux\n * store.\n *\n * @returns {Function|Object} The object mimicking the original object, but with\n * every action creator wrapped into the `dispatch` call. If you passed a\n * function as `actionCreators`, the return value will also be a single\n * function.\n */\nfunction bindActionCreators(actionCreators, dispatch) {\n  if (typeof actionCreators === 'function') {\n    return bindActionCreator(actionCreators, dispatch);\n  }\n\n  if ((typeof actionCreators === 'undefined' ? 'undefined' : _typeof(actionCreators)) !== 'object' || actionCreators === null) {\n    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators === 'undefined' ? 'undefined' : _typeof(actionCreators)) + '. ' + 'Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?');\n  }\n\n  var keys = Object.keys(actionCreators);\n  var boundActionCreators = {};\n  for (var i = 0; i < keys.length; i++) {\n    var key = keys[i];\n    var actionCreator = actionCreators[key];\n    if (typeof actionCreator === 'function') {\n      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);\n    }\n  }\n  return boundActionCreators;\n}\n\n/**\n * Composes single-argument functions from right to left. The rightmost\n * function can take multiple arguments as it provides the signature for\n * the resulting composite function.\n *\n * @param {...Function} funcs The functions to compose.\n * @returns {Function} A function obtained by composing the argument functions\n * from right to left. For example, compose(f, g, h) is identical to doing\n * (...args) => f(g(h(...args))).\n */\n\nfunction compose() {\n  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {\n    funcs[_key] = arguments[_key];\n  }\n\n  if (funcs.length === 0) {\n    return function (arg) {\n      return arg;\n    };\n  }\n\n  if (funcs.length === 1) {\n    return funcs[0];\n  }\n\n  return funcs.reduce(function (a, b) {\n    return function () {\n      return a(b.apply(undefined, arguments));\n    };\n  });\n}\n\n/**\n * Creates a store enhancer that applies middleware to the dispatch method\n * of the Redux store. This is handy for a variety of tasks, such as expressing\n * asynchronous actions in a concise manner, or logging every action payload.\n *\n * See `redux-thunk` package as an example of the Redux middleware.\n *\n * Because middleware is potentially asynchronous, this should be the first\n * store enhancer in the composition chain.\n *\n * Note that each middleware will be given the `dispatch` and `getState` functions\n * as named arguments.\n *\n * @param {...Function} middlewares The middleware chain to be applied.\n * @returns {Function} A store enhancer applying the middleware.\n */\nfunction applyMiddleware() {\n  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {\n    middlewares[_key] = arguments[_key];\n  }\n\n  return function (createStore) {\n    return function () {\n      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {\n        args[_key2] = arguments[_key2];\n      }\n\n      var store = createStore.apply(undefined, args);\n      var _dispatch = function dispatch() {\n        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');\n      };\n\n      var middlewareAPI = {\n        getState: store.getState,\n        dispatch: function dispatch() {\n          return _dispatch.apply(undefined, arguments);\n        }\n      };\n      var chain = middlewares.map(function (middleware) {\n        return middleware(middlewareAPI);\n      });\n      _dispatch = compose.apply(undefined, chain)(store.dispatch);\n\n      return _extends({}, store, {\n        dispatch: _dispatch\n      });\n    };\n  };\n}\n\n/*\n * This is a dummy function to check if the function name has been altered by minification.\n * If the function has been minified and NODE_ENV !== 'production', warn the user.\n */\nfunction isCrushed() {}\n\nif (\"development\" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {\n  warning(\"You are currently using minified code outside of NODE_ENV === 'production'. \" + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');\n}\n\n\n\n\n//# sourceURL=webpack:///./node_modules/redux/es/redux.js?");
+
+/***/ }),
+
+/***/ "./node_modules/symbol-observable/es/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/symbol-observable/es/index.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ponyfill.js */ \"./node_modules/symbol-observable/es/ponyfill.js\");\n/* global window */\n\n\nvar root;\n\nif (typeof self !== 'undefined') {\n  root = self;\n} else if (typeof window !== 'undefined') {\n  root = window;\n} else if (typeof global !== 'undefined') {\n  root = global;\n} else if (true) {\n  root = module;\n} else {}\n\nvar result = Object(_ponyfill_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(root);\n/* harmony default export */ __webpack_exports__[\"default\"] = (result);\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\"), __webpack_require__(/*! ./../../webpack/buildin/harmony-module.js */ \"./node_modules/webpack/buildin/harmony-module.js\")(module)))\n\n//# sourceURL=webpack:///./node_modules/symbol-observable/es/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/symbol-observable/es/ponyfill.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/symbol-observable/es/ponyfill.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return symbolObservablePonyfill; });\nfunction symbolObservablePonyfill(root) {\n\tvar result;\n\tvar Symbol = root.Symbol;\n\n\tif (typeof Symbol === 'function') {\n\t\tif (Symbol.observable) {\n\t\t\tresult = Symbol.observable;\n\t\t} else {\n\t\t\tresult = Symbol('observable');\n\t\t\tSymbol.observable = result;\n\t\t}\n\t} else {\n\t\tresult = '@@observable';\n\t}\n\n\treturn result;\n};\n\n\n//# sourceURL=webpack:///./node_modules/symbol-observable/es/ponyfill.js?");
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || Function(\"return this\")() || (1, eval)(\"this\");\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/harmony-module.js":
+/*!*******************************************!*\
+  !*** (webpack)/buildin/harmony-module.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(originalModule) {\n\tif (!originalModule.webpackPolyfill) {\n\t\tvar module = Object.create(originalModule);\n\t\t// module.parent = undefined by default\n\t\tif (!module.children) module.children = [];\n\t\tObject.defineProperty(module, \"loaded\", {\n\t\t\tenumerable: true,\n\t\t\tget: function() {\n\t\t\t\treturn module.l;\n\t\t\t}\n\t\t});\n\t\tObject.defineProperty(module, \"id\", {\n\t\t\tenumerable: true,\n\t\t\tget: function() {\n\t\t\t\treturn module.i;\n\t\t\t}\n\t\t});\n\t\tObject.defineProperty(module, \"exports\", {\n\t\t\tenumerable: true\n\t\t});\n\t\tmodule.webpackPolyfill = 1;\n\t}\n\treturn module;\n};\n\n\n//# sourceURL=webpack:///(webpack)/buildin/harmony-module.js?");
 
 /***/ })
 
