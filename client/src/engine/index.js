@@ -119,23 +119,31 @@ function gameCycle() {
 }
 
 function move() {
-	var moveStep = player.speed * player.moveSpeed;	// player will move this far along the current direction vector
+    const { player } = getState();
+    
+    // player will move this far along the current direction vector
+	const moveStep = player.speed * player.moveSpeed;	
 
-	player.rot += player.dir * player.rotSpeed; // add rotation if player is rotating (player.dir != 0)
+    // add rotation if player is rotating (player.dir != 0)
+	const rotation = player.rot + (player.dir * player.rotSpeed); 
 
 	// make sure the angle is between 0 and 360 degrees
 	//while (player.rot < 0) player.rot += twoPI;
 	//while (player.rot >= twoPI) player.rot -= twoPI;
 
-	var newX = player.x + Math.cos(player.rot) * moveStep;	// calculate new player position with simple trigonometry
-	var newY = player.y + Math.sin(player.rot) * moveStep;
-
-	if (isBlocking(newX, newY)) {	// are we allowed to move to the new position?
-		return; // no, bail out.
-	}
-
-	player.x = newX; // set new position
-	player.y = newY;
+    // calculate new player position with simple trigonometry
+	const x = player.x + Math.cos(rotation) * moveStep;	
+    const y = player.y + Math.sin(rotation) * moveStep;
+    
+    // are we allowed to move to the new position?
+	if (isBlocking(x, y)) {
+        return;
+    }
+    
+    // set new position
+    if (moveStep || rotation !== player.rot) {
+        dispatch({ type: 'PLAYER_SET_POSITION', x, y, rotation })
+    }
 }
 
 function castRays() {
@@ -330,6 +338,8 @@ function updateMiniMap() {
 	var objectCtx = miniMapObjects.getContext("2d");
 	miniMapObjects.width = miniMapObjects.width;
 
+    const { player } = getState();
+
 	objectCtx.fillStyle = "red";
 	objectCtx.fillRect(		// draw a dot at the current player position
 		player.x * miniMapScale - 2,
@@ -371,8 +381,8 @@ function drawMiniMap() {
 	ctx.fillRect(0,0,miniMap.width,miniMap.height);
 
 	// loop through all blocks on the map
-	for (var y=0;y<mapHeight;y++) {
-		for (var x=0;x<mapWidth;x++) {
+	for (let y = 0; y < mapHeight; y++) {
+		for (let x = 0;x < mapWidth; x++) {
 
 			var wall = map[y][x];
 

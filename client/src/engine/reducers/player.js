@@ -14,9 +14,15 @@ const initState = {
 }
 
 export default (prevState = initState, action) => {
+    const {
+        type,
+        x,
+        y,
+        rotation,
+    } = action;
     const nextState = { ...prevState };
 
-    switch(action.type) {
+    switch(type) {
         case 'PLAYER_MOVE_FORWARD': {
             return {
                 ...prevState,
@@ -51,6 +57,14 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 dir: 0,
+            };
+        }
+        case 'PLAYER_SET_POSITION': {
+            return {
+                ...prevState,
+                x,
+                y,
+                rot: rotation,
             };
         }
         default: {
