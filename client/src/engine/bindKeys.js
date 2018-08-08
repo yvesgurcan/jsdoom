@@ -4,6 +4,7 @@ const { dispatch } = store;
 // bind keyboard events to game functions (movement, etc)
 export default () => {
 	document.onkeydown = function(event) {
+        event.preventDefault();
 		const { keyCode } = event;
 		switch (keyCode) {
 
@@ -26,6 +27,7 @@ export default () => {
 	}
 
 	document.onkeyup = function(event) {
+        event.preventDefault();
 		const { keyCode } = event;
 		switch (keyCode) {
 			case 38:
