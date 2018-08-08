@@ -2,7 +2,7 @@ import getElementById from './getElementById';
 import createElement from './createElement';
 import {
     stripWidth,
-    assetFolder
+    textureFolder
 } from './constants';
 import store from './store';
 const { dispatch, getState } = store;
@@ -21,11 +21,10 @@ export default () => {
 		strip.style.width = stripWidth+'px';
 		strip.style.height = '0px';
 		strip.style.overflow = 'hidden';
-
 		strip.style.backgroundColor = 'magenta';
 
 		let img = new Image();
-		img.src = `${assetFolder}/walls.png`;
+		img.src = `${textureFolder}/walls.png`;
 		img.style.position = 'absolute';
 		img.style.left = '0px';
 

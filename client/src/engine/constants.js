@@ -9,3 +9,4 @@ export const twoPI = Math.PI * 2;
 export const numTextures = 4;
 
 export const assetFolder = '/client/assets';
+export const textureFolder = `${assetFolder}/textures`;
