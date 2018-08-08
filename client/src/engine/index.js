@@ -1,4 +1,5 @@
 import store from './store';
+const { getState, dispatch } = store;
 import $ from './getElementById';
 import dc from './createElement';
 import {
@@ -71,22 +72,22 @@ function bindKeys() {
 	document.onkeydown = function(e) {
 		e = e || window.event;
 
-		switch (e.keyCode) { // which key was pressed?
+		switch (e.keyCode) {
 
-			case 38: // up, move player forward, ie. increase speed
-				player.speed = 1;
+            case 38:
+                dispatch({ type: 'PLAYER_MOVE_FORWARD' });
 				break;
 
-			case 40: // down, move player backward, set negative speed
-				player.speed = -1;
+			case 40:
+                dispatch({ type: 'PLAYER_MOVE_BACKWARD' });
 				break;
 
-			case 37: // left, rotate player left
-				player.dir = -1;
+			case 37:
+                dispatch({ type: 'PLAYER_TURN_LEFT' });
 				break;
 
-			case 39: // right, rotate player right
-				player.dir = 1;
+			case 39:
+                dispatch({ type: 'PLAYER_TURN_RIGHT' });
 				break;
 		}
 	}
@@ -96,12 +97,12 @@ function bindKeys() {
 
 		switch (e.keyCode) {
 			case 38:
-			case 40:
-				player.speed = 0;	// stop the player movement when up/down key is released
+            case 40:
+                dispatch({ type: 'PLAYER_MOVE_STOP' });
 				break;
 			case 37:
 			case 39:
-				player.dir = 0;
+                dispatch({ type: 'PLAYER_TURN_STOP' });
 				break;
 		}
 	}
