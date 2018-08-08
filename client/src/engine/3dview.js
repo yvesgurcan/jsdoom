@@ -20,20 +20,20 @@ export function castRays() {
 
 	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?
-		var rayScreenPos = (-numRays / 2 + i) * stripWidth;
+		const rayScreenPos = (-numRays / 2 + i) * stripWidth;
 
 		// the distance from the viewer to the point on the screen, simply Pythagoras.
-		var rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
+		const rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
 
 		// the angle of the ray, relative to the viewing direction.
 		// right triangle: a = sin(A) * c
-		var rayAngle = Math.asin(rayScreenPos / rayViewDist);
-
+		const rayAngle = Math.asin(rayScreenPos / rayViewDist);
 
         const { player } = getState();
 
 		castSingleRay(
-			player.rot + rayAngle, 	// add the players viewing direction to get the angle in world space
+            // add the players viewing direction to get the angle in world space
+			player.rot + rayAngle, 
 			stripIdx++
 		);
 	}
@@ -91,6 +91,7 @@ export function castSingleRay(rayAngle, stripIdx) {
 			var distY = y - player.y;
 			dist = distX*distX + distY*distY;	// the distance from the player to this point, squared.
 
+            // wallType is a number taken from map.js; it corresponds to the position of the texture in walls.png
 			wallType = map[wallY][wallX]; // we'll remember the type of wall we hit for later
 			textureX = y % 1;	// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.
 			if (!right) textureX = 1 - textureX; // if we're looking to the left side of the map, the texture should be reversed
@@ -108,7 +109,7 @@ export function castSingleRay(rayAngle, stripIdx) {
 
 
 
-	// now check against horizontal lines. It's basically the same, just "turned around".
+	// now check against horizontal lines. It's basically the same, just 'turned around'.
 	// the only difference here is that once we hit a map block,
 	// we check if there we also found one in the earlier, vertical run. We'll know that if dist != 0.
 	// If so, we only register this hit if this distance is smaller.
@@ -141,7 +142,7 @@ export function castSingleRay(rayAngle, stripIdx) {
 		y += dYHor;
 	}
 
-	if (dist) {
+	if (dist > 0) {
 		drawRay(xHit, yHit);
 
         const { screen } = getState();
@@ -158,7 +159,7 @@ export function castSingleRay(rayAngle, stripIdx) {
 
             // now calc the position, height and width of the wall strip
 
-            // "real" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
+            // 'real' wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
             // thus the height on the screen is equal to wall_height_real * viewDist / dist
 
             var height = Math.round(viewDist / dist);
@@ -170,19 +171,19 @@ export function castSingleRay(rayAngle, stripIdx) {
             // it half way down the screen and then half the wall height back up.
             var top = Math.round(((screenHeight / 2) - height) / 2);
 
-            strip.style.height = height+"px";
-            strip.style.top = top+"px";
+            strip.style.height = height + 'px';
+            strip.style.top = top + 'px';
 
-            strip.img.style.height = Math.floor(height * numTextures) + "px";
-            strip.img.style.width = Math.floor(width*2) +"px";
-            strip.img.style.top = -Math.floor(height * (wallType-1)) + "px";
+            strip.img.style.height = Math.floor(height * numTextures) + 'px';
+            strip.img.style.width = Math.floor(width * 2) + 'px';
+            strip.img.style.top = -Math.floor(height * (wallType - 1)) + 'px';
 
             var texX = Math.round(textureX*width);
 
             if (texX > width - stripWidth)
                 texX = width - stripWidth;
 
-            strip.img.style.left = -texX + "px";
+            strip.img.style.left = -texX + 'px';
             
         }
 
