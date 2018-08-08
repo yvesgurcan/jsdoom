@@ -40,33 +40,6 @@ function init() {
 
 var screenStrips = [];
 
-function initScreen() {
-	var screen = $("screen");
-
-	for (let i = 0; i < screenWidth; i += stripWidth) {
-		var strip = dc("div");
-		strip.style.position = "absolute";
-		strip.style.left = i + "px";
-		strip.style.width = stripWidth+"px";
-		strip.style.height = "0px";
-		strip.style.overflow = "hidden";
-
-		strip.style.backgroundColor = "magenta";
-
-		var img = new Image();
-		img.src = (window.opera ? "walls-19-colors.png" : "walls.png");
-		img.style.position = "absolute";
-		img.style.left = "0px";
-
-		strip.appendChild(img);
-		strip.img = img;	// assign the image to a property on the strip element so we have easy access to the image later
-
-		screenStrips.push(strip);
-		screen.appendChild(strip);
-	}
-
-}
-
 // bind keyboard events to game functions (movement, etc)
 function bindKeys() {
 	document.onkeydown = function(e) {
@@ -108,6 +81,33 @@ function bindKeys() {
 	}
 }
 
+function initScreen() {
+	var screen = $("screen");
+
+	for (let i = 0; i < screenWidth; i += stripWidth) {
+		var strip = dc("div");
+		strip.style.position = "absolute";
+		strip.style.left = i + "px";
+		strip.style.width = stripWidth+"px";
+		strip.style.height = "0px";
+		strip.style.overflow = "hidden";
+
+		strip.style.backgroundColor = "magenta";
+
+		var img = new Image();
+		img.src = (window.opera ? "walls-19-colors.png" : "walls.png");
+		img.style.position = "absolute";
+		img.style.left = "0px";
+
+		strip.appendChild(img);
+		strip.img = img;	// assign the image to a property on the strip element so we have easy access to the image later
+
+		screenStrips.push(strip);
+		screen.appendChild(strip);
+	}
+
+}
+
 function gameCycle() {
 	move();
 
@@ -118,6 +118,25 @@ function gameCycle() {
 	setTimeout(gameCycle,1000/30); // aim for 30 FPS
 }
 
+function move() {
+	var moveStep = player.speed * player.moveSpeed;	// player will move this far along the current direction vector
+
+	player.rot += player.dir * player.rotSpeed; // add rotation if player is rotating (player.dir != 0)
+
+	// make sure the angle is between 0 and 360 degrees
+	//while (player.rot < 0) player.rot += twoPI;
+	//while (player.rot >= twoPI) player.rot -= twoPI;
+
+	var newX = player.x + Math.cos(player.rot) * moveStep;	// calculate new player position with simple trigonometry
+	var newY = player.y + Math.sin(player.rot) * moveStep;
+
+	if (isBlocking(newX, newY)) {	// are we allowed to move to the new position?
+		return; // no, bail out.
+	}
+
+	player.x = newX; // set new position
+	player.y = newY;
+}
 
 function castRays() {
 	var stripIdx = 0;
@@ -294,26 +313,6 @@ function drawRay(rayX, rayY) {
 	);
 	objectCtx.closePath();
 	objectCtx.stroke();
-}
-
-function move() {
-	var moveStep = player.speed * player.moveSpeed;	// player will move this far along the current direction vector
-
-	player.rot += player.dir * player.rotSpeed; // add rotation if player is rotating (player.dir != 0)
-
-	// make sure the angle is between 0 and 360 degrees
-	//while (player.rot < 0) player.rot += twoPI;
-	//while (player.rot >= twoPI) player.rot -= twoPI;
-
-	var newX = player.x + Math.cos(player.rot) * moveStep;	// calculate new player position with simple trigonometry
-	var newY = player.y + Math.sin(player.rot) * moveStep;
-
-	if (isBlocking(newX, newY)) {	// are we allowed to move to the new position?
-		return; // no, bail out.
-	}
-
-	player.x = newX; // set new position
-	player.y = newY;
 }
 
 function isBlocking(x,y) {
