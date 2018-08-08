@@ -71,7 +71,4 @@ export default (prevState = initState, action) => {
             return nextState;
         }
     }
-
-    return nextState;
-
 }
