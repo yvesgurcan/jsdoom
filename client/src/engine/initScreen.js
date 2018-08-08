@@ -1,6 +1,9 @@
 import getElementById from './getElementById';
 import createElement from './createElement';
-import { stripWidth } from './constants';
+import {
+    stripWidth,
+    assetFolder
+} from './constants';
 import store from './store';
 const { dispatch, getState } = store;
 
@@ -21,8 +24,8 @@ export default () => {
 
 		strip.style.backgroundColor = 'magenta';
 
-		var img = new Image();
-		img.src = (window.opera ? 'walls-19-colors.png' : 'walls.png');
+		let img = new Image();
+		img.src = `${assetFolder}/walls.png`;
 		img.style.position = 'absolute';
 		img.style.left = '0px';
 

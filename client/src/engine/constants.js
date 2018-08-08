@@ -7,3 +7,5 @@ export const fovHalf = fov / 2;
 export const twoPI = Math.PI * 2;
 
 export const numTextures = 4;
+
+export const assetFolder = '/client/assets';
