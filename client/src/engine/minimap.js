@@ -3,7 +3,7 @@ import {
     map,
     mapWidth,
     mapHeight,
-} from './map';
+} from '../map/walls';
 import { miniMapScale } from './constants';
 import store from './store';
 const { getState } = store;
@@ -76,11 +76,12 @@ export function drawMiniMap() {
 
 	// loop through all blocks on the map
 	for (let y = 0; y < mapHeight; y++) {
-		for (let x = 0;x < mapWidth; x++) {
+		for (let x = 0; x < mapWidth; x++) {
 
-			var wall = map[y][x];
-
-			if (wall > 0) { // if there is a wall block at this (x,y) ...
+			const wall = map[y][x];
+            
+            // if there is a wall block at this (x,y) ...
+			if (wall !== 0) { 
 
 				ctx.fillStyle = "rgb(200,200,200)";
 				ctx.fillRect(				// ... then draw a block on the minimap

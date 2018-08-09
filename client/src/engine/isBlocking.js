@@ -2,7 +2,7 @@ import {
     map,
     mapWidth,
     mapHeight,
-} from './map';
+} from '../map/walls';
 
 export default (x, y) => {
 	// first make sure that we cannot move outside the boundaries of the level
