@@ -2,17 +2,17 @@ import {
     map,
     mapWidth,
     mapHeight,
-} from './map';
+} from '../map/walls';
 import {
     stripWidth,
     twoPI,
-    numTextures,
 } from './constants';
 import { drawRay } from './minimap';
 import store from './store';
 const { getState } = store;
 
 export function castRays() {
+
 	var stripIdx = 0;
 
     const { screen } = getState();
@@ -40,6 +40,9 @@ export function castRays() {
 }
 
 export function castSingleRay(rayAngle, stripIdx) {
+    if (stripIdx % 10 === 0) {
+        // debugger
+    }
 	// first make sure the angle is between 0 and 360 degrees
 	rayAngle %= twoPI;
 	if (rayAngle < 0) rayAngle += twoPI;
@@ -47,8 +50,6 @@ export function castSingleRay(rayAngle, stripIdx) {
 	// moving right/left? up/down? Determined by which quadrant the angle is in.
 	var right = (rayAngle > twoPI * 0.75 || rayAngle < twoPI * 0.25);
 	var up = (rayAngle < 0 || rayAngle > Math.PI);
-
-	var wallType = 0;
 
 	// only do these once
 	var angleSin = Math.sin(rayAngle);
@@ -86,13 +87,11 @@ export function castSingleRay(rayAngle, stripIdx) {
 		var wallY = Math.floor(y);
 
 		// is this point inside a wall block?
-		if (map[wallY][wallX] > 0) {
+		if (map[wallY][wallX] !== 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
 			dist = distX*distX + distY*distY;	// the distance from the player to this point, squared.
 
-            // wallType is a number taken from map.js; it corresponds to the position of the texture in walls.png
-			wallType = map[wallY][wallX]; // we'll remember the type of wall we hit for later
 			textureX = y % 1;	// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.
 			if (!right) textureX = 1 - textureX; // if we're looking to the left side of the map, the texture should be reversed
 
@@ -122,17 +121,16 @@ export function castSingleRay(rayAngle, stripIdx) {
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
 		var wallY = Math.floor(y + (up ? -1 : 0));
-		var wallX = Math.floor(x);
-		if (map[wallY][wallX] > 0) {
+        var wallX = Math.floor(x);
+		if (map[wallY][wallX] !== 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
-			var blockDist = distX*distX + distY*distY;
+			var blockDist = distX * distX + distY * distY;
 			if (!dist || blockDist < dist) {
 				dist = blockDist;
 				xHit = x;
 				yHit = y;
 
-				wallType = map[wallY][wallX];
 				textureX = x % 1;
 				if (up) textureX = 1 - textureX;
 			}
@@ -174,11 +172,11 @@ export function castSingleRay(rayAngle, stripIdx) {
             strip.style.height = height + 'px';
             strip.style.top = top + 'px';
 
-            strip.img.style.height = Math.floor(height * numTextures) + 'px';
-            strip.img.style.width = Math.floor(width * 2) + 'px';
-            strip.img.style.top = -Math.floor(height * (wallType - 1)) + 'px';
+            // this is stretching the texture
+            strip.img.style.height = Math.floor(height) + 'px';
+            strip.img.style.width = Math.floor(width) + 'px';
 
-            var texX = Math.round(textureX*width);
+            var texX = Math.round(textureX * width);
 
             if (texX > width - stripWidth)
                 texX = width - stripWidth;
