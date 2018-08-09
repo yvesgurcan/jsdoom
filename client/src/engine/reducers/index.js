@@ -1,4 +1,4 @@
-import { combineReducers } from "../../../../node_modules/redux";
+import { combineReducers } from "redux";
 import player from './player';
 import screen from './screen';
 
