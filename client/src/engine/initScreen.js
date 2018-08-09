@@ -19,15 +19,17 @@ export default () => {
 		let strip = createElement('div');
 		strip.style.position = 'absolute';
 		strip.style.left = i + 'px';
-		strip.style.width = stripWidth+'px';
-		strip.style.height = '0px';
+		strip.style.width = stripWidth + 'px';
 		strip.style.overflow = 'hidden';
-		strip.style.backgroundColor = 'magenta';
+        strip.style.backgroundColor = 'magenta';
+
+        if (i % 8 === 0) {
+            // strip.style.backgroundColor = 'yellow';
+        }
 
 		let img = new Image();
-		img.src = `${textureFolder}/walls.png`;
+		img.src = `${textureFolder}/ZZWOLF9.png`;
 		img.style.position = 'absolute';
-		img.style.left = '0px';
 
         strip.appendChild(img);
         // assign the image to a property on the strip element so we have easy access to the image later
