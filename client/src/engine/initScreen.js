@@ -8,7 +8,8 @@ import store from './store';
 const { dispatch, getState } = store;
 
 export default () => {
-	let screen = getElementById('screen');
+    let screen = getElementById('scene');
+    screen.innerHTML = '';
 
     const { screen: screenState } = getState();
     const { width: screenWidth } = screenState;
