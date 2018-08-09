@@ -19,10 +19,19 @@ export default (prevState = initState, action) => {
         x,
         y,
         rotation,
+        width,
     } = action;
     const nextState = { ...prevState };
 
-    switch(type) {
+    switch (type) {
+        case 'SCREEN_RESIZE': {
+            // if this goes out of control, 0.18 is a trustable value for small screens
+            const moveSpeed = Math.max(.10, Math.min(1.1, .000001 * width * width / 1.4));
+            return {
+                ...prevState,
+                moveSpeed,
+            };
+        }
         case 'PLAYER_MOVE_FORWARD': {
             return {
                 ...prevState,
