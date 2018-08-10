@@ -16,7 +16,7 @@ export default (prevState = initState, action) => {
     } = action;
     const nextState = { ...prevState };
 
-    switch(type) {
+    switch (type) {
         case 'SCREEN_SET_STRIPS': {
             return {
                 ...prevState,
@@ -38,4 +38,4 @@ export default (prevState = initState, action) => {
             return nextState;
         }
     }
-}
+};

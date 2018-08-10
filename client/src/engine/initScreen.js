@@ -5,18 +5,19 @@ import {
     textureFolder
 } from './constants';
 import store from './store';
+
 const { dispatch, getState } = store;
 
 export default () => {
-    let screen = getElementById('scene');
+    const screen = getElementById('scene');
     screen.innerHTML = '';
 
     const { screen: screenState } = getState();
     const { width: screenWidth } = screenState;
 
-    let strips = [];
+    const strips = [];
 	for (let i = 0; i < screenWidth; i += stripWidth) {
-		let strip = createElement('div');
+		const strip = createElement('div');
 		strip.style.position = 'absolute';
 		strip.style.left = i + 'px';
 		strip.style.width = stripWidth + 'px';
@@ -27,7 +28,7 @@ export default () => {
             // strip.style.backgroundColor = 'yellow';
         }
 
-		let img = new Image();
+		const img = new Image();
 		img.src = `${textureFolder}/ZZWOLF9.png`;
 		img.style.position = 'absolute';
 

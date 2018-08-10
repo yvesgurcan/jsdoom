@@ -1,10 +1,13 @@
 import isBlocking from './isBlocking';
 import store from './store';
+
 const { getState, dispatch } = store;
 
 export default () => {
     const { player } = getState();
     
+    // TODO: check if there is a wall in between moveStep and player.x/player.y
+
     // player will move this far along the current direction vector
 	const moveStep = player.speed * player.moveSpeed;	
 
@@ -16,8 +19,8 @@ export default () => {
 	//while (player.rot >= twoPI) player.rot -= twoPI;
 
     // calculate new player position with simple trigonometry
-	const x = player.x + Math.cos(rotation) * moveStep;	
-    const y = player.y + Math.sin(rotation) * moveStep;
+	const x = player.x + (Math.cos(rotation) * moveStep);	
+    const y = player.y + (Math.sin(rotation) * moveStep);
     
     // are we allowed to move to the new position?
 	if (isBlocking(x, y)) {
@@ -26,6 +29,6 @@ export default () => {
     
     // set new position
     if (moveStep || rotation !== player.rot) {
-        dispatch({ type: 'PLAYER_SET_POSITION', x, y, rotation })
+        dispatch({ type: 'PLAYER_SET_POSITION', x, y, rotation });
     }
-}
+};

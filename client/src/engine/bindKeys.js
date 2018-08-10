@@ -1,13 +1,13 @@
 import store from './store';
+
 const { dispatch } = store;
 
 // bind keyboard events to game functions (movement, etc)
 export default () => {
-	document.onkeydown = function(event) {
+	document.onkeydown = function (event) {
         event.preventDefault();
 		const { keyCode } = event;
 		switch (keyCode) {
-
             case 38:
                 dispatch({ type: 'PLAYER_MOVE_FORWARD' });
 				break;
@@ -22,11 +22,13 @@ export default () => {
 
 			case 39:
                 dispatch({ type: 'PLAYER_TURN_RIGHT' });
-				break;
+                break;
+            default:
+                break;
 		}
-	}
+	};
 
-	document.onkeyup = function(event) {
+	document.onkeyup = function (event) {
         event.preventDefault();
 		const { keyCode } = event;
 		switch (keyCode) {
@@ -37,7 +39,9 @@ export default () => {
 			case 37:
 			case 39:
                 dispatch({ type: 'PLAYER_TURN_STOP' });
-				break;
+                break;
+            default:
+                break;
 		}
-	}
-}
+	};
+};

@@ -1,16 +1,16 @@
 const initState = {
-    x : 16,
-    y : 10,
+    x: 16,
+    y: 10,
     // the direction that the player is turning, either -1 for left or 1 for right.
-    dir : 0,
+    dir: 0,
     // the current angle of rotation	
-    rot : 0,
+    rot: 0,
     // is the playing moving forward (speed = 1) or backwards (speed = -1).	
-    speed : 0,
+    speed: 0,
     // how far (in map units) does the player move each step/update
-    moveSpeed : 0.18,
+    moveSpeed: 0.18,
     // how much does the player rotate each step/update (in radians)
-    rotSpeed : 6 * Math.PI / 180	
+    rotSpeed: 6 * (Math.PI / 180),
 };
 
 export default (prevState = initState, action) => {
@@ -26,7 +26,7 @@ export default (prevState = initState, action) => {
     switch (type) {
         case 'SCREEN_RESIZE': {
             // if this goes out of control, 0.18 is a trustable value for small screens
-            const moveSpeed = Math.max(.10, Math.min(1.1, .000001 * width * width / 1.4));
+            const moveSpeed = Math.max(0.10, Math.min(1.1, 0.000001 * width * (width / 1.4)));
             return {
                 ...prevState,
                 moveSpeed,
@@ -80,4 +80,4 @@ export default (prevState = initState, action) => {
             return nextState;
         }
     }
-}
+};

@@ -9,21 +9,21 @@ import {
 } from './constants';
 import { drawRay } from './minimap';
 import store from './store';
+
 const { getState } = store;
 
 export function castRays() {
-
-	var stripIdx = 0;
+	let stripIdx = 0;
 
     const { screen } = getState();
     const { numRays, viewDist } = screen;
 
 	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?
-		const rayScreenPos = (-numRays / 2 + i) * stripWidth;
+		const rayScreenPos = ((-numRays / 2) + i) * stripWidth;
 
 		// the distance from the viewer to the point on the screen, simply Pythagoras.
-		const rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
+		const rayViewDist = Math.sqrt((rayScreenPos * rayScreenPos) + (viewDist * viewDist));
 
 		// the angle of the ray, relative to the viewing direction.
 		// right triangle: a = sin(A) * c
@@ -106,8 +106,6 @@ export function castSingleRay(rayAngle, stripIdx) {
 		y += dYVer;
 	}
 
-
-
 	// now check against horizontal lines. It's basically the same, just 'turned around'.
 	// the only difference here is that once we hit a map block,
 	// we check if there we also found one in the earlier, vertical run. We'll know that if dist != 0.
@@ -147,13 +145,13 @@ export function castSingleRay(rayAngle, stripIdx) {
         const { strips, viewDist } = screen;
 
         if (stripIdx < strips.length) {
-            let strip = strips[stripIdx];
+            const strip = strips[stripIdx];
 
             dist = Math.sqrt(dist);
 
             // use perpendicular distance to adjust for fish eye
             // distorted_dist = correct_dist / cos(relative_angle_of_ray)
-            dist = dist * Math.cos(player.rot - rayAngle);
+            dist *= Math.cos(player.rot - rayAngle);
 
             // now calc the position, height and width of the wall strip
 
@@ -178,13 +176,11 @@ export function castSingleRay(rayAngle, stripIdx) {
 
             var texX = Math.round(textureX * width);
 
-            if (texX > width - stripWidth)
+            if (texX > width - stripWidth) {
                 texX = width - stripWidth;
+            }
 
-            strip.img.style.left = -texX + 'px';
-            
+            strip.img.style.left = -texX + 'px';  
         }
-
 	}
-
 }

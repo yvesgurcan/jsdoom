@@ -19,7 +19,7 @@ function gameLoop() {
     castRays();
     
     // frames per second
-	setTimeout(gameLoop,1000/45); 
+	setTimeout(gameLoop, 1000 / 45); 
 }
 
 setTimeout(init, 75);
