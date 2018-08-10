@@ -39,6 +39,8 @@ export function castRays() {
 	}
 }
 
+let xWallHit = 0;
+let yWallHit = 0;
 export function castSingleRay(rayAngle, stripIdx) {
     if (stripIdx % 10 === 0) {
         // debugger
@@ -63,6 +65,8 @@ export function castSingleRay(rayAngle, stripIdx) {
 	var wallX;	// the (x,y) map coords of the block
 	var wallY;
 
+    var wallIsShaded = false;
+    
 	var wallIsHorizontal = false;
 
 	// first check against the vertical map/wall lines
@@ -82,28 +86,43 @@ export function castSingleRay(rayAngle, stripIdx) {
     const { screen } = getState();
     const { height: screenHeight } = screen;
 
+
+    const { spriteMap, sprites: { visibleSprites } } = getState();
+
+    let wallType = null;
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
-		var wallX = Math.floor(x + (right ? 0 : -1));
-		var wallY = Math.floor(y);
+		var wallX = (x + (right ? 0 : -1))>>0;
+		var wallY = (y)>>0;
+
+		if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
+			spriteMap[wallY][wallX].visible = true;
+			visibleSprites.push(spriteMap[wallY][wallX]);
+		}
 
 		// is this point inside a wall block?
-		if (map[wallY][wallX] !== 0) {
+		if (map[wallY][wallX] > 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
-			dist = distX*distX + distY*distY;	// the distance from the player to this point, squared.
+			dist = (distX * distX) + (distY * distY);	// the distance from the player to this point, squared.
 
+			wallType = map[wallY][wallX]; // we'll remember the type of wall we hit for later
 			textureX = y % 1;	// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.
 			if (!right) textureX = 1 - textureX; // if we're looking to the left side of the map, the texture should be reversed
 
 			xHit = x;	// save the coordinates of the hit. We only really use these to draw the rays on minimap.
 			yHit = y;
+			xWallHit = wallX;
+			yWallHit = wallY;
+
+			// make horizontal walls shaded
+			wallIsShaded = true;
 
 			wallIsHorizontal = true;
 
 			break;
 		}
-		x += dXVer;
-		y += dYVer;
+		x = x + dXVer;
+		y = y + dYVer;
 	}
 
 	// now check against horizontal lines. It's basically the same, just 'turned around'.
@@ -118,31 +137,42 @@ export function castSingleRay(rayAngle, stripIdx) {
 	var x = player.x + (y - player.y) * slope;
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
-		var wallY = Math.floor(y + (up ? -1 : 0));
-        var wallX = Math.floor(x);
-		if (map[wallY][wallX] !== 0) {
+		var wallY = (y + (up ? -1 : 0)) >> 0;
+        var wallX = (x) >> 0;
+        
+		if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
+			spriteMap[wallY][wallX].visible = true;
+			visibleSprites.push(spriteMap[wallY][wallX]);
+		}
+
+		if (map[wallY][wallX] > 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
-			var blockDist = distX * distX + distY * distY;
+			var blockDist = (distX * distX) + (distY * distY);
 			if (!dist || blockDist < dist) {
 				dist = blockDist;
 				xHit = x;
 				yHit = y;
+				xWallHit = wallX;
+				yWallHit = wallY;
 
+				wallType = map[wallY][wallX];
 				textureX = x % 1;
 				if (up) textureX = 1 - textureX;
+
+				wallIsShaded = false;
 			}
 			break;
 		}
-		x += dXHor;
-		y += dYHor;
+		x = x + dXHor;
+		y = y + dYHor;
 	}
 
 	if (dist > 0) {
 		drawRay(xHit, yHit);
 
-        const { screen } = getState();
-        const { strips, viewDist } = screen;
+        const { screen: screenState } = getState();
+        const { strips, viewDist } = screenState;
 
         if (stripIdx < strips.length) {
             const strip = strips[stripIdx];
@@ -158,29 +188,71 @@ export function castSingleRay(rayAngle, stripIdx) {
             // 'real' wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
             // thus the height on the screen is equal to wall_height_real * viewDist / dist
 
-            var height = Math.round(viewDist / dist);
+            const height = Math.round(viewDist / dist);
 
             // width is the same, but we have to stretch the texture to a factor of stripWidth to make it fill the strip correctly
-            var width = height * stripWidth;
+            const width = height * stripWidth;
 
             // top placement is easy since everything is centered on the x-axis, so we simply move
             // it half way down the screen and then half the wall height back up.
-            var top = Math.round(((screenHeight / 2) - height) / 2);
+            const top = Math.round(((screenHeight / 2) - height) / 2);
 
-            strip.style.height = height + 'px';
-            strip.style.top = top + 'px';
+            let imgTop = 0;
 
-            // this is stretching the texture
-            strip.img.style.height = Math.floor(height) + 'px';
-            strip.img.style.width = Math.floor(width) + 'px';
+            const style = strip.style;
+            const oldStyles = strip.oldStyles;
 
-            var texX = Math.round(textureX * width);
+            // then adjust the top placement according to which wall texture we need
+            imgTop = (height * (wallType - 1)) >> 0;
 
+            // FIXME: not a true value
+            const numTextures = 999;
+
+            const styleHeight = (height * numTextures) >> 0;
+
+            if (oldStyles.height !== styleHeight) {
+                style.height = `${styleHeight}px`;
+                oldStyles.height = styleHeight;
+            }
+
+            let texX = Math.round(textureX * width);
             if (texX > width - stripWidth) {
                 texX = width - stripWidth;
             }
+            texX += (wallIsShaded ? width : 0);
 
-            strip.img.style.left = -texX + 'px';  
+            const styleWidth = (width * 2) >> 0;
+            if (oldStyles.width !== styleWidth) {
+                style.width = `${styleWidth}px`;
+                oldStyles.width = styleWidth;
+            }
+
+            const styleTop = top - imgTop;
+            if (oldStyles.top !== styleTop) {
+                style.top = `${styleTop}px`;
+                oldStyles.top = styleTop;
+            }
+
+            const styleLeft = (stripIdx * stripWidth) - texX;
+            if (oldStyles.left !== styleLeft) {
+                style.left = `${styleLeft}px`;
+                oldStyles.left = styleLeft;
+            }
+
+            const styleClip = `rect(${imgTop}, ${texX + stripWidth}, ${imgTop + height}, ${texX})`;
+            if (oldStyles.clip !== styleClip) {
+                style.clip = styleClip;
+                oldStyles.clip = styleClip;
+            }
+
+            const dwx = xWallHit - player.x;
+            const dwy = yWallHit - player.y;
+            const wallDist = (dwx * dwx) + (dwy * dwy);
+            const styleZIndex = -(wallDist * 1000) >> 0;
+            if (styleZIndex !== oldStyles.zIndex) {
+                strip.style.zIndex = styleZIndex;
+                oldStyles.zIndex = styleZIndex;
+            }
         }
 	}
 }

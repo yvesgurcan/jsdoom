@@ -8,3 +8,5 @@ export const twoPI = Math.PI * 2;
 
 export const assetFolder = '/client/assets';
 export const textureFolder = `${assetFolder}/textures`;
+
+export const gameCycleDelay = 1000 / 30;

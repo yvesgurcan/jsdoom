@@ -9,6 +9,7 @@ const initState = {
     speed: 0,
     // how far (in map units) does the player move each step/update
     moveSpeed: 0.18,
+    rotDeg: 0,
     // how much does the player rotate each step/update (in radians)
     rotSpeed: 6 * (Math.PI / 180),
 };

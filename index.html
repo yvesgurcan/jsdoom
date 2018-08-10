@@ -5,38 +5,48 @@
     
     <style>
     
-    div#minimapcontainer {
-    
-    }
-    canvas#minimap {
-     position : absolute;
-    }
-    canvas#minimapobjects {
-     position : absolute;
-    }
-    
-    div#floor {
-     position : absolute;
-     width : 100%;
-     height : 100%;
-     background-color : rgb(128,128,128);
-    }
-    
-    div#ceiling {
-     position : absolute;
-     width : 100%;
-     height : 50%;
-     background-color : rgb(96,96,96);
-    }
-    
-    
-    #screen {
-     position : relative;
-     width : 100%;
-     height : 50%;
-     border : 1px solid black;
-     overflow : hidden;
-    }
+        canvas#minimap {
+            position : absolute;
+        }
+        
+        canvas#minimapobjects {
+            position : absolute;
+        }
+        
+        div#overlay {
+            position : absolute;
+            width : 310px;
+            height : 190px;
+            padding : 5px;
+            color : white;
+            font-family : lucida console, courier new;
+            font-size : 10px;
+            z-index : 100000001;
+        }
+
+        div#floor {
+            position : absolute;
+            width : 100%;
+            height : 100%;
+            background-color : rgb(128,128,128);
+            z-index : -10000000;
+        }
+        
+        div#ceiling {
+            position : absolute;
+            width : 100%;
+            height : 50%;
+            background-color : rgb(80,80,80);
+            z-index : -10000000;
+        }
+        
+        #screen {
+            position : relative;
+            width : 100%;
+            height : 50%;
+            border : 1px solid black;
+            overflow : hidden;
+        }
     
     </style>
     
@@ -53,6 +63,8 @@
         <canvas id="minimap"></canvas>
         <canvas id="minimapobjects"></canvas>
     </div>
+
+    <div id="debug"></div>
 
     <script src="./client/dist/bundle.js"></script>
     
