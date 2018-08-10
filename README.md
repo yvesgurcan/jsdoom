@@ -27,3 +27,8 @@ To build and watch the client only, use `npm run dev:client`.
 The client gets built in `client/dist`. The entry point of the application is an `index.html` file at the root of this project.
 
 It is not necessary to run the server to deploy this application.
+
+## Resources
+
+* <https://lodev.org/cgtutor/raycasting.html>
+* <https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-1/>
