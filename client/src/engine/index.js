@@ -15,23 +15,6 @@ import initEnemies from './initEnemies';
 var $ = function(id) { return document.getElementById(id); };
 var dc = function(tag) { return document.createElement(tag); };
 
-// indexOf for IE. From: https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference:Objects:Array:indexOf
-if (!Array.prototype.indexOf) {
-	Array.prototype.indexOf = function(elt /*, from*/) {
-		var len = this.length;
-		var from = Number(arguments[1]) || 0;
-		from = (from < 0) ? Math.ceil(from) : Math.floor(from);
-		if (from < 0)
-			from += len;
-		for (; from < len; from++) {
-			if (from in this && this[from] === elt)
-				return from;
-		}
-		return -1;
-	};
-}
-
-
 var map = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 	// 0
 	[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 1
