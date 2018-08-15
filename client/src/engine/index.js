@@ -8,6 +8,7 @@ import {
     getState,
     dispatch,
 } from './store';
+import initSprites from './initSprites';
 
 // just a few helper functions
 var $ = function(id) { return document.getElementById(id); };
@@ -180,43 +181,6 @@ function initEnemies() {
 
 var visibleSprites = [];
 var oldVisibleSprites = [];
-
-function initSprites() {
-	const spriteMap = [];
-	for (let y = 0; y < map.length; y++) {
-		spriteMap[y] = [];
-	}
-
-    const screen = $('screen');
-
-    const { 
-        decorationTypes: itemTypes,
-        decorationMapInit: mapItems,
-    } = getState();
-
-	for (let i = 0; i < mapItems.length; i++) {
-		const sprite = { ...mapItems[i] };
-        const itemType = itemTypes[sprite.type];
-        if (!itemType) {
-            console.error(`Could not find decoration type '${sprite.type}' for decoration at {x: ${sprite.x}, y: ${sprite.y}}`);
-            /* eslint-disable-next-line */
-            continue;
-        }
-
-		const img = dc('img');
-		img.src = `${decorationPath}/${itemType.img}${ext}`;
-		img.style.display = 'none';
-		img.style.position = 'absolute';
-
-		sprite.visible = false;
-		sprite.block = itemType.block;
-		sprite.img = img;
-
-		spriteMap[sprite.y][sprite.x] = sprite;
-        screen.appendChild(img);
-	}
-    dispatch({ type: 'PLACE_DECORATIONS', payload: spriteMap });
-}
 
 var lastGameCycleTime = 0;
 var gameCycleDelay = 1000 / 30; // aim for 30 fps for game logic
