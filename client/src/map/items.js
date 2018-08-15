@@ -1,6 +1,4 @@
-export default [];
-
-const items = [
+export default [
 	// lamps in center area
 	{ type: 3, x: 10, y: 7 },
 	{ type: 3, x: 15, y: 7 },

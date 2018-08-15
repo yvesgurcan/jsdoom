@@ -31,4 +31,5 @@ It is not necessary to run the server to deploy this application.
 ## Resources
 
 * <https://lodev.org/cgtutor/raycasting.html>
-* <https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-1/>
+* <https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-1>
+* <https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-2>
