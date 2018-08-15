@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import decorationMap from './decorationMap';
 import decorationTypes from './decorationTypes';
+import decorationMapInit from './decorationMapInit';
+import decorationMap from './decorationMap';
 
 export default combineReducers({
-    decorationMap,
     decorationTypes,
+    decorationMapInit,
+    decorationMap,
 });
