@@ -515,14 +515,13 @@ function castSingleRay(rayAngle, stripIdx) {
 
         var styleHeight;
         const styleSrc = `${wolfPath}/${wallTextures[wallType]}${ext}`;
-        if (oldStyles.src != styleSrc) {
-            console.log(styleSrc)
+        if (oldStyles.src !== styleSrc) {
             strip.src = styleSrc;
             oldStyles.src = styleSrc
         }
         var styleHeight = height;
 
-		if (oldStyles.height != styleHeight) {
+		if (oldStyles.height !== styleHeight) {
 			style.height = styleHeight + 'px';
 			oldStyles.height = styleHeight
 		}
@@ -533,25 +532,25 @@ function castSingleRay(rayAngle, stripIdx) {
 		texX += (wallIsShaded ? width : 0);
 
 		var styleWidth = (width*2)>>0;
-		if (oldStyles.width != styleWidth) {
+		if (oldStyles.width !== styleWidth) {
 			style.width = styleWidth +'px';
 			oldStyles.width = styleWidth;
 		}
 
 		var styleTop = top - imgTop;
-		if (oldStyles.top != styleTop) {
+		if (oldStyles.top !== styleTop) {
 			style.top = styleTop + 'px';
 			oldStyles.top = styleTop;
 		}
 
 		var styleLeft = stripIdx*stripWidth - texX;
-		if (oldStyles.left != styleLeft) {
+		if (oldStyles.left !== styleLeft) {
 			style.left = styleLeft + 'px';
 			oldStyles.left = styleLeft;
 		}
 
 		var styleClip = 'rect(' + imgTop + ', ' + (texX + stripWidth)  + ', ' + (imgTop + height) + ', ' + texX + ')';
-		if (oldStyles.clip != styleClip) {
+		if (oldStyles.clip !== styleClip) {
 			style.clip = styleClip;
 			oldStyles.clip = styleClip;
 		}
@@ -560,7 +559,7 @@ function castSingleRay(rayAngle, stripIdx) {
 		var dwy = yWallHit - player.y;
 		var wallDist = dwx*dwx + dwy*dwy;
 		var styleZIndex = -(wallDist*1000)>>0;
-		if (styleZIndex != oldStyles.zIndex) {
+		if (styleZIndex !== oldStyles.zIndex) {
 			strip.style.zIndex = styleZIndex;
 			oldStyles.zIndex = styleZIndex;
 		}
