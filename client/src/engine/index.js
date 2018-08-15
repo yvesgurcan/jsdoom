@@ -1,3 +1,5 @@
+import { wolfPath } from './constants';
+
 // just a few helper functions
 var $ = function(id) { return document.getElementById(id); };
 var dc = function(tag) { return document.createElement(tag); };
@@ -48,10 +50,10 @@ var map = [
 //	 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
 
 var itemTypes = [
-	{ img : "sprites/tablechairs.png", block : true },	// 0
-	{ img : "sprites/armor.png", block : true },		// 1
-	{ img : "sprites/plantgreen.png", block : true },	// 2
-	{ img : "sprites/lamp.png", block : false }		// 3
+	{ img : "tablechairs.png", block : true },	// 0
+	{ img : "armor.png", block : true },		// 1
+	{ img : "plantgreen.png", block : true },	// 2
+	{ img : "lamp.png", block : false }		// 3
 ];
 
 var mapItems = [
@@ -75,7 +77,7 @@ var mapItems = [
 
 
 var enemyTypes = [
-	{ img : "guard.png", moveSpeed : 0.05, rotSpeed : 3, totalStates : 13 }
+	{ img : `${wolfPath}/guard.png`, moveSpeed : 0.05, rotSpeed : 3, totalStates : 13 }
 ];
 
 var mapEnemies = [
@@ -116,10 +118,10 @@ var twoPI = Math.PI * 2;
 
 var numTextures = 4;
 var wallTextures = [
-	"walls_1.png",
-	"walls_2.png",
-	"walls_3.png",
-	"walls_4.png"
+	"walls-1.png",
+	"walls-2.png",
+	"walls-3.png",
+	"walls-4.png"
 ];
 
 var userAgent = navigator.userAgent.toLowerCase();
@@ -210,7 +212,7 @@ function initSprites() {
 		var sprite = mapItems[i];
 		var itemType = itemTypes[sprite.type];
 		var img = dc("img");
-		img.src = itemType.img;
+		img.src = wolfPath + '/' + itemType.img;
 		img.style.display = "none";
 		img.style.position = "absolute";
 
@@ -714,7 +716,7 @@ function castSingleRay(rayAngle, stripIdx) {
 			imgTop = (height * (wallType-1))>>0;
 			var styleHeight = (height * numTextures)>>0;
 		} else {
-			var styleSrc = wallTextures[wallType-1];
+			var styleSrc = wolfPath + '/' + wallTextures[wallType-1];
 			if (oldStyles.src != styleSrc) {
 				strip.src = styleSrc;
 				oldStyles.src = styleSrc
