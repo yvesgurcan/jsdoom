@@ -1,6 +1,4 @@
-import decorationMap from '../../maps/decorations';
-
-const initState = [...decorationMap];
+const initState = [];
 export default (prevState = initState, action) => {
     const {
         type,
@@ -9,7 +7,7 @@ export default (prevState = initState, action) => {
 
     const nextState = [...prevState];
     switch (type) {
-        case 'INIT_DECORATION_MAP': {
+        case 'PLACE_DECORATIONS': {
             return payload;
         }
         default: {

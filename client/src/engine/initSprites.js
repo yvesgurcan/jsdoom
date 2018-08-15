@@ -11,18 +11,18 @@ import createElement from './createElement';
 
 export default () => {
     const spriteMap = [];
+    const screen = getElementById('screen');
     
     const {
         wallMap: map,
         decorationTypes: itemTypes,
-        decorationMapInit: mapItems,
+        decorationMap: mapItems,
     } = getState();
 
 	for (let y = 0; y < map.length; y++) {
 		spriteMap[y] = [];
 	}
 
-    const screen = getElementById('screen');
 
 	for (let i = 0; i < mapItems.length; i++) {
 		const sprite = { ...mapItems[i] };
