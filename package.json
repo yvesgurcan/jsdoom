@@ -17,6 +17,7 @@
         "webpack-cli": "^3.1.0"
     },
     "dependencies": {
-        "redux": "^4.0.0"
+        "redux": "^4.0.0",
+        "uuid4": "^1.0.0"
     }
 }
