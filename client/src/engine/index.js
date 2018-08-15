@@ -1,4 +1,8 @@
-import { wolfPath } from './constants';
+import {
+    ext,
+    wolfPath,
+    decorationPath,
+} from './constants';
 import {
     store,
     getState,
@@ -96,14 +100,14 @@ var twoPI = Math.PI * 2;
 
 var numTextures = 4;
 var wallTextures = [
-	"walls-1.png",
-	"walls-2.png",
-	"walls-3.png",
-	"walls-4.png"
+	'walls-1.png',
+	'walls-2.png',
+	'walls-3.png',
+	'walls-4.png'
 ];
 
 var userAgent = navigator.userAgent.toLowerCase();
-var isGecko = userAgent.indexOf("gecko") != -1 && userAgent.indexOf("safari") == -1;
+var isGecko = userAgent.indexOf('gecko') != -1 && userAgent.indexOf('safari') == -1;
 
 // enable this to use a single image file containing all wall textures. This performs better in Firefox. Opera likes smaller images.
 var useSingleTexture = isGecko;
@@ -113,7 +117,7 @@ var screenStrips = [];
 var overlay;
 
 var fps = 0;
-var overlayText = "";
+var overlayText = '';
 
 function init() {
 
@@ -137,15 +141,15 @@ function init() {
 var enemies = [];
 
 function initEnemies() {
-	var screen = $("screen");
+	var screen = $('screen');
 
 	for (var i=0;i<mapEnemies.length;i++) {
 		var enemy = mapEnemies[i];
 		var type = enemyTypes[enemy.type];
-		var img = dc("img");
+		var img = dc('img');
 		img.src = type.img;
-		img.style.display = "none";
-		img.style.position = "absolute";
+		img.style.display = 'none';
+		img.style.position = 'absolute';
 
 		enemy.state = 0;
 		enemy.rot = 0;
@@ -161,8 +165,8 @@ function initEnemies() {
 			top : 0,
 			width : 0,
 			height : 0,
-			clip : "",
-			display : "none",
+			clip : '',
+			display : 'none',
 			zIndex : 0
 		};
 
@@ -184,7 +188,7 @@ function initSprites() {
 		spriteMap[y] = [];
 	}
 
-    var screen = $("screen");
+    var screen = $('screen');
     
     const { 
         decorationTypes: itemTypes,
@@ -195,11 +199,16 @@ function initSprites() {
 
 	for (var i = 0; i < mapItems.length; i++) {
 		var sprite = mapItems[i];
-		var itemType = itemTypes[sprite.type];
-		var img = dc("img");
-		img.src = wolfPath + '/' + itemType.img;
-		img.style.display = "none";
-		img.style.position = "absolute";
+        var itemType = itemTypes[sprite.type];
+        if (!itemType) {
+            console.error(`Could not find decoration type '${sprite.type}' for decoration at {x: ${sprite.x}, y: ${sprite.y}}`);
+            continue;
+        }
+
+		var img = dc('img');
+		img.src = `${decorationPath}/${itemType.img}${ext}`;
+		img.style.display = 'none';
+		img.style.position = 'absolute';
 
 		sprite.visible = false;
 		sprite.block = itemType.block;
@@ -314,7 +323,7 @@ function renderSprites() {
 	for (var i=0;i<visibleSprites.length;i++) {
 		var sprite = visibleSprites[i];
 		var img = sprite.img;
-		img.style.display = "block";
+		img.style.display = 'block';
 
 		// translate position to viewer space
 		var dx = sprite.x + 0.5 - player.x;
@@ -334,13 +343,13 @@ function renderSprites() {
 		// x-position on screen
 		var x = Math.tan(spriteAngle) * viewDist;
 
-		img.style.left = (screenWidth/2 + x - size/2) + "px";
+		img.style.left = (screenWidth/2 + x - size/2) + 'px';
 
 		// y is constant since we keep all sprites at the same height and vertical position
-		img.style.top = ((screenHeight-size)/2)+"px";
+		img.style.top = ((screenHeight-size)/2)+'px';
 
-		img.style.width = size + "px";
-		img.style.height =  size + "px";
+		img.style.width = size + 'px';
+		img.style.height =  size + 'px';
 
 		var dbx = sprite.x - player.x;
 		var dby = sprite.y - player.y;
@@ -353,7 +362,7 @@ function renderSprites() {
 		var sprite = oldVisibleSprites[i];
 		if (visibleSprites.indexOf(sprite) < 0) {
 			sprite.visible = false;
-			sprite.img.style.display = "none";
+			sprite.img.style.display = 'none';
 		}
 	}
 
@@ -387,28 +396,28 @@ function renderEnemies() {
 
 			// height is equal to the sprite size
 			if (size != oldStyles.height) {
-				style.height =  size + "px";
+				style.height =  size + 'px';
 				oldStyles.height = size;
 			}
 
 			// width is equal to the sprite size times the total number of states
 			var styleWidth = size * enemy.totalStates;
 			if (styleWidth != oldStyles.width) {
-				style.width = styleWidth + "px";
+				style.width = styleWidth + 'px';
 				oldStyles.width = styleWidth;
 			}
 
 			// top position is halfway down the screen, minus half the sprite height
 			var styleTop = ((screenHeight-size)/2);
 			if (styleTop != oldStyles.top) {
-				style.top = styleTop + "px";
+				style.top = styleTop + 'px';
 				oldStyles.top = styleTop;
 			}
 
 			// place at x position, adjusted for sprite size and the current sprite state
 			var styleLeft = (screenWidth/2 + x - size/2 - size*enemy.state);
 			if (styleLeft != oldStyles.left) {
-				style.left = styleLeft + "px";
+				style.left = styleLeft + 'px';
 				oldStyles.left = styleLeft;
 			}
 
@@ -418,19 +427,19 @@ function renderEnemies() {
 				oldStyles.zIndex = styleZIndex;
 			}
 
-			var styleDisplay = "block";
+			var styleDisplay = 'block';
 			if (styleDisplay != oldStyles.display) {
 				style.display = styleDisplay;
 				oldStyles.display = styleDisplay;
 			}
 
-			var styleClip = "rect(0, " + (size*(enemy.state+1)) + ", " + size + ", " + (size*(enemy.state)) + ")";
+			var styleClip = 'rect(0, ' + (size*(enemy.state+1)) + ', ' + size + ', ' + (size*(enemy.state)) + ')';
 			if (styleClip != oldStyles.clip) {
 				style.clip = styleClip;
 				oldStyles.clip = styleClip;
 			}
 		} else {
-			var styleDisplay = "none";
+			var styleDisplay = 'none';
 			if (styleDisplay != enemy.oldStyles.display) {
 				img.style.display = styleDisplay;
 				enemy.oldStyles.display = styleDisplay;
@@ -440,23 +449,23 @@ function renderEnemies() {
 }
 
 function updateOverlay() {
-	overlay.innerHTML = "FPS: " + fps.toFixed(1) + "<br/>" + overlayText;
-	overlayText = "";
+	overlay.innerHTML = 'FPS: ' + fps.toFixed(1) + '<br/>' + overlayText;
+	overlayText = '';
 }
 
 
 function initScreen() {
 
-	var screen = $("screen");
+	var screen = $('screen');
 
 	for (var i=0;i<screenWidth;i+=stripWidth) {
-		var strip = dc("img");
-		strip.style.position = "absolute";
-		strip.style.height = "0px";
-		strip.style.left = strip.style.top = "0px";
+		var strip = dc('img');
+		strip.style.position = 'absolute';
+		strip.style.height = '0px';
+		strip.style.left = strip.style.top = '0px';
 
 		if (useSingleTexture) {
-			strip.src = (window.opera ? "walls_19color.png" : "walls.png");
+			strip.src = (window.opera ? 'walls_19color.png' : 'walls.png');
 		}
 
 		strip.oldStyles = {
@@ -464,8 +473,8 @@ function initScreen() {
 			top : 0,
 			width : 0,
 			height : 0,
-			clip : "",
-			src : ""
+			clip : '',
+			src : ''
 		};
 
 		screenStrips.push(strip);
@@ -473,9 +482,9 @@ function initScreen() {
 	}
 
 	// overlay div for adding text like fps count, etc.
-	overlay = dc("div");
-	overlay.id = "overlay";
-	overlay.style.display = showOverlay ? "block" : "none";
+	overlay = dc('div');
+	overlay.id = 'overlay';
+	overlay.style.display = showOverlay ? 'block' : 'none';
 	screen.appendChild(overlay);
 
 }
@@ -622,7 +631,7 @@ function castSingleRay(rayAngle, stripIdx) {
 		y = y + dYVer;
 	}
 
-	// now check against horizontal lines. It's basically the same, just "turned around".
+	// now check against horizontal lines. It's basically the same, just 'turned around'.
 	// the only difference here is that once we hit a map block, 
 	// we check if there we also found one in the earlier, vertical run. We'll know that if dist != 0.
 	// If so, we only register this hit if this distance is smaller.
@@ -678,7 +687,7 @@ function castSingleRay(rayAngle, stripIdx) {
 
 		// now calc the position, height and width of the wall strip
 
-		// "real" wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
+		// 'real' wall height in the game world is 1 unit, the distance from the player to the screen is viewDist,
 		// thus the height on the screen is equal to wall_height_real * viewDist / dist
 
 		var height = Math.round(viewDist / dist);
@@ -710,7 +719,7 @@ function castSingleRay(rayAngle, stripIdx) {
 		}
 
 		if (oldStyles.height != styleHeight) {
-			style.height = styleHeight + "px";
+			style.height = styleHeight + 'px';
 			oldStyles.height = styleHeight
 		}
 
@@ -721,23 +730,23 @@ function castSingleRay(rayAngle, stripIdx) {
 
 		var styleWidth = (width*2)>>0;
 		if (oldStyles.width != styleWidth) {
-			style.width = styleWidth +"px";
+			style.width = styleWidth +'px';
 			oldStyles.width = styleWidth;
 		}
 
 		var styleTop = top - imgTop;
 		if (oldStyles.top != styleTop) {
-			style.top = styleTop + "px";
+			style.top = styleTop + 'px';
 			oldStyles.top = styleTop;
 		}
 
 		var styleLeft = stripIdx*stripWidth - texX;
 		if (oldStyles.left != styleLeft) {
-			style.left = styleLeft + "px";
+			style.left = styleLeft + 'px';
 			oldStyles.left = styleLeft;
 		}
 
-		var styleClip = "rect(" + imgTop + ", " + (texX + stripWidth)  + ", " + (imgTop + height) + ", " + texX + ")";
+		var styleClip = 'rect(' + imgTop + ', ' + (texX + stripWidth)  + ', ' + (imgTop + height) + ', ' + texX + ')';
 		if (oldStyles.clip != styleClip) {
 			style.clip = styleClip;
 			oldStyles.clip = styleClip;
@@ -757,10 +766,10 @@ function castSingleRay(rayAngle, stripIdx) {
 }
 
 function drawRay(rayX, rayY) {
-	var miniMapObjects = $("minimapobjects");
-	var objectCtx = miniMapObjects.getContext("2d");
+	var miniMapObjects = $('minimapobjects');
+	var objectCtx = miniMapObjects.getContext('2d');
 
-	objectCtx.strokeStyle = "rgba(0,100,0,0.3)";
+	objectCtx.strokeStyle = 'rgba(0,100,0,0.3)';
 	objectCtx.lineWidth = 0.5;
 	objectCtx.beginPath();
 	objectCtx.moveTo(player.x * miniMapScale, player.y * miniMapScale);
@@ -909,20 +918,20 @@ function isBlocking(x,y) {
 
 function updateMiniMap() {
 
-	var miniMap = $("minimap");
-	var miniMapObjects = $("minimapobjects");
+	var miniMap = $('minimap');
+	var miniMapObjects = $('minimapobjects');
 
-	var objectCtx = miniMapObjects.getContext("2d");
+	var objectCtx = miniMapObjects.getContext('2d');
 	miniMapObjects.width = miniMapObjects.width;
 
-	objectCtx.fillStyle = "red";
+	objectCtx.fillStyle = 'red';
 	objectCtx.fillRect(		// draw a dot at the current player position
 		player.x * miniMapScale - 2, 
 		player.y * miniMapScale - 2,
 		4, 4
 	);
 
-	objectCtx.strokeStyle = "red";
+	objectCtx.strokeStyle = 'red';
 	objectCtx.beginPath();
 	objectCtx.moveTo(player.x * miniMapScale, player.y * miniMapScale);
 	objectCtx.lineTo(
@@ -935,7 +944,7 @@ function updateMiniMap() {
 	for (var i=0;i<enemies.length;i++) {
 		var enemy = enemies[i];
 
-		objectCtx.fillStyle = "blue";
+		objectCtx.fillStyle = 'blue';
 		objectCtx.fillRect(		// draw a dot at the enemy position
 			enemy.x * miniMapScale - 2, 
 			enemy.y * miniMapScale - 2,
@@ -948,23 +957,23 @@ function drawMiniMap() {
 
 	// draw the topdown view minimap
 
-	var miniMap = $("minimap");			// the actual map
-	var miniMapCtr = $("minimapcontainer");		// the container div element
-	var miniMapObjects = $("minimapobjects");	// the canvas used for drawing the objects on the map (player character, etc)
+	var miniMap = $('minimap');			// the actual map
+	var miniMapCtr = $('minimapcontainer');		// the container div element
+	var miniMapObjects = $('minimapobjects');	// the canvas used for drawing the objects on the map (player character, etc)
 
 	miniMap.width = mapWidth * miniMapScale;	// resize the internal canvas dimensions 
 	miniMap.height = mapHeight * miniMapScale;	// of both the map canvas and the object canvas
 	miniMapObjects.width = miniMap.width;
 	miniMapObjects.height = miniMap.height;
 
-	var w = (mapWidth * miniMapScale) + "px" 	// minimap CSS dimensions
-	var h = (mapHeight * miniMapScale) + "px"
+	var w = (mapWidth * miniMapScale) + 'px' 	// minimap CSS dimensions
+	var h = (mapHeight * miniMapScale) + 'px'
 	miniMap.style.width = miniMapObjects.style.width = miniMapCtr.style.width = w;
 	miniMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;
 
-	var ctx = miniMap.getContext("2d");
+	var ctx = miniMap.getContext('2d');
 
-	ctx.fillStyle = "white";
+	ctx.fillStyle = 'white';
 	ctx.fillRect(0,0,miniMap.width,miniMap.height);
 
 	// loop through all blocks on the map
@@ -974,7 +983,7 @@ function drawMiniMap() {
 			var wall = map[y][x];
 
 			if (wall > 0) { // if there is a wall block at this (x,y) ...
-				ctx.fillStyle = "rgb(200,200,200)";
+				ctx.fillStyle = 'rgb(200,200,200)';
 				ctx.fillRect(				// ... then draw a block on the minimap
 					x * miniMapScale,
 					y * miniMapScale,
@@ -983,7 +992,7 @@ function drawMiniMap() {
 			}
 
 			if (spriteMap[y][x]) {
-				ctx.fillStyle = "rgb(100,200,100)";
+				ctx.fillStyle = 'rgb(100,200,100)';
 				ctx.fillRect(
 					x * miniMapScale + miniMapScale*0.25,
 					y * miniMapScale + miniMapScale*0.25,
