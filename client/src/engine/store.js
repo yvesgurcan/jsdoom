@@ -10,11 +10,9 @@ export const dispatch = store.dispatch;
 
 export const getState = (property = null) => {
     const state = store.getState();
-    console.log({ state });
     if (!property) {
         return state;
     }
     const result = state[property];
-    console.log({ result });
     return result;
 };
