@@ -65,12 +65,6 @@ var viewDist = (screenWidth/2) / Math.tan((fov / 2));
 var twoPI = Math.PI * 2;
 
 var numTextures = 4;
-var wallTextures = [
-	'walls-1.png',
-	'walls-2.png',
-	'walls-3.png',
-	'walls-4.png'
-];
 
 var userAgent = navigator.userAgent.toLowerCase();
 var isGecko = userAgent.indexOf('gecko') != -1 && userAgent.indexOf('safari') == -1;
@@ -250,7 +244,6 @@ function renderSprites() {
 			sprite.img.style.display = 'none';
 		}
 	}
-
 }
 
 function renderEnemies() {
@@ -345,7 +338,6 @@ function updateOverlay() {
 
 
 function initScreen() {
-
 	var screen = $('screen');
 
 	for (var i=0;i<screenWidth;i+=stripWidth) {
@@ -376,7 +368,6 @@ function initScreen() {
 	overlay.id = 'overlay';
 	overlay.style.display = showOverlay ? 'block' : 'none';
 	screen.appendChild(overlay);
-
 }
 
 function castRays() {
@@ -447,6 +438,7 @@ function castSingleRay(rayAngle, stripIdx) {
 
     const {
         decorationMapPlacement: spriteMap,
+        wallTypes: wallTextures,
     } = getState();
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
@@ -564,7 +556,7 @@ function castSingleRay(rayAngle, stripIdx) {
 			imgTop = (height * (wallType-1))>>0;
 			var styleHeight = (height * numTextures)>>0;
 		} else {
-			var styleSrc = wolfPath + '/' + wallTextures[wallType-1];
+			const styleSrc = `${wolfPath}/${wallTextures[wallType-1]}${ext}`;
 			if (oldStyles.src != styleSrc) {
 				strip.src = styleSrc;
 				oldStyles.src = styleSrc
@@ -614,9 +606,7 @@ function castSingleRay(rayAngle, stripIdx) {
 			strip.style.zIndex = styleZIndex;
 			oldStyles.zIndex = styleZIndex;
 		}
-
 	}
-
 }
 
 function drawRay(rayX, rayY) {
@@ -679,29 +669,30 @@ function move(entityType, entity, timeDelta, index) {
 }
 
 function checkCollision(fromX, fromY, toX, toY, radius) {
-	var pos = {
-		x : fromX,
-		y : fromY
+	const pos = {
+		x: fromX,
+		y: fromY
 	};
 
-	if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth)
-		return pos;
+	if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth) {
+        return pos;
+    }
 
-	var blockX = Math.floor(toX);
-	var blockY = Math.floor(toY);
+	const blockX = Math.floor(toX);
+	const blockY = Math.floor(toY);
 
 
-	if (isBlocking(blockX,blockY)) {
+	if (isBlocking(blockX, blockY)) {
 		return pos;
 	}
 
 	pos.x = toX;
 	pos.y = toY;
 
-	var blockTop = isBlocking(blockX,blockY-1);
-	var blockBottom = isBlocking(blockX,blockY+1);
-	var blockLeft = isBlocking(blockX-1,blockY);
-	var blockRight = isBlocking(blockX+1,blockY);
+	const blockTop = isBlocking(blockX,blockY-1);
+	const blockBottom = isBlocking(blockX,blockY+1);
+	const blockLeft = isBlocking(blockX-1,blockY);
+	const blockRight = isBlocking(blockX+1,blockY);
 
 	if (blockTop != 0 && toY - blockY < radius) {
 		toY = pos.y = blockY + radius;
