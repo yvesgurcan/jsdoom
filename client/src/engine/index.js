@@ -8,6 +8,7 @@ import {
     getState,
     dispatch,
 } from './store';
+import bindKeys from './bindKeys';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
 
@@ -96,7 +97,6 @@ var fps = 0;
 var overlayText = '';
 
 function init() {
-
 	mapWidth = map[0].length;
 	mapHeight = map.length;
 
@@ -120,6 +120,7 @@ var lastGameCycleTime = 0;
 var gameCycleDelay = 1000 / 30; // aim for 30 fps for game logic
 
 function gameCycle() {
+    const { player } = getState();
 	var now = new Date().getTime();
 
 	// time since last game logic
@@ -144,7 +145,7 @@ function gameCycle() {
 }
 
 function ai(timeDelta) {
-    const { enemyMap: enemies } = getState();
+    const { enemyMap: enemies, player } = getState();
 
 	for (let i = 0; i < enemies.length; i++) {
 		const enemy = enemies[i];
@@ -214,6 +215,7 @@ function clearSprites() {
 }
 
 function renderSprites() {
+    const { player } = getState();
 	for (var i=0;i<visibleSprites.length;i++) {
 		var sprite = visibleSprites[i];
 		var img = sprite.img;
@@ -263,7 +265,7 @@ function renderSprites() {
 }
 
 function renderEnemies() {
-    const { enemyMap: enemies } = getState();
+    const { enemyMap: enemies, player } = getState();
 
 	for (let i = 0; i < enemies.length; i++) {  
         const enemy = { ...enemies[i] };
@@ -388,51 +390,10 @@ function initScreen() {
 
 }
 
-// bind keyboard events to game functions (movement, etc)
-function bindKeys() {
-
-	document.onkeydown = function(e) {
-		e = e || window.event;
-
-		switch (e.keyCode) { // which key was pressed?
-
-			case 38: // up, move player forward, ie. increase speed
-				player.speed = 1;
-				break;
-
-			case 40: // down, move player backward, set negative speed
-				player.speed = -1;
-				break;
-
-			case 37: // left, rotate player left
-				player.dir = -1;
-				break;
-
-			case 39: // right, rotate player right
-				player.dir = 1;
-				break;
-		}
-	}
-
-	document.onkeyup = function(e) {
-		e = e || window.event;
-
-		switch (e.keyCode) {
-			case 38:
-			case 40:
-				player.speed = 0;	// stop the player movement when up/down key is released
-				break;
-			case 37:
-			case 39:
-				player.dir = 0;
-				break;
-		}
-	}
-}
-
-
 function castRays() {
 	var stripIdx = 0;
+
+    const { player } = getState();
 
 	for (var i=0;i<numRays;i++) {
 		// where on the screen does ray go through?
@@ -453,6 +414,7 @@ function castRays() {
 }
 
 function castSingleRay(rayAngle, stripIdx) {
+    const { player } = getState();
 
 	// first make sure the angle is between 0 and 360 degrees
 	rayAngle %= twoPI;
@@ -672,6 +634,8 @@ function drawRay(rayX, rayY) {
 	var miniMapObjects = $('minimapobjects');
 	var objectCtx = miniMapObjects.getContext('2d');
 
+    const { player } = getState();
+
 	objectCtx.strokeStyle = 'rgba(0,100,0,0.3)';
 	objectCtx.lineWidth = 0.5;
 	objectCtx.beginPath();
@@ -715,11 +679,11 @@ function move(entityType, entity, timeDelta, index) {
     
     switch (entityType) {
         case 'enemy': {
-            dispatch({ type: 'MOVE_ENEMY', index, payload: entity });
+            dispatch({ type: 'SET_ENEMY_COORDINATES', index, payload: entity });
             break;
         }
         case 'player': {
-            dispatch({ type: 'MOVE_PLAYER', payload: entity });
+            dispatch({ type: 'SET_PLAYER_COORDINATES', payload: entity });
             break;
         }
     }
@@ -838,6 +802,8 @@ function updateMiniMap() {
 
 	var miniMapObjects = $('minimapobjects');
 
+    const { player } = getState();
+    
 	var objectCtx = miniMapObjects.getContext('2d');
 	miniMapObjects.width = miniMapObjects.width;
 

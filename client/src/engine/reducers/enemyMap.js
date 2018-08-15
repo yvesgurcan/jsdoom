@@ -12,7 +12,7 @@ export default (prevState = initState, action) => {
         case 'INIT_ENEMY_MAP': {
             return payload;
         }
-        case 'MOVE_ENEMY': {
+        case 'SET_ENEMY_COORDINATES': {
             const nextState = prevState.map((enemy, i) => {
                 if (i === index) {
                     return payload;
