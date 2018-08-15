@@ -13,64 +13,30 @@ import initSprites from './initSprites';
 import initEnemies from './initEnemies';
 
 // just a few helper functions
-var $ = function(id) { return document.getElementById(id); };
-var dc = function(tag) { return document.createElement(tag); };
+const $ = (id) => document.getElementById(id);
+const dc = (tag) => document.createElement(tag);
 
-var map = [
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 	// 0
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 1
-	[1, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 2
-	[1, 0, 0, 3, 0, 3, 0, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 3
-	[1, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 4
-	[1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 5
-	[1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1], 	// 6
-	[1, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 7
-	[1, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2], 	// 8
-	[1, 0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 9
-	[1, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1], 	// 10
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 11
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2], 	// 12
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 13
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1], 	// 14
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 15
-	[1, 0, 0, 4, 0, 0, 4, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 4, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1], 	// 16
-	[1, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1], 	// 17
-	[1, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1], 	// 18
-	[1, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1], 	// 19
-	[1, 0, 0, 4, 3, 3, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 3, 3, 4, 0, 0, 0, 0, 0, 0, 0, 1], 	// 20
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 21
-	[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 	// 22
-	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	// 23
-];
-//	 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
+let mapWidth = 0;
+let mapHeight = 0;
 
-var mapWidth = 0;
-var mapHeight = 0;
+const miniMapScale = 8;
 
-var miniMapScale = 8;
+const screenWidth = 320;
+const screenHeight = 200;
 
-var screenWidth = 320;
-var screenHeight = 200;
+const showOverlay = true;
 
-var showOverlay = true;
+const stripWidth = 3;
+const fov = 60 * Math.PI / 180;
 
-var stripWidth = 3;
-var fov = 60 * Math.PI / 180;
+const numRays = Math.ceil(screenWidth / stripWidth);
+const fovHalf = fov / 2;
 
-var numRays = Math.ceil(screenWidth / stripWidth);
-var fovHalf = fov / 2;
+const viewDist = (screenWidth/2) / Math.tan((fov / 2));
 
-var viewDist = (screenWidth/2) / Math.tan((fov / 2));
+const twoPI = Math.PI * 2;
 
-var twoPI = Math.PI * 2;
-
-var numTextures = 4;
-
-var userAgent = navigator.userAgent.toLowerCase();
-var isGecko = userAgent.indexOf('gecko') != -1 && userAgent.indexOf('safari') == -1;
-
-// enable this to use a single image file containing all wall textures. This performs better in Firefox. Opera likes smaller images.
-var useSingleTexture = isGecko;
+const numTextures = 4;
 
 
 var screenStrips = [];
@@ -80,6 +46,7 @@ var fps = 0;
 var overlayText = '';
 
 function init() {
+    const { wallMap: map } = getState();
 	mapWidth = map[0].length;
 	mapHeight = map.length;
 
@@ -346,17 +313,13 @@ function initScreen() {
 		strip.style.height = '0px';
 		strip.style.left = strip.style.top = '0px';
 
-		if (useSingleTexture) {
-			strip.src = (window.opera ? 'walls_19color.png' : 'walls.png');
-		}
-
 		strip.oldStyles = {
-			left : 0,
-			top : 0,
-			width : 0,
-			height : 0,
-			clip : '',
-			src : ''
+			left: 0,
+			top: 0,
+			width: 0,
+			height: 0,
+			clip: '',
+			src: ''
 		};
 
 		screenStrips.push(strip);
@@ -439,6 +402,7 @@ function castSingleRay(rayAngle, stripIdx) {
     const {
         decorationMapPlacement: spriteMap,
         wallTypes: wallTextures,
+        wallMap: map,
     } = getState();
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
@@ -451,14 +415,13 @@ function castSingleRay(rayAngle, stripIdx) {
 		}
 
 		// is this point inside a wall block?
-		if (map[wallY][wallX] > 0) {
-
+		if (map[wallY][wallX] !== 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
 			dist = distX*distX + distY*distY;	// the distance from the player to this point, squared.
 
 			wallType = map[wallY][wallX]; // we'll remember the type of wall we hit for later
-			textureX = y % 1;	// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.
+            textureX = y % 1;	// where exactly are we on the wall? textureX is the x coordinate on the texture that we'll use later when texturing the wall.
 			if (!right) textureX = 1 - textureX; // if we're looking to the left side of the map, the texture should be reversed
 
 			xHit = x;	// save the coordinates of the hit. We only really use these to draw the rays on minimap.
@@ -497,7 +460,7 @@ function castSingleRay(rayAngle, stripIdx) {
 			visibleSprites.push(spriteMap[wallY][wallX]);
 		}
 
-		if (map[wallY][wallX] > 0) {
+		if (map[wallY][wallX] !== 0) {
 			var distX = x - player.x;
 			var distY = y - player.y;
 			var blockDist = distX*distX + distY*distY;
@@ -521,7 +484,7 @@ function castSingleRay(rayAngle, stripIdx) {
 	}
 
 	if (dist) {
-		//drawRay(xHit, yHit);
+		drawRay(xHit, yHit);
 
 		var strip = screenStrips[stripIdx];
 
@@ -550,19 +513,14 @@ function castSingleRay(rayAngle, stripIdx) {
 		var style = strip.style;
 		var oldStyles = strip.oldStyles;
 
-		var styleHeight;
-		if (useSingleTexture) {
-			// then adjust the top placement according to which wall texture we need
-			imgTop = (height * (wallType-1))>>0;
-			var styleHeight = (height * numTextures)>>0;
-		} else {
-			const styleSrc = `${wolfPath}/${wallTextures[wallType-1]}${ext}`;
-			if (oldStyles.src != styleSrc) {
-				strip.src = styleSrc;
-				oldStyles.src = styleSrc
-			}
-			var styleHeight = height;
-		}
+        var styleHeight;
+        const styleSrc = `${wolfPath}/${wallTextures[wallType]}${ext}`;
+        if (oldStyles.src != styleSrc) {
+            console.log(styleSrc)
+            strip.src = styleSrc;
+            oldStyles.src = styleSrc
+        }
+        var styleHeight = height;
 
 		if (oldStyles.height != styleHeight) {
 			style.height = styleHeight + 'px';
@@ -764,6 +722,8 @@ function isBlocking(x,y) {
 	var ix = Math.floor(x);
 	var iy = Math.floor(y);
 
+    const { wallMap: map } = getState();
+
 	// return true if the map block is not 0, ie. if there is a blocking wall.
 	if (map[iy][ix] != 0)
 		return true;
@@ -846,6 +806,7 @@ function drawMiniMap() {
 
     const {
         decorationMapPlacement: spriteMap,
+        wallMap: map,
     } = getState();
 
 	// loop through all blocks on the map
@@ -854,7 +815,7 @@ function drawMiniMap() {
 
 			var wall = map[y][x];
 
-			if (wall > 0) { // if there is a wall block at this (x,y) ...
+			if (wall !== 0) { // if there is a wall block at this (x,y) ...
 				ctx.fillStyle = 'rgb(200,200,200)';
 				ctx.fillRect(				// ... then draw a block on the minimap
 					x * miniMapScale,
