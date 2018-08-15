@@ -1,6 +1,6 @@
 import decorationTypes from '../../types/decorations';
 
-const initState = [...decorationTypes];
+const initState = { ...decorationTypes };
 
 export default (prevState = initState, action) => {
     const {
@@ -8,7 +8,7 @@ export default (prevState = initState, action) => {
         payload,
     } = action;
 
-    const nextState = [...prevState];
+    const nextState = { ...prevState };
     switch (type) {
         case 'SET_DECORATION_TYPES': {
             return payload;
