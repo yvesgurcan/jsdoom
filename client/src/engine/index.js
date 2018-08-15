@@ -178,34 +178,32 @@ function initEnemies() {
 }
 
 
-var spriteMap;
 var visibleSprites = [];
 var oldVisibleSprites = [];
 
 function initSprites() {
-	spriteMap = [];
-	for (var y=0;y<map.length;y++) {
+	const spriteMap = [];
+	for (let y = 0; y < map.length; y++) {
 		spriteMap[y] = [];
 	}
 
-    var screen = $('screen');
-    
+    const screen = $('screen');
+
     const { 
         decorationTypes: itemTypes,
-        decorationMap: mapItems,
+        decorationMapInit: mapItems,
     } = getState();
 
-    console.log(mapItems.length);
-
-	for (var i = 0; i < mapItems.length; i++) {
-		var sprite = mapItems[i];
-        var itemType = itemTypes[sprite.type];
+	for (let i = 0; i < mapItems.length; i++) {
+		const sprite = { ...mapItems[i] };
+        const itemType = itemTypes[sprite.type];
         if (!itemType) {
             console.error(`Could not find decoration type '${sprite.type}' for decoration at {x: ${sprite.x}, y: ${sprite.y}}`);
+            /* eslint-disable-next-line */
             continue;
         }
 
-		var img = dc('img');
+		const img = dc('img');
 		img.src = `${decorationPath}/${itemType.img}${ext}`;
 		img.style.display = 'none';
 		img.style.position = 'absolute';
@@ -215,11 +213,10 @@ function initSprites() {
 		sprite.img = img;
 
 		spriteMap[sprite.y][sprite.x] = sprite;
-		screen.appendChild(img);
+        screen.appendChild(img);
 	}
-
+    dispatch({ type: 'PLACE_DECORATIONS', payload: spriteMap });
 }
-
 
 var lastGameCycleTime = 0;
 var gameCycleDelay = 1000 / 30; // aim for 30 fps for game logic
@@ -595,6 +592,10 @@ function castSingleRay(rayAngle, stripIdx) {
 	var x = right ? Math.ceil(player.x) : Math.floor(player.x);	// starting horizontal position, at one of the edges of the current map block
 	var y = player.y + (x - player.x) * slope;			// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.
 
+    const {
+        decorationMap: spriteMap,
+    } = getState();
+
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
 		var wallX = (x + (right ? 0 : -1))>>0;
 		var wallY = (y)>>0;
@@ -910,6 +911,10 @@ function isBlocking(x,y) {
 	if (map[iy][ix] != 0)
 		return true;
 
+    const {
+        decorationMap: spriteMap,
+    } = getState();
+
 	if (spriteMap[iy][ix] && spriteMap[iy][ix].block)
 		return true;
 
@@ -975,6 +980,10 @@ function drawMiniMap() {
 
 	ctx.fillStyle = 'white';
 	ctx.fillRect(0,0,miniMap.width,miniMap.height);
+
+    const {
+        decorationMap: spriteMap,
+    } = getState();
 
 	// loop through all blocks on the map
 	for (var y=0;y<mapHeight;y++) {
