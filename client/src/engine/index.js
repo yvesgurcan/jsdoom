@@ -1,4 +1,9 @@
 import { wolfPath } from './constants';
+import {
+    store,
+    getState,
+    dispatch,
+} from './store';
 
 // just a few helper functions
 var $ = function(id) { return document.getElementById(id); };
@@ -48,33 +53,6 @@ var map = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	// 23
 ];
 //	 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
-
-var itemTypes = [
-	{ img : "tablechairs.png", block : true },	// 0
-	{ img : "armor.png", block : true },		// 1
-	{ img : "plantgreen.png", block : true },	// 2
-	{ img : "lamp.png", block : false }		// 3
-];
-
-var mapItems = [
-
-	// lamps in center area
-	{type:3, x:10, y:7},
-	{type:3, x:15, y:7},
-
-	// lamps in bottom corridor
-	{type:3, x:5, y:22},
-	{type:3, x:12, y:22},
-	{type:3, x:19, y:22},
-
-	// tables in long bottom room
-	{type:0, x:10, y:18},
-	{type:0, x:15, y:18},
-	// lamps in long bottom room
-	{type:3, x:8, y:18},
-	{type:3, x:17, y:18}
-];
-
 
 var enemyTypes = [
 	{ img : `${wolfPath}/guard.png`, moveSpeed : 0.05, rotSpeed : 3, totalStates : 13 }
@@ -206,9 +184,16 @@ function initSprites() {
 		spriteMap[y] = [];
 	}
 
-	var screen = $("screen");
+    var screen = $("screen");
+    
+    const { 
+        decorationTypes: itemTypes,
+        decorationMap: mapItems,
+    } = getState();
 
-	for (var i=0;i<mapItems.length;i++) {
+    console.log(mapItems.length);
+
+	for (var i = 0; i < mapItems.length; i++) {
 		var sprite = mapItems[i];
 		var itemType = itemTypes[sprite.type];
 		var img = dc("img");
