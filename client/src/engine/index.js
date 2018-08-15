@@ -9,6 +9,7 @@ import {
     dispatch,
 } from './store';
 import initSprites from './initSprites';
+import initEnemies from './initEnemies';
 
 // just a few helper functions
 var $ = function(id) { return document.getElementById(id); };
@@ -58,15 +59,6 @@ var map = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	// 23
 ];
 //	 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
-
-var enemyTypes = [
-	{ img : `${wolfPath}/guard.png`, moveSpeed : 0.05, rotSpeed : 3, totalStates : 13 }
-];
-
-var mapEnemies = [
-	{type : 0, x : 17.5, y : 4.5},
-	{type : 0, x : 25.5, y : 16.5}
-];
 
 var player = {
 	x : 10.5,		// current x, y position
@@ -130,7 +122,6 @@ function init() {
 	initScreen();
 
 	initSprites();
-
 	initEnemies();
 
 	drawMiniMap();
@@ -138,46 +129,6 @@ function init() {
 	gameCycle();
 	renderCycle();
 }
-
-var enemies = [];
-
-function initEnemies() {
-	var screen = $('screen');
-
-	for (var i=0;i<mapEnemies.length;i++) {
-		var enemy = mapEnemies[i];
-		var type = enemyTypes[enemy.type];
-		var img = dc('img');
-		img.src = type.img;
-		img.style.display = 'none';
-		img.style.position = 'absolute';
-
-		enemy.state = 0;
-		enemy.rot = 0;
-		enemy.rotDeg = 0;
-		enemy.dir = 0;
-		enemy.speed = 0;
-		enemy.moveSpeed = type.moveSpeed;
-		enemy.rotSpeed = type.rotSpeed;
-		enemy.totalStates = type.totalStates;
-
-		enemy.oldStyles = {
-			left : 0,
-			top : 0,
-			width : 0,
-			height : 0,
-			clip : '',
-			display : 'none',
-			zIndex : 0
-		};
-
-		enemy.img = img;
-		enemies.push(enemy);
-
-		screen.appendChild(img);
-	}
-}
-
 
 var visibleSprites = [];
 var oldVisibleSprites = [];
@@ -191,7 +142,7 @@ function gameCycle() {
 	// time since last game logic
 	var timeDelta = now - lastGameCycleTime;
 
-	move(player, timeDelta);
+	move('player', player, timeDelta);
 
 	ai(timeDelta);
 
@@ -210,38 +161,38 @@ function gameCycle() {
 }
 
 function ai(timeDelta) {
-	for (var i=0;i<enemies.length;i++) {
-		var enemy = enemies[i];
+    const { enemyMap: enemies } = getState();
 
-		var dx = player.x - enemy.x;
-		var dy = player.y - enemy.y;
+	for (let i = 0; i < enemies.length; i++) {
+		const enemy = enemies[i];
 
-		var dist = Math.sqrt(dx*dx + dy*dy);
+		const dx = player.x - enemy.x;
+		const dy = player.y - enemy.y;
+
+		const dist = Math.sqrt((dx * dx) + (dy * dy));
 		if (dist > 4) {
-			var angle = Math.atan2(dy, dx);
+			const angle = Math.atan2(dy, dx);
 
-			enemy.rotDeg = angle * 180 / Math.PI;
+			enemy.rotDeg = (angle * 180) / Math.PI;
 			enemy.rot = angle;
 			enemy.speed = 1;
 
-			var walkCycleTime = 1000;
-			var numWalkSprites = 4;
+			const walkCycleTime = 1000;
+			const numWalkSprites = 4;
 
 			enemy.state = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
-
 		} else {
 			enemy.state = 0;
 			enemy.speed = 0;
 		}
 
-		move(enemies[i], timeDelta);
+		move('enemy', enemies[i], timeDelta, i);
 	}
 }
 
 var lastRenderCycleTime = 0;
 
 function renderCycle() {
-
 	updateMiniMap();
 
 	clearSprites();
@@ -280,7 +231,6 @@ function clearSprites() {
 }
 
 function renderSprites() {
-
 	for (var i=0;i<visibleSprites.length;i++) {
 		var sprite = visibleSprites[i];
 		var img = sprite.img;
@@ -328,80 +278,85 @@ function renderSprites() {
 	}
 
 }
+
 function renderEnemies() {
+    const { enemyMap: enemies } = getState();
 
-	for (var i=0;i<enemies.length;i++) {
-		var enemy = enemies[i];
-		var img = enemy.img;
+	for (let i = 0; i < enemies.length; i++) {  
+        const enemy = { ...enemies[i] };
+		const img = enemy.img;
 
-		var dx = enemy.x - player.x;
-		var dy = enemy.y - player.y;
+		const dx = enemy.x - player.x;
+		const dy = enemy.y - player.y;
 
-		var angle = Math.atan2(dy, dx) - player.rot;
+		let angle = Math.atan2(dy, dx) - player.rot;
 
-		if (angle < -Math.PI) angle += 2*Math.PI;
-		if (angle >= Math.PI) angle -= 2*Math.PI;
+		if (angle < -Math.PI) angle += 2 * Math.PI;
+		if (angle >= Math.PI) angle -= 2 * Math.PI;
 
 		// is enemy in front of player? Maybe use the FOV value instead.
-		if (angle > -Math.PI*0.5 && angle < Math.PI*0.5) {
-			var distSquared = dx*dx + dy*dy;
-			var dist = Math.sqrt(distSquared);
-			var size = viewDist / (Math.cos(angle) * dist);
+		if (angle > -Math.PI * 0.5 && angle < Math.PI * 0.5) {
+			const distSquared = (dx * dx) + (dy * dy);
+			const dist = Math.sqrt(distSquared);
+			const size = viewDist / (Math.cos(angle) * dist);
 
-			if (size <= 0) continue;
+			if (size <= 0) {
+                /* eslint-disable-next-line */
+                continue;
+            }
 
-			var x = Math.tan(angle) * viewDist;
+			const x = Math.tan(angle) * viewDist;
 
-			var style = img.style;
-			var oldStyles = enemy.oldStyles;
+			const style = img.style;
+			const oldStyles = enemy.oldStyles;
 
 			// height is equal to the sprite size
-			if (size != oldStyles.height) {
+			if (size !== oldStyles.height) {
 				style.height =  size + 'px';
 				oldStyles.height = size;
 			}
 
 			// width is equal to the sprite size times the total number of states
-			var styleWidth = size * enemy.totalStates;
-			if (styleWidth != oldStyles.width) {
+			const styleWidth = size * enemy.totalStates;
+			if (styleWidth !== oldStyles.width) {
 				style.width = styleWidth + 'px';
 				oldStyles.width = styleWidth;
 			}
 
 			// top position is halfway down the screen, minus half the sprite height
-			var styleTop = ((screenHeight-size)/2);
-			if (styleTop != oldStyles.top) {
+			const styleTop = ((screenHeight-size)/2);
+			if (styleTop !== oldStyles.top) {
 				style.top = styleTop + 'px';
 				oldStyles.top = styleTop;
 			}
 
 			// place at x position, adjusted for sprite size and the current sprite state
-			var styleLeft = (screenWidth/2 + x - size/2 - size*enemy.state);
-			if (styleLeft != oldStyles.left) {
+			const styleLeft = (screenWidth/2 + x - size/2 - size*enemy.state);
+			if (styleLeft !== oldStyles.left) {
 				style.left = styleLeft + 'px';
 				oldStyles.left = styleLeft;
 			}
 
-			var styleZIndex = -(distSquared*1000)>>0;
-			if (styleZIndex != oldStyles.zIndex) {
+			const styleZIndex = -(distSquared*1000)>>0;
+			if (styleZIndex !== oldStyles.zIndex) {
 				style.zIndex = styleZIndex;
 				oldStyles.zIndex = styleZIndex;
 			}
 
-			var styleDisplay = 'block';
-			if (styleDisplay != oldStyles.display) {
+			const styleDisplay = 'block';
+			if (styleDisplay !== oldStyles.display) {
 				style.display = styleDisplay;
 				oldStyles.display = styleDisplay;
 			}
 
-			var styleClip = 'rect(0, ' + (size*(enemy.state+1)) + ', ' + size + ', ' + (size*(enemy.state)) + ')';
-			if (styleClip != oldStyles.clip) {
+			const styleClip = 'rect(0, ' + (size*(enemy.state+1)) + ', ' + size + ', ' + (size*(enemy.state)) + ')';
+			if (styleClip !== oldStyles.clip) {
 				style.clip = styleClip;
 				oldStyles.clip = styleClip;
 			}
 		} else {
-			var styleDisplay = 'none';
-			if (styleDisplay != enemy.oldStyles.display) {
+			const styleDisplay = 'none';
+			if (styleDisplay !== enemy.oldStyles.display) {
 				img.style.display = styleDisplay;
 				enemy.oldStyles.display = styleDisplay;
 			}
@@ -557,7 +512,7 @@ function castSingleRay(rayAngle, stripIdx) {
 	var y = player.y + (x - player.x) * slope;			// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.
 
     const {
-        decorationMap: spriteMap,
+        decorationMapPlacement: spriteMap,
     } = getState();
 
 	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
@@ -746,7 +701,7 @@ function drawRay(rayX, rayY) {
 	objectCtx.stroke();
 }
 
-function move(entity, timeDelta) {
+function move(entityType, entity, timeDelta, index) {
 	// time timeDelta has passed since we moved last time. We should have moved after time gameCycleDelay, 
 	// so calculate how much we should multiply our movement to ensure game speed is constant
 
@@ -773,7 +728,18 @@ function move(entity, timeDelta) {
 	var pos = checkCollision(entity.x, entity.y, newX, newY, 0.35);
 
 	entity.x = pos.x; // set new position
-	entity.y = pos.y;
+    entity.y = pos.y;
+    
+    switch (entityType) {
+        case 'enemy': {
+            dispatch({ type: 'MOVE_ENEMY', index, payload: entity });
+            break;
+        }
+        case 'player': {
+            dispatch({ type: 'MOVE_PLAYER', payload: entity });
+            break;
+        }
+    }
 }
 
 function checkCollision(fromX, fromY, toX, toY, radius) {
@@ -876,7 +842,7 @@ function isBlocking(x,y) {
 		return true;
 
     const {
-        decorationMap: spriteMap,
+        decorationMapPlacement: spriteMap,
     } = getState();
 
 	if (spriteMap[iy][ix] && spriteMap[iy][ix].block)
@@ -887,7 +853,6 @@ function isBlocking(x,y) {
 
 function updateMiniMap() {
 
-	var miniMap = $('minimap');
 	var miniMapObjects = $('minimapobjects');
 
 	var objectCtx = miniMapObjects.getContext('2d');
@@ -910,14 +875,19 @@ function updateMiniMap() {
 	objectCtx.closePath();
 	objectCtx.stroke();
 
-	for (var i=0;i<enemies.length;i++) {
-		var enemy = enemies[i];
 
-		objectCtx.fillStyle = 'blue';
-		objectCtx.fillRect(		// draw a dot at the enemy position
+    const { enemyMap: enemies } = getState();
+
+	for (let i = 0; i < enemies.length; i++) {
+		const enemy = enemies[i];
+
+        objectCtx.fillStyle = 'blue';
+        // draw a dot at the enemy position
+		objectCtx.fillRect(		
 			enemy.x * miniMapScale - 2, 
 			enemy.y * miniMapScale - 2,
-			4, 4
+            4,
+            4,
 		);
 	}
 }
@@ -946,7 +916,7 @@ function drawMiniMap() {
 	ctx.fillRect(0,0,miniMap.width,miniMap.height);
 
     const {
-        decorationMap: spriteMap,
+        decorationMapPlacement: spriteMap,
     } = getState();
 
 	// loop through all blocks on the map
