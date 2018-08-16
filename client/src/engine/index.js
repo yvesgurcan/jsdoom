@@ -27,12 +27,12 @@ const screenHeight = 200;
 const showOverlay = true;
 
 const stripWidth = 3;
-const fov = 60 * Math.PI / 180;
+const fov = (60 * Math.PI) / 180;
 
 const numRays = Math.ceil(screenWidth / stripWidth);
 const fovHalf = fov / 2;
 
-const viewDist = (screenWidth/2) / Math.tan((fov / 2));
+const viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 
 const twoPI = Math.PI * 2;
 
@@ -80,11 +80,11 @@ function renderCycle() {
 	renderEnemies();
 
 	// time since last rendering
-	var now = new Date().getTime();
-	var timeDelta = now - lastRenderCycleTime;
-	var cycleDelay = 1000 / 30;
+	const now = new Date().getTime();
+	const timeDelta = now - lastRenderCycleTime;
+	let cycleDelay = 1000 / 30;
 	if (timeDelta > cycleDelay) {
-		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay))
+		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
 	}
 	lastRenderCycleTime = now;
 	setTimeout(renderCycle, cycleDelay);
@@ -98,8 +98,8 @@ function clearSprites() {
 	// clear the visible sprites array but keep a copy in oldVisibleSprites for later.
 	// also mark all the sprites as not visible so they can be added to visibleSprites again during raycasting.
 	oldVisibleSprites = [];
-	for (var i=0;i<visibleSprites.length;i++) {
-		var sprite = visibleSprites[i];
+	for (let i = 0; i < visibleSprites.length; i++) {
+		const sprite = visibleSprites[i];
 		oldVisibleSprites[i] = sprite;
 		sprite.visible = false;
 	}
@@ -108,46 +108,46 @@ function clearSprites() {
 
 function renderSprites() {
     const { player } = getState();
-	for (var i=0;i<visibleSprites.length;i++) {
-		var sprite = visibleSprites[i];
-		var img = sprite.img;
+	for (let i = 0; i < visibleSprites.length; i++) {
+		const sprite = visibleSprites[i];
+		const img = sprite.img;
 		img.style.display = 'block';
 
 		// translate position to viewer space
-		var dx = sprite.x + 0.5 - player.x;
-		var dy = sprite.y + 0.5 - player.y;
+		const dx = sprite.x + 0.5 - player.x;
+		const dy = sprite.y + 0.5 - player.y;
 
 		// distance to sprite
-		var dist = Math.sqrt(dx*dx + dy*dy);
+		const dist = Math.sqrt(dx*dx + dy*dy);
 
 		// sprite angle relative to viewing angle
-		var spriteAngle = Math.atan2(dy, dx) - player.rot;
+		const spriteAngle = Math.atan2(dy, dx) - player.rot;
 
 		// size of the sprite
-		var size = viewDist / (Math.cos(spriteAngle) * dist);
+		const size = viewDist / (Math.cos(spriteAngle) * dist);
 
 		if (size <= 0) continue;
 
 		// x-position on screen
-		var x = Math.tan(spriteAngle) * viewDist;
+		const x = Math.tan(spriteAngle) * viewDist;
 
-		img.style.left = (screenWidth/2 + x - size/2) + 'px';
+		img.style.left = (screenWidth / 2 + x - size / 2) + 'px';
 
 		// y is constant since we keep all sprites at the same height and vertical position
-		img.style.top = ((screenHeight-size)/2)+'px';
+		img.style.top = ((screenHeight - size) / 2) + 'px';
 
 		img.style.width = size + 'px';
 		img.style.height =  size + 'px';
 
-		var dbx = sprite.x - player.x;
-		var dby = sprite.y - player.y;
-		var blockDist = dbx*dbx + dby*dby;
-		img.style.zIndex = -Math.floor(blockDist*1000);
+		const dbx = sprite.x - player.x;
+		const dby = sprite.y - player.y;
+		const blockDist = dbx * dbx + dby * dby;
+		img.style.zIndex = -Math.floor(blockDist * 1000);
 	}
 
 	// hide the sprites that are no longer visible
-	for (var i=0;i<oldVisibleSprites.length;i++) {
-		var sprite = oldVisibleSprites[i];
+	for (let i = 0; i < oldVisibleSprites.length; i++) {
+		const sprite = oldVisibleSprites[i];
 		if (visibleSprites.indexOf(sprite) < 0) {
 			sprite.visible = false;
 			sprite.img.style.display = 'none';
@@ -200,7 +200,7 @@ function renderEnemies() {
 			}
 
 			// top position is halfway down the screen, minus half the sprite height
-			const styleTop = ((screenHeight-size)/2);
+			const styleTop = ((screenHeight-size) / 2);
 			if (styleTop !== oldStyles.top) {
 				style.top = styleTop + 'px';
 				oldStyles.top = styleTop;
@@ -247,10 +247,10 @@ function updateOverlay() {
 
 
 function initScreen() {
-	var screen = $('screen');
+	const screen = $('screen');
 
-	for (var i=0;i<screenWidth;i+=stripWidth) {
-		var strip = dc('img');
+	for (let i = 0; i < screenWidth; i += stripWidth) {
+		const strip = dc('img');
 		strip.style.position = 'absolute';
 		strip.style.height = '0px';
 		strip.style.left = strip.style.top = '0px';
@@ -276,20 +276,20 @@ function initScreen() {
 }
 
 function castRays() {
-	var stripIdx = 0;
+	let stripIdx = 0;
 
     const { player } = getState();
 
-	for (var i=0;i<numRays;i++) {
+	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?
-		var rayScreenPos = (-numRays/2 + i) * stripWidth;
+		const rayScreenPos = (-numRays / 2 + i) * stripWidth;
 
 		// the distance from the viewer to the point on the screen, simply Pythagoras.
-		var rayViewDist = Math.sqrt(rayScreenPos*rayScreenPos + viewDist*viewDist);
+		const rayViewDist = Math.sqrt(rayScreenPos * rayScreenPos + viewDist * viewDist);
 
 		// the angle of the ray, relative to the viewing direction.
 		// right triangle: a = sin(A) * c
-		var rayAngle = Math.asin(rayScreenPos / rayViewDist);
+		const rayAngle = Math.asin(rayScreenPos / rayViewDist);
 
 		castSingleRay(
 			player.rot + rayAngle, 	// add the players viewing direction to get the angle in world space
