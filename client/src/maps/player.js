@@ -1,5 +1,5 @@
 export default {
-	x: 27,
+	x: 29,
 	y: 7,
 	dir: 0,		// the direction that the player is turning, either -1 for left or 1 for right.
 	rotDeg: 90,
