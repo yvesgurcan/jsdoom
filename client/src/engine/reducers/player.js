@@ -5,7 +5,7 @@ const initState = {
     y: 1,
     rotDeg: 0,
     ...player,
-	moveSpeed: 0.4,
+	moveSpeed: 0.3,
     speed: 0,
     rotSpeed: 4,
     dir: 0,
