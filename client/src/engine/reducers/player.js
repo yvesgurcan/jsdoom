@@ -1,6 +1,15 @@
 import player from '../../maps/player';
 
-const initState = { ...player };
+const initState = {
+    x: 1,
+    y: 1,
+    rotDeg: 0,
+    ...player,
+	moveSpeed: 0.4,
+    speed: 0,
+    rotSpeed: 4,
+    dir: 0,
+};
 
 export default (prevState = initState, action) => {
     const {

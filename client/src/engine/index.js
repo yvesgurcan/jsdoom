@@ -7,6 +7,7 @@ import {
     dispatch,
 } from './store';
 import bindKeys from './bindKeys';
+import initPlayer from './initPlayer';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
 import ai from './ai';
@@ -53,7 +54,7 @@ function init() {
 	bindKeys();
 
 	initScreen();
-
+    initPlayer();
 	initSprites();
 	initEnemies();
 
