@@ -15,7 +15,7 @@ export default (prevState = initState, action) => {
         case 'SET_ENEMY_COORDINATES': {
             const nextState = prevState.map((enemy, i) => {
                 if (i === index) {
-                    return payload;
+                    return { ...payload };
                 }
                 return enemy;
             });

@@ -14,7 +14,7 @@ export default (prevState = initState, action) => {
             return payload;
         }
         case 'SET_PLAYER_COORDINATES': {
-            return payload;
+            return { ...payload };
         }
         case 'MOVE_PLAYER_FORWARD': {
             return {
