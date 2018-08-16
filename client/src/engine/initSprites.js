@@ -23,7 +23,6 @@ export default () => {
 		spriteMap[y] = [];
 	}
 
-
 	for (let i = 0; i < mapItems.length; i++) {
 		const sprite = { ...mapItems[i] };
         const itemType = itemTypes[sprite.type];
