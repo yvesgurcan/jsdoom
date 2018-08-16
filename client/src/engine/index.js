@@ -1,16 +1,16 @@
 import {
     ext,
     wolfPath,
-    decorationPath,
 } from './constants';
 import {
-    store,
     getState,
     dispatch,
 } from './store';
 import bindKeys from './bindKeys';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
+import ai from './ai';
+import move from './move';
 
 // just a few helper functions
 const $ = (id) => document.getElementById(id);
@@ -71,57 +71,27 @@ var gameCycleDelay = 1000 / 30; // aim for 30 fps for game logic
 
 function gameCycle() {
     const { player } = getState();
-	var now = new Date().getTime();
+	const now = new Date().getTime();
 
 	// time since last game logic
-	var timeDelta = now - lastGameCycleTime;
+	const timeDelta = now - lastGameCycleTime;
 
 	move('player', player, timeDelta);
 
 	ai(timeDelta);
 
-	var cycleDelay = gameCycleDelay; 
+	let cycleDelay = gameCycleDelay; 
 
 	// the timer will likely not run that fast due to the rendering cycle hogging the cpu
 	// so figure out how much time was lost since last cycle
 
 	if (timeDelta > cycleDelay) {
-		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay))
+		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
 	}
 
 	setTimeout(gameCycle, cycleDelay);
 
 	lastGameCycleTime = now;
-}
-
-function ai(timeDelta) {
-    const { enemyMap: enemies, player } = getState();
-
-	for (let i = 0; i < enemies.length; i++) {
-		const enemy = enemies[i];
-
-		const dx = player.x - enemy.x;
-		const dy = player.y - enemy.y;
-
-		const dist = Math.sqrt((dx * dx) + (dy * dy));
-		if (dist > 4) {
-			const angle = Math.atan2(dy, dx);
-
-			enemy.rotDeg = (angle * 180) / Math.PI;
-			enemy.rot = angle;
-			enemy.speed = 1;
-
-			const walkCycleTime = 1000;
-			const numWalkSprites = 4;
-
-			enemy.state = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
-		} else {
-			enemy.state = 0;
-			enemy.speed = 0;
-		}
-
-		move('enemy', enemies[i], timeDelta, i);
-	}
 }
 
 var lastRenderCycleTime = 0;
@@ -591,161 +561,7 @@ function drawRay(rayX, rayY) {
 	objectCtx.stroke();
 }
 
-function move(entityType, entity, timeDelta, index) {
-	// time timeDelta has passed since we moved last time. We should have moved after time gameCycleDelay, 
-	// so calculate how much we should multiply our movement to ensure game speed is constant
-
-	var mul = timeDelta / gameCycleDelay;
-
-	var moveStep = mul * entity.speed * entity.moveSpeed;	// entity will move this far along the current direction vector
-
-	entity.rotDeg += mul * entity.dir * entity.rotSpeed; // add rotation if entity is rotating (entity.dir != 0)
-	entity.rotDeg %= 360;
-
-	if (entity.rotDeg < -180) entity.rotDeg += 360;
-	if (entity.rotDeg >= 180) entity.rotDeg -= 360;
-
-	var snap = (entity.rotDeg+360) % 90
-	if (snap < 2 || snap > 88) {
-		entity.rotDeg = Math.round(entity.rotDeg / 90) * 90;
-	}
-
-	entity.rot = entity.rotDeg * Math.PI / 180;
-
-	var newX = entity.x + Math.cos(entity.rot) * moveStep;	// calculate new entity position with simple trigonometry
-	var newY = entity.y + Math.sin(entity.rot) * moveStep;
-
-	var pos = checkCollision(entity.x, entity.y, newX, newY, 0.35);
-
-	entity.x = pos.x; // set new position
-    entity.y = pos.y;
-    
-    switch (entityType) {
-        case 'enemy': {
-            dispatch({ type: 'SET_ENEMY_COORDINATES', index, payload: entity });
-            break;
-        }
-        case 'player': {
-            dispatch({ type: 'SET_PLAYER_COORDINATES', payload: entity });
-            break;
-        }
-    }
-}
-
-function checkCollision(fromX, fromY, toX, toY, radius) {
-	const pos = {
-		x: fromX,
-		y: fromY
-	};
-
-	if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth) {
-        return pos;
-    }
-
-	const blockX = Math.floor(toX);
-	const blockY = Math.floor(toY);
-
-
-	if (isBlocking(blockX, blockY)) {
-		return pos;
-	}
-
-	pos.x = toX;
-	pos.y = toY;
-
-	const blockTop = isBlocking(blockX,blockY-1);
-	const blockBottom = isBlocking(blockX,blockY+1);
-	const blockLeft = isBlocking(blockX-1,blockY);
-	const blockRight = isBlocking(blockX+1,blockY);
-
-	if (blockTop != 0 && toY - blockY < radius) {
-		toY = pos.y = blockY + radius;
-	}
-	if (blockBottom != 0 && blockY+1 - toY < radius) {
-		toY = pos.y = blockY + 1 - radius;
-	}
-	if (blockLeft != 0 && toX - blockX < radius) {
-		toX = pos.x = blockX + radius;
-	}
-	if (blockRight != 0 && blockX+1 - toX < radius) {
-		toX = pos.x = blockX + 1 - radius;
-	}
-
-	// is tile to the top-left a wall
-	if (isBlocking(blockX-1,blockY-1) != 0 && !(blockTop != 0 && blockLeft != 0)) {
-		var dx = toX - blockX;
-		var dy = toY - blockY;
-		if (dx*dx+dy*dy < radius*radius) {
-			if (dx*dx > dy*dy)
-				toX = pos.x = blockX + radius;
-			else
-				toY = pos.y = blockY + radius;
-		}
-	}
-	// is tile to the top-right a wall
-	if (isBlocking(blockX+1,blockY-1) != 0 && !(blockTop != 0 && blockRight != 0)) {
-		var dx = toX - (blockX+1);
-		var dy = toY - blockY;
-		if (dx*dx+dy*dy < radius*radius) {
-			if (dx*dx > dy*dy)
-				toX = pos.x = blockX + 1 - radius;
-			else
-				toY = pos.y = blockY + radius;
-		}
-	}
-	// is tile to the bottom-left a wall
-	if (isBlocking(blockX-1,blockY+1) != 0 && !(blockBottom != 0 && blockBottom != 0)) {
-		var dx = toX - blockX;
-		var dy = toY - (blockY+1);
-		if (dx*dx+dy*dy < radius*radius) {
-			if (dx*dx > dy*dy)
-				toX = pos.x = blockX + radius;
-			else
-				toY = pos.y = blockY + 1 - radius;
-		}
-	}
-	// is tile to the bottom-right a wall
-	if (isBlocking(blockX+1,blockY+1) != 0 && !(blockBottom != 0 && blockRight != 0)) {
-		var dx = toX - (blockX+1);
-		var dy = toY - (blockY+1);
-		if (dx*dx+dy*dy < radius*radius) {
-			if (dx*dx > dy*dy)
-				toX = pos.x = blockX + 1 - radius;
-			else
-				toY = pos.y = blockY + 1 - radius;
-		}
-	}
-
-	return pos;
-}
-
-function isBlocking(x,y) {
-
-	// first make sure that we cannot move outside the boundaries of the level
-	if (y < 0 || y >= mapHeight || x < 0 || x >= mapWidth)
-		return true;
-
-	var ix = Math.floor(x);
-	var iy = Math.floor(y);
-
-    const { wallMap: map } = getState();
-
-	// return true if the map block is not 0, ie. if there is a blocking wall.
-	if (map[iy][ix] != 0)
-		return true;
-
-    const {
-        decorationMapPlacement: spriteMap,
-    } = getState();
-
-	if (spriteMap[iy][ix] && spriteMap[iy][ix].block)
-		return true;
-
-	return false;
-}
-
 function updateMiniMap() {
-
 	var miniMapObjects = $('minimapobjects');
 
     const { player } = getState();
