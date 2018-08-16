@@ -514,7 +514,14 @@ function castSingleRay(rayAngle, stripIdx) {
 		var oldStyles = strip.oldStyles;
 
         var styleHeight;
-        const styleSrc = `${wolfPath}/${wallTextures[wallType]}${ext}`;
+
+        const wallTexture = wallTextures[wallType];
+        if (!wallTexture) {
+            console.error(`Could not find texture '${wallType}' for wall at {x: ${wallX}, y: ${wallY}}`);
+            return;
+        }
+
+        const styleSrc = `${wolfPath}/${wallTexture}${ext}`;
         if (oldStyles.src !== styleSrc) {
             strip.src = styleSrc;
             oldStyles.src = styleSrc
