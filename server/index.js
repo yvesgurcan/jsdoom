@@ -40,7 +40,7 @@ const server = createServer((req, res) => {
 
 
 
-module.exports = (port = '3000', hostname = 'localhost') => {
+module.exports = (port = 3001, hostname = 'localhost') => {
     server.listen(port, hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`);
     });
