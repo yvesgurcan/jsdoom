@@ -10,8 +10,7 @@ import bindKeys from './bindKeys';
 import initPlayer from './initPlayer';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
-import ai from './ai';
-import move from './move';
+import gameCycle from './gameCycle';
 
 // just a few helper functions
 const $ = (id) => document.getElementById(id);
@@ -66,34 +65,6 @@ function init() {
 
 var visibleSprites = [];
 var oldVisibleSprites = [];
-
-var lastGameCycleTime = 0;
-var gameCycleDelay = 1000 / 30; // aim for 30 fps for game logic
-
-function gameCycle() {
-    const { player } = getState();
-	const now = new Date().getTime();
-
-	// time since last game logic
-	const timeDelta = now - lastGameCycleTime;
-
-	move('player', player, timeDelta);
-
-	ai(timeDelta);
-
-	let cycleDelay = gameCycleDelay; 
-
-	// the timer will likely not run that fast due to the rendering cycle hogging the cpu
-	// so figure out how much time was lost since last cycle
-
-	if (timeDelta > cycleDelay) {
-		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
-	}
-
-	setTimeout(gameCycle, cycleDelay);
-
-	lastGameCycleTime = now;
-}
 
 var lastRenderCycleTime = 0;
 

@@ -1,4 +1,4 @@
-const initState = 1000 / 30;
+const initState = 0;
 export default (prevState = initState, action) => {
     const {
         type,
@@ -6,7 +6,7 @@ export default (prevState = initState, action) => {
     } = action;
 
     switch (type) {
-        case 'INIT_GAME_CYCLE_DELAY': {
+        case 'SET_LAST_GAME_CYCLE_TIME': {
             return payload;
         }
         default: {
