@@ -7,6 +7,8 @@ export default () => {
 
     const {
         player,
+        enemyMap: enemies,
+        decorationMap,
         automap: {
             showAutomap,
             revealThings,
@@ -20,19 +22,20 @@ export default () => {
 	const objectCtx = miniMapObjects.getContext('2d');
 	miniMapObjects.width = miniMapObjects.width;
 
+    const scale = miniMapScale * 0.5;
+
     const playerSquare = {
         x: player.x * miniMapScale,
         y: player.y * miniMapScale,
-        scale: miniMapScale * 0.5
     };
 
     // draw a dot at the current player position
     objectCtx.fillStyle = 'white';
 	objectCtx.fillRect(		
-		playerSquare.x - (playerSquare.scale / 2), 
-		playerSquare.y - (playerSquare.scale / 2),
-        playerSquare.scale,
-        playerSquare.scale,
+		playerSquare.x - (scale / 2), 
+		playerSquare.y - (scale / 2),
+        scale,
+        scale,
 	);
 
     /*
@@ -47,19 +50,37 @@ export default () => {
         objectCtx.stroke();
     */
 
-    const { enemyMap: enemies } = getState();
-
     if (revealThings) {
         for (let i = 0; i < enemies.length; i++) {
             const enemy = enemies[i];
+            const enemySquare = {
+                x: enemy.x * miniMapScale,
+                y: enemy.y * miniMapScale,
+            };
             objectCtx.fillStyle = 'blue';
             // draw a dot at the enemy position
             objectCtx.fillRect(
-                (enemy.x * miniMapScale) - 2, 
-                (enemy.y * miniMapScale) - 2,
-                miniMapScale * 0.5,
-                miniMapScale * 0.5,
+                enemySquare.x + 2, 
+                enemySquare.y + 2,
+                scale,
+                scale,
             );
-        }    
+        }
+
+        for (let i = 0; i < decorationMap.length; i++) {
+            const decoration = decorationMap[i];
+            const decorationSquare = {
+                x: decoration.x * miniMapScale,
+                y: decoration.y * miniMapScale,
+            };
+            objectCtx.fillStyle = 'rgb(100, 200, 100)';
+            // draw a dot at the enemy position
+            objectCtx.fillRect(
+                decorationSquare.x + 2,
+                decorationSquare.y + 2,
+                scale,
+                scale,
+            );
+        }
     }
 };

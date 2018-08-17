@@ -1,6 +1,6 @@
 {
     "name": "jsdoom",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "scripts": {
         "start": "node server",
         "dev": "npm run dev:server & npm run dev:client",

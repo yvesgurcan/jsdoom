@@ -1,8 +1,8 @@
 const initState = {
     showAutomap: true,
     showViewingCone: true,
-    revealThings: false,
     revealMap: false,
+    revealThings: false,
 };
 
 export default (prevState = initState, action) => {

@@ -40,10 +40,7 @@ export default () => {
         miniMap.height,
     );
 
-    const {
-        decorationMapPlacement: spriteMap,
-        wallMap: map,
-    } = getState();
+    const { wallMap: map } = getState();
 
 	// loop through all blocks on the map
 	for (let y = 0; y < mapHeight; y++) {
@@ -60,18 +57,6 @@ export default () => {
                     miniMapScale,
 				);
 			}
-
-            if (true) {
-                if (spriteMap[y][x]) {
-                    ctx.fillStyle = 'rgb(100,200,100)';
-                    ctx.fillRect(
-                        (x * miniMapScale) + (miniMapScale * 0.25),
-                        (y * miniMapScale) + (miniMapScale * 0.25),
-                        miniMapScale * 0.5,
-                        miniMapScale * 0.5,
-                    );
-                }    
-            }
 		}
 	}
 };
