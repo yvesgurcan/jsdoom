@@ -15,6 +15,7 @@ import hud from './hud';
 import visibleSprites from './visibleSprites';
 import oldVisibleSprites from './oldVisibleSprites';
 import view from './view';
+import automap from './automap';
 
 export default combineReducers({
     player,
@@ -33,4 +34,5 @@ export default combineReducers({
     visibleSprites,
     oldVisibleSprites,
     view,
+    automap,
 });

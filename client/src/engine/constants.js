@@ -4,7 +4,7 @@ export const wolfPath = `${assetsPath}/wolf`;
 export const ext = '.png';
 export const decorationPath = `${assetsPath}/decorations`;
 
-export const miniMapScale = 10;
+export const miniMapScale = 20;
 
 export const fov = (60 * Math.PI) / 180;
 

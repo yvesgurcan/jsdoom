@@ -4,9 +4,12 @@ import { getState } from './store';
 import updateMiniMap from './updateMiniMap';
 
 export default () => {
-	const miniMap = getElementById('minimap');			// the actual map
-	const miniMapCtr = getElementById('minimapcontainer');		// the container div element
-	const miniMapObjects = getElementById('minimapobjects');	// the canvas used for drawing the objects on the map (player character, etc)
+    // the actual map
+    const miniMap = getElementById('minimap');
+    // the container div element
+    // const miniMapCtr = getElementById('minimapcontainer');
+    // the canvas used for drawing the objects on the map (player character, etc)
+	const miniMapObjects = getElementById('minimapobjects');
 
     const {
         map: {
@@ -20,11 +23,13 @@ export default () => {
 	miniMapObjects.width = miniMap.width;
     miniMapObjects.height = miniMap.height;
     
-    // minimap CSS dimensions
-	const w = `${mapWidth * miniMapScale}px`; 	
-	const h = `${mapHeight * miniMapScale}px`;
-	miniMap.style.width = miniMapObjects.style.width = miniMapCtr.style.width = w;
-	miniMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;
+    /*
+        // minimap CSS dimensions
+        const w = `${mapWidth * miniMapScale}px`; 	
+        const h = `${mapHeight * miniMapScale}px`;
+        miniMap.style.width = miniMapObjects.style.width = miniMapCtr.style.width = w;
+        miniMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;
+    */
 
 	const ctx = miniMap.getContext('2d');
 
