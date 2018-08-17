@@ -12,6 +12,7 @@ import initSprites from './initSprites';
 import initEnemies from './initEnemies';
 import renderEnemies from './renderEnemies';
 import updateOverlay from './updateOverlay';
+import updateMiniMap from './updateMiniMap';
 import gameCycle from './gameCycle';
 
 // just a few helper functions
@@ -21,7 +22,7 @@ const dc = (tag) => document.createElement(tag);
 let mapWidth = 0;
 let mapHeight = 0;
 
-const miniMapScale = 8;
+const miniMapScale = 10;
 
 const screenWidth = 320;
 const screenHeight = 200;
@@ -38,11 +39,8 @@ const viewDist = (screenWidth / 2) / Math.tan((fov / 2));
 
 const twoPI = Math.PI * 2;
 
-const numTextures = 4;
-
 
 var screenStrips = [];
-var overlay;
 
 function init() {
     const { wallMap: map } = getState();
@@ -119,7 +117,7 @@ function renderSprites() {
 		const dy = sprite.y + 0.5 - player.y;
 
 		// distance to sprite
-		const dist = Math.sqrt(dx*dx + dy*dy);
+		const dist = Math.sqrt(dx * dx + dy * dy);
 
 		// sprite angle relative to viewing angle
 		const spriteAngle = Math.atan2(dy, dx) - player.rot;
@@ -441,48 +439,6 @@ function drawRay(rayX, rayY) {
 	);
 	objectCtx.closePath();
 	objectCtx.stroke();
-}
-
-function updateMiniMap() {
-	var miniMapObjects = $('minimapobjects');
-
-    const { player } = getState();
-    
-	var objectCtx = miniMapObjects.getContext('2d');
-	miniMapObjects.width = miniMapObjects.width;
-
-	objectCtx.fillStyle = 'red';
-	objectCtx.fillRect(		// draw a dot at the current player position
-		player.x * miniMapScale - 2, 
-		player.y * miniMapScale - 2,
-		4, 4
-	);
-
-	objectCtx.strokeStyle = 'red';
-	objectCtx.beginPath();
-	objectCtx.moveTo(player.x * miniMapScale, player.y * miniMapScale);
-	objectCtx.lineTo(
-		(player.x + Math.cos(player.rot) * 4) * miniMapScale,
-		(player.y + Math.sin(player.rot) * 4) * miniMapScale
-	);
-	objectCtx.closePath();
-	objectCtx.stroke();
-
-
-    const { enemyMap: enemies } = getState();
-
-	for (let i = 0; i < enemies.length; i++) {
-		const enemy = enemies[i];
-
-        objectCtx.fillStyle = 'blue';
-        // draw a dot at the enemy position
-		objectCtx.fillRect(		
-			enemy.x * miniMapScale - 2, 
-			enemy.y * miniMapScale - 2,
-            4,
-            4,
-		);
-	}
 }
 
 function drawMiniMap() {
