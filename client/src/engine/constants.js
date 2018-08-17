@@ -10,3 +10,5 @@ export const miniMapScale = 10;
 
 export const fov = (60 * Math.PI) / 180;
 export const viewDist = (screenWidth / 2) / Math.tan((fov / 2));
+
+export const stripWidth = 3;
