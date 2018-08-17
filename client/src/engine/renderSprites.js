@@ -51,12 +51,12 @@ export default () => {
 		img.style.zIndex = -Math.floor(blockDist * 1000);
 	}
 
-	// hide the sprites that are no longer visible
+    // hide the sprites that are no longer visible
 	for (let i = 0; i < oldVisibleSprites.length; i++) {
 		const sprite = oldVisibleSprites[i];
 		if (visibleSprites.indexOf(sprite) < 0) {
 			sprite.visible = false;
 			sprite.img.style.display = 'none';
 		}
-	}
+    }
 };

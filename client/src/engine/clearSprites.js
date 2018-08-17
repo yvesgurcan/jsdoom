@@ -8,7 +8,7 @@ export default () => {
 	for (let i = 0; i < visibleSprites.length; i++) {
 		const sprite = visibleSprites[i];
 		oldVisibleSprites[i] = sprite;
-		sprite.visible = false;
+        sprite.visible = false;
 	}
 	dispatch({ type: 'UPDATE_SPRITES', visibleSprites: [], oldVisibleSprites });
 };
