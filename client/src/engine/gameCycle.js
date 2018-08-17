@@ -1,7 +1,4 @@
-import {
-    getState,
-    dispatch,
-} from './store';
+import { getState, dispatch } from './store';
 import move from './move';
 import ai from './ai';
 
