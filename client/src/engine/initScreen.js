@@ -1,5 +1,4 @@
 import {
-    screenWidth,
     stripWidth,
 } from './constants';
 import getElementById from './getElementById';
@@ -9,7 +8,10 @@ import { getState } from './store';
 export default () => {
 	const screenStrips = getElementById('strips');
 
-    const { hud: { showOverlay } } = getState();
+    const {
+        hud: { showOverlay },
+        view: { screenWidth },
+    } = getState();
 
 	for (let i = 0; i < screenWidth; i += stripWidth) {
 		const strip = createElement('img');

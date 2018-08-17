@@ -1,9 +1,7 @@
 import {
     wolfPath,
     ext,
-    screenHeight,
     stripWidth,
-    viewDist,
     twoPI,
 } from './constants';
 import { getState } from './store';
@@ -14,6 +12,10 @@ export default (rayAngle, stripIdx) => {
     const {
         player,
         map: { mapWidth, mapHeight },
+        view: {
+            screenHeight,
+            viewDist,
+        },
     } = getState();
 
 	// first make sure the angle is between 0 and 360 degrees

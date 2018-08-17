@@ -8,7 +8,12 @@ export default () => {
 	const miniMapCtr = getElementById('minimapcontainer');		// the container div element
 	const miniMapObjects = getElementById('minimapobjects');	// the canvas used for drawing the objects on the map (player character, etc)
 
-    const { map: { mapWidth, mapHeight } } = getState();
+    const {
+        map: {
+            mapWidth,
+            mapHeight,
+        },
+    } = getState();
 
 	miniMap.width = mapWidth * miniMapScale;	// resize the internal canvas dimensions 
 	miniMap.height = mapHeight * miniMapScale;	// of both the map canvas and the object canvas

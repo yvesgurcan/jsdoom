@@ -1,15 +1,17 @@
-import {
-    numRays,
-    stripWidth,
-    viewDist,
-} from './constants';
+import { stripWidth } from './constants';
 import { getState } from './store';
 import castSingleRay from './castSingleRay';
 
 export default () => {
 	let stripIdx = 0;
 
-    const { player } = getState();
+    const {
+        player,
+        view: {
+            numRays,
+            viewDist,
+        },
+    } = getState();
 
 	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?

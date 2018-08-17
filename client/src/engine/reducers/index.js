@@ -14,6 +14,7 @@ import lastRenderCycleTime from './lastRenderCycleTime';
 import hud from './hud';
 import visibleSprites from './visibleSprites';
 import oldVisibleSprites from './oldVisibleSprites';
+import view from './view';
 
 export default combineReducers({
     player,
@@ -31,4 +32,5 @@ export default combineReducers({
     hud,
     visibleSprites,
     oldVisibleSprites,
+    view,
 });

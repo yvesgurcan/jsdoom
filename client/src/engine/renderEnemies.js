@@ -1,14 +1,14 @@
-import {
-    screenHeight,
-    screenWidth,
-    viewDist,
-} from './constants';
 import { getState } from './store';
 
 export default () => {
     const {
         enemyMap: enemies,
         player,
+        view: {
+            screenHeight,
+            screenWidth,
+            viewDist,
+        },
     } = getState();
 
 	for (let i = 0; i < enemies.length; i++) {  

@@ -6,8 +6,10 @@ import initScreen from './initScreen';
 import drawMiniMap from './drawMiniMap';
 import gameCycle from './gameCycle';
 import renderCycle from './renderCycle';
+import resizeView from './resizeView';
 
 export default () => {
+    resizeView();
 	bindKeys();
 	initScreen();
     initPlayer();

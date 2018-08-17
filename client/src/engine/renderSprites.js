@@ -1,8 +1,3 @@
-import {
-    screenWidth,
-    screenHeight,
-    viewDist,
-} from './constants';
 import { getState } from './store';
 
 export default () => {
@@ -10,6 +5,11 @@ export default () => {
         player,
         visibleSprites,
         oldVisibleSprites,
+        view: {
+            screenWidth,
+            screenHeight,
+            viewDist,
+        },
     } = getState();
 	for (let i = 0; i < visibleSprites.length; i++) {
 		const sprite = visibleSprites[i];
