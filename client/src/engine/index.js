@@ -10,6 +10,7 @@ import bindKeys from './bindKeys';
 import initPlayer from './initPlayer';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
+import updateOverlay from './updateOverlay';
 import gameCycle from './gameCycle';
 
 // just a few helper functions
@@ -42,9 +43,6 @@ const numTextures = 4;
 var screenStrips = [];
 var overlay;
 
-var fps = 0;
-var overlayText = '';
-
 function init() {
     const { wallMap: map } = getState();
 	mapWidth = map[0].length;
@@ -66,8 +64,6 @@ function init() {
 var visibleSprites = [];
 var oldVisibleSprites = [];
 
-var lastRenderCycleTime = 0;
-
 function renderCycle() {
 	updateMiniMap();
 
@@ -79,19 +75,23 @@ function renderCycle() {
 
 	renderEnemies();
 
+    const { lastRenderCycleTime } = getState();
+
 	// time since last rendering
 	const now = new Date().getTime();
 	const timeDelta = now - lastRenderCycleTime;
 	let cycleDelay = 1000 / 30;
 	if (timeDelta > cycleDelay) {
 		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
-	}
-	lastRenderCycleTime = now;
+    }
+    
+    dispatch({ type: 'SET_LAST_RENDER_CYCLE_TIME', payload: now });
+
 	setTimeout(renderCycle, cycleDelay);
 
-	fps = 1000 / timeDelta;
 	if (showOverlay) {
-		updateOverlay();
+        const fps = 1000 / timeDelta;
+		updateOverlay(fps);
 	}
 }
 function clearSprites() {
@@ -156,7 +156,10 @@ function renderSprites() {
 }
 
 function renderEnemies() {
-    const { enemyMap: enemies, player } = getState();
+    const {
+        enemyMap: enemies,
+        player,
+    } = getState();
 
 	for (let i = 0; i < enemies.length; i++) {  
         const enemy = { ...enemies[i] };
@@ -207,13 +210,13 @@ function renderEnemies() {
 			}
 
 			// place at x position, adjusted for sprite size and the current sprite state
-			const styleLeft = (screenWidth/2 + x - size/2 - size*enemy.state);
+			const styleLeft = (screenWidth / 2 + x - size / 2 - size * enemy.state);
 			if (styleLeft !== oldStyles.left) {
 				style.left = styleLeft + 'px';
 				oldStyles.left = styleLeft;
 			}
 
-			const styleZIndex = -(distSquared*1000)>>0;
+			const styleZIndex = -(distSquared * 1000) >> 0;
 			if (styleZIndex !== oldStyles.zIndex) {
 				style.zIndex = styleZIndex;
 				oldStyles.zIndex = styleZIndex;
@@ -225,7 +228,7 @@ function renderEnemies() {
 				oldStyles.display = styleDisplay;
 			}
 
-			const styleClip = 'rect(0, ' + (size*(enemy.state+1)) + ', ' + size + ', ' + (size*(enemy.state)) + ')';
+			const styleClip = 'rect(0, ' + (size * (enemy.state + 1)) + ', ' + size + ', ' + (size * (enemy.state)) + ')';
 			if (styleClip !== oldStyles.clip) {
 				style.clip = styleClip;
 				oldStyles.clip = styleClip;
@@ -238,11 +241,6 @@ function renderEnemies() {
 			}
 		}
 	}
-}
-
-function updateOverlay() {
-	overlay.innerHTML = 'FPS: ' + fps.toFixed(1) + '<br/>' + overlayText;
-	overlayText = '';
 }
 
 
@@ -269,7 +267,7 @@ function initScreen() {
 	}
 
 	// overlay div for adding text like fps count, etc.
-	overlay = dc('div');
+	const overlay = dc('div');
 	overlay.id = 'overlay';
 	overlay.style.display = showOverlay ? 'block' : 'none';
 	screen.appendChild(overlay);

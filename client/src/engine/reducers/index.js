@@ -10,6 +10,7 @@ import decorationMap from './decorationMap';
 import decorationMapPlacement from './decorationMapPlacement';
 import gameCycleDelay from './gameCycleDelay';
 import lastGameCycleTime from './lastGameCycleTime';
+import lastRenderCycleTime from './lastRenderCycleTime';
 
 export default combineReducers({
     player,
@@ -23,4 +24,5 @@ export default combineReducers({
     decorationMapPlacement,
     gameCycleDelay,
     lastGameCycleTime,
+    lastRenderCycleTime,
 });
