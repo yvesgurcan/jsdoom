@@ -4,7 +4,6 @@ export default () => {
 	document.onkeydown = (event) => {
         const { keyCode } = event;
         event.preventDefault();
-        console.log(keyCode);
         switch (keyCode) {
             default: break;
             case 9: {
