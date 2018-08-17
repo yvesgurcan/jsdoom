@@ -1,7 +1,6 @@
 import { miniMapScale } from './constants';
 import getElementById from './getElementById';
 import { getState } from './store';
-import updateMiniMap from './updateMiniMap';
 
 export default () => {
     // the actual map
@@ -33,7 +32,7 @@ export default () => {
 
 	const ctx = miniMap.getContext('2d');
 
-	ctx.fillStyle = 'white';
+	ctx.fillStyle = 'rgb(0, 0, 0)';
 	ctx.fillRect(
         0,
         0,
@@ -51,9 +50,9 @@ export default () => {
 		for (let x = 0; x < mapWidth; x++) {
 			const wall = map[y][x];
 
-            // draw a block on the minimap if there is a wall block at this (x, y)
+            // draw a block on the minimap if there is a wall block at these coordinates
 			if (wall !== 0) {
-                ctx.fillStyle = 'rgb(200, 200, 200)';
+                ctx.fillStyle = 'rgb(255, 0, 0)';
 				ctx.fillRect(				
 					x * miniMapScale,
 					y * miniMapScale,
@@ -62,17 +61,17 @@ export default () => {
 				);
 			}
 
-			if (spriteMap[y][x]) {
-				ctx.fillStyle = 'rgb(100,200,100)';
-				ctx.fillRect(
-					(x * miniMapScale) + (miniMapScale * 0.25),
-                    (y * miniMapScale) + (miniMapScale * 0.25),
-                    miniMapScale * 0.5,
-                    miniMapScale * 0.5,
-				);
-			}
+            if (true) {
+                if (spriteMap[y][x]) {
+                    ctx.fillStyle = 'rgb(100,200,100)';
+                    ctx.fillRect(
+                        (x * miniMapScale) + (miniMapScale * 0.25),
+                        (y * miniMapScale) + (miniMapScale * 0.25),
+                        miniMapScale * 0.5,
+                        miniMapScale * 0.5,
+                    );
+                }    
+            }
 		}
 	}
-
-	updateMiniMap();
 };

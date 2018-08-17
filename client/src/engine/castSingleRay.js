@@ -5,7 +5,7 @@ import {
     twoPI,
 } from './constants';
 import { getState } from './store';
-import drawRay from './drawRay';
+import drawViewingCone from './drawViewingCone';
 import getElementById from './getElementById';
 
 export default (rayAngle, stripIdx) => {
@@ -15,6 +15,7 @@ export default (rayAngle, stripIdx) => {
             mapWidth,
             mapHeight,
         },
+        automap: { showViewingCone },
         view: {
             screenHeight,
             viewDist,
@@ -146,7 +147,9 @@ export default (rayAngle, stripIdx) => {
 	}
 
 	if (dist) {
-		drawRay(xHit, yHit);
+        if (showViewingCone) {
+            drawViewingCone(xHit, yHit);
+        }
 
         const strip = screenStrips.children[stripIdx];
         

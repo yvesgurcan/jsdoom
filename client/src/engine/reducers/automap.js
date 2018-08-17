@@ -1,5 +1,8 @@
 const initState = {
-    showAutomap: false,
+    showAutomap: true,
+    showViewingCone: true,
+    revealThings: false,
+    revealMap: false,
 };
 
 export default (prevState = initState, action) => {
@@ -7,22 +10,44 @@ export default (prevState = initState, action) => {
         type,
     } = action;
 
-    const nextState = { ...prevState };
     switch (type) {
+        default: return prevState;
         case 'TOGGLE_AUTOMAP': {
             return {
                 ...prevState,
                 showAutomap: !prevState.showAutomap,
             };
         }
-        case 'TURN_OFF_AUTOMAP': {
+        case 'TOGGLE_VIEWING_CONE': {
+            if (prevState.showAutomap) {
+                return {
+                    ...prevState,
+                    showViewingCone: !prevState.showViewingCone,
+                };
+            }
+            return prevState;
+        }
+        case 'TOGGLE_CHEAT_AUTOMAP': {
+            const reset = prevState.revealThings && prevState.revealMap;
+            if (reset) {
+                return {
+                    ...prevState,
+                    revealMap: false,
+                    revealThings: false,
+                };
+            }
+            if (prevState.revealMap) {
+                return {
+                    ...prevState,
+                    revealMap: true,
+                    revealThings: true,
+                };
+            }
             return {
                 ...prevState,
-                showAutomap: false,
-            };
-        }
-        default: {
-            return nextState;
+                revealMap: true,
+                revealThings: false,
+            };         
         }
     }
 };

@@ -9,6 +9,7 @@ const initState = {
     speed: 0,
     rotSpeed: 4,
     dir: 0,
+    noClip: false,
 };
 
 export default (prevState = initState, action) => {
