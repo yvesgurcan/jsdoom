@@ -1,4 +1,5 @@
 import { dispatch } from './store';
+import initScreen from './initScreen';
 
 function resizeView() {
     const screenWidth = document.body.clientWidth;
@@ -10,6 +11,7 @@ export default () => {
     resizeView();
 
 	window.onresize = function () {
+        initScreen();
         resizeView();
 	};
 };

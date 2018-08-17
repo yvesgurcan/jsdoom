@@ -11,7 +11,10 @@ import getElementById from './getElementById';
 export default (rayAngle, stripIdx) => {
     const {
         player,
-        map: { mapWidth, mapHeight },
+        map: {
+            mapWidth,
+            mapHeight,
+        },
         view: {
             screenHeight,
             viewDist,
@@ -145,7 +148,12 @@ export default (rayAngle, stripIdx) => {
 	if (dist) {
 		drawRay(xHit, yHit);
 
-		const strip = screenStrips.children[stripIdx];
+        const strip = screenStrips.children[stripIdx];
+        
+        if (!strip) {
+            console.error(`Rendering Error: Index ${stripIdx} is out of range.`);
+            return;
+        }
 
 		dist = Math.sqrt(dist);
 
