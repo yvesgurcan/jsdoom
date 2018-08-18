@@ -5,11 +5,11 @@ const initState = {
     y: 1,
     rotDeg: 0,
     ...player,
-	moveSpeed: 0.3,
+	moveSpeed: 0.2,
     speed: 0,
     rotSpeed: 4,
     dir: 0,
-    noClip: false,
+    strafe: false,
 };
 
 export default (prevState = initState, action) => {
@@ -18,8 +18,8 @@ export default (prevState = initState, action) => {
         payload,
     } = action;
 
-    const nextState = { ...prevState };
     switch (type) {
+        default: return prevState;
         case 'INIT_PLAYER': {
             return initState;
         }
@@ -50,6 +50,18 @@ export default (prevState = initState, action) => {
                 dir: 1,
             };
         }
+        case 'START_PLAYER_STRAFE': {
+            return {
+                ...prevState,
+                strafe: true,
+            };
+        }
+        case 'STOP_PLAYER_STRAFE': {
+            return {
+                ...prevState,
+                strafe: false,
+            };
+        }
         case 'STOP_PLAYER_SPEED': {
             return {
                 ...prevState,
@@ -61,9 +73,6 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 dir: 0,
             };
-        }
-        default: {
-            return nextState;
         }
     }
 };
