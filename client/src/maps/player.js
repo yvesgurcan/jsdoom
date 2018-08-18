@@ -1,5 +1,5 @@
 export default {
-	x: 25,
+	x: 15,
 	y: 10,
-	rotDeg: 225,
+	rotDeg: 0,
 };
