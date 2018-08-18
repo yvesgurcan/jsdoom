@@ -8,7 +8,7 @@ const debugPlayer = {
         const { player } = getState();
 
         // this is an approximate calculation
-        const rot = (rotDeg / 180) * 3;
+        const rot = (rotDeg / 180) * Math.PI;
 
         const updatedPlayer = {
             ...player,
