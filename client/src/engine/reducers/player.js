@@ -21,7 +21,7 @@ export default (prevState = initState, action) => {
     const nextState = { ...prevState };
     switch (type) {
         case 'INIT_PLAYER': {
-            return payload;
+            return initState;
         }
         case 'SET_PLAYER_COORDINATES': {
             return { ...payload };
