@@ -67,7 +67,7 @@ export default (rayAngle, stripIdx) => {
         visibleSprites,
     } = getState();
 
-	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
+	while (x > 0 && x < mapWidth && y > 0 && y < mapHeight) {
 		wallX = (x + (right ? 0 : -1)) >> 0;
 		wallY = (y) >> 0;
 
@@ -111,10 +111,9 @@ export default (rayAngle, stripIdx) => {
 	y = up ? Math.floor(player.y) : Math.ceil(player.y);
 	x = player.x + ((y - player.y) * slope);
 
-
     const screenStrips = getElementById('strips');
 
-	while (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight) {
+	while (x > 0 && x < mapWidth && y > 0 && y < mapHeight) {
 		wallY = (y + (up ? -1 : 0)) >> 0;
 		wallX = (x) >> 0;
 
