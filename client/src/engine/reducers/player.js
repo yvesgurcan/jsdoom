@@ -1,74 +1,78 @@
+import player from '../../maps/player';
+
 const initState = {
-    x : 16,
-    y : 10,
-    // the direction that the player is turning, either -1 for left or 1 for right.
-    dir : 0,
-    // the current angle of rotation	
-    rot : 0,
-    // is the playing moving forward (speed = 1) or backwards (speed = -1).	
-    speed : 0,
-    // how far (in map units) does the player move each step/update
-    moveSpeed : 0.18,
-    // how much does the player rotate each step/update (in radians)
-    rotSpeed : 6 * Math.PI / 180	
+    x: 1,
+    y: 1,
+    rotDeg: 0,
+    ...player,
+	moveSpeed: 0.2,
+    speed: 0,
+    rotSpeed: 4,
+    dir: 0,
+    strafe: false,
 };
 
 export default (prevState = initState, action) => {
     const {
         type,
-        x,
-        y,
-        rotation,
+        payload,
     } = action;
-    const nextState = { ...prevState };
 
-    switch(type) {
-        case 'PLAYER_MOVE_FORWARD': {
+    switch (type) {
+        default: return prevState;
+        case 'INIT_PLAYER': {
+            return initState;
+        }
+        case 'SET_PLAYER_COORDINATES': {
+            return { ...payload };
+        }
+        case 'MOVE_PLAYER_FORWARD': {
             return {
                 ...prevState,
                 speed: 1,
             };
         }
-        case 'PLAYER_MOVE_BACKWARD': {
+        case 'MOVE_PLAYER_BACKWARD': {
             return {
                 ...prevState,
                 speed: -1,
             };
         }
-        case 'PLAYER_MOVE_STOP': {
-            return {
-                ...prevState,
-                speed: 0,
-            };
-        }
-        case 'PLAYER_TURN_LEFT': {
+        case 'ROTATE_PLAYER_LEFT': {
             return {
                 ...prevState,
                 dir: -1,
             };
         }
-        case 'PLAYER_TURN_RIGHT': {
+        case 'ROTATE_PLAYER_RIGHT': {
             return {
                 ...prevState,
                 dir: 1,
             };
         }
-        case 'PLAYER_TURN_STOP': {
+        case 'START_PLAYER_STRAFE': {
+            return {
+                ...prevState,
+                strafe: true,
+            };
+        }
+        case 'STOP_PLAYER_STRAFE': {
+            return {
+                ...prevState,
+                strafe: false,
+            };
+        }
+        case 'STOP_PLAYER_SPEED': {
+            return {
+                ...prevState,
+                speed: 0,
+            };
+        }
+        case 'STOP_PLAYER_DIRECTION': {
             return {
                 ...prevState,
                 dir: 0,
             };
         }
-        case 'PLAYER_SET_POSITION': {
-            return {
-                ...prevState,
-                x,
-                y,
-                rot: rotation,
-            };
-        }
-        default: {
-            return nextState;
-        }
     }
-}
+};

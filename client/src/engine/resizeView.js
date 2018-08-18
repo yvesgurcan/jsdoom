@@ -1,18 +1,17 @@
+import { dispatch } from './store';
 import initScreen from './initScreen';
-import store from './store';
-const { dispatch } = store;
 
-function resizeView(){
-    const width = document.body.clientWidth;
-    const height = document.body.clientHeight;
-    dispatch({ type: 'SCREEN_RESIZE', width, height });
-    initScreen();
+function resizeView() {
+    const screenWidth = document.body.clientWidth;
+    const screenHeight = document.body.clientHeight;
+    dispatch({ type: 'SET_VIEW_SIZE', payload: { screenWidth, screenHeight } });
 }
 
 export default () => {
     resizeView();
 
-	window.onresize = function() {
+	window.onresize = function () {
+        initScreen();
         resizeView();
-	}
-}
+	};
+};

@@ -1,1 +1,1 @@
-export default function(tag) { return document.createElement(tag); };
+export default (tag) => document.createElement(tag);
