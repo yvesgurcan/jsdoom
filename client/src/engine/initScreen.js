@@ -1,41 +1,40 @@
-import getElementById from './getElementById';
-import createElement from './createElement';
 import {
     stripWidth,
-    textureFolder
 } from './constants';
-import store from './store';
-const { dispatch, getState } = store;
+import getElementById from './getElementById';
+import createElement from './createElement';
+import { getState } from './store';
 
 export default () => {
-    let screen = getElementById('scene');
-    screen.innerHTML = '';
+	const screenStrips = getElementById('strips');
 
-    const { screen: screenState } = getState();
-    const { width: screenWidth } = screenState;
+    const {
+        hud: { showOverlay },
+        view: { screenWidth },
+    } = getState();
 
-    let strips = [];
 	for (let i = 0; i < screenWidth; i += stripWidth) {
-		let strip = createElement('div');
+		const strip = createElement('img');
 		strip.style.position = 'absolute';
-		strip.style.left = i + 'px';
-		strip.style.width = stripWidth+'px';
 		strip.style.height = '0px';
-		strip.style.overflow = 'hidden';
-		strip.style.backgroundColor = 'magenta';
+		strip.style.left = strip.style.top = '0px';
 
-		let img = new Image();
-		img.src = `${textureFolder}/walls.png`;
-		img.style.position = 'absolute';
-		img.style.left = '0px';
+		strip.oldStyles = {
+			left: 0,
+			top: 0,
+			width: 0,
+			height: 0,
+			clip: '',
+			src: ''
+		};
 
-        strip.appendChild(img);
-        // assign the image to a property on the strip element so we have easy access to the image later
-		strip.img = img;	
+		screenStrips.appendChild(strip);
+	}
 
-		strips.push(strip);
-        screen.appendChild(strip);
-    }
-    dispatch({ type: 'SCREEN_SET_STRIPS', strips });
-
-}
+	// overlay div for adding text like fps count, etc.
+	const screen = getElementById('screen');
+	const overlay = createElement('div');
+	overlay.id = 'overlay';
+	overlay.style.display = showOverlay ? 'block' : 'none';
+	screen.appendChild(overlay);
+};

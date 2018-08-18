@@ -1,1 +1,1 @@
-export default function(id) { return document.getElementById(id); };
+export default (id) => document.getElementById(id);
