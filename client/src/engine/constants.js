@@ -24,4 +24,8 @@ export const keys = {
     V: 86,
     SHIFT: 16,
     TAB: 9,
+    MINUS: 189,
+    EQUAL: 187,
+    NUMPAD_MINUS: 109,
+    NUMPAD_PLUS: 107,
 };

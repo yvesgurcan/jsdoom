@@ -1,6 +1,7 @@
 import { keys } from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
+import adjustMusicVolume from './adjustMusicVolume';
 
 const {
     UP, W,
@@ -10,6 +11,8 @@ const {
     V,
     TAB,
     SHIFT,
+    MINUS, NUMPAD_MINUS,
+    EQUAL,  NUMPAD_PLUS,
 } = keys;
 
 console.table({
@@ -17,9 +20,9 @@ console.table({
     'DOWN-or-S': 'backward',
     'LEFT-or-A': 'left',
     'RIGHT-or-D': 'right',
-    shift: 'strafe',
-    tab: 'toggle automap',
-    v: 'toggle viewing cone (automap only)',
+    SHIFT: 'strafe',
+    TAB: 'toggle automap',
+    V: 'toggle viewing cone (automap only)',
 });
 
 export default () => {
@@ -70,6 +73,18 @@ export default () => {
             }
             case V: {
                 dispatch({ type: 'TOGGLE_VIEWING_CONE' });
+                break;
+            }
+            case NUMPAD_MINUS:
+            case MINUS: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume - 0.1);
+                break;
+            }
+            case NUMPAD_PLUS:
+            case EQUAL: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume + 0.1);
                 break;
             }
         }
