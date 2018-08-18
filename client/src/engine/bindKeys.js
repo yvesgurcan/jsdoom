@@ -1,13 +1,25 @@
-import { dispatch } from './store';
+import { keys } from './constants';
+import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
+
+const {
+    UP, W,
+    DOWN, S,
+    LEFT, A,
+    RIGHT, D,
+    V,
+    TAB,
+    SHIFT,
+} = keys;
 
 console.table({
     'UP-or-W': 'forward',
     'DOWN-or-S': 'backward',
     'LEFT-or-A': 'left',
     'RIGHT-or-D': 'right',
-    tab: 'show automap',
-    v: 'show viewing cone (automap only)',
+    shift: 'strafe',
+    tab: 'toggle automap',
+    v: 'toggle viewing cone (automap only)',
 });
 
 export default () => {
@@ -28,38 +40,36 @@ export default () => {
 
         switch (keyCode) {
             default: break;
-            // tab
-            case 9: {
-                dispatch({ type: 'TOGGLE_AUTOMAP' });
-                break;
-            }
-            // v
-            case 86: {
-                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
-                break;
-            }
-            // up or w
-            case 38:
-            case 87: {
+            case UP:
+            case W: {
                 dispatch({ type: 'MOVE_PLAYER_FORWARD' });
 				break;
             }
-            // down or s
-            case 40:
-            case 83: {
+            case DOWN:
+            case S: {
                 dispatch({ type: 'MOVE_PLAYER_BACKWARD' });
 				break;
             }
-            // left or a
-            case 37:
-            case 65: {
+            case LEFT:
+            case A: {
                 dispatch({ type: 'ROTATE_PLAYER_LEFT' });
 				break;
             }
-            // right or d
-            case 39:
-            case 68: {
+            case RIGHT:
+            case D: {
                 dispatch({ type: 'ROTATE_PLAYER_RIGHT' });
+                break;
+            }
+            case TAB: {
+                dispatch({ type: 'TOGGLE_AUTOMAP' });
+                break;
+            }
+            case SHIFT: {
+                dispatch({ type: 'START_PLAYER_STRAFE' });
+                break;
+            }
+            case V: {
+                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
                 break;
             }
         }
@@ -70,18 +80,23 @@ export default () => {
         event.preventDefault();
 		switch (keyCode) {
             default: break;
-            case 38:
-            case 87:
-            case 40:
-            case 83:
+            case UP:
+            case DOWN:
+            case W:
+            case S:
                 dispatch({ type: 'STOP_PLAYER_SPEED' });
-				break;
-            case 37:
-            case 65:
-            case 39:
-            case 68:
+                break;
+            case LEFT:
+            case RIGHT:
+            case A:
+            case D: {
                 dispatch({ type: 'STOP_PLAYER_DIRECTION' });
-				break;
+                break;
+            }
+            case SHIFT: {
+                dispatch({ type: 'STOP_PLAYER_STRAFE' });
+                break;
+            }
 		}
 	};
 };
