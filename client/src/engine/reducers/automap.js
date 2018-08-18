@@ -1,5 +1,5 @@
 const initState = {
-    showAutomap: true,
+    showAutomap: false,
     showViewingCone: true,
     revealMap: false,
     revealThings: false,
