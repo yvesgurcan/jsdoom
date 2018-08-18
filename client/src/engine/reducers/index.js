@@ -17,6 +17,7 @@ import oldVisibleSprites from './oldVisibleSprites';
 import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
+import music from './music';
 
 export default combineReducers({
     player,
@@ -37,4 +38,5 @@ export default combineReducers({
     view,
     automap,
     keyStrokes,
+    music,
 });
