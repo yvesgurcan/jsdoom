@@ -10,4 +10,6 @@ export default [
 	{ type: 'column5', x: 17, y: 18 },
 	{ type: 'column6', x: 17, y: 18 },
 	{ type: 'lamp1', x: 17, y: 18 },
+	{ type: 'lamp1', x: 0, y: 0 },
+    { type: 'column3', x: 2, y: 3 },
 ];
