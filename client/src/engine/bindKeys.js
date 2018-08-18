@@ -1,15 +1,16 @@
 import { dispatch } from './store';
 import checkForCheat from './checkForCheat';
 
+console.table({
+    'UP-or-W': 'forward',
+    'DOWN-or-S': 'backward',
+    'LEFT-or-A': 'left',
+    'RIGHT-or-D': 'right',
+    tab: 'show automap',
+    v: 'show viewing cone (automap only)',
+});
+
 export default () => {
-    console.table({
-        'UP-or-W': 'forward',
-        'DOWN-or-S': 'backward',
-        'LEFT-or-A': 'left',
-        'RIGHT-or-D': 'right',
-        tab: 'show automap',
-        v: 'show viewing cone (automap only)',
-    });
 	document.onkeydown = (event) => {
         const { keyCode } = event;
 
