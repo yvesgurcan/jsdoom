@@ -1,14 +1,16 @@
+import resizeView from './resizeView';
 import bindKeys from './bindKeys';
+import debug from './debug';
+import initScreen from './initScreen';
 import initPlayer from './initPlayer';
 import initSprites from './initSprites';
 import initEnemies from './initEnemies';
-import initScreen from './initScreen';
 import initAutomap from './initAutomap';
 import gameCycle from './gameCycle';
 import renderCycle from './renderCycle';
-import resizeView from './resizeView';
 
 export default () => {
+    debug();
     resizeView();
 	bindKeys();
 	initScreen();
