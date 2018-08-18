@@ -50,6 +50,9 @@ export default (entityType, entity, timeDelta, index) => {
                 dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedEntity });
                 break;
             }
-        }    
+        }
+        return true;
     }
+
+    return false;
 };
