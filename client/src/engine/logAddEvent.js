@@ -5,9 +5,16 @@ import { getState, dispatch } from './store';
 export default (message = '') => {
     dispatch({ type: 'ADD_LOG_EVENT', payload: message });
     const { log } = getState();
-    const logMessages = getElementById('log');
-    logMessages.innerHTML = log.join('<br/>');
+    const { length } = log;
+    if (length > 2) {
+        dispatch({ type: 'TRUNCATE_LOG' });
+    }
 
-    setTimeout(logRemoveEvent, 3000);    
+    const logMessages = getElementById('log');
+    logMessages.innerHTML = log.map(item => item.message).join('<br/>');
+
+    const loggedMessage = log[length - 1];
+    setTimeout(() => logRemoveEvent(loggedMessage.id), 3000);
+    
     return true;
 };
