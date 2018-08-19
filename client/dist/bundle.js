@@ -778,7 +778,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'ss', x: 17.5, y: 4.5 },\n\t{ type: 'ss', x: 25.5, y: 16.5 },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n// see SPRITES.md for details\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'ss', x: 17.5, y: 4.5 },\n\t{ type: 'ss', x: 25.5, y: 16.5 },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
 
 /***/ }),
 
