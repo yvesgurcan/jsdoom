@@ -7,11 +7,7 @@ import { getState } from './store';
 
 export default () => {
 	const screenStrips = getElementById('strips');
-
-    const {
-        hud: { showOverlay },
-        view: { screenWidth },
-    } = getState();
+    const { view: { screenWidth } } = getState();
 
 	for (let i = 0; i < screenWidth; i += stripWidth) {
 		const strip = createElement('img');
@@ -30,11 +26,4 @@ export default () => {
 
 		screenStrips.appendChild(strip);
 	}
-
-	// overlay div for adding text like fps count, etc.
-	const screen = getElementById('screen');
-	const overlay = createElement('div');
-	overlay.id = 'overlay';
-	overlay.style.display = showOverlay ? 'block' : 'none';
-	screen.appendChild(overlay);
 };

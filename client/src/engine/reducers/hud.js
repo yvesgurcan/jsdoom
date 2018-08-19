@@ -1,5 +1,5 @@
 const initState = {
-    showOverlay: true,
+    showFPS: true,
 };
 export default (prevState = initState, action) => {
     const {
@@ -8,11 +8,15 @@ export default (prevState = initState, action) => {
     } = action;
 
     switch (type) {
+        default: return prevState;
         case 'SET_HUD': {
             return { ...payload };
         }
-        default: {
-            return prevState;
+        case 'TOGGLE_FPS': {
+            return {
+                ...prevState,
+                showFPS: !prevState.showFPS,
+            };
         }
     }
 };

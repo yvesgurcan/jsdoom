@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>jsDoom</title>
+        <title>Doom.js</title>
 
         <style>
             canvas#minimap {
@@ -14,17 +14,25 @@
                 width: 98%;
             }
 
-            div#overlay {
+            #log {
                 position: absolute;
-                width: 100%;
-                height: 50px;
+                width: calc(100% - 50px);
                 padding: 5px;
-                color: red;
                 font-family: lucida console, courier new;
-                font-size: 10px;
+                z-index: 1;
             }
 
-            div#floor {
+            #fps {
+                position: absolute;
+                flex-direction: row-reverse;
+                padding: 5px;
+                right: 7px;
+                font-family: lucida console, courier new;
+                font-size: 10px;
+                z-index: 1;
+            }
+
+            #floor {
                 position: absolute;
                 width: 100%;
                 height: 100%;
@@ -32,7 +40,7 @@
                 z-index: -10000000;
             }
 
-            div#ceiling {
+            #ceiling {
                 position: absolute;
                 width: 100%;
                 height: 50%;
@@ -53,6 +61,8 @@
     </head>
     <body>
 
+        <div id="log"></div>
+        <div id="fps"></div>
         <div id="screen">
             <div id="floor"></div>
             <div id="ceiling"></div>
@@ -63,8 +73,6 @@
             <canvas id="minimap"></canvas>
             <canvas id="minimapobjects"></canvas>
         </div>
-
-        <div id="debug"></div>
 
         <script src="./client/dist/bundle.js"></script>
         
