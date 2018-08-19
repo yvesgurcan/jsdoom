@@ -6,14 +6,22 @@ import automap from './automap';
 
 const gameCycle = () => {
     const {
-        gameCycleDelay,
-        lastGameCycleTime,
+        gameCycle: {
+            delay,
+            lastCycle,
+        },
         player,
     } = getState();
+
+    if (delay <= 0) {
+        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        return false;
+    }
+
 	const now = new Date().getTime();
 
 	// time since last game logic
-	const timeDelta = now - lastGameCycleTime;
+    const timeDelta = now - lastCycle;
 	move('player', player, timeDelta);
     ai(timeDelta);
     logUpdateColor();
@@ -22,10 +30,10 @@ const gameCycle = () => {
 
 	// the timer will likely not run that fast due to the rendering cycle hogging the cpu
 	// so figure out how much time was lost since last cycle
-	let cycleDelay = gameCycleDelay; 
+	let cycleDelay = delay; 
 	if (timeDelta > cycleDelay) {
 		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
-	}
+    }
 
 	setTimeout(gameCycle, cycleDelay);
     dispatch({ type: 'SET_LAST_GAME_CYCLE_TIME', payload: now });

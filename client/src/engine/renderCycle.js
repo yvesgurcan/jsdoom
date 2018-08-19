@@ -8,12 +8,20 @@ import updateFPS from './updateFPS';
 
 const renderCycle = () => {
     const {
-        lastRenderCycleTime,
+        gameCycle: {
+            delay,
+            lastRender,
+        },
         automap: {
             showAutomap,
             showViewingCone,
         },
     } = getState();
+
+    if (delay <= 0) {
+        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        return false;
+    }
 
     updateAutomap();
     
@@ -28,8 +36,8 @@ const renderCycle = () => {
 
 	// time since last rendering
 	const now = new Date().getTime();
-	const timeDelta = now - lastRenderCycleTime;
-	let cycleDelay = 1000 / 30;
+	const timeDelta = now - lastRender;
+	let cycleDelay = delay;
 	if (timeDelta > cycleDelay) {
 		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
     }
