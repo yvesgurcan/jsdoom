@@ -8,6 +8,7 @@ export default (prevState = initState, action) => {
     } = action;
 
     switch (type) {
+        default: return prevState;
         case 'SET_HUD': {
             return { ...payload };
         }
@@ -16,9 +17,6 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 showFPS: !prevState.showFPS,
             };
-        }
-        default: {
-            return prevState;
         }
     }
 };
