@@ -1,10 +1,8 @@
-# How sprites work
+# How enemey sprites work
 
-## Enemy sprites
+## Filenames
 
-### Filenames
-
-#### Single-animation pattern
+### Single-animation pattern
 
 Image filenames follow a specific pattern:
 
@@ -23,7 +21,7 @@ Pattern:
 ${PREFIX}${FRAME}${ANGLE}
 ```
 
-#### Frames and Animations
+### Frames and Animations
 
 A `FRAME` is always a letter. The letters used to define all the frames of a single enemey are consecutive (from `A` to `Z`, without any gap).
 
@@ -52,7 +50,7 @@ Note that death animations do not support different angles, which is represented
 
 The number of animation for each action should be defined in the JSON object where enemies are listed.
 
-#### Prefix
+### Prefix
 
 The `PREFIX` is always 4-character long. It is used to identify all the animations of a specific enemey.
 
@@ -65,7 +63,7 @@ BOS2E3
 The example above represents the `E` `FRAME` of the `BOS2` enemy (also known as the Hell Knight). In this case, the 2 in `BOS2` is used to differentiate this animation from `BOSSE3`, which is a `FRAME` belonging to the Baron of Hell.
 
 
-#### Mirrored pattern
+### Mirrored pattern
 
 Sometimes, the same image is used for two different `ANGLE` values:
 
