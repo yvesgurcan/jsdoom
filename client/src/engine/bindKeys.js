@@ -8,11 +8,12 @@ const {
     DOWN, S,
     LEFT, A,
     RIGHT, D,
-    V,
     TAB,
     SHIFT,
     MINUS, NUMPAD_MINUS,
-    EQUAL,  NUMPAD_PLUS,
+    EQUAL, NUMPAD_PLUS,
+    V,
+    F,
 } = keys;
 
 console.table({
@@ -22,7 +23,10 @@ console.table({
     'RIGHT-or-D': 'right',
     SHIFT: 'strafe',
     TAB: 'toggle automap',
+    MINUS: 'turn volume down',
+    'EQUAL-or-PLUS': 'turn volume up',
     V: 'toggle viewing cone (automap only)',
+    F: 'toggle FPS count',
 });
 
 export default () => {
@@ -71,10 +75,6 @@ export default () => {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
                 break;
             }
-            case V: {
-                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
-                break;
-            }
             case NUMPAD_MINUS:
             case MINUS: {
                 const { music: { volume } } = getState();
@@ -85,6 +85,14 @@ export default () => {
             case EQUAL: {
                 const { music: { volume } } = getState();
                 adjustMusicVolume(volume + 0.1);
+                break;
+            }
+            case V: {
+                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
+                break;
+            }
+            case F: {
+                dispatch({ type: 'TOGGLE_FPS' });
                 break;
             }
         }

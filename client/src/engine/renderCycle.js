@@ -1,22 +1,30 @@
 import { getState, dispatch } from './store';
-import updateMiniMap from './updateMiniMap';
+import updateAutomap from './updateAutomap';
 import clearSprites from './clearSprites';
 import castRays from './castRays';
 import renderSprites from './renderSprites';
 import renderEnemies from './renderEnemies';
-import updateOverlay from './updateOverlay';
+import updateFPS from './updateFPS';
 
 const renderCycle = () => {
-	updateMiniMap();
-	clearSprites();
-	castRays();
-	renderSprites();
-	renderEnemies();
-
     const {
         lastRenderCycleTime,
-        hud: { showOverlay },
+        automap: {
+            showAutomap,
+            showViewingCone,
+        },
     } = getState();
+
+    updateAutomap();
+    
+    if (!showAutomap || (showAutomap && showViewingCone)) {
+        castRays();
+    }
+    if (!showAutomap) {
+        clearSprites();
+        renderSprites();
+        renderEnemies();
+    }
 
 	// time since last rendering
 	const now = new Date().getTime();
@@ -28,12 +36,9 @@ const renderCycle = () => {
     
     dispatch({ type: 'SET_LAST_RENDER_CYCLE_TIME', payload: now });
 
-	setTimeout(renderCycle, cycleDelay);
-
-	if (showOverlay) {
-        const fps = 1000 / timeDelta;
-		updateOverlay(fps);
-	}
+    setTimeout(renderCycle, cycleDelay);
+    
+    updateFPS(timeDelta);
 };
 
 export default renderCycle;
