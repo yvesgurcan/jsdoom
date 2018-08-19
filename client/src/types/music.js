@@ -10,7 +10,7 @@ const doom = {
     D_E1M8: 'Sign of Evil',
     D_E1M9: 'Hiding the Secrets',
     D_E2M1: 'I Sawed the Demons',
-    D_E2M2: 'The Demons From Adrian\'s Pen',
+    D_E2M2: 'The Demons from Adrian\'s Pen',
     D_E2M3: 'Intermission from DOOM',
     D_E2M4: 'They\'re Going to Get You',
     D_E2M6: 'Sinister',
@@ -45,7 +45,22 @@ const doom2 = {
     D_ULTIMA: 'The Ultimate Challenge',
 };
 
+// this is a partial list
+const tnt = {
+    SADISTIC: 'Sadistic',
+    DEATH_BELL: 'Death\'s Bell',
+    MORE: 'More',
+    SOLDIER_OF_CHAOS: 'Soldier of Chaos',
+    INFINITE: 'Infinite',
+    KILL_AT_WILL: 'Let\'s Kill at Will',
+    COLD_SUBTLENESS: 'Cold Subtleness',
+    BLOOD_JUNGLE: 'Blood Jungle',
+    AIMSHOOTKILL: 'AimShootKill',
+    LEGION_LOST: 'Legion of the Lost',
+};
+
 export default {
     ...doom,
     ...doom2,
+    ...tnt,
 };
