@@ -2,6 +2,7 @@ import { keys } from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
+import logAddEvent from './logAddEvent';
 
 const {
     UP, W,
@@ -79,12 +80,14 @@ export default () => {
             case MINUS: {
                 const { music: { volume } } = getState();
                 adjustMusicVolume(volume - 0.1);
+                logAddEvent('Volume down.');
                 break;
             }
             case NUMPAD_PLUS:
             case EQUAL: {
                 const { music: { volume } } = getState();
                 adjustMusicVolume(volume + 0.1);
+                logAddEvent('Volume up.');
                 break;
             }
             case V: {

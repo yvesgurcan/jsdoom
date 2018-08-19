@@ -1,3 +1,5 @@
+import uuid4 from 'uuid4';
+
 const initState = [];
 export default (prevState = initState, action) => {
     const {
@@ -10,11 +12,18 @@ export default (prevState = initState, action) => {
         case 'ADD_LOG_EVENT': {
             return [
                 ...prevState,
-                payload,
+                {
+                    message: payload,
+                    id: uuid4(),
+                },
             ];
         }
         case 'REMOVE_LOG_EVENT': {
-            const nextState = prevState.filter((event, index) => index !== 0);
+            const nextState = prevState.filter((event) => event.id !== payload);
+            return [...nextState];
+        }
+        case 'TRUNCATE_LOG': {
+            const nextState = prevState.slice(-2);
             return [...nextState];
         }
     }

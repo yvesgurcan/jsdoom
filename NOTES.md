@@ -1,5 +1,11 @@
 # Release Notes
 
+## v 0.2.2 - 2018/08/18
+
+* We have better logging
+
+Now that displaying messages at the top of the screen works, it was time to make sure that these messages get deleted logically. From now on, no more than 3 messages will be displayed at once, and they will all consistently be displayed for 3 seconds each (unless they were pushed out of the queue because they were the 4th message). It's pretty neat :)
+
 ## v 0.2.1 - 2018/08/18
 
 * We have logging
