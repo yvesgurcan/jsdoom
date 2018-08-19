@@ -1,6 +1,7 @@
 import { getState, dispatch } from './store';
 import move from './move';
 import ai from './ai';
+import logUpdateColor from './logUpdateColor';
 import automap from './automap';
 
 const gameCycle = () => {
@@ -15,6 +16,7 @@ const gameCycle = () => {
 	const timeDelta = now - lastGameCycleTime;
 	move('player', player, timeDelta);
     ai(timeDelta);
+    logUpdateColor();
     automap();
 
 

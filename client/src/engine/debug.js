@@ -1,3 +1,5 @@
+import logAddEvent from './logAddEvent';
+import logRemoveEvent from './logRemoveEvent';
 import { getState, dispatch } from './store';
 
 const debugPlayer = {
@@ -22,10 +24,17 @@ const debugPlayer = {
     }
 };
 
+const debugLog = {
+    add: logAddEvent,
+    remove: logRemoveEvent,
+};
+
 console.log('debug functions', {
-    player: debugPlayer
+    player: debugPlayer,
+    log: debugLog,
 });
 
 export default () => {
     window.player = debugPlayer;
+    window.log = debugLog;
 };

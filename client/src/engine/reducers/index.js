@@ -18,6 +18,7 @@ import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
 import music from './music';
+import log from './log';
 
 export default combineReducers({
     player,
@@ -39,4 +40,5 @@ export default combineReducers({
     automap,
     keyStrokes,
     music,
+    log,
 });

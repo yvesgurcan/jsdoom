@@ -18,8 +18,8 @@
                 position: absolute;
                 width: calc(100% - 50px);
                 padding: 5px;
-                color: red;
                 font-family: lucida console, courier new;
+                z-index: 1;
             }
 
             #fps {
@@ -27,7 +27,6 @@
                 flex-direction: row-reverse;
                 padding: 5px;
                 right: 7px;
-                color: orange;
                 font-family: lucida console, courier new;
                 font-size: 10px;
                 z-index: 1;
@@ -62,9 +61,9 @@
     </head>
     <body>
 
+        <div id="log"></div>
         <div id="fps"></div>
         <div id="screen">
-            <div id="log"></div>
             <div id="floor"></div>
             <div id="ceiling"></div>
             <div id="strips"></div>
