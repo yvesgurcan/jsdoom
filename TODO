@@ -1,0 +1,1 @@
+* Rework enemy sprite animations: Enemies should use a single image for each state (as opposed to one big image with all the states together). Also, enemies should have an idle animation.
