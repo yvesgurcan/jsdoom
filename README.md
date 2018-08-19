@@ -1,8 +1,10 @@
-# JS Doom
+# Doom.js
 
 ## [Play](http://doom.yvesgurcan.com)
 
 ## [TODO](TODO)
+
+## [Release Notes](NOTES.md)
 
 ## Setup
 
