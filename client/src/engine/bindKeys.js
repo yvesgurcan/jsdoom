@@ -13,8 +13,9 @@ const {
     SHIFT,
     MINUS, NUMPAD_MINUS,
     EQUAL, NUMPAD_PLUS,
-    V,
     F,
+    P,
+    V,
 } = keys;
 
 console.table({
@@ -26,8 +27,9 @@ console.table({
     TAB: 'toggle automap',
     MINUS: 'turn volume down',
     'EQUAL-or-PLUS': 'turn volume up',
-    V: 'toggle viewing cone (automap only)',
     F: 'toggle FPS count',
+    P: 'toggle pause',
+    V: 'toggle viewing cone (automap only)',
 });
 
 export default () => {
@@ -40,10 +42,24 @@ export default () => {
         }
         console.log({ keyCode });
 
+        switch (keyCode) {
+            default: break;
+            case P: {
+                dispatch({ type: 'TOGGLE_PAUSE' });
+                break;
+            }
+        }
+
+        const { gameCycle: { paused } } = getState();
+        if (paused) {
+            return false;
+        }
+
         dispatch({ type: 'REGISTER_KEY_STROKE', payload: keyCode });
+
         const cheat = checkForCheat();
         if (cheat) {
-            return;
+            return false;
         }
 
         switch (keyCode) {
@@ -90,12 +106,12 @@ export default () => {
                 logAddEvent('Volume up.');
                 break;
             }
-            case V: {
-                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
-                break;
-            }
             case F: {
                 dispatch({ type: 'TOGGLE_FPS' });
+                break;
+            }
+            case V: {
+                dispatch({ type: 'TOGGLE_VIEWING_CONE' });
                 break;
             }
         }
@@ -104,6 +120,12 @@ export default () => {
 	document.onkeyup = (event) => {
         const { keyCode } = event;
         event.preventDefault();
+        
+        const { gameCycle: { paused } } = getState();
+        if (paused) {
+            return false;
+        }
+
 		switch (keyCode) {
             default: break;
             case UP:

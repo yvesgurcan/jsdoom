@@ -3,6 +3,7 @@ const initState = {
     delay: 1000 / 30,
     lastCycle: 0,
     lastRender: 0,
+    paused: false,
 };
 
 export default (prevState = initState, action) => {
@@ -23,6 +24,12 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 lastRender: payload,
+            };
+        }
+        case 'TOGGLE_PAUSE': {
+            return {
+                ...prevState,
+                paused: !prevState.paused,
             };
         }
     }

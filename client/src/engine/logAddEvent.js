@@ -4,7 +4,15 @@ import { getState, dispatch } from './store';
 
 export default (message = '') => {
     dispatch({ type: 'ADD_LOG_EVENT', payload: message });
-    const { log } = getState();
+    const {
+        log,
+        gameCycle: { paused },
+    } = getState();
+
+    if (paused) {
+        // return false;
+    }
+
     const { length } = log;
     if (length > 2) {
         dispatch({ type: 'TRUNCATE_LOG' });

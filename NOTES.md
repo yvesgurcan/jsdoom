@@ -1,5 +1,11 @@
 # Release Notes
 
+## v 0.2.3 - 2018/08/19
+
+* The game can now be paused
+
+Because it will be very useful for debug, the game is now pauseable!
+
 ## v 0.2.2 - 2018/08/18
 
 * We have better logging

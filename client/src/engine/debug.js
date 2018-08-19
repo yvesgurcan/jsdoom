@@ -1,6 +1,7 @@
 import logAddEvent from './logAddEvent';
 import logRemoveEvent from './logRemoveEvent';
 import { getState, dispatch } from './store';
+import updatePauseState from './updatePauseState';
 
 const debugPlayer = {
     init: () => {
@@ -29,12 +30,16 @@ const debugLog = {
     remove: logRemoveEvent,
 };
 
+const debugPause = () => updatePauseState(true);
+
 console.log('debug functions', {
     player: debugPlayer,
     log: debugLog,
+    pause: debugPause,
 });
 
 export default () => {
     window.player = debugPlayer;
     window.log = debugLog;
+    window.pause = debugPause;
 };

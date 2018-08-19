@@ -11,6 +11,7 @@ const renderCycle = () => {
         gameCycle: {
             delay,
             lastRender,
+            paused,
         },
         automap: {
             showAutomap,
@@ -20,6 +21,11 @@ const renderCycle = () => {
 
     if (delay <= 0) {
         console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        return false;
+    }
+
+    if (paused) {
+        setTimeout(renderCycle, delay);
         return false;
     }
 

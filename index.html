@@ -22,6 +22,15 @@
                 z-index: 1;
             }
 
+            #pause {
+                position: absolute;
+                color: red;
+                margin-top: 10%;
+                padding: 5px;
+                width: 100%;
+                text-align: center;
+            }
+
             #fps {
                 position: absolute;
                 flex-direction: row-reverse;
@@ -61,8 +70,12 @@
     </head>
     <body>
 
-        <div id="log"></div>
-        <div id="fps"></div>
+        <div id="hud">
+            <div id="log"></div>
+            <div id="pause"></div>
+            <div id="fps"></div>
+        </div>
+
         <div id="screen">
             <div id="floor"></div>
             <div id="ceiling"></div>
