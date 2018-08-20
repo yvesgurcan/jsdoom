@@ -53,6 +53,7 @@ export default () => {
 
         const img = createElement('img');
         img.id = id;
+        img.className = type;
         img.src = `${wolfPath}/${enemyType.img}${ext}`;
         img.style.display = 'none';
         img.style.position = 'absolute';
