@@ -10,10 +10,15 @@ export default (prevState = initState, action) => {
 
     switch (type) {
         default: return prevState;
-        case 'REGISTER_KEY_STROKE': {
+        case 'INCREMENT_KEYPRESS_COUNT': {
             return {
                 ...prevState,
                 keyPressCount: prevState.keyPressCount + 1,
+            };
+        }
+        case 'REGISTER_KEY_STROKE': {
+            return {
+                ...prevState,
                 history: [
                     ...prevState.history,
                     payload,

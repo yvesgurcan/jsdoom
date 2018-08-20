@@ -15,13 +15,18 @@ const startMusic = () => {
     song.volume = volume;
     song.loop = true;
 
-    song.play();
-    console.log(`initMusic(): ${songName}`);
-
-    dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
-    logAddEvent(`Playing '${songName}'...`);
-    
-    return true;
+    return song.play()
+        .then(() => {
+            console.log(`initMusic(): ${songName}`);
+            dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
+            logAddEvent(`Playing '${songName}'...`);
+            return true;
+        })
+        .catch((error) => {
+            console.error(`initMusic(): Couldn't play '${songName}'.`, { error });
+            logAddEvent(`Couldn't play '${songName}'.`);
+            return false;
+        });
 };
 
 export default (dontListenForClick) => {

@@ -12,11 +12,13 @@ const {
     RIGHT, D,
     TAB,
     SHIFT,
+    COMMAND,
     MINUS, NUMPAD_MINUS,
     EQUAL, NUMPAD_PLUS,
     F,
     M,
     P,
+    R,
     V,
 } = keys;
 
@@ -39,16 +41,43 @@ export default () => {
 	document.onkeydown = (event) => {
         const { keyCode } = event;
 
-        // allow page refresh (Command + R)
-        if (keyCode !== 91 && keyCode !== 82) {
+        // allow page refresh
+        if (keyCode !== COMMAND && keyCode !== R) {
             event.preventDefault();
         }
         console.log({ keyCode });
+
+        const { keyStrokes: { keyPressCount } } = getState();
+        if (keyPressCount < 2) {
+            dispatch({ type: 'INCREMENT_KEYPRESS_COUNT' });
+        }
 
         switch (keyCode) {
             default: break;
             case P: {
                 dispatch({ type: 'TOGGLE_PAUSE' });
+                break;
+            }
+            case NUMPAD_MINUS:
+            case MINUS: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume - 0.1);
+                logAddEvent('Volume down.');
+                break;
+            }
+            case NUMPAD_PLUS:
+            case EQUAL: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume + 0.1);
+                logAddEvent('Volume up.');
+                break;
+            }
+            case F: {
+                dispatch({ type: 'TOGGLE_FPS' });
+                break;
+            }
+            case M: {
+                changeMusic();
                 break;
             }
         }
@@ -93,28 +122,6 @@ export default () => {
             }
             case SHIFT: {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
-                break;
-            }
-            case NUMPAD_MINUS:
-            case MINUS: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume - 0.1);
-                logAddEvent('Volume down.');
-                break;
-            }
-            case NUMPAD_PLUS:
-            case EQUAL: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume + 0.1);
-                logAddEvent('Volume up.');
-                break;
-            }
-            case F: {
-                dispatch({ type: 'TOGGLE_FPS' });
-                break;
-            }
-            case M: {
-                changeMusic();
                 break;
             }
             case V: {
