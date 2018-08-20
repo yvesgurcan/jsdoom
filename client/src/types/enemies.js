@@ -7,7 +7,7 @@ export default {
     },
 	chaingunner: {
         prefix: 'CPOS',
-        moveSpeed: 0.05,
+        moveSpeed: 0.04,
         rotSpeed: 3,
         walk: {
             frames: 'A-D',
