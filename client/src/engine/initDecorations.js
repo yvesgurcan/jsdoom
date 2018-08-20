@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4';
 import {
-    ext,
+    imgExt,
     decorationPath,
 } from './constants';
 import {
@@ -40,7 +40,7 @@ export default () => {
         const img = createElement('img');
         img.id = id;
         img.className = sprite.type;
-		img.src = `${decorationPath}/${itemType.img}${ext}`;
+		img.src = `${decorationPath}/${itemType.img}${imgExt}`;
 		img.style.display = 'none';
 		img.style.position = 'absolute';
 
