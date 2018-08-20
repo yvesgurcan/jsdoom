@@ -11,7 +11,7 @@ export default (volume) => {
     const song = window.music;
     song.volume = adjustedVolume;
 
-    console.log(`Volume: ${adjustedVolume.toFixed(2)}`);
+    console.log(`adjustMusicVolume(): ${adjustedVolume.toFixed(2)}`);
 
     dispatch({ type: 'SET_MUSIC_VOLUME', payload: { volume: adjustedVolume } });
 };

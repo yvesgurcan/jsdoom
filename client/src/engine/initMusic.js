@@ -15,7 +15,7 @@ const startMusic = () => {
     song.loop = true;
 
     song.play();
-    console.log(`Playing '${songName}'...`);
+    console.log(`initMusic(): ${songName}`);
 
     window.music = song;
 
