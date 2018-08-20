@@ -10,9 +10,9 @@ const startMusic = () => {
 
     const song = new Audio(`/client/assets/music/${songNameFormatted}.mp3`);
 
-    const volume = 0.3;
-
+    const { music: { volume } } = getState();
     song.volume = volume;
+    
     song.loop = true;
 
     return song.play()

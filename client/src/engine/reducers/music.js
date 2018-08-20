@@ -1,4 +1,7 @@
-const initState = { song: null };
+const initState = {
+    volume: 0,
+    song: null,
+};
 
 export default (prevState = initState, action) => {
     const {
