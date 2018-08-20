@@ -28,7 +28,7 @@ export default (timeDelta) => {
 		} else {
 			enemy.state = 0;
 			enemy.speed = 0;
-		}
+        }
 
 		move('enemy', enemy, timeDelta, i);
 	}
