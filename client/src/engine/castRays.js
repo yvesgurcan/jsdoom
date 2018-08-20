@@ -11,7 +11,15 @@ export default () => {
             numRays,
             viewDist,
         },
+        automap: {
+            showAutomap,
+            showViewingCone,
+        },
     } = getState();
+
+    if (showAutomap && !showViewingCone) {
+        return false;
+    }
 
 	for (let i = 0; i < numRays; i++) {
 		// where on the screen does ray go through?

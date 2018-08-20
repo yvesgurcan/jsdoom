@@ -9,7 +9,12 @@ export default () => {
             screenWidth,
             viewDist,
         },
+        automap: { showAutomap },
     } = getState();
+
+    if (showAutomap) {
+        return false;
+    }
 
 	for (let i = 0; i < enemies.length; i++) {  
         const enemy = { ...enemies[i] };
