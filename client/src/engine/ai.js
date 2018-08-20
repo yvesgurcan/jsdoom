@@ -8,15 +8,6 @@ export default (timeDelta) => {
     } = getState();
 
     for (let i = 0; i < enemies.length; i++) {
-        const {
-            moveSpeed,
-            rotSpeed,
-        } = enemy;
-
-        if (!moveSpeed || !rotSpeed) {
-            /* eslint-disable-next-line */
-            continue;
-        }
         const enemy = { ...enemies[i] };
 
         const dx = player.x - enemy.x;
