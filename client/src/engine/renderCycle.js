@@ -1,8 +1,8 @@
 import { getState, dispatch } from './store';
 import updateAutomap from './updateAutomap';
-import clearSprites from './clearSprites';
+import clearDecorations from './clearDecorations';
 import castRays from './castRays';
-import renderSprites from './renderSprites';
+import renderDecorations from './renderDecorations';
 import renderEnemies from './renderEnemies';
 import updateFPS from './updateFPS';
 
@@ -35,8 +35,8 @@ const renderCycle = () => {
         castRays();
     }
     if (!showAutomap) {
-        clearSprites();
-        renderSprites();
+        clearDecorations();
+        renderDecorations();
         renderEnemies();
     }
 

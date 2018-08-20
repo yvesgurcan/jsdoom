@@ -4,7 +4,7 @@ import debug from './debug';
 import initMusic from './initMusic';
 import initScreen from './initScreen';
 import initPlayer from './initPlayer';
-import initSprites from './initSprites';
+import initDecorations from './initDecorations';
 import initEnemies from './initEnemies';
 import initAutomap from './initAutomap';
 import gameCycle from './gameCycle';
@@ -17,7 +17,7 @@ export default () => {
     initMusic();
 	initScreen();
     initPlayer();
-	initSprites();
+	initDecorations();
 	initEnemies();
 	initAutomap();
 	gameCycle();
