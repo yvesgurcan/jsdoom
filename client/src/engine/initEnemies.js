@@ -19,6 +19,17 @@ export default () => {
 
     for (let i = 0; i < mapEnemies.length; i++) {
         const enemy = { ...mapEnemies[i] };
+        const {
+            moveSpeed,
+            rotSpeed,
+        } = enemy;
+
+        if (!moveSpeed || !rotSpeed) {
+            console.error('initEnemies(): moveSpeed and/or rotSpeed is undefined. Entity will not be placed on the map.', { entity: enemy });
+            /* eslint-disable-next-line */
+            continue;
+        }
+        
         const type = { ...enemyTypes[enemy.type] };
         const id = uuid4();
 
