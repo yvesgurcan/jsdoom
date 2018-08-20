@@ -3,9 +3,9 @@
 
 ## v0.2.4 - 2018/08/19
 
-* Change song (debug)
+* Change song
 
-It's only available as a debug functionality, but you can now choose a new song randomly while playing. It helps: I won't get bored of hearing the same song 10 times in a row, now :P
+You can now randomly play a new song randby pressing `M` on your keyboard. I won't get bored of hearing the same song 10 times in a row, now :P
 
 ## v0.2.3 - 2018/08/19
 
