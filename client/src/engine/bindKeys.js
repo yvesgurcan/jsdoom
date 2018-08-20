@@ -3,6 +3,7 @@ import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
 import logAddEvent from './logAddEvent';
+import changeMusic from './changeMusic';
 
 const {
     UP, W,
@@ -14,6 +15,7 @@ const {
     MINUS, NUMPAD_MINUS,
     EQUAL, NUMPAD_PLUS,
     F,
+    M,
     P,
     V,
 } = keys;
@@ -28,6 +30,7 @@ console.table({
     MINUS: 'turn volume down',
     'EQUAL-or-PLUS': 'turn volume up',
     F: 'toggle FPS count',
+    M: 'change song',
     P: 'toggle pause',
     V: 'toggle viewing cone (automap only)',
 });
@@ -108,6 +111,10 @@ export default () => {
             }
             case F: {
                 dispatch({ type: 'TOGGLE_FPS' });
+                break;
+            }
+            case M: {
+                changeMusic();
                 break;
             }
             case V: {
