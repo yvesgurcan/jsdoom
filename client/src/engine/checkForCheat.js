@@ -1,12 +1,12 @@
 import logAddEvent from './logAddEvent';
 import { getState, dispatch } from './store';
 
-export default () => {
+export default (externalInput) => {
     const cheats = [
         'IDDT',
     ];
     const { keyStrokes } = getState();
-    const input = keyStrokes.map(key => String.fromCharCode(key)).join('');
+    const input = externalInput || keyStrokes.map(key => String.fromCharCode(key)).join('');
     const match = cheats.find(cheat => input.indexOf(cheat) > -1);
     switch (match) {
         default: return false;

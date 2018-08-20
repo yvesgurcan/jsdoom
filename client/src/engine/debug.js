@@ -2,6 +2,7 @@ import logAddEvent from './logAddEvent';
 import logRemoveEvent from './logRemoveEvent';
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
+import checkForCheat from './checkForCheat';
 
 const debugPlayer = {
     init: () => {
@@ -32,14 +33,18 @@ const debugLog = {
 
 const debugPause = () => updatePauseState(true);
 
+const debugCheat = (input) => (input.toUpperCase ? checkForCheat(input.toUpperCase()) : false);
+
 console.log('debug functions', {
     player: debugPlayer,
     log: debugLog,
     pause: debugPause,
+    cheat: debugCheat,
 });
 
 export default () => {
     window.player = debugPlayer;
     window.log = debugLog;
     window.pause = debugPause;
+    window.cheat = debugCheat;
 };
