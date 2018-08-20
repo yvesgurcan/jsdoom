@@ -4,6 +4,7 @@ import { getState, dispatch } from './store';
 export default (externalInput) => {
     const cheats = [
         'IDDT',
+        'IDMUS',
     ];
     const { keyStrokes } = getState();
     const input = externalInput || keyStrokes.map(key => String.fromCharCode(key)).join('');
