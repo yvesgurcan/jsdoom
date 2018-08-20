@@ -27,9 +27,11 @@ export default (prevState = initState, action) => {
             };
         }
         case 'TOGGLE_PAUSE': {
+            const now = new Date().getTime();
             return {
                 ...prevState,
                 paused: !prevState.paused,
+                lastCycle: now,
             };
         }
     }
