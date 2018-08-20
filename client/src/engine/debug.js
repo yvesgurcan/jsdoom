@@ -24,6 +24,8 @@ const debugPlayer = {
         };
 
         dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedPlayer });
+
+        return true;
     }
 };
 
