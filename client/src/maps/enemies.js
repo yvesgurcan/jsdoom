@@ -1,6 +1,6 @@
 // see SPRITES.md for details
 
 export default [
-	{ type: 'ss', x: 26, y: 5 },
-	{ type: 'ss', x: 26, y: 15 },
+	{ type: 'chaingunner', x: 26, y: 5 },
+	{ type: 'chaingunner', x: 26, y: 15 },
 ];
