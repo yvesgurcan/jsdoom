@@ -26,6 +26,11 @@ const debugPlayer = {
         dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedPlayer });
 
         return true;
+    },
+    pos: () => {
+        const { player } = getState();
+        console.log(player);
+        return true;
     }
 };
 
