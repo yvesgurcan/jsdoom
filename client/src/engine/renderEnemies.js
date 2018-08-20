@@ -50,13 +50,6 @@ export default () => {
 				oldStyles.height = size;
 			}
 
-			// width is equal to the sprite size times the total number of states
-			const styleWidth = size * enemy.totalStates;
-			if (styleWidth !== oldStyles.width) {
-				style.width = `${styleWidth}px`;
-				oldStyles.width = styleWidth;
-			}
-
 			// top position is halfway down the screen, minus half the sprite height
 			const styleTop = ((screenHeight - size) / 2);
 			if (styleTop !== oldStyles.top) {
@@ -64,8 +57,8 @@ export default () => {
 				oldStyles.top = styleTop;
 			}
 
-			// place at x position, adjusted for sprite size and the current sprite state
-			const styleLeft = (((screenWidth / 2) + x) - (size / 2) - (size * enemy.state));
+			// place at x position, adjusted for sprite size
+			const styleLeft = (((screenWidth / 2) + x) - (size / 2));
 			if (styleLeft !== oldStyles.left) {
 				style.left = `${styleLeft}px`;
 				oldStyles.left = styleLeft;
@@ -81,12 +74,6 @@ export default () => {
 			if (styleDisplay !== oldStyles.display) {
 				style.display = styleDisplay;
 				oldStyles.display = styleDisplay;
-			}
-
-			const styleClip = `rect(0, ${size * (enemy.state + 1)}, ${size}, ${size * (enemy.state)})`;
-			if (styleClip !== oldStyles.clip) {
-				style.clip = styleClip;
-				oldStyles.clip = styleClip;
 			}
 		} else {
 			const styleDisplay = 'none';
