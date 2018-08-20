@@ -1,6 +1,6 @@
 import songs from '../types/music';
 import logAddEvent from './logAddEvent';
-import { dispatch } from './store';
+import { dispatch, getState } from './store';
 
 const startMusic = () => {
     const songNames = Object.keys(songs).map(name => name);
@@ -26,8 +26,12 @@ const startMusic = () => {
 
 export default (dontListenForClick) => {
     if (dontListenForClick) {
-        startMusic();
-        return true;
+        const { keyStrokes: { keyPressCount } } = getState();
+        if (keyPressCount > 1) {
+            startMusic();
+            return true;    
+        }
+        return false;
     }
     
     document.addEventListener('keydown', startMusic, { once: true });

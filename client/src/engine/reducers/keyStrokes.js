@@ -1,4 +1,7 @@
-const initState = [];
+const initState = {
+    keyPressCount: 0,
+    history: [],
+};
 export default (prevState = initState, action) => {
     const {
         type,
@@ -8,13 +11,20 @@ export default (prevState = initState, action) => {
     switch (type) {
         default: return prevState;
         case 'REGISTER_KEY_STROKE': {
-            return [
+            return {
                 ...prevState,
-                payload,
-            ];
+                keyPressCount: prevState.keyPressCount + 1,
+                history: [
+                    ...prevState.history,
+                    payload,
+                ],
+            };
         }
         case 'CLEAR_KEY_STROKES': {
-            return [];
+            return {
+                ...prevState,
+                history: [],
+            };
         }
     }
 };

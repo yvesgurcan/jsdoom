@@ -6,8 +6,8 @@ export default (externalInput) => {
         'IDDT',
         'IDMUS',
     ];
-    const { keyStrokes } = getState();
-    const input = externalInput || keyStrokes.map(key => String.fromCharCode(key)).join('');
+    const { keyStrokes: { history } } = getState();
+    const input = externalInput || history.map(key => String.fromCharCode(key)).join('');
     const match = cheats.find(cheat => input.indexOf(cheat) > -1);
     switch (match) {
         default: return false;
