@@ -1,4 +1,5 @@
 import songs from '../types/music';
+import logAddEvent from './logAddEvent';
 import { dispatch } from './store';
 
 const startMusic = () => {
@@ -17,9 +18,10 @@ const startMusic = () => {
     song.play();
     console.log(`initMusic(): ${songName}`);
 
-    window.music = song;
-
-    dispatch({ type: 'SET_MUSIC', payload: { songName, songObject: song, volume } });
+    dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
+    logAddEvent(`Playing '${songName}'...`);
+    
+    return true;
 };
 
 export default (dontListenForClick) => {
@@ -28,6 +30,6 @@ export default (dontListenForClick) => {
         return true;
     }
     
-    document.addEventListener('click', startMusic, { once: true });
+    document.addEventListener('keydown', startMusic, { once: true });
     return true;
 };

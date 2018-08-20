@@ -1,9 +1,10 @@
 import initMusic from './initMusic';
+import { getState } from './store';
 
 export default () => {
-    if (window.music) {
-        window.music.pause();
-        window.music = null;
+    const { music: { song } } = getState();
+    if (song && song.play) {
+        song.pause();
     }
     
     initMusic(true);
