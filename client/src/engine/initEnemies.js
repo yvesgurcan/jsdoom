@@ -1,7 +1,7 @@
 import uuid4 from 'uuid4';
 import {
-    ext,
-    wolfPath,
+    enemyPath,
+    imgExt,
 } from './constants';
 import getElementById from './getElementById';
 import createElement from './createElement';
@@ -39,12 +39,20 @@ export default () => {
         
         const enemyType = enemyTypes[enemy.type];
         const {
+            prefix,
             moveSpeed,
             rotSpeed,
         } = enemyType;
 
+
+        if (!prefix) {
+            console.error('initEnemies(): Enemy type is missing a prefix for image filenames. Entity will not be placed on the map.', { entity: enemy, enemyType });
+            /* eslint-disable-next-line */
+            continue;
+        }
+
         if (!moveSpeed || !rotSpeed) {
-            console.error('initEnemies(): moveSpeed and/or rotSpeed is undefined. Entity will not be placed on the map.', { entity: enemy });
+            console.error('initEnemies(): moveSpeed and/or rotSpeed of enemy type is undefined. Entity will not be placed on the map.', { entity: enemy, enemyType });
             /* eslint-disable-next-line */
             continue;
         }
@@ -54,7 +62,7 @@ export default () => {
         const img = createElement('img');
         img.id = id;
         img.className = type;
-        img.src = `${wolfPath}/${enemyType.img}${ext}`;
+        img.src = `${enemyPath}/${enemyType.prefix}/${enemyType.prefix}A1${imgExt}`;
         img.style.display = 'none';
         img.style.position = 'absolute';
 
