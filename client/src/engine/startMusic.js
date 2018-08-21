@@ -1,5 +1,5 @@
 import songs from '../types/music';
-import logAddEvent from './logAddEvent';
+import logAddEvent from './log/logAddEvent';
 import { dispatch, getState } from './store';
 
 const startMusic = (log = true) => {

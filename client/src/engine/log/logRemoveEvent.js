@@ -1,5 +1,5 @@
-import getElementById from './getElementById';
-import { getState, dispatch } from './store';
+import getElementById from '../getElementById';
+import { getState, dispatch } from '../store';
 
 const logRemoveEvent = id => {
     dispatch({ type: 'REMOVE_LOG_EVENT', payload: id });

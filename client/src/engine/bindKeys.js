@@ -2,7 +2,7 @@ import { keys } from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
-import logAddEvent from './logAddEvent';
+import logAddEvent from './log/logAddEvent';
 import startMusic from './startMusic';
 
 const {

@@ -1,4 +1,4 @@
-import logAddEvent from './logAddEvent';
+import logAddEvent from './log/logAddEvent';
 import { getState, dispatch } from './store';
 
 export default (externalInput) => {

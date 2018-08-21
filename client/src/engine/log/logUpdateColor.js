@@ -1,5 +1,5 @@
-import getElementById from './getElementById';
-import { getState } from './store';
+import getElementById from '../getElementById';
+import { getState } from '../store';
 
 export default () => {
     const { automap: { showAutomap } } = getState();

@@ -1,5 +1,5 @@
-import logAddEvent from './logAddEvent';
-import logRemoveEvent from './logRemoveEvent';
+import logAddEvent from './log/logAddEvent';
+import logRemoveEvent from './log/logRemoveEvent';
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import checkForCheat from './checkForCheat';

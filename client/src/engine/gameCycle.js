@@ -2,7 +2,7 @@ import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import move from './move';
 import ai from './ai';
-import logUpdateColor from './logUpdateColor';
+import logUpdateColor from './log/logUpdateColor';
 import automap from './automap';
 
 const gameCycle = () => {

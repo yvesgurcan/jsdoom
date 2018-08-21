@@ -1,6 +1,6 @@
-import getElementById from './getElementById';
-import logRemoveEvent from './logRemoveEvent';
-import { getState, dispatch } from './store';
+import getElementById from '../getElementById';
+import logRemoveEvent from '../log/logRemoveEvent';
+import { getState, dispatch } from '../store';
 
 export default (message = '') => {
     dispatch({ type: 'ADD_LOG_EVENT', payload: message });

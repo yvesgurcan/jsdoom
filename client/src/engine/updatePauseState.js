@@ -2,7 +2,7 @@ import { getState, dispatch } from './store';
 import automap from './automap';
 import getElementById from './getElementById';
 import updateFPS from './updateFPS';
-import logUpdateColor from './logUpdateColor';
+import logUpdateColor from './log/logUpdateColor';
 
 export default (togglePause) => {
     const {
