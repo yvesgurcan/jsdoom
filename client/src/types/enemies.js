@@ -8,6 +8,8 @@ export default {
             start: 'A',
             end: 'D',
             count: 4,
+            sounds: ['DSPOSACT'],
+            soundBaseInterval: 3000,
         },
     },
     ss: {

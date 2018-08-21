@@ -49,6 +49,30 @@ export default (prevState = initState, action) => {
             });
             return nextState;           
         }
+        case 'SET_ENEMY_ACTIVE_SOUND': {
+            const nextState = prevState.map((enemy, i) => {
+                if (i === index) {
+                    return {
+                        ...enemy,
+                        soundQueued: true,
+                    };
+                }
+                return enemy;
+            });
+            return nextState;
+        }
+        case 'UNSET_ENEMY_ACTIVE_SOUND': {
+            const nextState = prevState.map((enemy, i) => {
+                if (i === index) {
+                    return {
+                        ...enemy,
+                        soundQueued: false,
+                    };
+                }
+                return enemy;
+            });
+            return nextState;      
+        }
         case 'STOP_ENEMY': {
             const nextState = prevState.map((enemy, i) => {
                 if (i === index) {
