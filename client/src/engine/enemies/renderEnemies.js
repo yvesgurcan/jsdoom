@@ -1,4 +1,4 @@
-import { getState } from './store';
+import { getState } from '../store';
 
 export default () => {
     const {

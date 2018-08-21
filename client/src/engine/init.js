@@ -5,7 +5,7 @@ import startMusic from './startMusic';
 import initScreen from './initScreen';
 import initPlayer from './initPlayer';
 import initDecorations from './initDecorations';
-import initEnemies from './initEnemies';
+import initEnemies from './enemies/initEnemies';
 import initAutomap from './initAutomap';
 import gameCycle from './gameCycle';
 import renderCycle from './renderCycle';

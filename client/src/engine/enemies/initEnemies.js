@@ -2,11 +2,11 @@ import uuid4 from 'uuid4';
 import {
     enemyPath,
     imgExt,
-} from './constants';
-import getElementById from './getElementById';
-import createElement from './createElement';
+} from '../constants';
+import getElementById from '../getElementById';
+import createElement from '../createElement';
 
-import { getState, dispatch } from './store';
+import { getState, dispatch } from '../store';
 
 export default () => {
     let enemies = [];

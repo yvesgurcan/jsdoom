@@ -3,7 +3,7 @@ import updateAutomap from './updateAutomap';
 import clearDecorations from './clearDecorations';
 import castRays from './castRays';
 import renderDecorations from './renderDecorations';
-import renderEnemies from './renderEnemies';
+import renderEnemies from './enemies/renderEnemies';
 import updateFPS from './updateFPS';
 
 const renderCycle = () => {
