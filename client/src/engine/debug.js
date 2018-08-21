@@ -3,7 +3,7 @@ import logRemoveEvent from './logRemoveEvent';
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import checkForCheat from './checkForCheat';
-import changeMusic from './changeMusic';
+import startMusic from './startMusic';
 
 const debugPlayer = {
     init: () => {
@@ -44,7 +44,7 @@ const debugPause = () => updatePauseState(true);
 const debugCheat = (input) => (input.toUpperCase ? checkForCheat(input.toUpperCase()) : false);
 
 const debugSong = {
-    random: changeMusic,
+    random: () => startMusic(true),
 };
 
 console.log('debug functions', {

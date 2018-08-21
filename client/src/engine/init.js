@@ -1,7 +1,7 @@
 import resizeView from './resizeView';
 import bindKeys from './bindKeys';
 import debug from './debug';
-import initMusic from './initMusic';
+import startMusic from './startMusic';
 import initScreen from './initScreen';
 import initPlayer from './initPlayer';
 import initDecorations from './initDecorations';
@@ -14,7 +14,7 @@ export default () => {
     debug();
     resizeView();
     bindKeys();
-    initMusic();
+    startMusic();
 	initScreen();
     initPlayer();
 	initDecorations();

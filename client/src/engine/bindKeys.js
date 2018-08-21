@@ -3,7 +3,7 @@ import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
 import logAddEvent from './logAddEvent';
-import changeMusic from './changeMusic';
+import startMusic from './startMusic';
 
 const {
     UP, W,
@@ -77,7 +77,7 @@ export default () => {
                 break;
             }
             case M: {
-                changeMusic();
+                startMusic(true);
                 break;
             }
         }

@@ -2,7 +2,12 @@ import songs from '../types/music';
 import logAddEvent from './logAddEvent';
 import { dispatch, getState } from './store';
 
-const startMusic = () => {
+const startMusic = (log = true) => {
+    const { music: { song: songState } } = getState();
+    if (songState && songState.play) {
+        songState.pause();
+    }
+
     const songNames = Object.keys(songs).map(name => name);
     const randomIndex = Math.floor(Math.random() * (songNames.length - 1));
     const songName = songs[songNames[randomIndex]];
@@ -23,13 +28,15 @@ const startMusic = () => {
             return true;
         })
         .catch((error) => {
-            console.error(`initMusic(): Couldn't play '${songName}'.`, { error });
-            logAddEvent(`Couldn't play '${songName}'.`);
+            if (log) {
+                console.error(`initMusic(): Couldn't play '${songName}'.`, { error });
+                logAddEvent(`Couldn't play '${songName}'.`);
+            }
             return false;
         });
 };
 
-export default (dontListenForClick) => {
+export default (dontListenForClick = false) => {
     if (dontListenForClick) {
         const { keyStrokes: { keyPressCount } } = getState();
         if (keyPressCount > 1) {
