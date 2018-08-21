@@ -1,17 +1,13 @@
 export default {
-	ss: {
-        img: 'guard',
-        moveSpeed: 0.05,
-        rotSpeed: 3,
-        totalStates: 13,
-    },
 	chaingunner: {
         prefix: 'CPOS',
-        moveSpeed: 0.04,
+        moveSpeed: 0.05,
         rotSpeed: 3,
         walk: {
-            frames: 'A-D',
+            cycle: 1000,
+            start: 'A',
+            end: 'D',
+            count: 4,
         },
-        img: 'guard', // FIXME
     },
 };
