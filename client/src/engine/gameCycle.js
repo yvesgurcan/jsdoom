@@ -1,7 +1,7 @@
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import move from './move';
-import ai from './ai';
+import chasePlayer from './chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
 import automap from './automap';
 
@@ -31,9 +31,15 @@ const gameCycle = () => {
 
     // time since last game logic
     const timeDelta = now - lastCycle;
-    move('player', player, timeDelta);
-    ai(timeDelta);
+    
+    if (player.speed !== 0 || player.dir !== 0) {
+        move('player', player, timeDelta);
+    }
+
+    chasePlayer(timeDelta);
+
     logUpdateColor();
+
     automap();
 
 
