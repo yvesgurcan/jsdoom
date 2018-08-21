@@ -1,8 +1,15 @@
+import {
+    enemyPath,
+    imgExt,
+} from '../constants';
+import convertLetterToNumber from '../util/convertLetterToNumber';
+import convertNumberToLetter from '../util/convertNumberToLetter';
 import { getState } from '../store';
 
 export default () => {
     const {
         enemyMap: enemies,
+        enemyTypes,
         player,
         view: {
             screenHeight,
@@ -18,10 +25,30 @@ export default () => {
 
 	for (let i = 0; i < enemies.length; i++) {  
         const enemy = { ...enemies[i] };
-		const img = enemy.img;
+        const {
+            x,
+            y,
+            type,
+            speed,
+            walkFrame,
+            oldStyles,
+            img,
+        } = enemy;
 
-		const dx = enemy.x - player.x;
-		const dy = enemy.y - player.y;
+        const enemyType = { ...enemyTypes[type] };
+        const {
+            prefix,
+            walk: { start },
+        } = enemyType;
+        
+        if (speed !== 0) {
+            const offset = convertLetterToNumber(start);
+            const frame = convertNumberToLetter(walkFrame + offset);
+            img.src = `${enemyPath}/${prefix}/${prefix}${frame}1${imgExt}`;
+        }
+
+		const dx = x - player.x;
+		const dy = y - player.y;
 
 		let angle = Math.atan2(dy, dx) - player.rot;
 
@@ -34,15 +61,15 @@ export default () => {
 			const dist = Math.sqrt(distSquared);
 			const size = viewDist / (Math.cos(angle) * dist);
 
+            // not visible
 			if (size <= 0) {
                 /* eslint-disable-next-line */
                 continue;
             }
 
-			const x = Math.tan(angle) * viewDist;
+			const renderX = Math.tan(angle) * viewDist;
 
 			const style = img.style;
-			const oldStyles = enemy.oldStyles;
 
 			// height is equal to the sprite size
 			if (size !== oldStyles.height) {
@@ -58,7 +85,7 @@ export default () => {
 			}
 
 			// place at x position, adjusted for sprite size
-			const styleLeft = (((screenWidth / 2) + x) - (size / 2));
+			const styleLeft = (((screenWidth / 2) + renderX) - (size / 2));
 			if (styleLeft !== oldStyles.left) {
 				style.left = `${styleLeft}px`;
 				oldStyles.left = styleLeft;
