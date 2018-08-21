@@ -790,7 +790,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// see SPRITES.md for details\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'chaingunner', x: 18, y: 6 },\n\t{ type: 'chaingunner', x: 18, y: 8 },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n// see SPRITES.md for details\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'chaingunner', x: 18, y: 6 },\n\t{ type: 'ss', x: 18, y: 8 },\n\t{ type: 'cyberdemon', x: 14, y: 12 },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
 
 /***/ }),
 
@@ -838,7 +838,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tchaingunner: {\n        prefix: 'CPOS',\n        moveSpeed: 0.05,\n        rotSpeed: 3,\n        walk: {\n            cycle: 1000,\n            start: 'A',\n            end: 'D',\n            count: 4,\n        },\n    },\n});\n\n\n//# sourceURL=webpack:///./client/src/types/enemies.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tchaingunner: {\n        prefix: 'CPOS',\n        moveSpeed: 0.06,\n        rotSpeed: 3,\n        walk: {\n            cycle: 700,\n            start: 'A',\n            end: 'D',\n            count: 4,\n        },\n    },\n    ss: {\n        prefix: 'SSWV',\n        moveSpeed: 0.05,\n        rotSpeed: 3,\n        walk: {\n            cycle: 700,\n            start: 'A',\n            end: 'D',\n            count: 4,\n        },       \n    },\n    cyberdemon: {\n        prefix: 'CYBR',\n        moveSpeed: 0.04,\n        rotSpeed: 5,\n        walk: {\n            cycle: 700,\n            start: 'A',\n            end: 'D',\n            count: 4,\n        },       \n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/types/enemies.js?");
 
 /***/ }),
 
