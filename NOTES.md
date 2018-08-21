@@ -1,5 +1,12 @@
 # Release Notes
 
+## v0.2.5 - 2018/08/20
+
+* Walk animations
+
+Enemies now animate when they chase you! We have a chaingunner, a cybie, and a SS. The other enemies' animations are slightly less straightforward, so it will take me a little longer to get these working. The peeps at id Software were smart enough to mirror the enemies' animations in order to save them from drawing all the sprites. However, my little engine (that could) is not smart enough to handle angles yet, so I'll have to be clever as well in order to make sure that the sprites make it all the way to the renderer even if the filenames are not as predictable as with our good old SSes.
+
+Now that we have walking enemies, it's pretty cool, if you ask me. Makes it all more real. Yet, the engine right now feels more like a very alpha of Doom than the actual game when it was released to the public.
 
 ## v0.2.4 - 2018/08/19
 
