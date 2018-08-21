@@ -1,5 +1,6 @@
-import move from './move';
-import { dispatch, getState } from './store';
+import move from '../move';
+import playActiveSound from './playActiveSound';
+import { dispatch, getState } from '../store';
 
 export default (timeDelta) => {
     const {
@@ -15,7 +16,10 @@ export default (timeDelta) => {
         const dx = player.x - enemy.x;
         const dy = player.y - enemy.y;
         const dist = Math.sqrt((dx * dx) + (dy * dy));
+
         if (dist > 1) {
+            playActiveSound(enemy, enemyType, index);
+
             const rot = Math.atan2(dy, dx);
             const rotDeg = (rot * 180) / Math.PI;
             const speed = 1;

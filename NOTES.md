@@ -1,5 +1,11 @@
 # Release Notes
 
+# v0.2.6 - 2018/08/21
+
+* Enemy walking sounds
+
+Enemies can now emit a sound at fixed/random interval while they are chasing the player. Totally sets the mood :)
+
 ## v0.2.5 - 2018/08/20
 
 * Walk animations

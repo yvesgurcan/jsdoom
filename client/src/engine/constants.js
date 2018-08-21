@@ -1,9 +1,11 @@
-const assetsPath = 'client/assets';
+const assetPath = 'client/assets';
 
-export const wolfPath = `${assetsPath}/wolf`;
+export const wolfPath = `${assetPath}/wolf`;
 export const imgExt = '.png';
-export const decorationPath = `${assetsPath}/decorations`;
-export const enemyPath = `${assetsPath}/monsters`;
+export const decorationPath = `${assetPath}/decorations`;
+export const enemyPath = `${assetPath}/monsters`;
+export const soundPath = `${assetPath}/sound`;
+export const sndExt = '.wav';
 
 export const miniMapScale = 20;
 

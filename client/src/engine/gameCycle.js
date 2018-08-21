@@ -1,7 +1,7 @@
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import move from './move';
-import chasePlayer from './chasePlayer';
+import chasePlayer from './enemies/chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
 import automap from './automap';
 
