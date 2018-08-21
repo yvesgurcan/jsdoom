@@ -10,7 +10,13 @@ export default () => {
             screenHeight,
             viewDist,
         },
+        automap: { showAutomap },
     } = getState();
+
+    if (showAutomap) {
+        return false;
+    }
+
 	for (let i = 0; i < visibleSprites.length; i++) {
 		const sprite = visibleSprites[i];
 		const img = sprite.img;

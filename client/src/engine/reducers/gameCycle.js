@@ -1,7 +1,11 @@
 const initState = {
-    keyPressCount: 0,
-    history: [],
+    // set the goal for max FPS
+    delay: 1000 / 30,
+    lastCycle: 0,
+    lastRender: 0,
+    paused: false,
 };
+
 export default (prevState = initState, action) => {
     const {
         type,
@@ -10,25 +14,24 @@ export default (prevState = initState, action) => {
 
     switch (type) {
         default: return prevState;
-        case 'INCREMENT_KEYPRESS_COUNT': {
+        case 'SET_LAST_GAME_CYCLE_TIME': {
             return {
                 ...prevState,
-                keyPressCount: prevState.keyPressCount + 1,
+                lastCycle: payload,
             };
         }
-        case 'REGISTER_KEY_STROKE': {
+        case 'SET_LAST_RENDER_CYCLE_TIME': {
             return {
                 ...prevState,
-                history: [
-                    ...prevState.history,
-                    payload,
-                ],
+                lastRender: payload,
             };
         }
-        case 'CLEAR_KEY_STROKES': {
+        case 'TOGGLE_PAUSE': {
+            const now = new Date().getTime();
             return {
                 ...prevState,
-                history: [],
+                paused: !prevState.paused,
+                lastCycle: now,
             };
         }
     }

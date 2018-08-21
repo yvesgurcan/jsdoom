@@ -8,9 +8,7 @@ import enemyMap from './enemyMap';
 import decorationTypes from './decorationTypes';
 import decorationMap from './decorationMap';
 import decorationMapPlacement from './decorationMapPlacement';
-import gameCycleDelay from './gameCycleDelay';
-import lastGameCycleTime from './lastGameCycleTime';
-import lastRenderCycleTime from './lastRenderCycleTime';
+import gameCycle from './gameCycle';
 import hud from './hud';
 import visibleSprites from './visibleSprites';
 import oldVisibleSprites from './oldVisibleSprites';
@@ -30,9 +28,7 @@ export default combineReducers({
     decorationTypes,
     decorationMap,
     decorationMapPlacement,
-    gameCycleDelay,
-    lastGameCycleTime,
-    lastRenderCycleTime,
+    gameCycle,
     hud,
     visibleSprites,
     oldVisibleSprites,

@@ -9,6 +9,8 @@ export default () => {
 		const sprite = visibleSprites[i];
 		oldVisibleSprites[i] = sprite;
         sprite.visible = false;
-	}
-	dispatch({ type: 'UPDATE_SPRITES', visibleSprites: [], oldVisibleSprites });
+    }
+    
+    // FIXME: this is not right; and the decorations are not immutable... :(
+	dispatch({ type: 'UPDATE_SPRITES', visibleSprites: oldVisibleSprites, oldVisibleSprites });
 };

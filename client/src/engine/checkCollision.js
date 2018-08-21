@@ -21,7 +21,6 @@ export default (fromX, fromY, toX, toY, radius) => {
 	const blockX = Math.floor(toX);
 	const blockY = Math.floor(toY);
 
-
 	if (isBlocking(blockX, blockY)) {
 		return pos;
     }

@@ -2,7 +2,8 @@ import { keys } from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
-import logAddEvent from './logAddEvent';
+import logAddEvent from './log/logAddEvent';
+import startMusic from './startMusic';
 
 const {
     UP, W,
@@ -11,10 +12,14 @@ const {
     RIGHT, D,
     TAB,
     SHIFT,
+    COMMAND,
     MINUS, NUMPAD_MINUS,
     EQUAL, NUMPAD_PLUS,
-    V,
     F,
+    M,
+    P,
+    R,
+    V,
 } = keys;
 
 console.table({
@@ -26,24 +31,67 @@ console.table({
     TAB: 'toggle automap',
     MINUS: 'turn volume down',
     'EQUAL-or-PLUS': 'turn volume up',
-    V: 'toggle viewing cone (automap only)',
     F: 'toggle FPS count',
+    M: 'change song',
+    P: 'toggle pause',
+    V: 'toggle viewing cone (automap only)',
 });
 
 export default () => {
 	document.onkeydown = (event) => {
         const { keyCode } = event;
 
-        // allow page refresh (Command + R)
-        if (keyCode !== 91 && keyCode !== 82) {
+        // allow page refresh
+        if (keyCode !== COMMAND && keyCode !== R) {
             event.preventDefault();
         }
         console.log({ keyCode });
 
+        const { keyStrokes: { keyPressCount } } = getState();
+        if (keyPressCount < 2) {
+            dispatch({ type: 'INCREMENT_KEYPRESS_COUNT' });
+        }
+
+        switch (keyCode) {
+            default: break;
+            case P: {
+                dispatch({ type: 'TOGGLE_PAUSE' });
+                break;
+            }
+            case NUMPAD_MINUS:
+            case MINUS: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume - 0.1);
+                logAddEvent('Volume down.');
+                break;
+            }
+            case NUMPAD_PLUS:
+            case EQUAL: {
+                const { music: { volume } } = getState();
+                adjustMusicVolume(volume + 0.1);
+                logAddEvent('Volume up.');
+                break;
+            }
+            case F: {
+                dispatch({ type: 'TOGGLE_FPS' });
+                break;
+            }
+            case M: {
+                startMusic(true);
+                break;
+            }
+        }
+
+        const { gameCycle: { paused } } = getState();
+        if (paused) {
+            return false;
+        }
+
         dispatch({ type: 'REGISTER_KEY_STROKE', payload: keyCode });
+
         const cheat = checkForCheat();
         if (cheat) {
-            return;
+            return false;
         }
 
         switch (keyCode) {
@@ -76,26 +124,8 @@ export default () => {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
                 break;
             }
-            case NUMPAD_MINUS:
-            case MINUS: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume - 0.1);
-                logAddEvent('Volume down.');
-                break;
-            }
-            case NUMPAD_PLUS:
-            case EQUAL: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume + 0.1);
-                logAddEvent('Volume up.');
-                break;
-            }
             case V: {
                 dispatch({ type: 'TOGGLE_VIEWING_CONE' });
-                break;
-            }
-            case F: {
-                dispatch({ type: 'TOGGLE_FPS' });
                 break;
             }
         }
@@ -104,6 +134,12 @@ export default () => {
 	document.onkeyup = (event) => {
         const { keyCode } = event;
         event.preventDefault();
+        
+        const { gameCycle: { paused } } = getState();
+        if (paused) {
+            return false;
+        }
+
 		switch (keyCode) {
             default: break;
             case UP:

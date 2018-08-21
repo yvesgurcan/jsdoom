@@ -1,8 +1,9 @@
 const assetsPath = 'client/assets';
 
 export const wolfPath = `${assetsPath}/wolf`;
-export const ext = '.png';
+export const imgExt = '.png';
 export const decorationPath = `${assetsPath}/decorations`;
+export const enemyPath = `${assetsPath}/monsters`;
 
 export const miniMapScale = 20;
 
@@ -19,14 +20,18 @@ export const keys = {
     RIGHT: 39,
     SHIFT: 16,
     TAB: 9,
+    COMMAND: 91,
     MINUS: 189,
     EQUAL: 187,
     NUMPAD_MINUS: 109,
     NUMPAD_PLUS: 107,
-    W: 87,
-    S: 83,
     A: 65,
     D: 68,
-    V: 86,
     F: 70,
+    M: 77,
+    P: 80,
+    R: 82,
+    S: 83,
+    V: 86,
+    W: 87,
 };

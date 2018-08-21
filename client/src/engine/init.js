@@ -1,11 +1,11 @@
 import resizeView from './resizeView';
 import bindKeys from './bindKeys';
 import debug from './debug';
-import initMusic from './initMusic';
+import startMusic from './startMusic';
 import initScreen from './initScreen';
 import initPlayer from './initPlayer';
-import initSprites from './initSprites';
-import initEnemies from './initEnemies';
+import initDecorations from './initDecorations';
+import initEnemies from './enemies/initEnemies';
 import initAutomap from './initAutomap';
 import gameCycle from './gameCycle';
 import renderCycle from './renderCycle';
@@ -14,10 +14,10 @@ export default () => {
     debug();
     resizeView();
     bindKeys();
-    initMusic();
+    startMusic();
 	initScreen();
     initPlayer();
-	initSprites();
+	initDecorations();
 	initEnemies();
 	initAutomap();
 	gameCycle();

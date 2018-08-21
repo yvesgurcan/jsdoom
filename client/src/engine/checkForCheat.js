@@ -1,12 +1,13 @@
-import logAddEvent from './logAddEvent';
+import logAddEvent from './log/logAddEvent';
 import { getState, dispatch } from './store';
 
-export default () => {
+export default (externalInput) => {
     const cheats = [
         'IDDT',
+        'IDMUS',
     ];
-    const { keyStrokes } = getState();
-    const input = keyStrokes.map(key => String.fromCharCode(key)).join('');
+    const { keyStrokes: { history } } = getState();
+    const input = externalInput || history.map(key => String.fromCharCode(key)).join('');
     const match = cheats.find(cheat => input.indexOf(cheat) > -1);
     switch (match) {
         default: return false;

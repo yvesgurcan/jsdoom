@@ -1,6 +1,6 @@
 import {
     wolfPath,
-    ext,
+    imgExt,
     stripWidth,
     twoPI,
 } from './constants';
@@ -188,7 +188,7 @@ export default (rayAngle, stripIdx) => {
             return;
         }
 
-        const styleSrc = `${wolfPath}/${wallTexture}${ext}`;
+        const styleSrc = `${wolfPath}/${wallTexture}${imgExt}`;
         if (oldStyles.src !== styleSrc) {
             strip.src = styleSrc;
             oldStyles.src = styleSrc;

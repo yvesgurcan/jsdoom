@@ -1,4 +1,7 @@
-const initState = {};
+const initState = {
+    volume: 0.1,
+    song: null,
+};
 
 export default (prevState = initState, action) => {
     const {
@@ -6,6 +9,7 @@ export default (prevState = initState, action) => {
         payload = {},
     } = action;
     const {
+        song,
         songName,
         volume,
     } = payload;
@@ -15,6 +19,7 @@ export default (prevState = initState, action) => {
         case 'SET_MUSIC': {
             return {
                 ...prevState,
+                song,
                 songName,
                 volume: volume || prevState.volume,
             };

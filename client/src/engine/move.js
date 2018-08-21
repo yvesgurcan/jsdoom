@@ -5,13 +5,21 @@ import {
 import checkCollision from './checkCollision';
 
 export default (entityType, entity, timeDelta, index) => {
-    const { gameCycleDelay } = getState();
+    const {
+        gameCycle: { delay },
+    } = getState();
+
+    if (delay <= 0) {
+        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        return false;
+    }
+
 	// time timeDelta has passed since we moved last time. We should have moved after time gameCycleDelay, 
 	// so calculate how much we should multiply our movement to ensure game speed is constant
 
     const updatedEntity = { ...entity };
 
-	const mul = timeDelta / gameCycleDelay;
+	const mul = timeDelta / delay;
 	
     
     let newX = updatedEntity.x;
@@ -31,7 +39,7 @@ export default (entityType, entity, timeDelta, index) => {
             newY += (Math.sin(updatedEntity.rot - (Math.PI / 2)) * moveStep);
         }
         if (updatedEntity.speed !== 0) {
-            moveStep = (mul * updatedEntity.speed * updatedEntity.moveSpeed) / reduceSpeed;
+            moveStep = (mul * updatedEntity.moveSpeed) / reduceSpeed;
             
             newX += (Math.cos(updatedEntity.rot) * moveStep);
             newY += (Math.sin(updatedEntity.rot) * moveStep);
@@ -61,23 +69,21 @@ export default (entityType, entity, timeDelta, index) => {
     }
 
 	const pos = checkCollision(updatedEntity.x, updatedEntity.y, newX, newY, 0.01);
-
-	updatedEntity.x = pos.x; // set new position
+    
+    // set new position
+	updatedEntity.x = pos.x; 
     updatedEntity.y = pos.y;
 
-    if (moveStep !== 0 || rotation !== 0) {
-        switch (entityType) {
-            default: break;
-            case 'enemy': {
-                dispatch({ type: 'SET_ENEMY_COORDINATES', index, payload: updatedEntity });
-                break;
-            }
-            case 'player': {
-                dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedEntity });
-                break;
-            }
+    switch (entityType) {
+        default: break;
+        case 'enemy': {
+            dispatch({ type: 'UPDATE_ENEMY_COORDINATES', index, payload: { x: updatedEntity.x, y: updatedEntity.y } });
+            break;
         }
-        return true;
+        case 'player': {
+            dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedEntity });
+            break;
+        }
     }
 
     return false;

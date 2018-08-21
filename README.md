@@ -6,6 +6,8 @@
 
 ## [Release Notes](NOTES.md)
 
+## [How enemey sprites work](ENEMY_SPRITES.md)
+
 ## Setup
 
 ```npm install```

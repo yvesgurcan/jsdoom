@@ -1,4 +1,7 @@
+// see SPRITES.md for details
+
 export default [
-	{ type: 'ss', x: 17.5, y: 4.5 },
-	{ type: 'ss', x: 25.5, y: 16.5 },
+	{ type: 'chaingunner', x: 18, y: 6 },
+	{ type: 'ss', x: 18, y: 8 },
+	{ type: 'cyberdemon', x: 14, y: 12 },
 ];
