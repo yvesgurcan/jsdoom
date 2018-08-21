@@ -44,7 +44,6 @@ export default () => {
             rotSpeed,
         } = enemyType;
 
-
         if (!prefix) {
             console.error('initEnemies(): Enemy type is missing a prefix for image filenames. Entity will not be placed on the map.', { entity: enemy, enemyType });
             /* eslint-disable-next-line */
