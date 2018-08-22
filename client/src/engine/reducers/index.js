@@ -16,6 +16,7 @@ import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
 import music from './music';
+import sound from './sound';
 import log from './log';
 
 export default combineReducers({
@@ -36,5 +37,6 @@ export default combineReducers({
     automap,
     keyStrokes,
     music,
+    sound,
     log,
 });

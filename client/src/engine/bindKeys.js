@@ -2,6 +2,7 @@ import { keys } from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
+import adjustSoundVolume from './sound/adjustSoundVolume';
 import logAddEvent from './log/logAddEvent';
 import startMusic from './startMusic';
 
@@ -60,15 +61,23 @@ export default () => {
             }
             case NUMPAD_MINUS:
             case MINUS: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume - 0.1);
+                const {
+                    music: { volume: musicVolume },
+                    sound: { volume: soundVolume },
+                } = getState();
+                adjustMusicVolume(musicVolume - 0.1);
+                adjustSoundVolume(soundVolume - 0.1);
                 logAddEvent('Volume down.');
                 break;
             }
             case NUMPAD_PLUS:
             case EQUAL: {
-                const { music: { volume } } = getState();
-                adjustMusicVolume(volume + 0.1);
+                const {
+                    music: { volume: musicVolume },
+                    sound: { volume: soundVolume },
+                } = getState();
+                adjustMusicVolume(musicVolume + 0.1);
+                adjustSoundVolume(soundVolume + 0.1);
                 logAddEvent('Volume up.');
                 break;
             }
