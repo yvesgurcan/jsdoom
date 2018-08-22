@@ -10,7 +10,7 @@ export default (filename, volume = 1) => {
         return false;
     }
     
-    const mixedVolume = Math.min(1, volume * masterVolume);
+    const mixedVolume = Math.min(masterVolume, volume * masterVolume);
 
     if (mixedVolume < 0.045) {
         return false;
