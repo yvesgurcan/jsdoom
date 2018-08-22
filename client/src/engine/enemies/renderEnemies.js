@@ -6,6 +6,41 @@ import convertLetterToNumber from '../util/convertLetterToNumber';
 import convertNumberToLetter from '../util/convertNumberToLetter';
 import { getState } from '../store';
 
+const getMirroredFrame = (walkFrame, delimiter) => {
+    if (walkFrame < delimiter) {
+        return convertNumberToLetter((walkFrame + delimiter) - 1);
+    }
+    return convertNumberToLetter((walkFrame - delimiter) + 1);
+};
+
+const getOppositeAngle = (spriteAngle) => {
+    if (spriteAngle === 1) {
+        return 1;
+    }
+    return 10 - spriteAngle;
+};
+
+const getMirroredFrameFilename = (walkFrame, frame, spriteAngle, delimiter, prefix) => {
+    const oppositeFrame = getMirroredFrame(walkFrame, delimiter);
+    const oppositeAngle = getOppositeAngle(spriteAngle);
+    if (walkFrame < delimiter) {
+        return `${prefix}${frame}${spriteAngle}${oppositeFrame}${oppositeAngle}`;
+    }
+    return `${prefix}${oppositeFrame}${oppositeAngle}${frame}${spriteAngle}`;
+};
+
+const getMirroredAngleFilename = (frame, spriteAngle, prefix, reversedAngles = false) => {
+    const oppositeAngle = getOppositeAngle(spriteAngle);
+    console.log({ spriteAngle, oppositeAngle })
+    if (spriteAngle === 1 || spriteAngle === 5) {
+        return `${prefix}${frame}${spriteAngle}`;
+    }
+    if ((reversedAngles && spriteAngle > 5) || (!reversedAngles && spriteAngle < 5)) {
+        return `${prefix}${frame}${spriteAngle}${frame}${oppositeAngle}`;
+    }
+    return `${prefix}${frame}${oppositeAngle}${frame}${spriteAngle}`;
+};
+
 export default () => {
     const {
         enemyMap: enemies,
@@ -38,19 +73,53 @@ export default () => {
         const enemyType = { ...enemyTypes[type] };
         const {
             prefix,
-            walk: { start },
+            walk: {
+                start,
+                count,
+                mirroredAngles,
+                reversedAngles,
+                mirroredFrames,
+                mirroredFramesAnglesNotShared,
+            },
         } = enemyType;
-        
+
+        const spriteAngle = 1;
+
+        // update sprite
         if (speed !== 0) {
             const offset = convertLetterToNumber(start);
             const frame = convertNumberToLetter(walkFrame + offset);
-            img.src = `${enemyPath}/${prefix}/${prefix}${frame}1${imgExt}`;
+
+            // sprite uses mirrored frames+angles for the second half of the animation (A1D1, A2D8, A3D7, A4D6, A5D5, A6D4, A7D3, A8D2)
+            if (mirroredFrames || (mirroredFramesAnglesNotShared && (spriteAngle === 1 || spriteAngle === 5))) {
+                const delimiter = (count / 2) + 1;
+                const filename = getMirroredFrameFilename(walkFrame, frame, spriteAngle, delimiter, prefix, mirroredFramesAnglesNotShared);
+                img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                if (walkFrame < delimiter) {
+                    img.style.transform = 'scaleX(1)';
+                } else { 
+                    img.style.transform = 'scaleX(-1)';
+                }
+            // sprite uses mirrored angles for the same frame and mirrored frames on angle 1 and 5 (A1D1, A2A8, A3A7, A4A6, A5D5)
+            // or sprite uses mirrored angles for the same frame (A1, A2A8, A3A7, A4A6, A5)
+            } else if (mirroredFramesAnglesNotShared || mirroredAngles) {
+                const filename = getMirroredAngleFilename(frame, spriteAngle, prefix, reversedAngles);
+                img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                if ((reversedAngles && spriteAngle > 5) || (!reversedAngles && spriteAngle < 5)) {
+                    img.style.transform = 'scaleX(1)';
+                } else { 
+                    img.style.transform = 'scaleX(-1)';
+                }
+            // regular sprite (A1, A2, A3, A4, A5, A6, A7, A8)
+            } else {
+                img.src = `${enemyPath}/${prefix}/${prefix}${frame}${spriteAngle}${imgExt}`;
+            }
         }
 
 		const dx = x - player.x;
 		const dy = y - player.y;
 
-		let angle = Math.atan2(dy, dx) - player.rot;
+        let angle = Math.atan2(dy, dx) - player.rot;
 
 		if (angle < -Math.PI) angle += 2 * Math.PI;
 		if (angle >= Math.PI) angle -= 2 * Math.PI;
