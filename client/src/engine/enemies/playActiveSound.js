@@ -1,9 +1,19 @@
-import {
-    soundPath,
-    sndExt,
-} from '../constants';
-import playSound from '../playSound';
-import { dispatch } from '../store';
+
+import playSound from '../sound/playSound';
+import calculateVolume from '../sound/calculateVolume';
+import { dispatch, getState } from '../store';
+
+const handleSound = (selectedSound, index) => {
+    const {
+        player,
+        enemyMap,
+    } = getState();
+
+    const enemy = enemyMap[index];
+    const adjustedVolume = calculateVolume(player, enemy);
+    playSound(selectedSound, adjustedVolume);
+    dispatch({ type: 'UNSET_ENEMY_ACTIVE_SOUND', index });
+};
 
 export default (enemy, enemyType, index) => {
     const { soundQueued } = enemy;
@@ -32,23 +42,14 @@ export default (enemy, enemyType, index) => {
     }
 
     if (soundFixedInterval) {
-        const path = `${soundPath}/${selectedSound}${sndExt}`;
         dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });
-        setTimeout(() => {
-            dispatch({ type: 'UNSET_ENEMY_ACTIVE_SOUND', index });
-            playSound(path);
-        }, soundFixedInterval);
+        setTimeout(() => handleSound(selectedSound, index), soundFixedInterval);
     }
 
     if (soundBaseInterval) {
-        const path = `${soundPath}/${selectedSound}${sndExt}`;
         const modifier = Math.random() > 0.5 ? 1 : -1;
         const randomInterval = soundBaseInterval + Math.floor(soundBaseInterval * (Math.random() / 1.5) * modifier);
-        console.log({ randomInterval });
         dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });
-        setTimeout(() => {
-            playSound(path);
-            dispatch({ type: 'UNSET_ENEMY_ACTIVE_SOUND', index });
-        }, randomInterval);
+        setTimeout(() => handleSound(selectedSound, index), randomInterval);
     }
 };
