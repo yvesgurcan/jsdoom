@@ -27,26 +27,25 @@ export default (enemy, enemyType, index) => {
     }
 
     const {
-        sounds,
+        soundFixed,
+        soundRandom,
         soundFixedInterval,
         soundBaseInterval,
     } = walk;
-    if (!sounds) {
+    if (!soundFixed && !soundRandom) {
         return false;
     }
 
-    let selectedSound = null;
-    if (soundFixedInterval || soundBaseInterval) {
-        const randomSoundIndex = Math.floor(Math.random() * sounds.length) / sounds.length;
-        selectedSound = sounds[randomSoundIndex];
-    }
-
     if (soundFixedInterval) {
+        const randomSoundIndex = Math.floor(Math.random() * soundFixed.length) / soundFixed.length;
+        const selectedSound = soundFixed[randomSoundIndex];
         dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });
         setTimeout(() => handleSound(selectedSound, index), soundFixedInterval);
     }
 
     if (soundBaseInterval) {
+        const randomSoundIndex = Math.floor(Math.random() * soundRandom.length) / soundRandom.length;
+        const selectedSound = soundRandom[randomSoundIndex];
         const modifier = Math.random() > 0.5 ? 1 : -1;
         const randomInterval = soundBaseInterval + Math.floor(soundBaseInterval * (Math.random() / 1.5) * modifier);
         dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });

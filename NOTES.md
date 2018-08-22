@@ -1,5 +1,11 @@
 # Release Notes
 
+# v0.2.7 - 2018/08/21
+
+* Walk animations (mirrored frames, mirrored angles, reversed angles, and other fun things)
+
+I've added the less-straightforward walk animations for the Spider Mastermind, the Archvile, and so on. It was a very interesting dive into how id Software found amazing shortcuts to avoid drawing so many enemy sprites! Pretty cool.
+
 # v0.2.6 - 2018/08/21
 
 * Enemy walking sounds

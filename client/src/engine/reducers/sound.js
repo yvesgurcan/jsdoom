@@ -1,6 +1,5 @@
 const initState = {
-    volume: 0.2,
-    song: null,
+    volume: 0.4,
 };
 
 export default (prevState = initState, action) => {
@@ -9,22 +8,12 @@ export default (prevState = initState, action) => {
         payload = {},
     } = action;
     const {
-        song,
-        songName,
-        volume,
+        volume
     } = payload;
 
     switch (type) {
         default: return prevState;
-        case 'SET_MUSIC': {
-            return {
-                ...prevState,
-                song,
-                songName,
-                volume: volume || prevState.volume,
-            };
-        }
-        case 'SET_MUSIC_VOLUME': {
+        case 'SET_SOUND_VOLUME': {
             return {
                 ...prevState,
                 volume,
