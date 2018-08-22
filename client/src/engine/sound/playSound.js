@@ -19,7 +19,6 @@ export default (filename, volume = 1) => {
     const path = `${soundPath}/${filename}${sndExt}`;
     const sound = new Audio(path);
     sound.volume = mixedVolume;
-    console.log({ mixedVolume });
     sound.play();
     return true;
 };
