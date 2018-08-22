@@ -28,10 +28,12 @@ export default {
         moveSpeed: 0.04,
         rotSpeed: 5,
         walk: {
-            cycle: 700,
+            cycle: 800,
             start: 'A',
             end: 'D',
             count: 4,
+            sounds: ['DSHOOF'],
+            soundFixedInterval: 800,
         },       
     }
 };
