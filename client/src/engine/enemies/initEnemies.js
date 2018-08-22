@@ -37,7 +37,14 @@ export default () => {
             continue;
         }
         
-        const enemyType = enemyTypes[enemy.type];
+        const enemyType = enemyTypes[type];
+
+        if (!enemyType) {
+            console.error(`initEnemies(): Enemy type '${type}' is undefined. Entity will not be placed on the map.`, { entity: enemy, enemyType });
+            /* eslint-disable-next-line */
+            continue;
+        }
+
         const {
             prefix,
             moveSpeed,
