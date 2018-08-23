@@ -36,9 +36,9 @@ const debugPlayer = {
 const debugEnemies = {
     pos: (index) => {
         const { enemyMap } = getState();
-        const enemy = enemyMap[index];
+        const enemy = enemyMap[index - 1];
         if (!enemy) {
-            console.error(`Index is out of range (max: ${enemyMap.length})`);
+            console.error(`Index ${index} is out of range (max: ${enemyMap.length})`);
             return {};
         }
         return enemy;
