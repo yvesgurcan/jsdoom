@@ -31,7 +31,7 @@ const getMirroredFrameFilename = (walkFrame, frame, spriteAngle, delimiter, pref
 
 const getMirroredAngleFilename = (frame, spriteAngle, prefix, reversedAngles = false) => {
     const oppositeAngle = getOppositeAngle(spriteAngle);
-    console.log({ spriteAngle, oppositeAngle })
+    // console.log({ spriteAngle, oppositeAngle })
     if (spriteAngle === 1 || spriteAngle === 5) {
         return `${prefix}${frame}${spriteAngle}`;
     }
@@ -54,6 +54,11 @@ export default () => {
         automap: { showAutomap },
     } = getState();
 
+
+    const {
+        rotDeg: playerRotDeg,
+    } = player;
+
     if (showAutomap) {
         return false;
     }
@@ -65,6 +70,7 @@ export default () => {
             y,
             type,
             speed,
+            rotDeg,
             walkFrame,
             oldStyles,
             img,
@@ -83,7 +89,16 @@ export default () => {
             },
         } = enemyType;
 
-        const spriteAngle = 1;
+        let spriteAngle = 1;
+        if (rotDeg >= 0 && rotDeg <= 180) {
+            const result = playerRotDeg - rotDeg;
+            console.log({ result });
+            spriteAngle = 2;
+        } else if (rotDeg <= 0 && rotDeg >= -180) {
+            const result = playerRotDeg - rotDeg;
+            console.log({ result });
+            spriteAngle = 8;
+        }
 
         // update sprite
         if (speed !== 0) {

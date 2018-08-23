@@ -73,10 +73,10 @@ export default () => {
         img.style.position = 'absolute';
 
         const element = {
+            rotDeg: 0,
             ...enemy,
             id,
-            rot: 0,
-            rotDeg: 0,
+            rot: 0, // FIXME: this should probably be calculated based off rotDeg
             dir: 0,
             speed: 0,
             moveSpeed,

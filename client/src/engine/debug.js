@@ -24,13 +24,24 @@ const debugPlayer = {
         };
 
         dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedPlayer });
-
-        return true;
+        const { player: result } = getState();
+        return result;
     },
     pos: () => {
         const { player } = getState();
-        console.log(player);
-        return true;
+        return player;
+    }
+};
+
+const debugEnemies = {
+    pos: (index) => {
+        const { enemyMap } = getState();
+        const enemy = enemyMap[index];
+        if (!enemy) {
+            console.error(`Index is out of range (max: ${enemyMap.length})`);
+            return {};
+        }
+        return enemy;
     }
 };
 
@@ -49,6 +60,7 @@ const debugSong = {
 
 console.log('debug functions', {
     player: debugPlayer,
+    enemies: debugEnemies,
     log: debugLog,
     pause: debugPause,
     cheat: debugCheat,
@@ -57,6 +69,7 @@ console.log('debug functions', {
 
 export default () => {
     window.player = debugPlayer;
+    window.enemies = debugEnemies,
     window.log = debugLog;
     window.pause = debugPause;
     window.cheat = debugCheat;

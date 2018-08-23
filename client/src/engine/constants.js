@@ -37,3 +37,17 @@ export const keys = {
     V: 86,
     W: 87,
 };
+
+export const DIRECTIONS = {
+    NORTH: -90,
+    EAST: 0,
+    SOUTH: 90,
+    WEST: -180,
+};
+
+export const ANGLES = {
+    RIGHT: 90,
+    FRONT: 180,
+    LEFT: 270,
+    BACK: 360,
+};
