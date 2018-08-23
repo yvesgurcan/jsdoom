@@ -1,10 +1,36 @@
 import {
+    fov,
     enemyPath,
     imgExt,
+    ANGLE_DIFF,
+
 } from '../constants';
 import convertLetterToNumber from '../util/convertLetterToNumber';
 import convertNumberToLetter from '../util/convertNumberToLetter';
+import convertRadianToDegree from '../util/convertRadianToDegree';
 import { getState } from '../store';
+
+const getSpriteAngle = (angle) => {
+    let spriteAngle = 1;
+    if (angle > 45 - ANGLE_DIFF && angle < 45 + ANGLE_DIFF) {
+        spriteAngle = 4;
+    } else if (angle > 135 - ANGLE_DIFF && angle < 135 + ANGLE_DIFF) {
+        spriteAngle = 2;
+    } else if (angle > 90 - ANGLE_DIFF && angle < 90 + ANGLE_DIFF) {
+        spriteAngle = 3;
+    } else if (angle > 0 - ANGLE_DIFF && angle < 0 + ANGLE_DIFF) {
+        spriteAngle = 5;
+    } else if (angle > -45 - ANGLE_DIFF && angle < -45 + ANGLE_DIFF) {
+        spriteAngle = 6;
+    } else if (angle > -90 - ANGLE_DIFF && angle < -90 + ANGLE_DIFF) {
+        spriteAngle = 7;
+    // calculations are getting slightly weird here... is it really a 360 rotation!? I think there might be something wrong with the converter in utils
+    } else if (angle > 235 - ANGLE_DIFF || angle < 135 + ANGLE_DIFF) {
+        spriteAngle = 8;
+    }
+    console.log({ angle, spriteAngle });
+    return spriteAngle;
+};
 
 const getMirroredFrame = (walkFrame, delimiter) => {
     if (walkFrame < delimiter) {
@@ -31,7 +57,7 @@ const getMirroredFrameFilename = (walkFrame, frame, spriteAngle, delimiter, pref
 
 const getMirroredAngleFilename = (frame, spriteAngle, prefix, reversedAngles = false) => {
     const oppositeAngle = getOppositeAngle(spriteAngle);
-    console.log({ spriteAngle, oppositeAngle })
+    // console.log({ spriteAngle, oppositeAngle })
     if (spriteAngle === 1 || spriteAngle === 5) {
         return `${prefix}${frame}${spriteAngle}`;
     }
@@ -65,6 +91,7 @@ export default () => {
             y,
             type,
             speed,
+            rot,
             walkFrame,
             oldStyles,
             img,
@@ -83,7 +110,25 @@ export default () => {
             },
         } = enemyType;
 
-        const spriteAngle = 1;
+        const dx = x - player.x;
+        const dy = y - player.y;
+
+        let angle = Math.atan2(dy, dx) - player.rot;
+
+
+        if (angle < -Math.PI) angle += 2 * Math.PI;
+        if (angle >= Math.PI) angle -= 2 * Math.PI;
+
+        const outOfViewWithSafety = (fov / 2) + (fov * 0.5);
+        const inFrontOfPlayer = angle > -outOfViewWithSafety && angle < outOfViewWithSafety;
+
+        if (!inFrontOfPlayer) {
+            return false;
+        }
+
+        const enemyAngle = convertRadianToDegree(rot);
+        const angleToPlayer = convertRadianToDegree(Math.atan2(dy, dx)) - enemyAngle;
+        const spriteAngle = getSpriteAngle(angleToPlayer);
 
         // update sprite
         if (speed !== 0) {
@@ -115,14 +160,6 @@ export default () => {
                 img.src = `${enemyPath}/${prefix}/${prefix}${frame}${spriteAngle}${imgExt}`;
             }
         }
-
-		const dx = x - player.x;
-		const dy = y - player.y;
-
-        let angle = Math.atan2(dy, dx) - player.rot;
-
-		if (angle < -Math.PI) angle += 2 * Math.PI;
-		if (angle >= Math.PI) angle -= 2 * Math.PI;
 
 		// is enemy in front of player? Maybe use the FOV value instead.
 		if (angle > -Math.PI * 0.5 && angle < Math.PI * 0.5) {

@@ -39,7 +39,7 @@ export default (entityType, entity, timeDelta, index) => {
             newY += (Math.sin(updatedEntity.rot - (Math.PI / 2)) * moveStep);
         }
         if (updatedEntity.speed !== 0) {
-            moveStep = (mul * updatedEntity.moveSpeed) / reduceSpeed;
+            moveStep = (mul * updatedEntity.speed * updatedEntity.moveSpeed) / reduceSpeed;
             
             newX += (Math.cos(updatedEntity.rot) * moveStep);
             newY += (Math.sin(updatedEntity.rot) * moveStep);

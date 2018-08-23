@@ -9,7 +9,8 @@ export const sndExt = '.wav';
 
 export const miniMapScale = 20;
 
-export const fov = (60 * Math.PI) / 180;
+// in radians
+export const fov = (60 * Math.PI) / 200;
 
 export const stripWidth = 3;
 
@@ -37,3 +38,14 @@ export const keys = {
     V: 86,
     W: 87,
 };
+
+export const DIRECTIONS = {
+    NORTH: -90,
+    EAST: 0,
+    SOUTH: 90,
+    WEST: -180,
+};
+
+export const ANGLE_COUNT = 8;
+
+export const ANGLE_DIFF = (360 / 8) / 2;
