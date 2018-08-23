@@ -1,5 +1,11 @@
 # Release Notes
 
+*v0.2.8 - 2018/08/22
+
+* Sprite angles
+
+The engine is now capable of handling different sprite angles when the player looks at enemies. However, the enemies always lock in towards the player so you will not get to see these different-angle sprites yet. Just a matter of time before I enhance the AI and show the backs and sides of our favorite zombiemen.
+
 # v0.2.7 - 2018/08/21
 
 * Walk animations (mirrored frames, mirrored angles, reversed angles, and other fun things)
