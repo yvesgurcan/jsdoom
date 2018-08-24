@@ -28,7 +28,6 @@ const getSpriteAngle = (angle) => {
     } else if (angle > 235 - ANGLE_DIFF || angle < 135 + ANGLE_DIFF) {
         spriteAngle = 8;
     }
-    console.log({ angle, spriteAngle });
     return spriteAngle;
 };
 
