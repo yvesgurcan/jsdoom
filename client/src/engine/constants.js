@@ -49,3 +49,12 @@ export const DIRECTIONS = {
 export const ANGLE_COUNT = 8;
 
 export const ANGLE_DIFF = (360 / 8) / 2;
+
+export const MOVE_TIME = 450;
+
+export const MOVE = {
+    FORWARD: 'FORWARD',
+    LEFT: 'LEFT',
+    RIGHT: 'RIGHT',
+    BACKWARD: 'BACKWARD',
+};

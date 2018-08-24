@@ -1,4 +1,5 @@
 import move from '../move';
+import pickDirection from './pickDirection';
 import playActiveSound from './playActiveSound';
 import { dispatch, getState } from '../store';
 
@@ -13,23 +14,18 @@ export default (timeDelta) => {
         const enemy = { ...enemies[index] };
         const enemyType = { ...enemyTypes[enemy.type] };
 
-        const dx = player.x - enemy.x;
-        const dy = player.y - enemy.y;
-        const dist = Math.sqrt((dx * dx) + (dy * dy));
 
-        if (dist > 1) {
+        if (enemy.awake) {
             playActiveSound(enemy, enemyType, index);
 
-            const rot = Math.atan2(dy, dx);
-            const rotDeg = (rot * 180) / Math.PI;
-            const speed = 1;
+            const { rot, rotDeg, speed, direction } = pickDirection(enemy, player);
 
             const walkCycleTime = enemyType.walk.cycle;
             const numWalkSprites = enemyType.walk.count;
 
             const walkFrame = Math.floor((new Date() % walkCycleTime) / (walkCycleTime / numWalkSprites)) + 1;
             
-            dispatch({ type: 'MOVE_ENEMY', index, payload: { speed, rotDeg, rot, walkFrame } });
+            dispatch({ type: 'MOVE_ENEMY', index, payload: { speed, rotDeg, rot, walkFrame, direction } });
             const updatedEnemy = {
                 ...enemy,
                 rotDeg,

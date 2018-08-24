@@ -9,7 +9,7 @@ const {
 } = DIRECTIONS;
 
 export default [
-	{ type: 'baronOfHell', x: 18, y: 7, rotDeg: NORTH },
-	// { type: 'archVile', x: 18, y: 10, rotDeg: EAST },
+	{ type: 'zombieman', x: 18, y: 7, rotDeg: NORTH },
+	{ type: 'imp', x: 18, y: 10, rotDeg: EAST },
 	// { type: 'baronOfHell', x: 18, y: 11, rotDeg: SOUTH },
 ];

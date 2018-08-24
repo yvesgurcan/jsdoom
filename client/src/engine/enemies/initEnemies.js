@@ -73,6 +73,7 @@ export default () => {
         img.style.position = 'absolute';
 
         const element = {
+            awake: true,
             rotDeg: 0,
             rot: 0,
             ...enemy,
