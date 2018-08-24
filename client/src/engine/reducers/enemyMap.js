@@ -1,4 +1,7 @@
 import enemyMap from '../../maps/enemies';
+import {
+    MOVE_TIME,
+} from '../constants';
 
 const initState = [...enemyMap];
 export default (prevState = initState, action) => {
@@ -15,6 +18,7 @@ export default (prevState = initState, action) => {
         rot,
         speed,
         walkFrame,
+        direction,
     } = payload;
 
     switch (type) {
@@ -43,6 +47,8 @@ export default (prevState = initState, action) => {
                         rotDeg,
                         rot,
                         walkFrame,
+                        direction,
+                        nextMotion: !enemy.nextMotion || enemy.nextMotion <= 0 ? MOVE_TIME + MOVE_TIME * Math.random() : enemy.nextMotion - 100,
                     };
                 }
                 return enemy;
