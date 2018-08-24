@@ -1,5 +1,15 @@
 # Release Notes
 
+*v0.2.9 - 2018/08/23
+
+* Chasing the player
+
+Something very iconic about Doom is the way the enemies behave: Once they are awake, they walk in the general direction of the player, and wander from time to time by taking a steep turn or go in the opposite direction for a few steps, while emitting guttural growling sounds.
+
+I've just written a rudimentary copy of this behavior, where the enemies seem to follow you, but they also sometimes get distracted for a second or two.
+
+Much more fun than having these guys just run blindly towards you like a huge magnet, right?.
+
 *v0.2.8 - 2018/08/22
 
 * Sprite angles
