@@ -114,16 +114,8 @@ export default () => {
 
         let angle = Math.atan2(dy, dx) - player.rot;
 
-
         if (angle < -Math.PI) angle += 2 * Math.PI;
         if (angle >= Math.PI) angle -= 2 * Math.PI;
-
-        const outOfViewWithSafety = (fov / 2) + (fov * 0.5);
-        const inFrontOfPlayer = angle > -outOfViewWithSafety && angle < outOfViewWithSafety;
-
-        if (!inFrontOfPlayer) {
-            return false;
-        }
 
         const enemyAngle = convertRadianToDegree(rot);
         const angleToPlayer = convertRadianToDegree(Math.atan2(dy, dx)) - enemyAngle;
