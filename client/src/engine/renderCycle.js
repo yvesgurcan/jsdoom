@@ -1,5 +1,5 @@
 import { getState, dispatch } from './store';
-import updateAutomap from './updateAutomap';
+import updateAutomap from './automap/updateAutomap';
 import clearDecorations from './clearDecorations';
 import castRays from './castRays';
 import renderDecorations from './renderDecorations';

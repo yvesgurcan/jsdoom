@@ -31,6 +31,7 @@ export const keys = {
     A: 65,
     D: 68,
     F: 70,
+    G: 71,
     M: 77,
     P: 80,
     R: 82,
@@ -58,3 +59,6 @@ export const MOVE = {
     RIGHT: 'RIGHT',
     BACKWARD: 'BACKWARD',
 };
+
+export const ON = 'ON';
+export const OFF = 'OFF';

@@ -1,6 +1,6 @@
-import { miniMapScale } from './constants';
-import getElementById from './getElementById';
-import { getState } from './store';
+import { miniMapScale } from '../constants';
+import getElementById from '../getElementById';
+import { getState } from '../store';
 
 export default () => {
 	const miniMapObjects = getElementById('minimapobjects');
@@ -11,7 +11,17 @@ export default () => {
         decorationMap,
         automap: {
             showAutomap,
+            showGrid,
             revealThings,
+            backgroundColor,
+            gridColor,
+            playerColor,
+            enemyColor,
+            decorationColor,
+        },
+        map: {
+            mapWidth,
+            mapHeight,
         },
     } = getState();
 
@@ -29,8 +39,8 @@ export default () => {
         y: player.y * miniMapScale,
     };
 
-    // draw a dot at the current player position
-    objectCtx.fillStyle = 'white';
+    // draw a dot at the player position
+    objectCtx.fillStyle = playerColor;
 	objectCtx.fillRect(		
 		playerSquare.x - (scale / 2), 
 		playerSquare.y - (scale / 2),
@@ -57,7 +67,8 @@ export default () => {
                 x: enemy.x * miniMapScale,
                 y: enemy.y * miniMapScale,
             };
-            objectCtx.fillStyle = 'blue';
+            objectCtx.fillStyle = enemyColor;
+
             // draw a dot at the enemy position
             objectCtx.fillRect(
                 enemySquare.x + 2, 
@@ -73,8 +84,9 @@ export default () => {
                 x: decoration.x * miniMapScale,
                 y: decoration.y * miniMapScale,
             };
-            objectCtx.fillStyle = 'rgb(100, 200, 100)';
-            // draw a dot at the enemy position
+            objectCtx.fillStyle = decorationColor;
+
+            // draw a dot at the decoration position
             objectCtx.fillRect(
                 decorationSquare.x + 2,
                 decorationSquare.y + 2,
@@ -82,5 +94,12 @@ export default () => {
                 scale,
             );
         }
+    }
+
+    const grid = getElementById('grid');
+    if (showGrid && grid.style.display !== 'block') {
+        grid.style.display = 'block';
+    } else if (!showGrid && grid.style.display !== 'none') {
+        grid.style.display = 'none';
     }
 };

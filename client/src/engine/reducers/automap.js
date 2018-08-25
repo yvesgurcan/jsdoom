@@ -1,8 +1,12 @@
+import automapSettings from '../../maps/automap';
+
 const initState = {
-    showAutomap: false,
+    showAutomap: true,
+    showGrid: false,
     showViewingCone: true,
     revealMap: false,
-    revealThings: false,
+    revealThings: true,
+    ...automapSettings,
 };
 
 export default (prevState = initState, action) => {
@@ -16,6 +20,12 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 showAutomap: !prevState.showAutomap,
+            };
+        }
+        case 'TOGGLE_AUTOMAP_GRID': {
+            return {
+                ...prevState,
+                showGrid: !prevState.showGrid,
             };
         }
         case 'TOGGLE_VIEWING_CONE': {

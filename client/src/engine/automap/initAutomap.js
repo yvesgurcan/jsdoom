@@ -1,26 +1,38 @@
-import { miniMapScale } from './constants';
-import getElementById from './getElementById';
-import { getState } from './store';
+import { miniMapScale } from '../constants';
+import getElementById from '../getElementById';
+import { getState } from '../store';
 
 export default () => {
     // the actual map
     const miniMap = getElementById('minimap');
-    // the container div element
-    // const miniMapCtr = getElementById('minimapcontainer');
+    const grid = getElementById('grid');
+    
     // the canvas used for drawing the objects on the map (player character, etc)
 	const miniMapObjects = getElementById('minimapobjects');
 
     const {
+        automap: {
+            backgroundColor,
+            wallColor,
+            gridColor,
+        },
         map: {
             mapWidth,
             mapHeight,
         },
     } = getState();
 
-	miniMap.width = mapWidth * miniMapScale;	// resize the internal canvas dimensions 
-	miniMap.height = mapHeight * miniMapScale;	// of both the map canvas and the object canvas
+    // resize the internal canvas dimensions 
+    miniMap.width = mapWidth * miniMapScale;
+	miniMap.height = mapHeight * miniMapScale;	
+    
+    // resize the object canvas
 	miniMapObjects.width = miniMap.width;
     miniMapObjects.height = miniMap.height;
+
+    // resize the grid canvas
+	grid.width = mapWidth * miniMapScale;
+    grid.height = mapHeight * miniMapScale;
     
     /*
         // minimap CSS dimensions
@@ -30,10 +42,12 @@ export default () => {
         miniMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;
     */
 
-	const ctx = miniMap.getContext('2d');
+	const canvas = miniMap.getContext('2d');
+	const gridCanvas = grid.getContext('2d');
 
-	ctx.fillStyle = 'rgb(0, 0, 0)';
-	ctx.fillRect(
+    // set the background
+	canvas.fillStyle = backgroundColor;
+	canvas.fillRect(
         0,
         0,
         miniMap.width,
@@ -49,14 +63,32 @@ export default () => {
 
             // draw a block on the minimap if there is a wall block at these coordinates
 			if (wall !== 0) {
-                ctx.fillStyle = 'rgb(255, 0, 0)';
-				ctx.fillRect(				
+                canvas.fillStyle = wallColor;
+				canvas.fillRect(				
 					x * miniMapScale,
 					y * miniMapScale,
                     miniMapScale,
                     miniMapScale,
 				);
-			}
-		}
+            }
+            
+            // grid
+            gridCanvas.fillStyle = gridColor;
+            gridCanvas.fillRect(
+                x * miniMapScale,
+                1,
+                1,
+                miniMap.height,
+            );
+        }
+
+        // grid
+        gridCanvas.fillStyle = gridColor;
+        gridCanvas.fillRect(
+            1,
+            y * miniMapScale,
+            miniMap.width,
+            1,
+        );
 	}
 };
