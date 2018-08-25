@@ -5,8 +5,15 @@ import {
 import { getState } from '../store';
 
 export default (filename, volume = 1) => {
-    const { sound: { volume: masterVolume } } = getState();
-    if (masterVolume === 0 || !filename) {
+    const {
+        gameCycle: {
+            paused,
+        },
+        sound: {
+            volume: masterVolume
+        },
+    } = getState();
+    if (paused || masterVolume === 0 || !filename) {
         return false;
     }
     

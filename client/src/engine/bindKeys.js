@@ -22,6 +22,7 @@ const {
     EQUAL, NUMPAD_PLUS,
     F,
     G,
+    J,
     M,
     P,
     R,
@@ -39,6 +40,7 @@ console.table({
     'EQUAL-or-PLUS': 'turn volume up',
     F: 'toggle FPS count',
     G: 'toggle automap grid',
+    J: 'toggle playlist mode',
     M: 'change song',
     P: 'toggle pause',
     V: 'toggle viewing cone (automap only)',
@@ -89,6 +91,13 @@ export default () => {
             }
             case F: {
                 dispatch({ type: 'TOGGLE_FPS' });
+                break;
+            }
+            case J: {
+                const { music: { playlistMode } } = getState();
+                console.log(`Playlist mode: ${!playlistMode ? ON : OFF}`);
+                logAddEvent(`Playlist mode: ${!playlistMode ? ON : OFF}`);
+                dispatch({ type: 'TOGGLE_PLAYLIST_MODE' });
                 break;
             }
             case M: {

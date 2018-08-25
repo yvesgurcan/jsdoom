@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.2.11 - 2018/08/25
+
+* Playlist mode
+
+Here is what's new: When playlist mode is ON, the music engine will play a different song at the end of the current song. When playlist mode is OFF, the same song will loop over and over again. Neat, eh?
+
+I guess this will not really make a difference in the final version of the game, since Doom does not do that in its original version (source ports probably allow it, though). The real difference for me is that when I'm debugging the engine, I won't be listening to the same song all the time! And that's what matters :P 
+
 ## v0.2.10 - 2018/08/24
 
 * Automap Grid

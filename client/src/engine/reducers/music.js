@@ -1,6 +1,7 @@
 const initState = {
     volume: 0.2,
     song: null,
+    playlistMode: true,
 };
 
 export default (prevState = initState, action) => {
@@ -28,6 +29,19 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 volume,
+            };
+        }
+        case 'TOGGLE_PLAYLIST_MODE': {
+            if (prevState.song) {
+                if (prevState.playlistMode === false) {
+                    prevState.song.loop = false;
+                } else {
+                    prevState.song.loop = true;
+                }
+            }
+            return {
+                ...prevState,
+                playlistMode: !prevState.playlistMode,
             };
         }
     }

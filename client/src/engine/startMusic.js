@@ -1,9 +1,19 @@
+import {
+    ON,
+    OFF,
+} from './constants';
 import songs from '../types/music';
 import logAddEvent from './log/logAddEvent';
 import { dispatch, getState } from './store';
 
 const startMusic = (log = true) => {
-    const { music: { song: songState } } = getState();
+    const {
+        music: {
+            song: songState,
+            volume,
+            playlistMode,
+        },
+    } = getState();
     if (songState && songState.play) {
         songState.pause();
     }
@@ -14,22 +24,27 @@ const startMusic = (log = true) => {
     const songNameFormatted = songName.replace(/ /g, '_').replace(/'/g, '_').replace(/\./g, '_');
 
     const song = new Audio(`/client/assets/music/${songNameFormatted}.mp3`);
-
-    const { music: { volume } } = getState();
     song.volume = volume;
-    
-    song.loop = true;
+    song.loop = !playlistMode;
 
     return song.play()
         .then(() => {
-            console.log(`initMusic(): ${songName}`);
+            console.log(`startMusic(): ${songName}.`);
             dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
             logAddEvent(`Playing '${songName}'...`);
+
+            song.addEventListener('ended', () => {
+                if (playlistMode) {
+                    console.log('startMusic(): Queuing up next song.');
+                    startMusic(true, true);
+                }
+            }, false);
+
             return true;
         })
         .catch((error) => {
             if (log) {
-                console.error(`initMusic(): Couldn't play '${songName}'.`, { error });
+                console.error(`startMusic(): Couldn't play '${songName}'.`, { error });
                 logAddEvent(`Couldn't play '${songName}'.`);
             }
             return false;
@@ -46,6 +61,10 @@ export default (dontListenForClick = false) => {
         return false;
     }
     
-    document.addEventListener('keydown', startMusic, { once: true });
+    document.addEventListener('keydown', () => {
+        const { music: { playlistMode } } = getState();
+        console.log(`startMusic(): Playlist mode: ${playlistMode ? ON : OFF}`);
+        return startMusic();
+    }, { once: true });
     return true;
 };
