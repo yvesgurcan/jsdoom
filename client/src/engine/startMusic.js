@@ -1,3 +1,7 @@
+import {
+    ON,
+    OFF,
+} from './constants';
 import songs from '../types/music';
 import logAddEvent from './log/logAddEvent';
 import { dispatch, getState } from './store';
@@ -29,12 +33,12 @@ const startMusic = (log = true) => {
             dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
             logAddEvent(`Playing '${songName}'...`);
 
-            if (playlistMode) {
-                song.addEventListener('ended', () => {
+            song.addEventListener('ended', () => {
+                if (playlistMode) {
                     console.log('startMusic(): Queuing up next song.');
                     startMusic(true, true);
-                }, false);
-            }
+                }
+            }, false);
 
             return true;
         })
@@ -57,6 +61,10 @@ export default (dontListenForClick = false) => {
         return false;
     }
     
-    document.addEventListener('keydown', startMusic, { once: true });
+    document.addEventListener('keydown', () => {
+        const { music: { playlistMode } } = getState();
+        console.log(`startMusic(): Playlist mode: ${playlistMode ? ON : OFF}`);
+        return startMusic();
+    }, { once: true });
     return true;
 };
