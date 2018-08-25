@@ -1,4 +1,8 @@
-import { keys } from './constants';
+import {
+    keys,
+    ON,
+    OFF,
+} from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
@@ -17,6 +21,7 @@ const {
     MINUS, NUMPAD_MINUS,
     EQUAL, NUMPAD_PLUS,
     F,
+    G,
     M,
     P,
     R,
@@ -33,6 +38,7 @@ console.table({
     MINUS: 'turn volume down',
     'EQUAL-or-PLUS': 'turn volume up',
     F: 'toggle FPS count',
+    G: 'toggle automap grid',
     M: 'change song',
     P: 'toggle pause',
     V: 'toggle viewing cone (automap only)',
@@ -131,6 +137,12 @@ export default () => {
             }
             case SHIFT: {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
+                break;
+            }
+            case G: {
+                const { automap: { showGrid } } = getState();
+                logAddEvent(`Grid ${!showGrid ? ON : OFF}.`);
+                dispatch({ type: 'TOGGLE_AUTOMAP_GRID' });
                 break;
             }
             case V: {
