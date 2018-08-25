@@ -40,7 +40,7 @@ console.table({
     'EQUAL-or-PLUS': 'turn volume up',
     F: 'toggle FPS count',
     G: 'toggle automap grid',
-    J: 'change song and start playlist',
+    J: 'toggle playlist mode',
     M: 'change song',
     P: 'toggle pause',
     V: 'toggle viewing cone (automap only)',
