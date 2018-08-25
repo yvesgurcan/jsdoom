@@ -646,7 +646,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _map
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst initState = {\n    volume: 0.4,\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((prevState = initState, action) => {\n    const {\n        type,\n        payload = {},\n    } = action;\n    const {\n        volume\n    } = payload;\n\n    switch (type) {\n        default: return prevState;\n        case 'SET_SOUND_VOLUME': {\n            return {\n                ...prevState,\n                volume,\n            };\n        }\n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/reducers/sound.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst initState = {\n    volume: 0.2,\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((prevState = initState, action) => {\n    const {\n        type,\n        payload = {},\n    } = action;\n    const {\n        volume\n    } = payload;\n\n    switch (type) {\n        default: return prevState;\n        case 'SET_SOUND_VOLUME': {\n            return {\n                ...prevState,\n                volume,\n            };\n        }\n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/reducers/sound.js?");
 
 /***/ }),
 
@@ -886,7 +886,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _engine_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine/constants */ \"./client/src/engine/constants.js\");\n// see SPRITES.md for details\n\n\nconst {\n    NORTH,\n    EAST,\n    SOUTH,\n    WEST,\n} = _engine_constants__WEBPACK_IMPORTED_MODULE_0__[\"DIRECTIONS\"];\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'zombieman', x: 18, y: 7, rotDeg: NORTH },\n\t{ type: 'imp', x: 18, y: 10, rotDeg: EAST },\n\t// { type: 'baronOfHell', x: 18, y: 11, rotDeg: SOUTH },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _engine_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine/constants */ \"./client/src/engine/constants.js\");\n// see SPRITES.md for details\n\n\nconst {\n    NORTH,\n    EAST,\n    SOUTH,\n    WEST,\n} = _engine_constants__WEBPACK_IMPORTED_MODULE_0__[\"DIRECTIONS\"];\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ([\n\t{ type: 'arachnotron', x: 18, y: 7, rotDeg: NORTH },\n\t// { type: 'imp', x: 18, y: 10, rotDeg: EAST },\n\t// { type: 'baronOfHell', x: 18, y: 11, rotDeg: SOUTH },\n]);\n\n\n//# sourceURL=webpack:///./client/src/maps/enemies.js?");
 
 /***/ }),
 
