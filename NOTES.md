@@ -1,6 +1,12 @@
 # Release Notes
 
-*v0.2.9 - 2018/08/23
+## v0.2.10 - 2018/08/24
+
+* Automap Grid
+
+Alright, we now have a grid on the automap to have a better view of the level layout. Bonus: You can now change the colors used to draw the map. Yay!
+
+## v0.2.9 - 2018/08/23
 
 * Chasing the player
 
@@ -10,7 +16,7 @@ I've just written a rudimentary copy of this behavior, where the enemies seem to
 
 Much more fun than having these guys just run blindly towards you like a huge magnet, right?.
 
-*v0.2.8 - 2018/08/22
+## v0.2.8 - 2018/08/22
 
 * Sprite angles
 
