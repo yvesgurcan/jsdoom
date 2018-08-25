@@ -3,7 +3,13 @@ import logAddEvent from './log/logAddEvent';
 import { dispatch, getState } from './store';
 
 const startMusic = (log = true) => {
-    const { music: { song: songState } } = getState();
+    const {
+        music: {
+            song: songState,
+            volume,
+            playlistMode,
+        },
+    } = getState();
     if (songState && songState.play) {
         songState.pause();
     }
@@ -14,22 +20,27 @@ const startMusic = (log = true) => {
     const songNameFormatted = songName.replace(/ /g, '_').replace(/'/g, '_').replace(/\./g, '_');
 
     const song = new Audio(`/client/assets/music/${songNameFormatted}.mp3`);
-
-    const { music: { volume } } = getState();
     song.volume = volume;
-    
-    song.loop = true;
+    song.loop = !playlistMode;
 
     return song.play()
         .then(() => {
-            console.log(`initMusic(): ${songName}`);
+            console.log(`startMusic(): ${songName}.`);
             dispatch({ type: 'SET_MUSIC', payload: { song, songName, volume } });
             logAddEvent(`Playing '${songName}'...`);
+
+            if (playlistMode) {
+                song.addEventListener('ended', () => {
+                    console.log('startMusic(): Queuing up next song.');
+                    startMusic(true, true);
+                }, false);
+            }
+
             return true;
         })
         .catch((error) => {
             if (log) {
-                console.error(`initMusic(): Couldn't play '${songName}'.`, { error });
+                console.error(`startMusic(): Couldn't play '${songName}'.`, { error });
                 logAddEvent(`Couldn't play '${songName}'.`);
             }
             return false;

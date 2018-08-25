@@ -55,6 +55,10 @@ const debugPause = () => updatePauseState(true);
 const debugCheat = (input) => (input.toUpperCase ? checkForCheat(input.toUpperCase()) : false);
 
 const debugSong = {
+    get: () => {
+        const { music } = getState();
+        return music;
+    },
     random: () => startMusic(true),
 };
 
@@ -69,7 +73,7 @@ console.log('debug functions', {
 
 export default () => {
     window.player = debugPlayer;
-    window.enemies = debugEnemies,
+    window.enemies = debugEnemies;
     window.log = debugLog;
     window.pause = debugPause;
     window.cheat = debugCheat;
