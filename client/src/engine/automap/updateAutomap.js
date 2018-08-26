@@ -13,15 +13,9 @@ export default () => {
             showAutomap,
             showGrid,
             revealThings,
-            backgroundColor,
-            gridColor,
             playerColor,
             enemyColor,
             decorationColor,
-        },
-        map: {
-            mapWidth,
-            mapHeight,
         },
     } = getState();
 
