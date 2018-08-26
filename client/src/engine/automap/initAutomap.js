@@ -15,6 +15,7 @@ export default () => {
     } = getState();
 
     // grab elements
+    const automapContainer = getElementById('automapcontainer');
     const automap = getElementById('minimap');
     const grid = getElementById('grid');
     const autmapObjects = getElementById('minimapobjects');
@@ -42,8 +43,14 @@ export default () => {
     let scaleX = automap.width / mapWidth;
     if (scaleY > scaleX) {
         scaleY = scaleX;
+        const usedHeight = scaleY * mapHeight;
+        const marginHeight = automap.height - usedHeight;
+        automapContainer.style.marginTop = marginHeight / 2;
     } else if (scaleY < scaleX) {
         scaleX = scaleY;
+        const usedWidth = scaleX * mapWidth;
+        const marginWidth = automap.width - usedWidth;
+        automapContainer.style.marginLeft = marginWidth / 2;
     }
 
     const scale = scaleX;
