@@ -1,5 +1,5 @@
 const initState = {
-    volume: 0.2,
+    volume: 0,
     song: null,
     playlistMode: true,
 };

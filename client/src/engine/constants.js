@@ -5,6 +5,7 @@ export const imgExt = '.png';
 export const decorationPath = `${assetPath}/decorations`;
 export const enemyPath = `${assetPath}/monsters`;
 export const soundPath = `${assetPath}/sound`;
+export const statusBarPath = `${assetPath}/hud`;
 export const sndExt = '.wav';
 
 export const miniMapScale = 20;
