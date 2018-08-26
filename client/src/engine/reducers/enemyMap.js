@@ -3,6 +3,32 @@ import {
     MOVE_TIME,
 } from '../constants';
 
+const findEnemy = (enemies, enemyId) => {
+    let foundIndex = null;
+    const foundEnemy = enemies.find((e, i) => {
+        if (e.id === enemyId) {
+            foundIndex = i;
+            return true;
+        }
+        return false;
+    });
+
+    return {
+        foundEnemy,
+        foundIndex,
+    };
+};
+
+const updateEnemySoundQueue = (enemy, soundType, newValue) => {
+    const fixedSoundQueued = soundType === 'fixedInterval' ? newValue : enemy.fixedSoundQueued;
+    const randomSoundQueued = soundType === 'randomInterval' ? newValue : enemy.randomSoundQueued;
+    return {
+        ...enemy,
+        fixedSoundQueued,
+        randomSoundQueued,
+    };
+};
+
 const initState = [...enemyMap];
 export default (prevState = initState, action) => {
     const {
@@ -19,6 +45,8 @@ export default (prevState = initState, action) => {
         speed,
         walkFrame,
         direction,
+        enemyId,
+        soundType,
     } = payload;
 
     switch (type) {
@@ -56,28 +84,28 @@ export default (prevState = initState, action) => {
             return nextState;           
         }
         case 'SET_ENEMY_ACTIVE_SOUND': {
-            const nextState = prevState.map((enemy, i) => {
-                if (i === index) {
-                    return {
-                        ...enemy,
-                        soundQueued: true,
-                    };
-                }
-                return enemy;
-            });
+            const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
+            if (foundEnemy === undefined || foundIndex === null) {
+                console.error(`enemyMap reducer: Could not find enemy with id '${enemyId}'.`);
+                return prevState;
+            }
+
+            const enemy = updateEnemySoundQueue(foundEnemy, soundType, true);
+            const nextState = [...prevState];
+            nextState[foundIndex] = enemy;
             return nextState;
         }
         case 'UNSET_ENEMY_ACTIVE_SOUND': {
-            const nextState = prevState.map((enemy, i) => {
-                if (i === index) {
-                    return {
-                        ...enemy,
-                        soundQueued: false,
-                    };
-                }
-                return enemy;
-            });
-            return nextState;      
+            const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
+            if (foundEnemy === undefined || foundIndex === null) {
+                console.error(`enemyMap reducer: Could not find enemy with id '${enemyId}'.`);
+                return prevState;
+            }
+
+            const enemy = updateEnemySoundQueue(foundEnemy, soundType, false);
+            const nextState = [...prevState];
+            nextState[foundIndex] = enemy;
+            return nextState;
         }
         case 'STOP_ENEMY': {
             const nextState = prevState.map((enemy, i) => {

@@ -3,24 +3,41 @@ import playSound from '../sound/playSound';
 import calculateVolume from '../sound/calculateVolume';
 import { dispatch, getState } from '../store';
 
-const handleSound = (selectedSound, index) => {
+const selectSound = (soundList) => {
+    const randomIndex = Math.floor(Math.random() * soundList.length) / soundList.length;
+    return soundList[randomIndex];
+};
+
+const setRandomInterval = (baseInterval) => {
+    const modifier = Math.random() > 0.5 ? 1 : -1;
+    return baseInterval + Math.floor(baseInterval * (Math.random() / 1.5) * modifier);
+};
+
+const queueSound = (soundType, interval, selectedSound, enemyId) => {
+    dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', payload: { enemyId, soundType } });
+    setTimeout(() => handleSound(selectedSound, enemyId, soundType), interval);
+    return true;
+};
+
+const handleSound = (selectedSound, enemyId, soundType) => {
     const {
         player,
         enemyMap,
     } = getState();
 
-    const enemy = enemyMap[index];
-    const adjustedVolume = calculateVolume(player, enemy);
-    playSound(selectedSound, adjustedVolume);
-    dispatch({ type: 'UNSET_ENEMY_ACTIVE_SOUND', index });
-};
-
-export default (enemy, enemyType, index) => {
-    const { soundQueued } = enemy;
-    if (soundQueued) {
+    const enemy = enemyMap.find(e => e.id === enemyId);
+    if (enemy === undefined) {
+        console.error(`playActiveSound(): Could not find enemy with id '${enemyId}'.`);
         return false;
     }
 
+    const adjustedVolume = calculateVolume(player, enemy);
+    playSound(selectedSound, adjustedVolume);
+    dispatch({ type: 'UNSET_ENEMY_ACTIVE_SOUND', payload: { enemyId, soundType } });
+    return true;
+};
+
+export default (enemy, enemyType, index) => {
     const { walk } = enemyType;
     if (!walk) {
         return false;
@@ -37,18 +54,23 @@ export default (enemy, enemyType, index) => {
     }
 
     if (soundFixedInterval) {
-        const randomSoundIndex = Math.floor(Math.random() * soundFixed.length) / soundFixed.length;
-        const selectedSound = soundFixed[randomSoundIndex];
-        dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });
-        setTimeout(() => handleSound(selectedSound, index), soundFixedInterval);
+        const { fixedSoundQueued } = enemy;
+        if (fixedSoundQueued) {
+            return false;
+        }
+
+        const selectedSound = selectSound(soundFixed);
+        return queueSound('fixedInterval', soundFixedInterval, selectedSound, enemy.id);
     }
 
     if (soundBaseInterval) {
-        const randomSoundIndex = Math.floor(Math.random() * soundRandom.length) / soundRandom.length;
-        const selectedSound = soundRandom[randomSoundIndex];
-        const modifier = Math.random() > 0.5 ? 1 : -1;
-        const randomInterval = soundBaseInterval + Math.floor(soundBaseInterval * (Math.random() / 1.5) * modifier);
-        dispatch({ type: 'SET_ENEMY_ACTIVE_SOUND', index });
-        setTimeout(() => handleSound(selectedSound, index), randomInterval);
+        const { randomSoundQueued } = enemy;
+        if (randomSoundQueued) {
+            return false;
+        }
+
+        const selectedSound = selectSound(soundFixed);
+        const randomInterval = setRandomInterval(soundBaseInterval);
+        return queueSound('randomInterval', randomInterval, selectedSound, enemy.id);
     }
 };
