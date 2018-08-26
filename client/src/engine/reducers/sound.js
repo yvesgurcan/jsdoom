@@ -1,5 +1,5 @@
 const initState = {
-    volume: 0.2,
+    volume: 0.05,
 };
 
 export default (prevState = initState, action) => {
