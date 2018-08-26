@@ -71,8 +71,8 @@ export default () => {
 
             // draw a dot at the enemy position
             objectCtx.fillRect(
-                enemySquare.x + 2, 
-                enemySquare.y + 2,
+                enemySquare.x - (scale / 2), 
+                enemySquare.y - (scale / 2),
                 scale,
                 scale,
             );
@@ -88,8 +88,8 @@ export default () => {
 
             // draw a dot at the decoration position
             objectCtx.fillRect(
-                decorationSquare.x + 2,
-                decorationSquare.y + 2,
+                decorationSquare.x + (scale / 2),
+                decorationSquare.y + (scale / 2),
                 scale,
                 scale,
             );
