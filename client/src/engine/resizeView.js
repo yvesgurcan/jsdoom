@@ -1,4 +1,4 @@
-import { dispatch } from './store';
+import { dispatch, getState } from './store';
 import initScreen from './initScreen';
 import initAutomap from './automap/initAutomap';
 
@@ -14,6 +14,9 @@ export default () => {
 	window.onresize = function () {
         resizeView();
         initScreen();
-        initAutomap();
+        const { automap: { showAutomap } } = getState();
+        if (showAutomap) {
+            initAutomap();
+        }
 	};
 };
