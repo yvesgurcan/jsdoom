@@ -1,7 +1,7 @@
 import automapSettings from '../../maps/automap';
 
 const initState = {
-    showAutomap: true,
+    showAutomap: false,
     showGrid: false,
     showViewingCone: true,
     revealMap: false,

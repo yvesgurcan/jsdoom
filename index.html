@@ -13,18 +13,7 @@
                 width: 100%;
                 height: 100%;
                 z-index: -1;
-            }
-            
-            #minimap {
-                position: absolute;
-            }
-            
-            #minimapobjects {
-                position: absolute;
-            }
-
-            #grid {
-                position: absolute;
+                overflow: hidden;
             }
 
             #log {
@@ -55,6 +44,21 @@
                 z-index: 1;
             }
 
+            #statusbar {
+                position: fixed;
+                width: 100%;
+                bottom:0px;
+                z-index: 500;
+            }
+
+            #screen {
+                position: relative;
+                width: calc(100% - 2px);
+                height: 98%;
+                border: 1px solid black;
+                overflow: hidden;
+            }
+
             #floor {
                 position: absolute;
                 width: 100%;
@@ -70,14 +74,17 @@
                 background-color: rgb(80,80,80);
                 z-index: -10000000;
             }
+            
+            #minimap {
+                position: absolute;
+            }
+            
+            #grid {
+                position: absolute;
+            }
 
-
-            #screen {
-                position: relative;
-                width: 100%;
-                height: 100%;
-                border: 1px solid black;
-                overflow: hidden;
+            #minimapobjects {
+                position: absolute;
             }
         </style>
 
@@ -89,6 +96,7 @@
                 <div id="log"></div>
                 <div id="pause"></div>
                 <div id="fps"></div>
+                <div id="statusbar"></div>
             </div>
 
             <div id="screen">

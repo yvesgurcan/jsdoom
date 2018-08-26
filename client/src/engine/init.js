@@ -3,6 +3,7 @@ import bindKeys from './bindKeys';
 import debug from './debug';
 import startMusic from './startMusic';
 import initScreen from './initScreen';
+import drawStatusBar from './status/drawStatusBar';
 import initPlayer from './initPlayer';
 import initDecorations from './initDecorations';
 import initEnemies from './enemies/initEnemies';
@@ -15,7 +16,8 @@ export default () => {
     resizeView();
     bindKeys();
     startMusic();
-	initScreen();
+    initScreen();
+    drawStatusBar();
     initPlayer();
 	initDecorations();
 	initEnemies();
