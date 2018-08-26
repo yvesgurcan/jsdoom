@@ -1,5 +1,5 @@
 import { getState, dispatch } from './store';
-import automap from './automap';
+import handleAutomapVisibility from './automap/handleAutomapVisibility';
 import getElementById from './getElementById';
 import updateFPS from './updateFPS';
 import logUpdateColor from './log/logUpdateColor';
@@ -16,7 +16,7 @@ export default (togglePause) => {
 
     if (paused && showAutomap) {
         dispatch({ type: 'TOGGLE_AUTOMAP' });
-        automap();
+        handleAutomapVisibility();
         logUpdateColor();
         updateFPS();
     }
