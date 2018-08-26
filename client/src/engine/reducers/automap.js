@@ -12,10 +12,21 @@ const initState = {
 export default (prevState = initState, action) => {
     const {
         type,
+        payload = {},
     } = action;
+
+    const {
+        scale,
+    } = payload;
 
     switch (type) {
         default: return prevState;
+        case 'SET_AUTOMAP_SCALE': {
+            return {
+                ...prevState,
+                scale,
+            };
+        }
         case 'TOGGLE_AUTOMAP': {
             return {
                 ...prevState,

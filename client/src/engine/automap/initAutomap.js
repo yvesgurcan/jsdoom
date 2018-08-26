@@ -1,15 +1,7 @@
-import { miniMapScale } from '../constants';
 import getElementById from '../getElementById';
-import { getState } from '../store';
+import { getState, dispatch } from '../store';
 
 export default () => {
-    // the actual map
-    const miniMap = getElementById('minimap');
-    const grid = getElementById('grid');
-    
-    // the canvas used for drawing the objects on the map (player character, etc)
-	const miniMapObjects = getElementById('minimapobjects');
-
     const {
         automap: {
             backgroundColor,
@@ -22,36 +14,51 @@ export default () => {
         },
     } = getState();
 
-    // resize the internal canvas dimensions 
-    miniMap.width = mapWidth * miniMapScale;
-	miniMap.height = mapHeight * miniMapScale;	
-    
-    // resize the object canvas
-	miniMapObjects.width = miniMap.width;
-    miniMapObjects.height = miniMap.height;
+    // grab elements
+    const automap = getElementById('minimap');
+    const grid = getElementById('grid');
+    const autmapObjects = getElementById('minimapobjects');
+
+    // get the biggest possible size for the canvas
+    automap.style.width = '100%';
+    automap.style.height = '100%';
+    automap.width = automap.offsetWidth;
+    automap.height = automap.offsetHeight;
+
+    // reset CSS width and height
+    automap.style.width = '';
+    automap.style.height = '';
 
     // resize the grid canvas
-	grid.width = mapWidth * miniMapScale;
-    grid.height = mapHeight * miniMapScale;
-    
-    /*
-        // minimap CSS dimensions
-        const w = `${mapWidth * miniMapScale}px`; 	
-        const h = `${mapHeight * miniMapScale}px`;
-        miniMap.style.width = miniMapObjects.style.width = miniMapCtr.style.width = w;
-        miniMap.style.height = miniMapObjects.style.height = miniMapCtr.style.height = h;
-    */
+	grid.width = automap.width;
+    grid.height = automap.height;
 
-	const canvas = miniMap.getContext('2d');
-	const gridCanvas = grid.getContext('2d');
+    // resize the object canvas
+	autmapObjects.width = automap.width;
+    autmapObjects.height = automap.height;
+
+    // set the scale to keep the same ratio for the drawing (everything should be square)
+    let scaleY = automap.height / mapHeight;
+    let scaleX = automap.width / mapWidth;
+    if (scaleY > scaleX) {
+        scaleY = scaleX;
+    } else if (scaleY < scaleX) {
+        scaleX = scaleY;
+    }
+
+    const scale = scaleX;
+    dispatch({ type: 'SET_AUTOMAP_SCALE', payload: { scale } });
+
+	const automapCanvas = automap.getContext('2d');
+    const gridCanvas = grid.getContext('2d');
 
     // set the background
-	canvas.fillStyle = backgroundColor;
-	canvas.fillRect(
+	automapCanvas.fillStyle = backgroundColor;
+	automapCanvas.fillRect(
         0,
         0,
-        miniMap.width,
-        miniMap.height,
+        automap.width,
+        automap.height,
     );
 
     const { wallMap: map } = getState();
@@ -63,22 +70,22 @@ export default () => {
 
             // draw a block on the minimap if there is a wall block at these coordinates
 			if (wall !== 0) {
-                canvas.fillStyle = wallColor;
-				canvas.fillRect(				
-					x * miniMapScale,
-					y * miniMapScale,
-                    miniMapScale,
-                    miniMapScale,
+                automapCanvas.fillStyle = wallColor;
+				automapCanvas.fillRect(				
+					x * scale,
+					y * scale,
+                    scale + 1,
+                    scale + 1,
 				);
             }
             
             // grid
             gridCanvas.fillStyle = gridColor;
             gridCanvas.fillRect(
-                x * miniMapScale,
+                x * scale,
                 1,
                 1,
-                miniMap.height,
+                (mapHeight * scale) - 1,
             );
         }
 
@@ -86,8 +93,8 @@ export default () => {
         gridCanvas.fillStyle = gridColor;
         gridCanvas.fillRect(
             1,
-            y * miniMapScale,
-            miniMap.width,
+            y * scale,
+            (mapWidth * scale) - 1,
             1,
         );
 	}
