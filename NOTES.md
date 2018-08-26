@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.3.0 - 2018/08/25
+
+* Time to move to v0.3!
+
+Yes, I think that it's time to bump the version of this project, as things are starting to take shape. We have a music/sfx engine, enemies with walk animations for multiple angles, a little bit of artificial intelligence, a whole collection of wall textures to draw from freely, a cool automap, some debug functionalities, and status messages that display at the top of the screen.
+
+Latest addition: Now, the automap will always keep the best ratio possible, so that every wall on the map looks like a square, as it should, and not a rectangle if the screen's ratio is not 1:1. Very satisfactory!
+
 ## v0.2.11 - 2018/08/25
 
 * Playlist mode

@@ -1,6 +1,6 @@
 {
     "name": "doomjs",
-    "version": "0.2.11",
+    "version": "0.3.0",
     "scripts": {
         "start": "node server",
         "dev": "npm run dev:server & npm run dev:client",
