@@ -3,8 +3,9 @@ import updatePauseState from './updatePauseState';
 import move from './move';
 import chasePlayer from './enemies/chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
-import updateMugShot from './status/updateMugShot';
+import drawMugShot from './status/drawMugShot';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
+import drawHealth from './status/drawHealth';
 
 const gameCycle = () => {
     const {
@@ -43,7 +44,8 @@ const gameCycle = () => {
 
     handleAutomapVisibility();
 
-    updateMugShot();
+    drawMugShot();
+    drawHealth();
 
     // the timer will likely not run that fast due to the rendering cycle hogging the cpu
     // so figure out how much time was lost since last cycle

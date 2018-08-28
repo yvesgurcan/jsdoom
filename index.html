@@ -51,18 +51,29 @@
                 z-index: 500;
             }
 
-            #mugshotcontainer {
+            .statusbarcontainer {
                 position: absolute;
                 width: 100%;
+                padding-top: 0.8%;
+                padding-bottom: 0.8%;
+                z-index: 501;
+            }
+
+            #healthcontainer {
+                margin-left: 15.6%;
+            }
+
+            .health {
+                width: 3.8%;
+            }
+
+            #mugshotcontainer {
                 display: flex;
                 justify-content: center;
-                z-index: 501;
             }
 
             #mugshot {
                 width: 9%;
-                padding-top: 0.8%;
-                padding-bottom: 0.8%;
             }
 
             #screen {
@@ -111,7 +122,13 @@
                 <div id="pause"></div>
                 <div id="fps"></div>
                 <div id="statusbar">
-                    <div id="mugshotcontainer">
+                    <div class="statusbarcontainer" id="healthcontainer">
+                        <img class="health" id="health1">
+                        <img class="health" id="health2">
+                        <img class="health" id="health3">
+                        <img class="health" id="healthpercent">
+                    </div>
+                    <div class="statusbarcontainer" id="mugshotcontainer">
                         <img id="mugshot">
                     </div>
                 </div>
