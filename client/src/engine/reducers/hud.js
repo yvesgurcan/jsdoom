@@ -1,5 +1,8 @@
+import { MUGSHOT_TIME } from '../constants';
+
 const initState = {
     showFPS: true,
+    nextMugShot: 0,
 };
 export default (prevState = initState, action) => {
     const {
@@ -16,6 +19,18 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 showFPS: !prevState.showFPS,
+            };
+        }
+        case 'SET_NEXT_MUGSHOT': {
+            return {
+                ...prevState,
+                nextMugShot: prevState.nextMugShot <= 0 ? MUGSHOT_TIME : prevState.nextMugShot - 1,
+            };
+        }
+        case 'TOGGLE_GODMODE': {
+            return {
+                ...prevState,
+                nextMugShot: 0,
             };
         }
     }

@@ -3,7 +3,7 @@ import bindKeys from './bindKeys';
 import debug from './debug';
 import startMusic from './startMusic';
 import initScreen from './initScreen';
-import drawStatusBar from './status/drawStatusBar';
+import initStatusBar from './status/initStatusBar';
 import initPlayer from './initPlayer';
 import initDecorations from './initDecorations';
 import initEnemies from './enemies/initEnemies';
@@ -17,7 +17,7 @@ export default () => {
     bindKeys();
     startMusic();
     initScreen();
-    drawStatusBar();
+    initStatusBar();
     initPlayer();
 	initDecorations();
 	initEnemies();

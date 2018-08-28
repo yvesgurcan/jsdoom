@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import constants from './constants';
 import player from './player';
 import map from './map';
 import wallMap from './wallMap';
@@ -20,6 +21,7 @@ import sound from './sound';
 import log from './log';
 
 export default combineReducers({
+    constants,
     player,
     map,
     wallMap,

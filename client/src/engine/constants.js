@@ -64,3 +64,5 @@ export const MOVE = {
 
 export const ON = 'ON';
 export const OFF = 'OFF';
+
+export const MUGSHOT_TIME = 20;
