@@ -1,9 +1,10 @@
 const ASSET_PATH = 'client/assets';
 
 const initState = {
-    IMG_EXT: '.png',
-
     STATUS_BAR_PATH: `${ASSET_PATH}/hud`,
+    ALPHANUMERIC_PATH: `${ASSET_PATH}/alphanumeric`,
+    IMG_EXT: '.png',
+    STATUS_BAR_NUM_PREFIX: 'STT',
     MUGSHOT: {
         PREFIX: 'STF',
         DEAD: 'DEAD',
