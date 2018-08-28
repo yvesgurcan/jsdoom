@@ -1,6 +1,12 @@
 # Release Notes
 
-## v 0.3.1 - 2018/08/27
+## v0.3.2 - 2018/08/28
+
+* Health
+
+Technically, the player has health now. It can't be modified, it does not really do anything, except for changing how the mug shot looks, but it's there, and it's drawn on the status bar. Nice!
+
+## v0.3.1 - 2018/08/27
 
 * Mugshot
 
