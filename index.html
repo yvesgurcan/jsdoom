@@ -51,6 +51,20 @@
                 z-index: 500;
             }
 
+            #mugshotcontainer {
+                position: absolute;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                z-index: 501;
+            }
+
+            #mugshot {
+                width: 9%;
+                padding-top: 0.8%;
+                padding-bottom: 0.8%;
+            }
+
             #screen {
                 position: relative;
                 width: calc(100% - 2px);
@@ -96,7 +110,11 @@
                 <div id="log"></div>
                 <div id="pause"></div>
                 <div id="fps"></div>
-                <div id="statusbar"></div>
+                <div id="statusbar">
+                    <div id="mugshotcontainer">
+                        <img id="mugshot">
+                    </div>
+                </div>
             </div>
 
             <div id="screen">

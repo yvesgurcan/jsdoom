@@ -1,6 +1,12 @@
 # Release Notes
 
-## v0.3.0 - 2018/08/25
+## v 0.3.1 - 2018/08/27
+
+* Mugshot
+
+We can now see doomguy's beautiful face while he's roaming hell. He will take a look on the left, on the right, straight ahead, check again on the right, and so on... randomly. Depending on his health, we will see more or less blood. Also, we have god mode (or should I say degreelessness mode?) and a death state.
+
+## v0.3.0 - 2018/08/26
 
 * Time to move to v0.3!
 

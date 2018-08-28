@@ -1,8 +1,13 @@
+import {
+    ON,
+    OFF,
+} from './constants';
 import logAddEvent from './log/logAddEvent';
 import { getState, dispatch } from './store';
 
 export default (externalInput) => {
     const cheats = [
+        'IDDQD',
         'IDDT',
         'IDMUS',
     ];
@@ -11,6 +16,12 @@ export default (externalInput) => {
     const match = cheats.find(cheat => input.indexOf(cheat) > -1);
     switch (match) {
         default: return false;
+        case 'IDDQD': {
+            dispatch({ type: 'TOGGLE_GODMODE' });
+            const { player: { godMode } } = getState();
+            logAddEvent(`Degreelessness mode ${godMode ? ON : OFF}.`);
+            break;
+        }
         case 'IDDT': {
             const {
                 automap: {
