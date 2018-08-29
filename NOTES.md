@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.3.3 - 2018/08/28
+
+* Armor!
+
+Same as health, we now display the armor percentage of the player. It's useless for now, but it's displayed and will come handy in the future. I've changed the methodology used to draw the status bar: we now have a CSS grid, which seems to work pretty well for this case. Booya!
+
 ## v0.3.2 - 2018/08/28
 
 * Health

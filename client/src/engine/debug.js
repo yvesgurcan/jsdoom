@@ -1,3 +1,4 @@
+import getElementById from './getElementById';
 import logAddEvent from './log/logAddEvent';
 import logRemoveEvent from './log/logRemoveEvent';
 import { getState, dispatch } from './store';
@@ -63,6 +64,7 @@ const debugSong = {
 };
 
 console.log('debug functions', {
+    getElementById,
     player: debugPlayer,
     enemies: debugEnemies,
     log: debugLog,
@@ -72,6 +74,7 @@ console.log('debug functions', {
 });
 
 export default () => {
+    window.getElementById = getElementById;
     window.player = debugPlayer;
     window.enemies = debugEnemies;
     window.log = debugLog;

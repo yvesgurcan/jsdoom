@@ -51,29 +51,33 @@
                 z-index: 500;
             }
 
-            .statusbarcontainer {
+            #statusbargrid {
                 position: absolute;
-                width: 100%;
+                display: grid;
                 padding-top: 0.8%;
-                padding-bottom: 0.8%;
+                width: 100%;
                 z-index: 501;
+                grid-template-columns: 14.75% 18.1% 11.6% 11.3% 18%;
             }
 
-            #healthcontainer {
-                margin-left: 15.6%;
+            #healthcontainer, #armorcontainer {
+                padding-top: 0.8%;
+                padding-right: 1.8%;
+                display: flex;
+                justify-content: flex-end;
+                height: 59%;
             }
 
-            .health {
-                width: 3.8%;
+            .health[src], .armor[src] {
+                width: 24%;
             }
 
             #mugshotcontainer {
-                display: flex;
-                justify-content: center;
+                text-align: center;
             }
 
             #mugshot {
-                width: 9%;
+                width: 70%;
             }
 
             #screen {
@@ -122,14 +126,24 @@
                 <div id="pause"></div>
                 <div id="fps"></div>
                 <div id="statusbar">
-                    <div class="statusbarcontainer" id="healthcontainer">
-                        <img class="health" id="health1">
-                        <img class="health" id="health2">
-                        <img class="health" id="health3">
-                        <img class="health" id="healthpercent">
-                    </div>
-                    <div class="statusbarcontainer" id="mugshotcontainer">
-                        <img id="mugshot">
+                    <div id="statusbargrid">
+                        <div id="ammocontainer"></div>
+                        <div id="healthcontainer">
+                            <img class="health" id="health1">
+                            <img class="health" id="health2">
+                            <img class="health" id="health3">
+                            <img class="health" id="healthpercent">
+                        </div>
+                        <div id="weaponcontainer"></div>
+                        <div id="mugshotcontainer">
+                            <img id="mugshot">
+                        </div>
+                        <div id="armorcontainer">
+                                <img class="armor" id="armor1">
+                                <img class="armor" id="armor2">
+                                <img class="armor" id="armor3">
+                                <img class="armor" id="armorpercent">                            
+                        </div>
                     </div>
                 </div>
             </div>
