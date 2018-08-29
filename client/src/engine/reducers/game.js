@@ -1,4 +1,5 @@
 const initState = {
+    singlePlayer: true,
     // set the goal for max FPS
     delay: 1000 / 30,
     lastCycle: 0,

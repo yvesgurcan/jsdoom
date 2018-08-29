@@ -10,7 +10,7 @@ import drawArmor from './status/drawArmor';
 
 const gameCycle = () => {
     const {
-        gameCycle: {
+        game: {
             delay,
             lastCycle,
             paused,

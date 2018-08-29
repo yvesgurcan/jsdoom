@@ -106,7 +106,7 @@ export default () => {
             }
         }
 
-        const { gameCycle: { paused } } = getState();
+        const { game: { paused } } = getState();
         if (paused) {
             return false;
         }
@@ -165,7 +165,7 @@ export default () => {
         const { keyCode } = event;
         event.preventDefault();
         
-        const { gameCycle: { paused } } = getState();
+        const { game: { paused } } = getState();
         if (paused) {
             return false;
         }

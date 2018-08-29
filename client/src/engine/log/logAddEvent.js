@@ -6,7 +6,7 @@ export default (message = '') => {
     dispatch({ type: 'ADD_LOG_EVENT', payload: message });
     const {
         log,
-        gameCycle: { paused },
+        game: { paused },
     } = getState();
 
     if (paused) {

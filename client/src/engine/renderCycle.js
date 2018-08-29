@@ -8,7 +8,7 @@ import updateFPS from './updateFPS';
 
 const renderCycle = () => {
     const {
-        gameCycle: {
+        game: {
             delay,
             lastRender,
             paused,
@@ -20,7 +20,7 @@ const renderCycle = () => {
     } = getState();
 
     if (delay <= 0) {
-        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        console.error('Invalid value: game.delay should be a number greater than zero.');
         return false;
     }
 

@@ -5,7 +5,7 @@ export default (timeDelta) => {
     const {
         hud: { showFPS },
         automap: { showAutomap },
-        gameCycle: { paused },
+        game: { paused },
     } = getState();
     const framerate = getElementById('fps');
     if (showFPS) {

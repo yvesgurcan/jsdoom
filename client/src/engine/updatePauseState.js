@@ -6,7 +6,7 @@ import logUpdateColor from './log/logUpdateColor';
 
 export default (togglePause) => {
     const {
-        gameCycle: { paused },
+        game: { paused },
         automap: { showAutomap },
     } = getState();
 
