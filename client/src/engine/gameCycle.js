@@ -6,6 +6,7 @@ import logUpdateColor from './log/logUpdateColor';
 import drawMugShot from './status/drawMugShot';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
 import drawHealth from './status/drawHealth';
+import drawArmor from './status/drawArmor';
 
 const gameCycle = () => {
     const {
@@ -46,6 +47,7 @@ const gameCycle = () => {
 
     drawMugShot();
     drawHealth();
+    drawArmor();
 
     // the timer will likely not run that fast due to the rendering cycle hogging the cpu
     // so figure out how much time was lost since last cycle

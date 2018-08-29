@@ -12,7 +12,8 @@ const initState = {
     speed: 0,
     rotSpeed: 4,
     dir: 0,
-    health: 90,
+    health: 47,
+    armor: 200,
 };
 
 export default (prevState = initState, action) => {
