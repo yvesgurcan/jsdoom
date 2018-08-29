@@ -1,5 +1,6 @@
 import { getState } from '../store';
 import getElementById from '../getElementById';
+import drawNumber from './drawNumber';
 import drawPercentage from './drawPercentage';
 
 export default () => {
@@ -15,5 +16,6 @@ export default () => {
     const percent = getElementById('armorpercent');
 
     const playerArmor = String(armor);
-    drawPercentage(playerArmor, { element1, element2, element3, percent }, constants);
+    drawNumber(playerArmor, { element1, element2, element3 }, constants);
+    drawPercentage(percent);
 };
