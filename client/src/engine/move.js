@@ -5,12 +5,10 @@ import {
 import checkCollision from './checkCollision';
 
 export default (entityType, entity, timeDelta, index) => {
-    const {
-        gameCycle: { delay },
-    } = getState();
+    const { game: { delay } } = getState();
 
     if (delay <= 0) {
-        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        console.error('Invalid value: game.delay should be a number greater than zero.');
         return false;
     }
 

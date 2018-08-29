@@ -5,6 +5,8 @@ const initState = {
     ALPHANUMERIC_PATH: `${ASSET_PATH}/alphanumeric`,
     IMG_EXT: '.png',
     STATUS_BAR_NUM_PREFIX: 'STT',
+    STATUS_BAR_FILENAME: 'STBAR',
+    STATUS_BAR_WEAPON_FILENAME: 'STARMS',
     MUGSHOT: {
         PREFIX: 'STF',
         DEAD: 'DEAD',

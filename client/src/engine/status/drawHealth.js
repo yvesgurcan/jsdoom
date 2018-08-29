@@ -1,5 +1,6 @@
 import { getState } from '../store';
 import getElementById from '../getElementById';
+import drawNumber from './drawNumber';
 import drawPercentage from './drawPercentage';
 
 export default () => {
@@ -15,5 +16,6 @@ export default () => {
     const percent = getElementById('healthpercent');
 
     const playerHealth = String(health);
-    drawPercentage(playerHealth, { element1, element2, element3, percent }, constants);
+    drawNumber(playerHealth, { element1, element2, element3 }, constants);
+    drawPercentage(percent);
 };

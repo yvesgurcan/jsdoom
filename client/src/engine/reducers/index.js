@@ -9,7 +9,7 @@ import enemyMap from './enemyMap';
 import decorationTypes from './decorationTypes';
 import decorationMap from './decorationMap';
 import decorationMapPlacement from './decorationMapPlacement';
-import gameCycle from './gameCycle';
+import game from './game';
 import hud from './hud';
 import visibleSprites from './visibleSprites';
 import oldVisibleSprites from './oldVisibleSprites';
@@ -31,7 +31,7 @@ export default combineReducers({
     decorationTypes,
     decorationMap,
     decorationMapPlacement,
-    gameCycle,
+    game,
     hud,
     visibleSprites,
     oldVisibleSprites,
