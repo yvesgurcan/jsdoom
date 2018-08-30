@@ -14,6 +14,11 @@ const initState = {
     dir: 0,
     health: 47,
     armor: 200,
+    keys: {
+        blue: 'card',
+        yellow: 'skull',
+        red: 'card',
+    },
 };
 
 export default (prevState = initState, action) => {

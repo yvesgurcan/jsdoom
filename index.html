@@ -56,7 +56,7 @@
                 display: grid;
                 width: 102%;
                 z-index: 501;
-                grid-template-columns: 14.5% 17.3% 12.3% 10.2% 18%;
+                grid-template-columns: 14.5% 17.3% 12.3% 10.2% 18% 3.75%;
             }
 
             #healthcontainer, #armorcontainer {
@@ -78,6 +78,22 @@
 
             #mugshot {
                 width: 70%;
+            }
+
+            #keyscontainer {
+                padding-top: 24%;
+                padding-left: 3%;
+                width: 100%;
+                display: grid;
+                justify-content: center;
+                align-items: center;
+                grid-template-columns: 64%;
+                grid-row-gap: 10%;
+                grid-template-rows: 24% 24% 24%;
+            }
+
+            #redkey, #bluekey, #yellowkey {
+                width: 90%;
             }
 
             #screen {
@@ -139,10 +155,15 @@
                             <img id="mugshot">
                         </div>
                         <div id="armorcontainer">
-                                <img class="armor" id="armor1">
-                                <img class="armor" id="armor2">
-                                <img class="armor" id="armor3">
-                                <img class="armor" id="armorpercent">                            
+                            <img class="armor" id="armor1">
+                            <img class="armor" id="armor2">
+                            <img class="armor" id="armor3">
+                            <img class="armor" id="armorpercent">            
+                        </div>
+                        <div id="keyscontainer">
+                            <img id="bluekey">
+                            <img id="yellowkey">
+                            <img id="redkey">
                         </div>
                     </div>
                 </div>
