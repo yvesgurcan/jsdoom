@@ -5,7 +5,6 @@ export const imgExt = '.png';
 export const decorationPath = `${assetPath}/decorations`;
 export const enemyPath = `${assetPath}/monsters`;
 export const soundPath = `${assetPath}/sound`;
-export const statusBarPath = `${assetPath}/hud`;
 export const sndExt = '.wav';
 
 export const miniMapScale = 20;
@@ -16,31 +15,6 @@ export const fov = (60 * Math.PI) / 200;
 export const stripWidth = 3;
 
 export const twoPI = Math.PI * 2;
-
-export const keys = {
-    UP: 38,
-    DOWN: 40,
-    LEFT: 37,
-    RIGHT: 39,
-    SHIFT: 16,
-    TAB: 9,
-    COMMAND: 91,
-    MINUS: 189,
-    EQUAL: 187,
-    NUMPAD_MINUS: 109,
-    NUMPAD_PLUS: 107,
-    A: 65,
-    D: 68,
-    F: 70,
-    G: 71,
-    J: 74,
-    M: 77,
-    P: 80,
-    R: 82,
-    S: 83,
-    V: 86,
-    W: 87,
-};
 
 export const DIRECTIONS = {
     NORTH: -90,
@@ -62,7 +36,30 @@ export const MOVE = {
     BACKWARD: 'BACKWARD',
 };
 
-export const ON = 'ON';
-export const OFF = 'OFF';
+
+/* cannot be moved to a reducer */
 
 export const MUGSHOT_TIME = 20;
+
+// must be kept in sync with key-values of WEAPONS in reducers/constants
+export const ALL_WEAPONS = [
+    'shotgun',
+    'supershotgun',
+    'chaingun',
+    'rocketlauncher',
+    'plasmagun',
+    'bfg9000',
+];
+
+export const ALL_KEYS = {
+    blue: 'skull',
+    yellow: 'skull',
+    red: 'skull',
+};
+
+export const ALL_AMMO = {
+    bullets: 400,
+    shells: 100,
+    rockets: 100,
+    cells: 600,
+};

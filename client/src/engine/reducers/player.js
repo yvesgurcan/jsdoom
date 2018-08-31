@@ -1,3 +1,8 @@
+import {
+    ALL_WEAPONS,
+    ALL_AMMO,
+    ALL_KEYS,
+} from '../constants';
 import player from '../../maps/player';
 
 const initState = {
@@ -13,7 +18,7 @@ const initState = {
     rotSpeed: 4,
     dir: 0,
     health: 47,
-    armor: 200,
+    armor: 143,
 };
 
 export default (prevState = initState, action) => {
@@ -32,6 +37,27 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 health: 100,
                 godMode: !prevState.godMode,
+            };
+        }
+        case 'CHEAT_AMMO': {
+            return {
+                ...prevState,
+                health: 100,
+                armor: 200,
+                backpack: true,
+                weapons: ALL_WEAPONS,
+                ammo: ALL_AMMO,
+            };
+        }
+        case 'CHEAT_AMMO_AND_KEYS': {
+            return {
+                ...prevState,
+                health: 100,
+                armor: 200,
+                backpack: true,
+                weapons: ALL_WEAPONS,
+                ammo: ALL_AMMO,
+                keys: ALL_KEYS,
             };
         }
         case 'SET_PLAYER_COORDINATES': {

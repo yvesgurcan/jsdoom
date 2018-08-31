@@ -1,8 +1,3 @@
-import {
-    keys,
-    ON,
-    OFF,
-} from './constants';
 import { dispatch, getState } from './store';
 import checkForCheat from './checkForCheat';
 import adjustMusicVolume from './adjustMusicVolume';
@@ -10,45 +5,69 @@ import adjustSoundVolume from './sound/adjustSoundVolume';
 import logAddEvent from './log/logAddEvent';
 import startMusic from './startMusic';
 
-const {
-    UP, W,
-    DOWN, S,
-    LEFT, A,
-    RIGHT, D,
-    TAB,
-    SHIFT,
-    COMMAND,
-    MINUS, NUMPAD_MINUS,
-    EQUAL, NUMPAD_PLUS,
-    F,
-    G,
-    J,
-    M,
-    P,
-    R,
-    V,
-} = keys;
+export default (state) => {
+    const {
+        constants: {
+            KEYBOARD,
+            ON,
+            OFF,
+        },
+    } = state;
+    const {
+        UP, W,
+        DOWN, S,
+        LEFT, A,
+        RIGHT, D,
+        TAB,
+        SHIFT,
+        COMMAND,
+        MINUS, NUMPAD_MINUS,
+        EQUAL, NUMPAD_PLUS,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        F,
+        G,
+        J,
+        M,
+        P,
+        R,
+        V,
+    } = KEYBOARD;
+    
+    console.table({
+        'UP-or-W': 'forward',
+        'DOWN-or-S': 'backward',
+        'LEFT-or-A': 'left',
+        'RIGHT-or-D': 'right',
+        SHIFT: 'strafe',
+        TAB: 'toggle automap',
+        MINUS: 'turn volume down',
+        'EQUAL-or-PLUS': 'turn volume up',
+        F: 'toggle FPS count',
+        G: 'toggle automap grid',
+        J: 'toggle playlist mode',
+        M: 'change song',
+        P: 'toggle pause',
+        V: 'toggle viewing cone (automap only)',
+    });
 
-console.table({
-    'UP-or-W': 'forward',
-    'DOWN-or-S': 'backward',
-    'LEFT-or-A': 'left',
-    'RIGHT-or-D': 'right',
-    SHIFT: 'strafe',
-    TAB: 'toggle automap',
-    MINUS: 'turn volume down',
-    'EQUAL-or-PLUS': 'turn volume up',
-    F: 'toggle FPS count',
-    G: 'toggle automap grid',
-    J: 'toggle playlist mode',
-    M: 'change song',
-    P: 'toggle pause',
-    V: 'toggle viewing cone (automap only)',
-});
-
-export default () => {
 	document.onkeydown = (event) => {
         const { keyCode } = event;
+        const {
+            keyStrokes: { keyPressCount },
+            game: { paused },
+            automap: { showGrid },
+            music: {
+                volume: musicVolume,
+                playlistMode,
+            },
+            sound: { volume: soundVolume },
+        } = getState();
 
         // allow page refresh
         if (keyCode !== COMMAND && keyCode !== R) {
@@ -56,7 +75,6 @@ export default () => {
         }
         console.log({ keyCode });
 
-        const { keyStrokes: { keyPressCount } } = getState();
         if (keyPressCount < 2) {
             dispatch({ type: 'INCREMENT_KEYPRESS_COUNT' });
         }
@@ -69,10 +87,6 @@ export default () => {
             }
             case NUMPAD_MINUS:
             case MINUS: {
-                const {
-                    music: { volume: musicVolume },
-                    sound: { volume: soundVolume },
-                } = getState();
                 adjustMusicVolume(musicVolume - 0.1);
                 adjustSoundVolume(soundVolume - 0.1);
                 logAddEvent('Volume down.');
@@ -80,10 +94,6 @@ export default () => {
             }
             case NUMPAD_PLUS:
             case EQUAL: {
-                const {
-                    music: { volume: musicVolume },
-                    sound: { volume: soundVolume },
-                } = getState();
                 adjustMusicVolume(musicVolume + 0.1);
                 adjustSoundVolume(soundVolume + 0.1);
                 logAddEvent('Volume up.');
@@ -94,7 +104,6 @@ export default () => {
                 break;
             }
             case J: {
-                const { music: { playlistMode } } = getState();
                 console.log(`Playlist mode: ${!playlistMode ? ON : OFF}`);
                 logAddEvent(`Playlist mode: ${!playlistMode ? ON : OFF}`);
                 dispatch({ type: 'TOGGLE_PLAYLIST_MODE' });
@@ -106,14 +115,14 @@ export default () => {
             }
         }
 
-        const { game: { paused } } = getState();
         if (paused) {
             return false;
         }
 
         dispatch({ type: 'REGISTER_KEY_STROKE', payload: keyCode });
 
-        const cheat = checkForCheat();
+        const currentState = getState();
+        const cheat = checkForCheat(null, currentState);
         if (cheat) {
             return false;
         }
@@ -149,7 +158,6 @@ export default () => {
                 break;
             }
             case G: {
-                const { automap: { showGrid } } = getState();
                 logAddEvent(`Grid ${!showGrid ? ON : OFF}.`);
                 dispatch({ type: 'TOGGLE_AUTOMAP_GRID' });
                 break;

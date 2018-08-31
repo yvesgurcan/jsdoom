@@ -69,7 +69,7 @@ export default (enemy, enemyType, index) => {
             return false;
         }
 
-        const selectedSound = selectSound(soundFixed);
+        const selectedSound = selectSound(soundRandom);
         const randomInterval = setRandomInterval(soundBaseInterval);
         return queueSound('randomInterval', randomInterval, selectedSound, enemy.id);
     }

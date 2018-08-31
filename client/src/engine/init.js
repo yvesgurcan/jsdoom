@@ -1,3 +1,4 @@
+import { getState } from './store';
 import resizeView from './resizeView';
 import bindKeys from './bindKeys';
 import debug from './debug';
@@ -12,12 +13,13 @@ import gameCycle from './gameCycle';
 import renderCycle from './renderCycle';
 
 export default () => {
+    const state = getState();
     debug();
     resizeView();
-    bindKeys();
+    bindKeys(state);
     startMusic();
     initScreen();
-    initStatusBar();
+    initStatusBar(state);
     initPlayer();
 	initDecorations();
 	initEnemies();

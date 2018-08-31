@@ -1,7 +1,3 @@
-import {
-    ON,
-    OFF,
-} from './constants';
 import songs from '../types/music';
 import logAddEvent from './log/logAddEvent';
 import { dispatch, getState } from './store';
@@ -62,7 +58,13 @@ export default (dontListenForClick = false) => {
     }
     
     document.addEventListener('keydown', () => {
-        const { music: { playlistMode } } = getState();
+        const {
+            constants: {
+                ON,
+                OFF,
+            },
+            music: { playlistMode },
+        } = getState();
         console.log(`startMusic(): Playlist mode: ${playlistMode ? ON : OFF}`);
         return startMusic();
     }, { once: true });
