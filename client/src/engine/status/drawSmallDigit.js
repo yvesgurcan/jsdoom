@@ -1,7 +1,8 @@
-export default (element, digit, active, constants = {}) => {
+export default (element, digit, color = 'yellow', constants = {}) => {
     const {
         ALPHANUMERIC_PATH,
-        STATUS_BAR_NUM_PREFIX,
+        STATUS_BAR_NUM_GREY_PREFIX,
+        STATUS_BAR_NUM_YELLOW_PREFIX,
         IMG_EXT,
     } = constants;
     if (digit === undefined) {
@@ -9,17 +10,10 @@ export default (element, digit, active, constants = {}) => {
         return false;
     }
 
-    element.src = `${ALPHANUMERIC_PATH}/${STATUS_BAR_NUM_PREFIX}/${STATUS_BAR_NUM_PREFIX}NUM${digit}${IMG_EXT}`;
+    const numberPrefix = color === 'grey' ? STATUS_BAR_NUM_GREY_PREFIX : STATUS_BAR_NUM_YELLOW_PREFIX;
 
-    /*
-    if (Number(digit) === 1) {
-        element.style.width = '17%';
-        element.style.marginRight = '3%';
-    } else {
-        */
-        element.style.width = '24%';
-        element.style.marginRight = '0px';
-    /* } */
+    element.src = `${ALPHANUMERIC_PATH}/${numberPrefix}/${numberPrefix}${digit}${IMG_EXT}`;
+    element.className = color;
 
     return true;
 };

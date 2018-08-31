@@ -8,6 +8,7 @@ import handleAutomapVisibility from './automap/handleAutomapVisibility';
 import drawHealth from './status/drawHealth';
 import drawArmor from './status/drawArmor';
 import drawKeys from './status/drawKeys';
+import drawWeapons from './status/drawWeapons';
 
 const gameCycle = () => {
     const state = getState();
@@ -47,8 +48,9 @@ const gameCycle = () => {
 
     handleAutomapVisibility();
 
-    drawMugShot();
     drawHealth();
+    drawWeapons(state);
+    drawMugShot();
     drawArmor();
     drawKeys(state);
 

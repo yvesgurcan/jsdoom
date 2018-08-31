@@ -71,6 +71,31 @@
                 width: 24%;
             }
 
+            #arms {
+                z-index: 503;
+            }
+
+            #weaponscontainer {
+                position: absolute;
+                display: grid;
+                width: 12.3%;
+                height: 65%;
+                padding-top: 0.7%;
+                padding-left: 1.1%;
+                padding-right: 0.6%;
+                grid-template-columns: 29% 29% 29%;
+                grid-column-gap: 6%;
+                grid-row-gap: 10%;
+                justify-content: center;
+                z-index: 504;
+                box-sizing: border-box;
+            }
+
+            #weapon2, #weapon3, #weapon4, #weapon5, #weapon6, #weapon7 {
+                width: 45%;
+                margin: auto;
+            }
+
             #mugshotcontainer {
                 padding-top: 6%;
                 text-align: center;
@@ -151,12 +176,14 @@
                             <img class="health" id="healthpercent">
                         </div>
                         <div id="weaponsandfragcontainer">
-                            <img class="weapon" id="weapon1">
-                            <img class="weapon" id="weapon2">
-                            <img class="weapon" id="weapon3">
-                            <img class="weapon" id="weapon4">
-                            <img class="weapon" id="weapon5">
-                            <img class="weapon" id="weapon6">
+                            <div id="weaponscontainer">
+                                <img id="weapon2">
+                                <img id="weapon3">
+                                <img id="weapon4">
+                                <img id="weapon5">
+                                <img id="weapon6">
+                                <img id="weapon7">
+                            </div>
                         </div>
                         <div id="mugshotcontainer">
                             <img id="mugshot">

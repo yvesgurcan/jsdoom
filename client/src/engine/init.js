@@ -19,7 +19,7 @@ export default () => {
     bindKeys(state);
     startMusic();
     initScreen();
-    initStatusBar();
+    initStatusBar(state);
     initPlayer();
 	initDecorations();
 	initEnemies();
