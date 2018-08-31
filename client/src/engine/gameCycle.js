@@ -7,8 +7,10 @@ import drawMugShot from './status/drawMugShot';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
 import drawHealth from './status/drawHealth';
 import drawArmor from './status/drawArmor';
+import drawKeys from './status/drawKeys';
 
 const gameCycle = () => {
+    const state = getState();
     const {
         game: {
             delay,
@@ -16,7 +18,7 @@ const gameCycle = () => {
             paused,
         },
         player,
-    } = getState();
+    } = state;
 
     if (delay <= 0) {
         console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
@@ -48,6 +50,7 @@ const gameCycle = () => {
     drawMugShot();
     drawHealth();
     drawArmor();
+    drawKeys(state);
 
     // the timer will likely not run that fast due to the rendering cycle hogging the cpu
     // so figure out how much time was lost since last cycle
