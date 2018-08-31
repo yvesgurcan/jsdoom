@@ -1,5 +1,15 @@
 # Release Notes
 
+## v0.3.4 - 2018/08/31
+
+* Keys and Weapon Slots
+
+Look alive people! There are now door key icons (card or skull, of course) as well as wepaon slots that light up when the player owns the right weapon on the status bar.
+
+What better opportunity than this one to add more of the famous Doom cheatcodes to the game logic. They make testing easier, for sure.
+
+I wonder if debugging is the reason why the IDKFA and IDFA cheats exist in the first place...
+
 ## v0.3.3 - 2018/08/28
 
 * Armor!
