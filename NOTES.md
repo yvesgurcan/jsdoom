@@ -1,6 +1,12 @@
 # Release Notes
 
-## v0.3.4 - 2018/08/31
+## v0.3.5 - 2018/08/31
+
+* Ammo
+
+The concept of ammunition is now part of the engine. Ammo does not do anything yet, but the game is able to display how much you have for the currently selected weapon. Which would be much more useful if the player was actually able to select a weapon... and use their ammo! It will come in due time.
+
+## v0.3.4 - 2018/08/30
 
 * Keys and Weapon Slots
 
@@ -10,7 +16,7 @@ What better opportunity than this one to add more of the famous Doom cheatcodes 
 
 I wonder if debugging is the reason why the IDKFA and IDFA cheats exist in the first place...
 
-## v0.3.3 - 2018/08/28
+## v0.3.3 - 2018/08/29
 
 * Armor!
 

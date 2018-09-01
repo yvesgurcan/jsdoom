@@ -1,3 +1,9 @@
+const {
+    WEAPONS,
+    WEAPON_SETTINGS,
+    AMMO,
+} = require('../constants');
+
 const ASSET_PATH = 'client/assets';
 
 const CHEAT_GOD = 'IDDQD';
@@ -43,14 +49,9 @@ const initState = {
         CHEAT_MAP,
         CHEAT_MUSIC,
     ],
-    WEAPONS: {
-        SHOTGUN: 'shotgun',
-        SUPER_SHOTGUN: 'supershotgun',
-        CHAINGUN: 'chaingun',
-        ROCKET_LAUNCHER: 'rocketlauncher',
-        PLASMAGUN: 'plasmagun',
-        BFG9000: 'bfg9000',
-    },
+    WEAPONS,
+    WEAPON_SETTINGS,
+    AMMO,
     KEYBOARD: {
         UP: 38,
         DOWN: 40,

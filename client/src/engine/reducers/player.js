@@ -2,6 +2,8 @@ import {
     ALL_WEAPONS,
     ALL_AMMO,
     ALL_KEYS,
+    PISTOL,
+    BULLETS,
 } from '../constants';
 import player from '../../maps/player';
 
@@ -9,6 +11,8 @@ const initState = {
     godMode: false,
     strafe: false,
     dead: false,
+    selectedWeapon: PISTOL,
+    ammo: { [BULLETS]: 50 },
     x: 1,
     y: 1,
     rotDeg: 0,

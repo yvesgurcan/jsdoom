@@ -41,14 +41,75 @@ export const MOVE = {
 
 export const MUGSHOT_TIME = 20;
 
-// must be kept in sync with key-values of WEAPONS in reducers/constants
+export const BULLETS = 'bullets';
+export const SHELLS = 'shells';
+export const ROCKETS = 'rockets';
+export const CELLS = 'cells';
+
+export const AMMO = {
+    BULLETS,
+    SHELLS,
+    ROCKETS,
+    CELLS,
+};
+
+export const AMMO_MAX = {
+    [BULLETS]: 200,
+    [SHELLS]: 50,
+    [ROCKETS]: 50,
+    [CELLS]: 300,
+};
+
+export const PISTOL = 'pistol';
+export const SHOTGUN = 'shotgun';
+export const SUPER_SHOTGUN = 'supershotgun';
+export const CHAINGUN = 'chaingun';
+export const ROCKET_LAUNCHER = 'rocketlauncher';
+export const PLASMA_GUN = 'plasmagun';
+export const BFG9000 = 'bfg9000';
+
+export const WEAPONS = {
+    SHOTGUN,
+    SUPER_SHOTGUN,
+    CHAINGUN,
+    ROCKET_LAUNCHER,
+    PLASMA_GUN,
+    BFG9000,
+};
+
+export const WEAPON_SETTINGS = {
+    [PISTOL]: {
+        ammo: BULLETS,
+    },
+    [SHOTGUN]: {
+        ammo: SHELLS,
+    },
+    [SUPER_SHOTGUN]: {
+        ammo: SHELLS,
+        usage: 2,
+    },
+    [CHAINGUN]: {
+        ammo: BULLETS,
+    },
+    [ROCKET_LAUNCHER]: {
+        ammo: ROCKETS,
+    },
+    [PLASMA_GUN]: {
+        ammo: CELLS,
+    },
+    [BFG9000]: {
+        ammo: CELLS,
+        usage: 40,
+    },
+};
+
 export const ALL_WEAPONS = [
-    'shotgun',
-    'supershotgun',
-    'chaingun',
-    'rocketlauncher',
-    'plasmagun',
-    'bfg9000',
+    SHOTGUN,
+    SUPER_SHOTGUN,
+    CHAINGUN,
+    ROCKET_LAUNCHER,
+    PLASMA_GUN,
+    BFG9000,
 ];
 
 export const ALL_KEYS = {
