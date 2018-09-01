@@ -38,7 +38,7 @@ export default (state) => {
                 SUPER_SHOTGUN,
                 CHAINGUN,
                 ROCKET_LAUNCHER,
-                PLASMAGUN,
+                PLASMA_GUN,
                 BFG9000,
             },
         },
@@ -48,7 +48,7 @@ export default (state) => {
         checkIfPlayerOwnsWeapon(state, 3, [SHOTGUN, SUPER_SHOTGUN]);
         checkIfPlayerOwnsWeapon(state, 4, CHAINGUN);
         checkIfPlayerOwnsWeapon(state, 5, ROCKET_LAUNCHER);
-        checkIfPlayerOwnsWeapon(state, 6, PLASMAGUN);
+        checkIfPlayerOwnsWeapon(state, 6, PLASMA_GUN);
         checkIfPlayerOwnsWeapon(state, 7, BFG9000);
     } else {
         // TODO
