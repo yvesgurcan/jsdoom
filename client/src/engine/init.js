@@ -1,4 +1,5 @@
 import { getState } from './store';
+import metadata from './metadata';
 import resizeView from './resizeView';
 import bindKeys from './bindKeys';
 import debug from './debug';
@@ -14,9 +15,10 @@ import renderCycle from './renderCycle';
 
 export default () => {
     const state = getState();
-    debug();
+    metadata(state);
     resizeView();
     bindKeys(state);
+    debug();
     startMusic();
     initScreen();
     initStatusBar(state);

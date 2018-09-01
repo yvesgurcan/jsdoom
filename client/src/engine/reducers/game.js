@@ -1,4 +1,17 @@
+import packageData from '../../../../package.json';
+
+const {
+    name,
+    description,
+    version,
+    bugs: { url: issues },
+} = packageData;
+
 const initState = {
+    name,
+    description,
+    version,
+    issues,
     singlePlayer: true,
     // set the goal for max FPS
     delay: 1000 / 30,

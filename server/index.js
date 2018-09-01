@@ -1,18 +1,24 @@
+const packageData = require('../package.json');
 const { createServer } = require('http');
 const { readFileSync } = require('fs');
+const authorizeFetchFile = require('./authorizeFetchFile');
+const { clientEntryPoint } = require('./constants');
+const {
+    serveFile,
+    internalServerError,
+    notFound,
+} = require('./responses');
+
+const {
+    config: {
+        host,
+        port,
+    }
+} = packageData;
 
 const server = createServer((req, res) => {
-    const authorizeFetchFile = require('./authorizeFetchFile');
-    const { clientEntryPoint } = require("./constants");
-    const {
-        serveFile,
-        internalServerError,
-        notFound,
-    } = require("./responses");
-
     try {
         const {
-            method,
             url,
         } = req;
     
@@ -32,16 +38,13 @@ const server = createServer((req, res) => {
             return notFound(req, res, exception);
         }
         return serveFile(req, res, file);
-
     } catch (exception) {
-        return internalServerError(req, res, exception)
+        return internalServerError(req, res, exception);
     }
 });
 
-
-
-module.exports = (port = 3001, hostname = 'localhost') => {
-    server.listen(port, hostname, () => {
-        console.log(`Server running at http://${hostname}:${port}/`);
+module.exports = () => {
+    server.listen(port, host, () => {
+        console.log(`Server running at http://${host}:${port}/`);
     });
 };

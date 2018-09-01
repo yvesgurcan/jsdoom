@@ -63,22 +63,23 @@ const debugSong = {
     random: () => startMusic(true),
 };
 
-console.log('debug functions', {
-    getElementById,
-    player: debugPlayer,
-    enemies: debugEnemies,
-    log: debugLog,
-    pause: debugPause,
-    cheat: debugCheat,
-    song: debugSong,
-});
-
 export default () => {
-    window.getElementById = getElementById;
-    window.player = debugPlayer;
-    window.enemies = debugEnemies;
-    window.log = debugLog;
-    window.pause = debugPause;
-    window.cheat = debugCheat;
-    window.song = debugSong;
+    console.log('debug functions', {
+        getElementById,
+        player: debugPlayer,
+        enemies: debugEnemies,
+        log: debugLog,
+        pause: debugPause,
+        cheat: debugCheat,
+        song: debugSong,
+    });
+    return () => {
+        window.getElementById = getElementById;
+        window.player = debugPlayer;
+        window.enemies = debugEnemies;
+        window.log = debugLog;
+        window.pause = debugPause;
+        window.cheat = debugCheat;
+        window.song = debugSong;
+    };
 };
