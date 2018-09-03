@@ -4,6 +4,7 @@ import drawArmor from './drawArmor';
 import drawKeys from './drawKeys';
 import drawWeapons from './drawWeapons';
 import drawSelectedAmmo from './drawSelectedAmmo';
+import drawAmmo from './drawAmmo';
 
 export default (state) => {
     drawSelectedAmmo(state);
@@ -12,4 +13,5 @@ export default (state) => {
     drawMugShot();
     drawArmor();
     drawKeys(state);
+    drawAmmo(state);
 };

@@ -10,7 +10,7 @@ export default (state) => {
             ammo,
         }
     } = state;
-    const ammoElement = getElementById('ammocontainer');
+    const ammoElement = getElementById('selectedammocontainer');
 
     if (selectedWeapon) {
         const weaponSetting = WEAPON_SETTINGS[selectedWeapon];

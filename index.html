@@ -56,10 +56,10 @@
                 display: grid;
                 width: 102%;
                 z-index: 501;
-                grid-template-columns: 14.5% 17.3% 12.3% 10.2% 18% 3.75%;
+                grid-template-columns: 14.5% 17.3% 12.3% 10.2% 18% 3.75% 21.8%;
             }
 
-            #ammocontainer {
+            #selectedammocontainer {
                 padding-top: 4%;
                 padding-right: 7%;
                 display: flex;
@@ -125,6 +125,26 @@
                 width: 90%;
             }
 
+            #ammocontainer {
+                display: grid;
+                padding-top: 6%;
+                padding-left: 30%;
+                padding-right: 5%;
+                grid-template-columns: 38% 38%;
+                grid-column-gap: 24%;
+                grid-template-rows: 22% 22% 22% 22%;
+                grid-row-gap: 1%;
+            }
+
+            .ammo {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .ammo img[src] {
+                width: 20%;
+            }
+
             #screen {
                 position: relative;
                 width: calc(100% - 2px);
@@ -172,7 +192,7 @@
                 <div id="fps"></div>
                 <div id="statusbar">
                     <div id="statusbargrid">
-                        <div id="ammocontainer">
+                        <div id="selectedammocontainer">
                             <img id="ammo1">
                             <img id="ammo2">
                             <img id="ammo3">
@@ -206,6 +226,48 @@
                             <img id="bluekey">
                             <img id="yellowkey">
                             <img id="redkey">
+                        </div>
+                        <div id="ammocontainer">
+                            <div class="ammo" id="bullets">
+                                <img id="bullets1">
+                                <img id="bullets2">
+                                <img id="bullets3">
+                            </div>
+                            <div class="ammo" id="maxbullets">
+                                <img id="maxbullets1">
+                                <img id="maxbullets2">
+                                <img id="maxbullets3">
+                            </div>
+                            <div class="ammo" id="shells">
+                                <img id="shells1">
+                                <img id="shells2">
+                                <img id="shells3">
+                            </div>
+                            <div class="ammo" id="maxshells">
+                                <img id="maxshells1">
+                                <img id="maxshells2">
+                                <img id="maxshells3">
+                            </div>
+                            <div class="ammo" id="rockets">
+                                <img id="rockets1">
+                                <img id="rockets2">
+                                <img id="rockets3">
+                            </div>
+                            <div class="ammo" id="maxrockets">
+                                <img id="maxrockets1">
+                                <img id="maxrockets2">
+                                <img id="maxrockets3">
+                            </div>
+                            <div class="ammo" id="cells">
+                                <img id="cells1">
+                                <img id="cells2">
+                                <img id="cells3">
+                            </div>
+                            <div class="ammo" id="maxcells">
+                                <img id="maxcells1">
+                                <img id="maxcells2">
+                                <img id="maxcells3">
+                            </div>
                         </div>
                     </div>
                 </div>

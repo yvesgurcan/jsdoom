@@ -2,6 +2,7 @@ const {
     WEAPONS,
     WEAPON_SETTINGS,
     AMMO,
+    AMMO_MAX,
 } = require('../constants');
 
 const ASSET_PATH = 'client/assets';
@@ -52,6 +53,7 @@ const initState = {
     WEAPONS,
     WEAPON_SETTINGS,
     AMMO,
+    AMMO_MAX,
     KEYBOARD: {
         UP: 38,
         DOWN: 40,
