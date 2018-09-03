@@ -1,5 +1,17 @@
 # Release Notes
 
+## v 0.3.6 - 2018/09/02
+
+* Status bar is ready
+
+Here we are, with a full-blown Doom status bar. Finally, players will have the opportunity to immerse themselves in the game by checking doomguy's healh, armor, wepaons, ammo, and keys as they are dodging bullets from the enemies. Well, the engine is not quite ready for the monsters to attack but, eh, at least they're chasing you!
+
+Who knows what will come next for version 0.4?...
+
+...Probably some weapon sprites. With amazing animations.
+
+Indeed.
+
 ## v0.3.5 - 2018/08/31
 
 * Ammo
