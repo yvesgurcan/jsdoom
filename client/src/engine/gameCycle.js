@@ -4,7 +4,7 @@ import move from './move';
 import chasePlayer from './enemies/chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
-import updateStatusBar from './status/updateStatusBar';
+import updateStatusBar from './statusBar/updateStatusBar';
 
 const gameCycle = () => {
     const state = getState();
