@@ -50,7 +50,5 @@ export default (state) => {
         checkIfPlayerOwnsWeapon(state, 5, ROCKET_LAUNCHER);
         checkIfPlayerOwnsWeapon(state, 6, PLASMA_GUN);
         checkIfPlayerOwnsWeapon(state, 7, BFG9000);
-    } else {
-        // TODO
     }
 };
