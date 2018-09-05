@@ -73,13 +73,13 @@ export default () => {
         cheat: debugCheat,
         song: debugSong,
     });
-    return () => {
-        window.getElementById = getElementById;
-        window.player = debugPlayer;
-        window.enemies = debugEnemies;
-        window.log = debugLog;
-        window.pause = debugPause;
-        window.cheat = debugCheat;
-        window.song = debugSong;
-    };
+
+    window.getElementById = getElementById;
+    window.player = debugPlayer;
+    window.enemies = debugEnemies;
+    window.log = debugLog;
+    window.pause = debugPause;
+    window.cheat = debugCheat;
+    window.song = debugSong;
+    return true;
 };
