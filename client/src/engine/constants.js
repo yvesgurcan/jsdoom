@@ -60,6 +60,8 @@ export const AMMO_MAX = {
     [CELLS]: 300,
 };
 
+export const FIST = 'fist';
+export const CHAINSAW = 'chainsaw';
 export const PISTOL = 'pistol';
 export const SHOTGUN = 'shotgun';
 export const SUPER_SHOTGUN = 'supershotgun';
@@ -80,26 +82,33 @@ export const WEAPONS = {
 export const WEAPON_SETTINGS = {
     [PISTOL]: {
         ammo: BULLETS,
+        prefix: 'PIS',
     },
     [SHOTGUN]: {
         ammo: SHELLS,
+        prefix: 'SHT',
     },
     [SUPER_SHOTGUN]: {
         ammo: SHELLS,
         usage: 2,
+        prefix: 'SHT2',
     },
     [CHAINGUN]: {
         ammo: BULLETS,
+        prefix: 'CHG',
     },
     [ROCKET_LAUNCHER]: {
         ammo: ROCKETS,
+        prefix: 'MIS',
     },
     [PLASMA_GUN]: {
         ammo: CELLS,
+        prefix: 'PLS',
     },
     [BFG9000]: {
         ammo: CELLS,
         usage: 40,
+        prefix: 'BFG',
     },
 };
 
