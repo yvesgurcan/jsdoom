@@ -1,6 +1,16 @@
 # Release Notes
 
-## v 0.3.6 - 2018/09/02
+## v0.3.7 - 2018/09/04
+
+* Weapon sprites
+
+I guess this update is not as complete as the previous ones, as the freshly added weapon sprites really do nothing. At least it's getting some boilerplate out of the way and helps me think about what approach I need to take to tackle all the weapon animations.
+
+Meanwhile, I also tried to keep the size of the status bar decent so that it won't take up too much real estate on the screen, whatever the resolution is. Conversely, the status bar won't go too small either as to still be legible-ish at a minimum.
+
+But what I really need to figure out now is how to keep a good height/width ratio for the weapon sprite so that it displays consistently no matter what.
+
+## v0.3.6 - 2018/09/02
 
 * Status bar is ready
 
