@@ -1,3 +1,5 @@
+
+import drawWeapon from './drawWeapon';
 import drawSelectedAmmo from './drawSelectedAmmo';
 import drawHealth from './drawHealth';
 import drawWeaponSlots from './drawWeaponSlots';
@@ -7,6 +9,7 @@ import drawKeys from './drawKeys';
 import drawAmmo from './drawAmmo';
 
 export default (state) => {
+    drawWeapon(state);
     drawSelectedAmmo(state);
     drawHealth();
     drawWeaponSlots(state);
