@@ -12,7 +12,7 @@ const drawCurrentAmmo = (state, ammoType) => {
         player: { ammo },
     } = state;
 
-    const ammoQty = String(ammo[ammoType] || 0);
+    const ammoQty = ammo ? String(ammo[ammoType] || 0) : '0';
     return drawAmmo(state, ammoType, ammoQty, constants);
 };
 

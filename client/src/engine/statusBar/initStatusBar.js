@@ -7,6 +7,7 @@ export default (state) => {
             IMG_EXT,
             STATUS_BAR_PATH,
             STATUS_BAR_FILENAME,
+            STATUS_BAR_FILLER,
         },
     } = state;
 
@@ -18,6 +19,11 @@ export default (state) => {
     statusBar.appendChild(statusBarBackground);
 
     setTimeout(() => {
+        const statusBarContainer = getElementById('statusbarcontainer');
+        statusBarContainer.style.backgroundImage = `url('${STATUS_BAR_FILLER}')`;
+        statusBarContainer.style.height = statusBarBackground.offsetHeight;
+
+
         const statusBarGrid = getElementById('statusbargrid');
         statusBarGrid.height = statusBarBackground.height;
     }, 50);

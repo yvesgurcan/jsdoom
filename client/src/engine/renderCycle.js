@@ -7,6 +7,7 @@ import renderEnemies from './enemies/renderEnemies';
 import updateFPS from './updateFPS';
 
 const renderCycle = () => {
+    const state = getState();
     const {
         game: {
             delay,
@@ -17,7 +18,7 @@ const renderCycle = () => {
             showAutomap,
             showViewingCone,
         },
-    } = getState();
+    } = state;
 
     if (delay <= 0) {
         console.error('Invalid value: game.delay should be a number greater than zero.');
@@ -29,7 +30,7 @@ const renderCycle = () => {
         return false;
     }
 
-    updateAutomap();
+    updateAutomap(state);
     
     if (!showAutomap || (showAutomap && showViewingCone)) {
         castRays();

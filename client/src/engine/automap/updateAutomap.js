@@ -1,7 +1,6 @@
 import getElementById from '../getElementById';
-import { getState } from '../store';
 
-export default () => {
+export default (state) => {
 	const miniMapObjects = getElementById('minimapobjects');
 
     const {
@@ -17,12 +16,22 @@ export default () => {
             enemyColor,
             decorationColor,
         },
-    } = getState();
+    } = state;
+
+    const weapon = getElementById('weapon');
 
     if (!showAutomap) {
+        if (weapon.style.display !== 'block') {
+            weapon.style.display = 'block';
+        }
+
         return false;
     }
-    
+
+    if (weapon.style.display !== 'none') {
+        weapon.style.display = 'none';
+    }
+
 	const objectCtx = miniMapObjects.getContext('2d');
 	miniMapObjects.width = miniMapObjects.width;
 

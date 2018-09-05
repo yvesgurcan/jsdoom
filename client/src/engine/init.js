@@ -5,7 +5,7 @@ import bindKeys from './bindKeys';
 import debug from './debug';
 import startMusic from './startMusic';
 import initScreen from './initScreen';
-import initStatusBar from './status/initStatusBar';
+import initStatusBar from './statusBar/initStatusBar';
 import initPlayer from './initPlayer';
 import initDecorations from './initDecorations';
 import initEnemies from './enemies/initEnemies';

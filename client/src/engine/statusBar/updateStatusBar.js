@@ -1,15 +1,18 @@
-import drawMugShot from './drawMugShot';
+
+import drawWeapon from './drawWeapon';
+import drawSelectedAmmo from './drawSelectedAmmo';
 import drawHealth from './drawHealth';
+import drawWeaponSlots from './drawWeaponSlots';
+import drawMugShot from './drawMugShot';
 import drawArmor from './drawArmor';
 import drawKeys from './drawKeys';
-import drawWeapons from './drawWeapons';
-import drawSelectedAmmo from './drawSelectedAmmo';
 import drawAmmo from './drawAmmo';
 
 export default (state) => {
+    drawWeapon(state);
     drawSelectedAmmo(state);
     drawHealth();
-    drawWeapons(state);
+    drawWeaponSlots(state);
     drawMugShot();
     drawArmor();
     drawKeys(state);
