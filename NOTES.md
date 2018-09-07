@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.0 - 2018/09/07
+
+* Switching weapons
+
+We're moving up in the world. Version 0.4, because the status bear is done and we are moving to more complex stuff, such as... weapons! It is now possible to change your current weapon by pressing a number between 1 and 7. The image changes abruptly, and the engine does not check if you actually own the weapon, but it's a good start!
+
 ## v0.3.7 - 2018/09/04
 
 * Weapon sprites
