@@ -4,6 +4,7 @@ import adjustMusicVolume from './adjustMusicVolume';
 import adjustSoundVolume from './sound/adjustSoundVolume';
 import logAddEvent from './log/logAddEvent';
 import startMusic from './startMusic';
+import getNextWeaponFromSlot from './weapons/getNextWeaponFromSlot';
 
 export default (state) => {
     const {
@@ -119,7 +120,7 @@ export default (state) => {
             return false;
         }
 
-        dispatch({ type: 'REGISTER_KEY_STROKE', payload: keyCode });
+        dispatch({ type: 'REGISTER_KEY_STROKE', payload: { keyCode } });
 
         const currentState = getState();
         const cheat = checkForCheat(null, currentState);
@@ -155,6 +156,55 @@ export default (state) => {
             }
             case SHIFT: {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
+                break;
+            }
+            case ONE: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 1);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case TWO: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 2);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case THREE: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 3);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case FOUR: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 4);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case FIVE: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 5);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case SIX: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 6);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
+                break;
+            }
+            case SEVEN: {
+                const nextWeapon = getNextWeaponFromSlot(currentState, 7);
+                if (nextWeapon !== false) {
+                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                }
                 break;
             }
             case G: {

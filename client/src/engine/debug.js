@@ -5,6 +5,7 @@ import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import checkForCheat from './checkForCheat';
 import startMusic from './startMusic';
+import getNextWeaponFromSlot from './weapons/getNextWeaponFromSlot';
 
 const debugPlayer = {
     init: () => {
@@ -31,6 +32,23 @@ const debugPlayer = {
     pos: () => {
         const { player } = getState();
         return player;
+    }
+};
+
+const debugWeapons = {
+    inspect: () => {
+        const { weapons } = getState();
+        return weapons;
+    },
+    switch: (slot) => {
+        const state = getState();
+        const nextWeapon = getNextWeaponFromSlot(state, slot);
+        if (nextWeapon !== false) {
+            dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+        }
+
+        const { weapons: result } = getState();
+        return result;
     }
 };
 
@@ -67,6 +85,7 @@ export default () => {
     console.log('debug functions', {
         getElementById,
         player: debugPlayer,
+        weapons: debugWeapons,
         enemies: debugEnemies,
         log: debugLog,
         pause: debugPause,
@@ -76,6 +95,7 @@ export default () => {
 
     window.getElementById = getElementById;
     window.player = debugPlayer;
+    window.weapons = debugWeapons;
     window.enemies = debugEnemies;
     window.log = debugLog;
     window.pause = debugPause;
