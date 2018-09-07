@@ -21,11 +21,6 @@ const initState = {
     weapons: [
         CHAINSAW,
         SHOTGUN,
-        SUPER_SHOTGUN,
-        CHAINGUN,
-        ROCKET_LAUNCHER,
-        PLASMA_GUN,
-        BFG9000,
     ],
     ammo: { [BULLETS]: 50 },
     x: 1,
