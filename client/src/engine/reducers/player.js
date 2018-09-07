@@ -2,7 +2,7 @@ import {
     ALL_WEAPONS,
     ALL_AMMO,
     ALL_KEYS,
-    PISTOL,
+    CHAINSAW,
     SHOTGUN,
     SUPER_SHOTGUN,
     CHAINGUN,
@@ -17,7 +17,16 @@ const initState = {
     godMode: false,
     strafe: false,
     dead: false,
-    selectedWeapon: CHAINGUN,
+    selectedWeapon: SHOTGUN,
+    weapons: [
+        CHAINSAW,
+        SHOTGUN,
+        SUPER_SHOTGUN,
+        CHAINGUN,
+        ROCKET_LAUNCHER,
+        PLASMA_GUN,
+        BFG9000,
+    ],
     ammo: { [BULLETS]: 50 },
     x: 1,
     y: 1,
@@ -34,8 +43,10 @@ const initState = {
 export default (prevState = initState, action) => {
     const {
         type,
-        payload,
+        payload = {},
     } = action;
+
+    const { selectedWeapon } = payload;
 
     switch (type) {
         default: return prevState;
@@ -119,6 +130,12 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 dir: 0,
+            };
+        }
+        case 'STOP_SWITCH_WEAPON': {
+            return {
+                ...prevState,
+                selectedWeapon,
             };
         }
     }
