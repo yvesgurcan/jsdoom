@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import constants from './constants';
 import player from './player';
+import weapons from './weapons';
 import map from './map';
 import wallMap from './wallMap';
 import wallTypes from './wallTypes';
@@ -23,6 +24,7 @@ import log from './log';
 export default combineReducers({
     constants,
     player,
+    weapons,
     map,
     wallMap,
     wallTypes,
