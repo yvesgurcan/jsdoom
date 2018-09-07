@@ -32,23 +32,14 @@ const checkIfPlayerOwnsWeapon = (state, slotNumber, weaponSlot) => {
 
 export default (state) => {
     const {
-        constants: {
-            WEAPONS: {
-                SHOTGUN,
-                SUPER_SHOTGUN,
-                CHAINGUN,
-                ROCKET_LAUNCHER,
-                PLASMA_GUN,
-                BFG9000,
-            },
-        },
+        constants: { WEAPON_SLOTS },
         game: { singlePlayer },
     } = state;
     if (singlePlayer) {
-        checkIfPlayerOwnsWeapon(state, 3, [SHOTGUN, SUPER_SHOTGUN]);
-        checkIfPlayerOwnsWeapon(state, 4, CHAINGUN);
-        checkIfPlayerOwnsWeapon(state, 5, ROCKET_LAUNCHER);
-        checkIfPlayerOwnsWeapon(state, 6, PLASMA_GUN);
-        checkIfPlayerOwnsWeapon(state, 7, BFG9000);
+        checkIfPlayerOwnsWeapon(state, 3, WEAPON_SLOTS[3]);
+        checkIfPlayerOwnsWeapon(state, 4, WEAPON_SLOTS[4]);
+        checkIfPlayerOwnsWeapon(state, 5, WEAPON_SLOTS[5]);
+        checkIfPlayerOwnsWeapon(state, 6, WEAPON_SLOTS[6]);
+        checkIfPlayerOwnsWeapon(state, 7, WEAPON_SLOTS[7]);
     }
 };

@@ -1,9 +1,21 @@
-const {
+import {
     WEAPONS,
     WEAPON_SETTINGS,
     AMMO,
     AMMO_MAX,
-} = require('../constants');
+} from '../constants';
+
+const {
+    FIST,
+    CHAINSAW,
+    PISTOL,
+    SHOTGUN,
+    SUPER_SHOTGUN,
+    CHAINGUN,
+    ROCKET_LAUNCHER,
+    PLASMA_GUN,
+    BFG9000,
+} = WEAPONS;
 
 const ASSET_PATH = 'client/assets';
 
@@ -84,6 +96,21 @@ const initState = {
     },
     WEAPON_PATH: `${ASSET_PATH}/weapons`,
     WEAPONS,
+    WEAPON_SLOTS: {
+        1: [
+            CHAINSAW,
+            FIST,
+        ],
+        2: [PISTOL],
+        3: [
+            SHOTGUN,
+            SUPER_SHOTGUN,
+        ],
+        4: [CHAINGUN],
+        5: [ROCKET_LAUNCHER],
+        6: [PLASMA_GUN],
+        7: [BFG9000],
+    },
     WEAPON_SETTINGS,
     AMMO,
     AMMO_MAX,

@@ -71,6 +71,9 @@ export const PLASMA_GUN = 'plasmagun';
 export const BFG9000 = 'bfg9000';
 
 export const WEAPONS = {
+    FIST,
+    CHAINSAW,
+    PISTOL,
     SHOTGUN,
     SUPER_SHOTGUN,
     CHAINGUN,
@@ -80,6 +83,14 @@ export const WEAPONS = {
 };
 
 export const WEAPON_SETTINGS = {
+    [FIST]: { prefix: 'PUN' },
+    [CHAINSAW]: {
+        prefix: 'SAW',
+        idleFrames: [
+            'C0',
+            'D0',
+        ],
+    },
     [PISTOL]: {
         ammo: BULLETS,
         prefix: 'PIS',
@@ -92,6 +103,7 @@ export const WEAPON_SETTINGS = {
         ammo: SHELLS,
         usage: 2,
         prefix: 'SHT2',
+        noFlashSpritePrefix: true,
     },
     [CHAINGUN]: {
         ammo: BULLETS,
@@ -111,6 +123,9 @@ export const WEAPON_SETTINGS = {
         prefix: 'BFG',
     },
 };
+
+
+export const WEAPON_SWITCH_TIME = 15;
 
 export const ALL_WEAPONS = [
     SHOTGUN,
