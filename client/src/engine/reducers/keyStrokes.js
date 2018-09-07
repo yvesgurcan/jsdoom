@@ -5,8 +5,10 @@ const initState = {
 export default (prevState = initState, action) => {
     const {
         type,
-        payload,
+        payload = {},
     } = action;
+
+    const { keyCode } = payload;
 
     switch (type) {
         default: return prevState;
@@ -21,7 +23,7 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 history: [
                     ...prevState.history,
-                    payload,
+                    keyCode,
                 ],
             };
         }
