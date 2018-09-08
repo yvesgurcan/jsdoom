@@ -3,6 +3,7 @@ import {
     ALL_AMMO,
     ALL_KEYS,
     CHAINSAW,
+    PISTOL,
     SHOTGUN,
     SUPER_SHOTGUN,
     CHAINGUN,
@@ -20,10 +21,10 @@ const initState = {
     godMode: false,
     strafe: false,
     dead: false,
-    selectedWeapon: SHOTGUN,
+    selectedWeapon: PISTOL,
     weapons: [
-        CHAINSAW,
-        SHOTGUN,
+        SUPER_SHOTGUN,
+        CHAINGUN,
     ],
     ammo: {
         [BULLETS]: 50,
