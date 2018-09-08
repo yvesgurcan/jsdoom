@@ -103,8 +103,8 @@ const initState = {
         ],
         2: [PISTOL],
         3: [
-            SHOTGUN,
             SUPER_SHOTGUN,
+            SHOTGUN,
         ],
         4: [CHAINGUN],
         5: [ROCKET_LAUNCHER],
