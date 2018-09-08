@@ -1,5 +1,15 @@
 # Release Notes
 
+## v0.4.1 - 2018/09/08
+
+* Lower and raise weapons
+
+It was a little sad to switch weapons without transitions. Guess what? When you select a different weapon, the weapon will now amazingly lower and the next weapon will raise. Magic!
+
+Just like in Doom, the transition is very much blocking -- you can't fire your weapon when you are switching weapons. However, the behavior differs slightly from the original Doom. Basically, if you happen to select another weapon while you are already transitioning to the next weapon, Doom will queue up that other weapon and transition to that one as soon as the engine is done rendering the current transition. To keep track of this discrepancy and others with the original game, I created a [document that list differences with the Doom engine](VANILLA.md).
+
+Also, the player can not select a weapon they don't own anymore. Better hide this BFG now.
+
 ## v0.4.0 - 2018/09/07
 
 * Switching weapons

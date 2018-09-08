@@ -44,7 +44,7 @@ const debugWeapons = {
         const state = getState();
         const nextWeapon = getNextWeaponFromSlot(state, slot);
         if (nextWeapon !== false) {
-            dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+            dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
         }
 
         const { weapons: result } = getState();
