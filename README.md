@@ -8,6 +8,8 @@
 
 ## [How enemey sprites work](ENEMY_SPRITES.md)
 
+## [Differences with the Doom engine](VANILLA.md)
+
 ## Setup
 
 ```npm install```
