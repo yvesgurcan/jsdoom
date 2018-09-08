@@ -1,4 +1,4 @@
-# Vanilla vs HTML5
+# Vanilla vs JavaScript
 
 The original Doom engine is full of bugs (or features, depending on how you look at it) and odd behaviors.
 
