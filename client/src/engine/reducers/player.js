@@ -3,6 +3,7 @@ import {
     ALL_AMMO,
     ALL_KEYS,
     CHAINSAW,
+    PISTOL,
     SHOTGUN,
     SUPER_SHOTGUN,
     CHAINGUN,
@@ -10,6 +11,9 @@ import {
     PLASMA_GUN,
     BFG9000,
     BULLETS,
+    SHELLS,
+    ROCKETS,
+    CELLS,
 } from '../constants';
 import player from '../../maps/player';
 
@@ -17,12 +21,17 @@ const initState = {
     godMode: false,
     strafe: false,
     dead: false,
-    selectedWeapon: SHOTGUN,
+    selectedWeapon: PISTOL,
     weapons: [
-        CHAINSAW,
-        SHOTGUN,
+        SUPER_SHOTGUN,
+        CHAINGUN,
     ],
-    ammo: { [BULLETS]: 50 },
+    ammo: {
+        [BULLETS]: 50,
+        [SHELLS]: 0,
+        [ROCKETS]: 0,
+        [CELLS]: 0,
+    },
     x: 1,
     y: 1,
     rotDeg: 0,
