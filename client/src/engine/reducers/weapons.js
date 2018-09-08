@@ -14,20 +14,20 @@ export default (prevState = initState, action) => {
 
     switch (type) {
         default: return prevState;
-        case 'START_SWITCH_WEAPON': {
+        case 'START_LOWER_WEAPON': {
             return {
                 ...prevState,
                 nextWeapon,
                 nextWeaponDelay: WEAPON_SWITCH_TIME,
             };
         }
-        case 'UPDATE_SWITCH_WEAPON': {
+        case 'UPDATE_LOWER_WEAPON': {
             return {
                 ...prevState,
                 nextWeaponDelay,
             };       
         }
-        case 'STOP_SWITCH_WEAPON': {
+        case 'STOP_LOWER_WEAPON': {
             if (prevState.switchWeapon) {
                 return {
                     ...prevState,

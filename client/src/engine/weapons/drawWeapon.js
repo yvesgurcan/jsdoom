@@ -17,7 +17,7 @@ export default (state) => {
     } = state;
 
     if (nextWeaponDelay) {
-        dispatch({ type: 'UPDATE_SWITCH_WEAPON', payload: { nextWeaponDelay: nextWeaponDelay - 1 } });
+        dispatch({ type: 'UPDATE_LOWER_WEAPON', payload: { nextWeaponDelay: nextWeaponDelay - 1 } });
 
         // update weapon sprite
         const weapon = getElementById('weapon');
@@ -28,7 +28,7 @@ export default (state) => {
     }
 
     if (nextWeaponDelay <= 0 && nextWeapon && selectedWeapon !== nextWeapon) {
-        dispatch({ type: 'STOP_SWITCH_WEAPON', payload: { selectedWeapon: nextWeapon } });
+        dispatch({ type: 'STOP_LOWER_WEAPON', payload: { selectedWeapon: nextWeapon } });
         return false;
     }
 

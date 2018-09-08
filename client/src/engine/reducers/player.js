@@ -136,7 +136,7 @@ export default (prevState = initState, action) => {
                 dir: 0,
             };
         }
-        case 'STOP_SWITCH_WEAPON': {
+        case 'STOP_LOWER_WEAPON': {
             return {
                 ...prevState,
                 selectedWeapon,

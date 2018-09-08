@@ -161,49 +161,49 @@ export default (state) => {
             case ONE: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 1);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case TWO: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 2);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case THREE: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 3);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case FOUR: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 4);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case FIVE: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 5);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case SIX: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 6);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
             case SEVEN: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 7);
                 if (nextWeapon !== false) {
-                    dispatch({ type: 'START_SWITCH_WEAPON', payload: { nextWeapon } });
+                    dispatch({ type: 'START_LOWER_WEAPON', payload: { nextWeapon } });
                 }
                 break;
             }
