@@ -7,6 +7,7 @@ export default (state) => {
             IMG_EXT,
             WEAPON_PATH,
             WEAPON_SETTINGS,
+            WEAPON_SWITCH_TIME,
         },
         weapons: {
             nextWeaponDelay,
@@ -19,6 +20,9 @@ export default (state) => {
         dispatch({ type: 'UPDATE_SWITCH_WEAPON', payload: { nextWeaponDelay: nextWeaponDelay - 1 } });
 
         // update weapon sprite
+        const weapon = getElementById('weapon');
+        const imageHeight = weapon.offsetHeight;
+        weapon.style.bottom = -(imageHeight / WEAPON_SWITCH_TIME) * (WEAPON_SWITCH_TIME - nextWeaponDelay);
 
         return false;
     }
@@ -46,6 +50,11 @@ export default (state) => {
     } = weaponSettings;
 
     const weapon = getElementById('weapon');
+
+    if (weapon.style.bottom !== 0) {
+        weapon.style.bottom = 0;
+    }
+
     const spriteInitial = noFlashSpritePrefix ? '' : 'G';
     weapon.src = `${WEAPON_PATH}/${prefix}${spriteInitial}A0${IMG_EXT}`;
 };

@@ -1,6 +1,7 @@
 import {
     WEAPONS,
     WEAPON_SETTINGS,
+    WEAPON_SWITCH_TIME,
     AMMO,
     AMMO_MAX,
 } from '../constants';
@@ -112,6 +113,7 @@ const initState = {
         7: [BFG9000],
     },
     WEAPON_SETTINGS,
+    WEAPON_SWITCH_TIME,
     AMMO,
     AMMO_MAX,
 };
