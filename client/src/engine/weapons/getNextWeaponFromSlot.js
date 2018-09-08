@@ -4,8 +4,14 @@ import checkIfPlayerOwnsWeaponInSlot from './checkIfPlayerOwnsWeaponInSlot';
 export default (state, slot) => {
     const {
         constants: { WEAPONS: { FIST }, WEAPON_SLOTS },
+        weapons: { lowerWeaponDelay, raiseWeaponDelay },
         player: { selectedWeapon, weapons },
     } = state;
+
+    if (lowerWeaponDelay || raiseWeaponDelay) {
+        return false;
+    }
+
     if (slot === undefined || slot === null) {
         console.error(`getWeaponFromSlot(): Invalid slot number '${slot}'.`);
         return false;
@@ -41,22 +47,27 @@ export default (state, slot) => {
 
         // switch to second weapon in the slot if owned
         if (weaponsInSlot[1] === selectedWeapon) {
-            if (weapons.indexOf(WEAPON_SLOTS[slot][0]) > -1) {
+            if (slot !== 1 && weapons.indexOf(WEAPON_SLOTS[slot][0]) > -1) {
                 return WEAPON_SLOTS[slot][0];
             }
         }
 
+
         // switch to whichever weapon is owned
         if (weapons.indexOf(WEAPON_SLOTS[slot][0]) > -1) {
-            return WEAPON_SLOTS[slot][0];
+            if (selectedWeapon !== WEAPON_SLOTS[slot][0]) {
+                return WEAPON_SLOTS[slot][0];
+            }
         }
 
         if (weapons.indexOf(WEAPON_SLOTS[slot][1]) > -1) {
-            return WEAPON_SLOTS[slot][1];
+            if (selectedWeapon !== WEAPON_SLOTS[slot][1]) {
+                return WEAPON_SLOTS[slot][1];
+            }
         }
 
         // fist is never owned
-        if (slot === 1) {
+        if (slot === 1 && selectedWeapon !== FIST) {
             return FIST;
         }
 

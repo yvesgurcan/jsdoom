@@ -23,6 +23,8 @@ const initState = {
     dead: false,
     selectedWeapon: PISTOL,
     weapons: [
+        CHAINSAW,
+        SHOTGUN,
         SUPER_SHOTGUN,
         CHAINGUN,
     ],

@@ -9,7 +9,8 @@ export default (prevState = initState, action) => {
 
     const {
         nextWeapon,
-        nextWeaponDelay,
+        lowerWeaponDelay,
+        raiseWeaponDelay,
     } = payload;
 
     switch (type) {
@@ -18,25 +19,39 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 nextWeapon,
-                nextWeaponDelay: WEAPON_SWITCH_TIME,
+                lowerWeaponDelay: WEAPON_SWITCH_TIME,
             };
         }
         case 'UPDATE_LOWER_WEAPON': {
             return {
                 ...prevState,
-                nextWeaponDelay,
-            };       
+                lowerWeaponDelay,
+            };
         }
         case 'STOP_LOWER_WEAPON': {
-            if (prevState.switchWeapon) {
-                return {
-                    ...prevState,
-                    nextWeapon: undefined,
-                    nextWeaponDelay: undefined,
-                };    
-            }
-
-            return prevState;
+            return {
+                ...prevState,
+                nextWeapon: undefined,
+                lowerWeaponDelay: undefined,
+            };
+        }
+        case 'START_RAISE_WEAPON': {
+            return {
+                ...prevState,
+                raiseWeaponDelay: WEAPON_SWITCH_TIME,
+            };
+        }
+        case 'UPDATE_RAISE_WEAPON': {
+            return {
+                ...prevState,
+                raiseWeaponDelay,
+            };
+        }
+        case 'STOP_RAISE_WEAPON': {
+            return {
+                ...prevState,
+                raiseWeaponDelay: undefined,
+            };
         }
     }
 };

@@ -125,7 +125,7 @@ export const WEAPON_SETTINGS = {
 };
 
 
-export const WEAPON_SWITCH_TIME = 15;
+export const WEAPON_SWITCH_TIME = 10;
 
 export const ALL_WEAPONS = [
     SHOTGUN,
