@@ -1,7 +1,10 @@
 import getElementById from '../getElementById';
 import drawSmallDigit from './drawSmallDigit';
+import checkIfPlayerOwnsWeapon from '../weapons/checkIfPlayerOwnsWeapon';
 
-const updateWeaponStatus = (state, slotNumber, owned) => {
+const updateWeaponStatus = (state, slotNumber, weaponSlot) => {
+    const owned = checkIfPlayerOwnsWeapon(state, slotNumber, weaponSlot);
+
     const element = getElementById(`weapon${slotNumber}`);
     const color = owned ? 'yellow' : 'grey';
 
@@ -11,24 +14,6 @@ const updateWeaponStatus = (state, slotNumber, owned) => {
     }
 };
 
-const checkIfPlayerOwnsWeapon = (state, slotNumber, weaponSlot) => {
-    const { player: { weapons = null } } = state;
-
-    if (!weapons) {
-        return false;
-    }
-
-    let weaponsSlot = [weaponSlot];
-    if (Array.isArray(weaponSlot)) {
-        weaponsSlot = weaponSlot;
-    }
-
-    const owned = weaponsSlot.some(weapon => weapons.indexOf(weapon) > -1);
-
-    updateWeaponStatus(state, slotNumber, owned);
-    return true;
-};
-
 
 export default (state) => {
     const {
@@ -36,10 +21,10 @@ export default (state) => {
         game: { singlePlayer },
     } = state;
     if (singlePlayer) {
-        checkIfPlayerOwnsWeapon(state, 3, WEAPON_SLOTS[3]);
-        checkIfPlayerOwnsWeapon(state, 4, WEAPON_SLOTS[4]);
-        checkIfPlayerOwnsWeapon(state, 5, WEAPON_SLOTS[5]);
-        checkIfPlayerOwnsWeapon(state, 6, WEAPON_SLOTS[6]);
-        checkIfPlayerOwnsWeapon(state, 7, WEAPON_SLOTS[7]);
+        updateWeaponStatus(state, 3, WEAPON_SLOTS[3]);
+        updateWeaponStatus(state, 4, WEAPON_SLOTS[4]);
+        updateWeaponStatus(state, 5, WEAPON_SLOTS[5]);
+        updateWeaponStatus(state, 6, WEAPON_SLOTS[6]);
+        updateWeaponStatus(state, 7, WEAPON_SLOTS[7]);
     }
 };

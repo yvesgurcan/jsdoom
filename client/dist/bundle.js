@@ -958,7 +958,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dra
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _getElementById__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../getElementById */ \"./client/src/engine/getElementById.js\");\n/* harmony import */ var _drawSmallDigit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./drawSmallDigit */ \"./client/src/engine/statusBar/drawSmallDigit.js\");\n\n\n\nconst updateWeaponStatus = (state, slotNumber, owned) => {\n    const element = Object(_getElementById__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(`weapon${slotNumber}`);\n    const color = owned ? 'yellow' : 'grey';\n\n    if (element.className !== color) {\n        const { constants } = state;\n        Object(_drawSmallDigit__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(element, slotNumber, color, constants);\n    }\n};\n\nconst checkIfPlayerOwnsWeapon = (state, slotNumber, weaponSlot) => {\n    const { player: { weapons = null } } = state;\n\n    if (!weapons) {\n        return false;\n    }\n\n    let weaponsSlot = [weaponSlot];\n    if (Array.isArray(weaponSlot)) {\n        weaponsSlot = weaponSlot;\n    }\n\n    const owned = weaponsSlot.some(weapon => weapons.indexOf(weapon) > -1);\n\n    updateWeaponStatus(state, slotNumber, owned);\n    return true;\n};\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((state) => {\n    const {\n        constants: { WEAPON_SLOTS },\n        game: { singlePlayer },\n    } = state;\n    if (singlePlayer) {\n        checkIfPlayerOwnsWeapon(state, 3, WEAPON_SLOTS[3]);\n        checkIfPlayerOwnsWeapon(state, 4, WEAPON_SLOTS[4]);\n        checkIfPlayerOwnsWeapon(state, 5, WEAPON_SLOTS[5]);\n        checkIfPlayerOwnsWeapon(state, 6, WEAPON_SLOTS[6]);\n        checkIfPlayerOwnsWeapon(state, 7, WEAPON_SLOTS[7]);\n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/statusBar/drawWeaponSlots.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _getElementById__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../getElementById */ \"./client/src/engine/getElementById.js\");\n/* harmony import */ var _drawSmallDigit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./drawSmallDigit */ \"./client/src/engine/statusBar/drawSmallDigit.js\");\n/* harmony import */ var _weapons_checkIfPlayerOwnsWeapon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../weapons/checkIfPlayerOwnsWeapon */ \"./client/src/engine/weapons/checkIfPlayerOwnsWeapon.js\");\n\n\n\n\nconst updateWeaponStatus = (state, slotNumber, weaponSlot) => {\n    const owned = Object(_weapons_checkIfPlayerOwnsWeapon__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(state, slotNumber, weaponSlot);\n\n    const element = Object(_getElementById__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(`weapon${slotNumber}`);\n    const color = owned ? 'yellow' : 'grey';\n\n    if (element.className !== color) {\n        const { constants } = state;\n        Object(_drawSmallDigit__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(element, slotNumber, color, constants);\n    }\n};\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((state) => {\n    const {\n        constants: { WEAPON_SLOTS },\n        game: { singlePlayer },\n    } = state;\n    if (singlePlayer) {\n        updateWeaponStatus(state, 3, WEAPON_SLOTS[3]);\n        updateWeaponStatus(state, 4, WEAPON_SLOTS[4]);\n        updateWeaponStatus(state, 5, WEAPON_SLOTS[5]);\n        updateWeaponStatus(state, 6, WEAPON_SLOTS[6]);\n        updateWeaponStatus(state, 7, WEAPON_SLOTS[7]);\n    }\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/statusBar/drawWeaponSlots.js?");
 
 /***/ }),
 
@@ -1067,6 +1067,18 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst letter = [\n    'A',\n 
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ((radians) => {\n    if (radians >= 0) {\n        return (radians / Math.PI) * 180;\n    }\n    // this might not be the right way to do it... I don't think we get 360 degrees that way\n    return (((radians + Math.PI) / Math.PI) * 180) + 180;\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/util/convertRadianToDegree.js?");
+
+/***/ }),
+
+/***/ "./client/src/engine/weapons/checkIfPlayerOwnsWeapon.js":
+/*!**************************************************************!*\
+  !*** ./client/src/engine/weapons/checkIfPlayerOwnsWeapon.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ((state, slotNumber, weaponSlot) => {\n    const { player: { weapons = null } } = state;\n\n    if (!weapons) {\n        return false;\n    }\n\n    let weaponsSlot = [weaponSlot];\n    if (Array.isArray(weaponSlot)) {\n        weaponsSlot = weaponSlot;\n    }\n\n    const owned = weaponsSlot.some(weapon => weapons.indexOf(weapon) > -1);\n    return owned;\n});\n\n\n//# sourceURL=webpack:///./client/src/engine/weapons/checkIfPlayerOwnsWeapon.js?");
 
 /***/ }),
 
