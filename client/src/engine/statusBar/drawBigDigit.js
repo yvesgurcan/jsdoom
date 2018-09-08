@@ -6,6 +6,7 @@ export default (element, digit, constants = {}, alternativeWidth = false) => {
     } = constants;
     if (digit === undefined) {
         element.removeAttribute('src');
+        element.style = undefined;
         return false;
     }
 
