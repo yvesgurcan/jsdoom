@@ -13,7 +13,7 @@ export default (number, { element1, element2, element3 }, constants, alternative
     if (digit3 === undefined && digit2 === undefined) {
         drawBigDigit(element1, undefined, constants, alternativeWidth);
         drawBigDigit(element2, undefined, constants, alternativeWidth);
-        drawBigDigit(element3, digit1, constants);
+        drawBigDigit(element3, digit1, constants, alternativeWidth);
         return true;
     } else if (digit3 === undefined) {
         drawBigDigit(element1, undefined, constants, alternativeWidth);
