@@ -10,6 +10,9 @@ import {
     PLASMA_GUN,
     BFG9000,
     BULLETS,
+    SHELLS,
+    ROCKETS,
+    CELLS,
 } from '../constants';
 import player from '../../maps/player';
 
@@ -22,7 +25,12 @@ const initState = {
         CHAINSAW,
         SHOTGUN,
     ],
-    ammo: { [BULLETS]: 50 },
+    ammo: {
+        [BULLETS]: 50,
+        [SHELLS]: 0,
+        [ROCKETS]: 0,
+        [CELLS]: 0,
+    },
     x: 1,
     y: 1,
     rotDeg: 0,
