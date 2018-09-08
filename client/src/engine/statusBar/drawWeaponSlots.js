@@ -1,9 +1,9 @@
 import getElementById from '../getElementById';
 import drawSmallDigit from './drawSmallDigit';
-import checkIfPlayerOwnsWeapon from '../weapons/checkIfPlayerOwnsWeapon';
+import checkIfPlayerOwnsWeaponInSlot from '../weapons/checkIfPlayerOwnsWeaponInSlot';
 
 const updateWeaponStatus = (state, slotNumber, weaponSlot) => {
-    const owned = checkIfPlayerOwnsWeapon(state, slotNumber, weaponSlot);
+    const owned = checkIfPlayerOwnsWeaponInSlot(state, weaponSlot);
 
     const element = getElementById(`weapon${slotNumber}`);
     const color = owned ? 'yellow' : 'grey';
