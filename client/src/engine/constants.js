@@ -93,6 +93,7 @@ export const WEAPON_SETTINGS = {
         ],
         idleFrameInterval: 4,
         idleSound: 'DSSAWIDL',
+        idleSoundInterval: 275,
     },
     [PISTOL]: {
         ammo: BULLETS,
