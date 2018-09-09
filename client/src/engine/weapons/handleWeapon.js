@@ -1,30 +1,19 @@
+import getWeaponSettings from './getWeaponSettings';
+import getIdleFrame from './getIdleFrame';
+import buildSpritePath from './buildSpritePath';
+import playIdleSound from './playIdleSound';
+import playSound from '../sound/playSound';
 import getElementById from '../getElementById';
 import { dispatch, getState } from '../store';
 
-const getStaticSprite = (state) => {
-    const {
-        constants: {
-            IMG_EXT,
-            WEAPON_PATH,
-            WEAPON_SETTINGS,
-        },
-        player: { selectedWeapon },
-    } = state;
-    const weaponSettings = WEAPON_SETTINGS[selectedWeapon];
+const getFirstIdleSprite = (state, element) => {
+    const firstIdleFrame = getIdleFrame(state, element, false);
+    return buildSpritePath(state, firstIdleFrame);
+};
 
-    if (!weaponSettings) {
-        console.error(`Unknown selected weapon '${selectedWeapon}'. Could not get weapon settings.`);
-        return null;
-    }
-
-    const {
-        prefix,
-        noFlashSpritePrefix,
-    } = weaponSettings;
-    
-    const spriteInitial = noFlashSpritePrefix ? '' : 'G';
-    const spriteUrl = `${WEAPON_PATH}/${prefix}${spriteInitial}A0${IMG_EXT}`;
-    return spriteUrl;
+const getIdleSprite = (state, element) => {
+    const idleFrame = getIdleFrame(state, element, true);
+    return buildSpritePath(state, idleFrame);
 };
 
 export default (state) => {
@@ -38,10 +27,10 @@ export default (state) => {
         player: { selectedWeapon },
     } = state;
 
+    // lowering current weapon
     if (lowerWeaponDelay) {
         dispatch({ type: 'UPDATE_LOWER_WEAPON', payload: { lowerWeaponDelay: lowerWeaponDelay - 1 } });
 
-        // update weapon sprite
         const weapon = getElementById('weapon');
         const imageHeight = weapon.offsetHeight;
         weapon.style.bottom = -(imageHeight / WEAPON_SWITCH_TIME) * (WEAPON_SWITCH_TIME - lowerWeaponDelay);
@@ -54,16 +43,22 @@ export default (state) => {
 
         const weapon = getElementById('weapon');
         const newState = getState();
-        weapon.src = getStaticSprite(newState);
+        weapon.src = getFirstIdleSprite(newState, weapon);
         dispatch({ type: 'START_RAISE_WEAPON' });
+
+        const weaponSettings = getWeaponSettings(newState);
+        const { raiseSound } = weaponSettings;
+        if (raiseSound) {
+            playSound(raiseSound);
+        }
 
         return false;
     }
 
+    // raising next weapon
     if (raiseWeaponDelay) {
         dispatch({ type: 'UPDATE_RAISE_WEAPON', payload: { raiseWeaponDelay: raiseWeaponDelay - 1 } });
 
-        // update weapon sprite
         const weapon = getElementById('weapon');
         const imageHeight = weapon.offsetHeight;
         weapon.style.bottom = -(imageHeight / WEAPON_SWITCH_TIME) * raiseWeaponDelay;
@@ -76,7 +71,7 @@ export default (state) => {
     }
 
     if (!selectedWeapon) {
-        console.error('No weapon selected.');
+        console.error('handleWeapon(): No weapon selected.');
         return false;
     }
 
@@ -85,5 +80,9 @@ export default (state) => {
         weapon.style.bottom = 0;
     }
 
-    weapon.src = getStaticSprite(state);
+    // idle weapon
+    weapon.src = getIdleSprite(state, weapon);
+    playIdleSound(state);
+
+    return true;
 };

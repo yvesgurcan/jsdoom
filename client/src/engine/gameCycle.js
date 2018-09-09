@@ -5,7 +5,7 @@ import chasePlayer from './enemies/chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
 import updateStatusBar from './statusBar/updateStatusBar';
-import drawWeapon from './weapons/drawWeapon';
+import handleWeapon from './weapons/handleWeapon';
 
 const gameCycle = () => {
     const state = getState();
@@ -47,7 +47,7 @@ const gameCycle = () => {
 
     updateStatusBar(state);
 
-    drawWeapon(state);
+    handleWeapon(state);
 
     // the timer will likely not run that fast due to the rendering cycle hogging the cpu
     // so figure out how much time was lost since last cycle

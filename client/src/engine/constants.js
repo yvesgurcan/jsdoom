@@ -86,10 +86,14 @@ export const WEAPON_SETTINGS = {
     [FIST]: { prefix: 'PUN' },
     [CHAINSAW]: {
         prefix: 'SAW',
+        raiseSound: 'DSSAWUP',
         idleFrames: [
-            'C0',
-            'D0',
+            'C',
+            'D',
         ],
+        idleFrameInterval: 4,
+        idleSound: 'DSSAWIDL',
+        idleSoundInterval: 275,
     },
     [PISTOL]: {
         ammo: BULLETS,
@@ -125,7 +129,7 @@ export const WEAPON_SETTINGS = {
 };
 
 
-export const WEAPON_SWITCH_TIME = 10;
+export const WEAPON_SWITCH_TIME = 7;
 
 export const ALL_WEAPONS = [
     SHOTGUN,
