@@ -62,5 +62,17 @@ export default (prevState = initState, action) => {
                 currentIdleFrame,
             };
         }
+        case 'SET_IDLE_WEAPON_SOUND': {
+            return {
+                ...prevState,
+                playingIdleSound: true,
+            };
+        }
+        case 'UNSET_IDLE_WEAPON_SOUND': {
+            return {
+                ...prevState,
+                playingIdleSound: false,
+            };
+        }
     }
 };
