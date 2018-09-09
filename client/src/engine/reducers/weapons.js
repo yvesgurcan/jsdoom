@@ -11,6 +11,8 @@ export default (prevState = initState, action) => {
         nextWeapon,
         lowerWeaponDelay,
         raiseWeaponDelay,
+        idleFrameDelay,
+        currentIdleFrame,
     } = payload;
 
     switch (type) {
@@ -51,6 +53,13 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 raiseWeaponDelay: undefined,
+            };
+        }
+        case 'UPDATE_WEAPON_ANIMATION_DELAY': {
+            return {
+                ...prevState,
+                idleFrameDelay,
+                currentIdleFrame,
             };
         }
     }
