@@ -16,12 +16,12 @@ This difference has a huge impact on the gameplay and I feel like it is importan
 
 Difference observed on the Chocolate Doom port.
 
-### Slot 8 and Berserk
+### Slot 8, Slot 1 and Berserk
 
 In Doom, slot 8 switches the player's weapon to the chainsaw (if available). This slot does *not* offer the option to select the fist.
 
-Moreover, when the player picks up the chainsaw, the fist becomes available on slot 1 unless the player picks up a berserk pack.
+Moreover, when the player picks up the chainsaw, the fist becomes unavailable on slot 1 until the player picks up a berserk pack.
 
-The berserk-specific behavior might look like a big constraint but at least it makes a lot of sense: Once you have the chainsaw, there's pretty much no point to switch back to the fist, unless you have picked up a berserk pack.
+This berserk-specific behavior might look like a big constraint but at least it makes a lot of sense: Once you have the chainsaw, there's pretty much no point to switch back to the fist, unless you have picked up a berserk pack.
 
 It feels like it would be good to implement this idiosyncracy to the JavaScript engine, in order to be closer to the original game. However, I can see how not obfuscating the fist on slot 1 at any point seems to make more sense for a modern player.
