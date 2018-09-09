@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.4.2 - 2018/09/08
+
+* Weapon idle animations
+
+The chainsaw is a special weapon in Doom. It's the only weapon that is animated when you are not actively using it to destroy some demons. Moreover, it makes a very distinctive idling sound as well as a beautiful revving sound.
+
+Of course, I had to write some code in order to make sure that our beloved weapon does it all. There's only one thing left to do now... Let's find some meat!
+
 ## v0.4.1 - 2018/09/08
 
 * Lower and raise weapons
