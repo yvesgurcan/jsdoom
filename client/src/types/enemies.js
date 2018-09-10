@@ -2,6 +2,7 @@ export default {
     zombieman: {
         name: 'Zombieman',
         prefix: 'POSS',
+	health: 20,
         moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
@@ -17,6 +18,7 @@ export default {
     shotgunGuy: {
         name: 'Shotgun Guy',
         prefix: 'SPOS',
+	health: 30,
         moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
@@ -32,7 +34,9 @@ export default {
 	chaingunner: {
         name: 'Heavy Weapon Dude',
         prefix: 'CPOS',
-        moveSpeed: 0.03,
+		
+		
+		moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
             cycle: 700,
