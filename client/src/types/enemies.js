@@ -31,12 +31,11 @@ export default {
             soundBaseInterval: 3000,
         },
     },
-	chaingunner: {
+    chaingunner: {
         name: 'Heavy Weapon Dude',
         prefix: 'CPOS',
-		
-		
-		moveSpeed: 0.03,
+        health: 70,
+        moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
             cycle: 700,
