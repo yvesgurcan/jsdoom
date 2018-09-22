@@ -124,13 +124,13 @@ Much more fun than having these guys just run blindly towards you like a huge ma
 
 The engine is now capable of handling different sprite angles when the player looks at enemies. However, the enemies always lock in towards the player so you will not get to see these different-angle sprites yet. Just a matter of time before I enhance the AI and show the backs and sides of our favorite zombiemen.
 
-# v0.2.7 - 2018/08/21
+## v0.2.7 - 2018/08/21
 
 * Walk animations (mirrored frames, mirrored angles, reversed angles, and other fun things)
 
 I've added the less-straightforward walk animations for the Spider Mastermind, the Archvile, and so on. It was a very interesting dive into how id Software found amazing shortcuts to avoid drawing so many enemy sprites! Pretty cool.
 
-# v0.2.6 - 2018/08/21
+## v0.2.6 - 2018/08/21
 
 * Enemy walking sounds
 
@@ -148,7 +148,7 @@ Now that we have walking enemies, it's pretty cool, if you ask me. Makes it all 
 
 * Change song
 
-You can now randomly play a new song randby pressing `M` on your keyboard. I won't get bored of hearing the same song 10 times in a row, now :P
+You can now randomly play a new song by pressing `M` on your keyboard. I won't get bored of hearing the same song 10 times in a row, now :P
 
 ## v0.2.3 - 2018/08/19
 
