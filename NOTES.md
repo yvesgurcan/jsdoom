@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.3 - 2018/09/21
+
+* Decorations
+
+The engine was drawing all decorations (barrels, pillars, etc.) as if they were all of the same height and width. This is now fixed and, with a little (too much) magic (ie, magic numbers), we have a more coherent world where small items are small and big items are big. Makes sense, right?
+
 ## v0.4.2 - 2018/09/08
 
 * Weapon idle animations

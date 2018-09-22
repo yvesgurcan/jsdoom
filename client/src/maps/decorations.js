@@ -1,5 +1,7 @@
 export default [
 	{ type: 'barrel', x: 10, y: 7 },
+	{ type: 'candelabra', x: 12, y: 7 },
+	{ type: 'eye', x: 11, y: 6 },
 	{ type: 'candle', x: 15, y: 7 },
 	{ type: 'candelabra', x: 5, y: 22 },
 	{ type: 'eye', x: 12, y: 22 },

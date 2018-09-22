@@ -2,7 +2,7 @@ import { getState, dispatch } from './store';
 import updateAutomap from './automap/updateAutomap';
 import clearDecorations from './clearDecorations';
 import castRays from './castRays';
-import renderDecorations from './renderDecorations';
+import renderDecorations from './decorations/renderDecorations';
 import renderEnemies from './enemies/renderEnemies';
 import updateFPS from './updateFPS';
 

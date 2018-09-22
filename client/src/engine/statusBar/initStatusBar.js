@@ -26,7 +26,7 @@ export default (state) => {
 
         const statusBarGrid = getElementById('statusbargrid');
         statusBarGrid.height = statusBarBackground.height;
-    }, 50);
+    }, 200);
 
     initWeapons(state);
 };
