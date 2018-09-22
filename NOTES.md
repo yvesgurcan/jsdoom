@@ -116,7 +116,7 @@ Something very iconic about Doom is the way the enemies behave: Once they are aw
 
 I've just written a rudimentary copy of this behavior, where the enemies seem to follow you, but they also sometimes get distracted for a second or two.
 
-Much more fun than having these guys just run blindly towards you like a huge magnet, right?.
+Much more fun than having these guys just run blindly towards you like a huge magnet, right?
 
 ## v0.2.8 - 2018/08/22
 
