@@ -20,6 +20,7 @@ export default (state) => {
         LEFT, A,
         RIGHT, D,
         TAB,
+        CTRL,
         SHIFT,
         COMMAND,
         MINUS, NUMPAD_MINUS,
@@ -80,6 +81,7 @@ export default (state) => {
             dispatch({ type: 'INCREMENT_KEYPRESS_COUNT' });
         }
 
+        // keys allowed while the game is paused
         switch (keyCode) {
             default: break;
             case P: {
@@ -128,6 +130,7 @@ export default (state) => {
             return false;
         }
 
+        // keys allowed only when the game is not paused
         switch (keyCode) {
             default: break;
             case UP:

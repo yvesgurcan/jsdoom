@@ -37,6 +37,7 @@ const initState = {
         RIGHT: 39,
         SHIFT: 16,
         TAB: 9,
+        CTRL: 17,
         COMMAND: 91,
         MINUS: 189,
         EQUAL: 187,
