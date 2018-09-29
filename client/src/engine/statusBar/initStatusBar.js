@@ -9,7 +9,12 @@ export default (state) => {
             STATUS_BAR_FILENAME,
             STATUS_BAR_FILLER,
         },
+        hud: { hideStatusBar }
     } = state;
+
+    if (hideStatusBar) {
+        return false;
+    }
 
     const statusBar = getElementById('statusbar');
     const statusBarBackground = new Image();
