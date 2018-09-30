@@ -1,4 +1,5 @@
-import getWeaponSettings from './weapons/getWeaponSettings';
+import startFiring from './weapons/startFiring';
+import stopFiring from './weapons/stopFiring';
 import getElementById from './getElementById';
 import { getState, dispatch } from './store';
 
@@ -18,32 +19,18 @@ export default state => {
             return false;
         }
 
-        dispatch({ type: 'START_PLAYER_FIRE' });
+        startFiring(currentState);
     };
 
     document.onmouseup = event => {
         const currentState = getState();
-        const {
-            game: { paused },
-            weapons: { currentFireFrame },
-        } = currentState;
+        const { game: { paused } } = currentState;
 
         if (paused) {
             return false;
         }
-        
-        if (currentFireFrame !== 0) {
-            dispatch({ type: 'WAIT_FOR_WEAPON_ANIMATION_END' });
-            return false;
-        }
 
-        const weaponSettings = getWeaponSettings(currentState);
-        if (!weaponSettings) {
-            return false;
-        }
-    
-        const { fireFrames } = weaponSettings;
-        dispatch({ type: 'STOP_PLAYER_FIRE', currentFireFrame: fireFrames.length - 1 });
+        stopFiring(currentState);
     };
 
     document.onmousemove = event => {
