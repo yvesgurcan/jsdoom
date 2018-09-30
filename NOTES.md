@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.6 -- 2018/09/29
+
+* Weapon firing animations
+
+I'm taking little steps towards having weapons fully implemented. I added the necessary code to animate the weapons when pressing the firing key (aka Control or a click on the mouse). It's still missing the flash overlay, the positioning of the sprites is not correct, and it does not take the ammo away. But it's still good progress :)
+
 ## v0.4.5 - 2018/09/29
 
 * Keep it in the 30s
