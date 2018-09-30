@@ -144,5 +144,18 @@ export default (prevState = initState, action) => {
                 selectedWeapon,
             };
         }
+        case 'START_PLAYER_FIRE': {
+            return {
+                ...prevState,
+                firing: true,
+            };
+        }
+
+        case 'STOP_PLAYER_FIRE': {
+            return {
+                ...prevState,
+                firing: false,
+            };
+        }
     }
 };

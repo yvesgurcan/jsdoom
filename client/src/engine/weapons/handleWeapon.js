@@ -5,6 +5,7 @@ import playIdleSound from './playIdleSound';
 import playSound from '../sound/playSound';
 import getElementById from '../getElementById';
 import { dispatch, getState } from '../store';
+import getFireFrame from './getFireFrame';
 
 const getFirstIdleSprite = (state, element) => {
     const firstIdleFrame = getIdleFrame(state, element, false);
@@ -24,7 +25,10 @@ export default (state) => {
             lowerWeaponDelay,
             raiseWeaponDelay,
         },
-        player: { selectedWeapon },
+        player: {
+            selectedWeapon,
+            firing,
+        },
     } = state;
 
     // lowering current weapon
@@ -78,6 +82,16 @@ export default (state) => {
     const weapon = getElementById('weapon');
     if (weapon.style.bottom !== 0) {
         weapon.style.bottom = 0;
+    }
+
+    // firing
+    if (firing) {
+        const fireFrame = getFireFrame(state, weapon);
+        if (fireFrame) {
+            weapon.src = fireFrame;
+        }
+
+        return false;
     }
 
     // idle weapon

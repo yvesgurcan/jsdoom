@@ -1,6 +1,6 @@
 import getWeaponSettings from './getWeaponSettings';
 
-export default (state, frame) => {
+export default (state, frame, doNotPrefix) => {
     const {
         constants: {
             IMG_EXT,
@@ -18,7 +18,7 @@ export default (state, frame) => {
         noFlashSpritePrefix,
     } = weaponSettings;
 
-    const spriteInitial = noFlashSpritePrefix ? '' : 'G';
+    const spriteInitial = noFlashSpritePrefix || doNotPrefix ? '' : 'G';
     const spriteUrl = `${WEAPON_PATH}/${prefix}${spriteInitial}${frame}0${IMG_EXT}`;
     return spriteUrl;
 };
