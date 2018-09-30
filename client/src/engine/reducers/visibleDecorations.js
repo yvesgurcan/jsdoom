@@ -2,13 +2,13 @@ const initState = [];
 export default (prevState = initState, action) => {
     const {
         type,
-        visibleSprites,
+        visibleDecorations,
     } = action;
 
     const nextState = [...prevState];
     switch (type) {
         case 'UPDATE_SPRITES': {
-            return visibleSprites;
+            return visibleDecorations;
         }
         default: {
             return nextState;

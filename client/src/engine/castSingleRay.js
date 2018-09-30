@@ -62,18 +62,19 @@ export default (rayAngle, stripIdx) => {
 
     const {
         decorationMapPlacement: spriteMap,
+        visibleDecorations,
         wallTypes: wallTextures,
         wallMap: map,
-        visibleSprites,
     } = getState();
 
 	while (x > 0 && x < mapWidth && y > 0 && y < mapHeight) {
 		wallX = (x + (right ? 0 : -1)) >> 0;
 		wallY = (y) >> 0;
 
-		if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
-			spriteMap[wallY][wallX].visible = true;
-			visibleSprites.push(spriteMap[wallY][wallX]);
+        // FIXME: this should be refactored as a redux action in the visibleDecorations reducer instead of pushing to a mutable array
+		if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].created) {
+            spriteMap[wallY][wallX].created = true;
+			visibleDecorations.push(spriteMap[wallY][wallX]);
 		}
 
 		// is this point inside a wall block?
@@ -116,11 +117,6 @@ export default (rayAngle, stripIdx) => {
 	while (x > 0 && x < mapWidth && y > 0 && y < mapHeight) {
 		wallY = (y + (up ? -1 : 0)) >> 0;
 		wallX = (x) >> 0;
-
-		if (spriteMap[wallY][wallX] && !spriteMap[wallY][wallX].visible) {
-			spriteMap[wallY][wallX].visible = true;
-			visibleSprites.push(spriteMap[wallY][wallX]);
-		}
 
 		if (map[wallY][wallX] !== 0) {
 			const distX = x - player.x;
