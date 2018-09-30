@@ -98,11 +98,18 @@ export const WEAPON_SETTINGS = {
     [PISTOL]: {
         ammo: BULLETS,
         prefix: 'PIS',
+        fireFrames: [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+        ],
     },
     [SHOTGUN]: {
         ammo: SHELLS,
         prefix: 'SHT',
-        attackFrames: [
+        fireFrames: [
             'A',
             'A',
             'B',
@@ -119,7 +126,7 @@ export const WEAPON_SETTINGS = {
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
-        attackFrames: [
+        fireFrames: [
             'A',
             'A',
             'B',
@@ -138,7 +145,7 @@ export const WEAPON_SETTINGS = {
     [CHAINGUN]: {
         ammo: BULLETS,
         prefix: 'CHG',
-        attackFrames: [
+        fireFrames: [
             'B',
             'A',
         ],
@@ -150,7 +157,7 @@ export const WEAPON_SETTINGS = {
     [ROCKET_LAUNCHER]: {
         ammo: ROCKETS,
         prefix: 'MIS',
-        attackFrames: [
+        fireFrames: [
             'B',
             'B',
             'B',
@@ -167,7 +174,7 @@ export const WEAPON_SETTINGS = {
         ammo: CELLS,
         prefix: 'PLS',
         noFlashOverlay: true,
-        attackFrames: [
+        fireFrames: [
             'FA',
             'FB',
         ],
@@ -179,7 +186,7 @@ export const WEAPON_SETTINGS = {
         ammo: CELLS,
         usage: 40,
         prefix: 'BFG',
-        attackFrames: [
+        fireFrames: [
             'B',
             'C',
             'C',
