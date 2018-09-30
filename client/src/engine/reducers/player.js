@@ -150,7 +150,6 @@ export default (prevState = initState, action) => {
                 firing: true,
             };
         }
-
         case 'STOP_PLAYER_FIRE': {
             return {
                 ...prevState,

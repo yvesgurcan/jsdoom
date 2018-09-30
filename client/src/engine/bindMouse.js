@@ -1,5 +1,6 @@
+import getWeaponSettings from './weapons/getWeaponSettings';
 import getElementById from './getElementById';
-import { dispatch } from './store';
+import { getState, dispatch } from './store';
 
 export default state => {
     document.onclick = event => {
@@ -10,14 +11,49 @@ export default state => {
     };
 
     document.onmousedown = event => {
+        const currentState = getState();
+        const { game: { paused } } = currentState;
+
+        if (paused) {
+            return false;
+        }
+
         dispatch({ type: 'START_PLAYER_FIRE' });
     };
 
     document.onmouseup = event => {
-        dispatch({ type: 'STOP_PLAYER_FIRE' });
+        const currentState = getState();
+        const {
+            game: { paused },
+            weapons: { currentFireFrame },
+        } = currentState;
+
+        if (paused) {
+            return false;
+        }
+        
+        if (currentFireFrame !== 0) {
+            dispatch({ type: 'WAIT_FOR_WEAPON_ANIMATION_END' });
+            return false;
+        }
+
+        const weaponSettings = getWeaponSettings(currentState);
+        if (!weaponSettings) {
+            return false;
+        }
+    
+        const { fireFrames } = weaponSettings;
+        dispatch({ type: 'STOP_PLAYER_FIRE', currentFireFrame: fireFrames.length - 1 });
     };
 
     document.onmousemove = event => {
+        const currentState = getState();
+        const { game: { paused } } = currentState;
+
+        if (paused) {
+            return false;
+        }
+
         const {
             movementX,
             movementY,

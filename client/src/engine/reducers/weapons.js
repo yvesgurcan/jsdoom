@@ -88,6 +88,19 @@ export default (prevState = initState, action) => {
                 currentFireFrame,
             };
         }
+        case 'WAIT_FOR_WEAPON_ANIMATION_END': {
+            return {
+                ...prevState,
+                waitForAnimationToEnd: true,
+            };
+        }
+        case 'STOP_PLAYER_FIRE': {
+            return {
+                ...prevState,
+                waitForAnimationToEnd: false,
+                currentFireFrame,
+            };
+        }
         case 'SET_FIRE_WEAPON_SOUND': {
             return {
                 ...prevState,
@@ -97,8 +110,7 @@ export default (prevState = initState, action) => {
         case 'UNSET_FIRE_WEAPON_SOUND': {
             return {
                 ...prevState,
-                fireFrameDelay,
-                currentFireFrame,
+                playingFireSound: false,
             };
         }
     }

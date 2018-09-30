@@ -5,6 +5,7 @@ import adjustSoundVolume from './sound/adjustSoundVolume';
 import logAddEvent from './log/logAddEvent';
 import startMusic from './startMusic';
 import getNextWeaponFromSlot from './weapons/getNextWeaponFromSlot';
+import getWeaponSettings from './weapons/getWeaponSettings';
 
 export default (state) => {
     const {
@@ -230,7 +231,12 @@ export default (state) => {
         const { keyCode } = event;
         event.preventDefault();
         
-        const { game: { paused } } = getState();
+        const currentState = getState();
+        const {
+            game: { paused },
+            weapons: { currentFireFrame },
+        } = currentState;
+
         if (paused) {
             return false;
         }
@@ -255,7 +261,18 @@ export default (state) => {
                 break;
             }
             case CTRL: {
-                dispatch({ type: 'STOP_PLAYER_FIRE' });
+                if (currentFireFrame !== 0) {
+                    dispatch({ type: 'WAIT_FOR_WEAPON_ANIMATION_END' });
+                    break;
+                }
+
+                const weaponSettings = getWeaponSettings(currentState);
+                if (!weaponSettings) {
+                    break;
+                }
+            
+                const { fireFrames } = weaponSettings;
+                dispatch({ type: 'STOP_PLAYER_FIRE', currentFireFrame: fireFrames.length - 1 });
                 break;
             }
 		}
