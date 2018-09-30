@@ -101,17 +101,5 @@ export default (prevState = initState, action) => {
                 currentFireFrame,
             };
         }
-        case 'SET_FIRE_WEAPON_SOUND': {
-            return {
-                ...prevState,
-                playingFireSound: true,
-            };
-        }
-        case 'UNSET_FIRE_WEAPON_SOUND': {
-            return {
-                ...prevState,
-                playingFireSound: false,
-            };
-        }
     }
 };

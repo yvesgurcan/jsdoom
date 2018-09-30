@@ -1,6 +1,7 @@
 import getWeaponSettings from './getWeaponSettings';
 import buildSpritePath from './buildSpritePath';
 import { dispatch } from '../store';
+import playSound from '../sound/playSound';
 
 export default (state, element, animate = false) => {
     const { constants: { DEFAULT_WEAPON_FRAME_DELAY } } = state; 
@@ -13,6 +14,7 @@ export default (state, element, animate = false) => {
         fireFrames,
         flashFrames,
         noFlashOverlay,
+        firingSounds,
     } = weaponSettings;
 
     if (!fireFrames || fireFrames.length === 0) {
@@ -33,6 +35,12 @@ export default (state, element, animate = false) => {
     if (fireFrameDelay <= 0) {
         const nextFireFrame = currentFireFrame <= 0 ? fireFrames.length - 1 : currentFireFrame - 1;
         fireFrame = buildSpritePath(state, fireFrames[nextFireFrame], noFlashOverlay);
+
+        if (firingSounds) {
+            if (firingSounds[nextFireFrame]) {
+            const firingSound = firingSounds[nextFireFrame];
+            playSound(firingSound, 1);    
+        }
 
         // can't do anything until the weapon animation has ended
         if (waitForAnimationToEnd) {

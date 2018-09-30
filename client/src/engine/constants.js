@@ -105,6 +105,9 @@ export const WEAPON_SETTINGS = {
             'D',
             'E',
         ],
+        firingSounds: [
+            'DSPISTOL',
+        ],
     },
     [SHOTGUN]: {
         ammo: SHELLS,
@@ -152,6 +155,10 @@ export const WEAPON_SETTINGS = {
         flashFrames: [
             'B',
             'A',
+        ],
+        firingSounds: [
+            'DSPISTOL',
+            'DSPISTOL',
         ],
     },
     [ROCKET_LAUNCHER]: {
