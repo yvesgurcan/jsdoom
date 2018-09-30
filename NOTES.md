@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.4.4 - 2018/09/29
+
+* Figuring out the FPS mess
+
+A major issue I have with this project is the fact that the framerate goes down very quickly after the engine is running for a few minutes. It's very bad, really, because the game becomes unplayable at that point. I've noticed that problem a while ago but I was not sure how to tackle the issue. Well, from now on, it is possible to get a snapshot in the console of the framerate every second. With a simple color code and a timestamp, I get a little more insight into where and how it's going wrong, which should hopefully help me debug the code and see what is sucking the life out of the engine.
+
+Fingers crossed.
+
 ## v0.4.3 - 2018/09/21
 
 * Decorations

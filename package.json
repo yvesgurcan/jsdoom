@@ -1,6 +1,6 @@
 {
     "name": "wolfendoomjs",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "description": "A Wolfenstein engine running Doom game logic in the browser.",
     "keywords": [
         "Doom",
