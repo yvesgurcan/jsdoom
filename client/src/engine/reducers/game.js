@@ -18,7 +18,7 @@ const initState = {
     lastCycle: 0,
     lastRender: 0,
     paused: false,
-    logFPS: true,
+    logFPS: false,
     logFPSInterval: 1000,
     compareFPSInterval: 4000,
     lastFPSLog: null,
