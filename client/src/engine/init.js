@@ -7,7 +7,7 @@ import startMusic from './startMusic';
 import initScreen from './initScreen';
 import initStatusBar from './statusBar/initStatusBar';
 import initPlayer from './initPlayer';
-import initDecorations from './initDecorations';
+import initDecorations from './decorations/initDecorations';
 import initEnemies from './enemies/initEnemies';
 import initAutomap from './automap/initAutomap';
 import gameCycle from './gameCycle';
@@ -23,7 +23,7 @@ export default () => {
     initScreen();
     initStatusBar(state);
     initPlayer();
-	initDecorations();
+	initDecorations(state);
 	initEnemies();
 	initAutomap();
 	gameCycle();

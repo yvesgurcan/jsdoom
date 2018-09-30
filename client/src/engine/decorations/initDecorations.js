@@ -2,15 +2,12 @@ import uuid4 from 'uuid4';
 import {
     imgExt,
     decorationPath,
-} from './constants';
-import {
-    getState,
-    dispatch,
-} from './store';
-import getElementById from './getElementById';
-import createElement from './createElement';
+} from '../constants';
+import { dispatch } from '../store';
+import getElementById from '../getElementById';
+import createElement from '../createElement';
 
-export default () => {
+export default (state) => {
     const spriteMap = [];
     const screen = getElementById('screen');
     
@@ -18,7 +15,7 @@ export default () => {
         wallMap: map,
         decorationTypes: itemTypes,
         decorationMap: mapItems,
-    } = getState();
+    } = state;
 
 	for (let y = 0; y < map.length; y++) {
 		spriteMap[y] = [];
