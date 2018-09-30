@@ -117,41 +117,6 @@ export default () => {
         if (angle < -Math.PI) angle += 2 * Math.PI;
         if (angle >= Math.PI) angle -= 2 * Math.PI;
 
-        const enemyAngle = convertRadianToDegree(rot);
-        const angleToPlayer = convertRadianToDegree(Math.atan2(dy, dx)) - enemyAngle;
-        const spriteAngle = getSpriteAngle(angleToPlayer);
-
-        // update sprite
-        if (speed !== 0) {
-            const offset = convertLetterToNumber(start);
-            const frame = convertNumberToLetter(walkFrame + offset);
-
-            // sprite uses mirrored frames+angles for the second half of the animation (A1D1, A2D8, A3D7, A4D6, A5D5, A6D4, A7D3, A8D2)
-            if (mirroredFrames || (mirroredFramesAnglesNotShared && (spriteAngle === 1 || spriteAngle === 5))) {
-                const delimiter = (count / 2) + 1;
-                const filename = getMirroredFrameFilename(walkFrame, frame, spriteAngle, delimiter, prefix, mirroredFramesAnglesNotShared);
-                img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
-                if (walkFrame < delimiter) {
-                    img.style.transform = 'scaleX(1)';
-                } else { 
-                    img.style.transform = 'scaleX(-1)';
-                }
-            // sprite uses mirrored angles for the same frame and mirrored frames on angle 1 and 5 (A1D1, A2A8, A3A7, A4A6, A5D5)
-            // or sprite uses mirrored angles for the same frame (A1, A2A8, A3A7, A4A6, A5)
-            } else if (mirroredFramesAnglesNotShared || mirroredAngles) {
-                const filename = getMirroredAngleFilename(frame, spriteAngle, prefix, reversedAngles);
-                img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
-                if ((reversedAngles && spriteAngle > 5) || (!reversedAngles && spriteAngle < 5)) {
-                    img.style.transform = 'scaleX(1)';
-                } else { 
-                    img.style.transform = 'scaleX(-1)';
-                }
-            // regular sprite (A1, A2, A3, A4, A5, A6, A7, A8)
-            } else {
-                img.src = `${enemyPath}/${prefix}/${prefix}${frame}${spriteAngle}${imgExt}`;
-            }
-        }
-
 		// is enemy in front of player? Maybe use the FOV value instead.
 		if (angle > -Math.PI * 0.5 && angle < Math.PI * 0.5) {
 			const distSquared = (dx * dx) + (dy * dy);
@@ -160,8 +125,52 @@ export default () => {
 
             // not visible
 			if (size <= 0) {
+                if (img.style.display !== 'none') {
+                    enemy.visible = false;
+                    img.style.display = 'none';
+                }
                 /* eslint-disable-next-line */
                 continue;
+            }
+
+            if (img.style.display !== 'block') {
+                enemy.visible = true;
+                img.style.display = 'block';
+            }
+
+            const enemyAngle = convertRadianToDegree(rot);
+            const angleToPlayer = convertRadianToDegree(Math.atan2(dy, dx)) - enemyAngle;
+            const spriteAngle = getSpriteAngle(angleToPlayer);
+    
+            // update sprite
+            if (speed !== 0) {
+                const offset = convertLetterToNumber(start);
+                const frame = convertNumberToLetter(walkFrame + offset);
+    
+                // sprite uses mirrored frames+angles for the second half of the animation (A1D1, A2D8, A3D7, A4D6, A5D5, A6D4, A7D3, A8D2)
+                if (mirroredFrames || (mirroredFramesAnglesNotShared && (spriteAngle === 1 || spriteAngle === 5))) {
+                    const delimiter = (count / 2) + 1;
+                    const filename = getMirroredFrameFilename(walkFrame, frame, spriteAngle, delimiter, prefix, mirroredFramesAnglesNotShared);
+                    img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                    if (walkFrame < delimiter) {
+                        img.style.transform = 'scaleX(1)';
+                    } else { 
+                        img.style.transform = 'scaleX(-1)';
+                    }
+                // sprite uses mirrored angles for the same frame and mirrored frames on angle 1 and 5 (A1D1, A2A8, A3A7, A4A6, A5D5)
+                // or sprite uses mirrored angles for the same frame (A1, A2A8, A3A7, A4A6, A5)
+                } else if (mirroredFramesAnglesNotShared || mirroredAngles) {
+                    const filename = getMirroredAngleFilename(frame, spriteAngle, prefix, reversedAngles);
+                    img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                    if ((reversedAngles && spriteAngle > 5) || (!reversedAngles && spriteAngle < 5)) {
+                        img.style.transform = 'scaleX(1)';
+                    } else { 
+                        img.style.transform = 'scaleX(-1)';
+                    }
+                // regular sprite (A1, A2, A3, A4, A5, A6, A7, A8)
+                } else {
+                    img.src = `${enemyPath}/${prefix}/${prefix}${frame}${spriteAngle}${imgExt}`;
+                }
             }
 
 			const renderX = Math.tan(angle) * viewDist;
