@@ -20,8 +20,8 @@ export default (state) => {
         LEFT, A,
         RIGHT, D,
         TAB,
-        CTRL,
         SHIFT,
+        CTRL,
         COMMAND,
         MINUS, NUMPAD_MINUS,
         EQUAL, NUMPAD_PLUS,
@@ -58,7 +58,7 @@ export default (state) => {
         V: 'toggle viewing cone (automap only)',
     });
 
-	document.onkeydown = (event) => {
+	document.onkeydown = event => {
         const { keyCode } = event;
         const {
             keyStrokes: { keyPressCount },
@@ -161,6 +161,10 @@ export default (state) => {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
                 break;
             }
+            case CTRL: {
+                dispatch({ type: 'START_PLAYER_FIRE' });
+                break;
+            }
             case ONE: {
                 const nextWeapon = getNextWeaponFromSlot(currentState, 1);
                 if (nextWeapon !== false) {
@@ -222,7 +226,7 @@ export default (state) => {
         }
 	};
 
-	document.onkeyup = (event) => {
+	document.onkeyup = event => {
         const { keyCode } = event;
         event.preventDefault();
         
@@ -248,6 +252,10 @@ export default (state) => {
             }
             case SHIFT: {
                 dispatch({ type: 'STOP_PLAYER_STRAFE' });
+                break;
+            }
+            case CTRL: {
+                dispatch({ type: 'STOP_PLAYER_FIRE' });
                 break;
             }
 		}
