@@ -2,6 +2,7 @@ import { getState } from './store';
 import metadata from './metadata';
 import resizeView from './resizeView';
 import bindKeys from './bindKeys';
+import bindMouse from './bindMouse';
 import debug from './debug';
 import startMusic from './startMusic';
 import initScreen from './initScreen';
@@ -18,6 +19,7 @@ export default () => {
     metadata(state);
     resizeView();
     bindKeys(state);
+    bindMouse(state);
     debug();
     startMusic();
     initScreen();
