@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.4.5 - 2018/09/29
+
+* Keep it in the 30s
+
+I did it! I found the issue that was slowing down the engine tremendously after a few minutes of gameplay. I had an idea on what part of the engine was to be blamed but the actual problem proved to be a little bit different from what I expected. Basically, there was a function supposed to clear sprites that was horrible performance-wise and was actually not doing anything useful! The fix was as simple as commenting out the function. But I couldn't help refactor the mess related to rendering decorations and enemies. I ended up with cleaner code and a framerate that satisfyingly stays around 30 fps instead of dropping to insane numbers like it used to. Yay!
+
+Bonus: No more useless updates to the DOM for invisible sprites.
+
 ## v0.4.4 - 2018/09/29
 
 * Figuring out the FPS mess
