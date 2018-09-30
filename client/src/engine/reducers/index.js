@@ -12,8 +12,7 @@ import decorationMap from './decorationMap';
 import decorationMapPlacement from './decorationMapPlacement';
 import game from './game';
 import hud from './hud';
-import visibleSprites from './visibleSprites';
-import oldVisibleSprites from './oldVisibleSprites';
+import visibleDecorations from './visibleDecorations';
 import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
@@ -35,8 +34,7 @@ export default combineReducers({
     decorationMapPlacement,
     game,
     hud,
-    visibleSprites,
-    oldVisibleSprites,
+    visibleDecorations,
     view,
     automap,
     keyStrokes,

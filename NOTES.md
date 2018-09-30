@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.4.6 -- 2018/09/29
+
+* Weapon firing animations
+
+I'm taking little steps towards having weapons fully implemented. I added the necessary code to animate the weapons when pressing the firing key (aka Control or a click on the mouse). It's still missing the flash overlay, the positioning of the sprites is not correct, and it does not take the ammo away. But it's still good progress :)
+
+## v0.4.5 - 2018/09/29
+
+* Keep it in the 30s
+
+I did it! I found the issue that was slowing down the engine tremendously after a few minutes of gameplay. I had an idea on what part of the engine was to be blamed but the actual problem proved to be a little bit different from what I expected. Basically, there was a function supposed to clear sprites that was horrible performance-wise and was actually not doing anything useful! The fix was as simple as commenting out the function. But I couldn't help refactor the mess related to rendering decorations and enemies. I ended up with cleaner code and a framerate that satisfyingly stays around 30 fps instead of dropping to insane numbers like it used to. Yay!
+
+Bonus: No more useless updates to the DOM for invisible sprites.
+
+## v0.4.4 - 2018/09/29
+
+* Figuring out the FPS mess
+
+A major issue I have with this project is the fact that the framerate goes down very quickly after the engine is running for a few minutes. It's very bad, really, because the game becomes unplayable at that point. I've noticed that problem a while ago but I was not sure how to tackle the issue. Well, from now on, it is possible to get a snapshot in the console of the framerate every second. With a simple color code and a timestamp, I get a little more insight into where and how it's going wrong, which should hopefully help me debug the code and see what is sucking the life out of the engine.
+
+Fingers crossed.
+
 ## v0.4.3 - 2018/09/21
 
 * Decorations

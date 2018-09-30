@@ -3,8 +3,7 @@ import { getState } from '../store';
 export default () => {
     const {
         player,
-        visibleSprites,
-        oldVisibleSprites,
+        visibleDecorations,
         view: {
             screenWidth,
             screenHeight,
@@ -17,8 +16,8 @@ export default () => {
         return false;
     }
 
-	for (let i = 0; i < visibleSprites.length; i++) {
-		const sprite = visibleSprites[i];
+	for (let i = 0; i < visibleDecorations.length; i++) {
+		const sprite = visibleDecorations[i];
         const img = sprite.img;
         if (img.style.display !== 'block') {
             img.style.display = 'block';
@@ -46,8 +45,17 @@ export default () => {
 
         // not visible
 		if (size <= 0) {
+            if (sprite.img.style.display !== 'none') {
+                sprite.visible = false;
+                sprite.img.style.display = 'none';
+            }
             /* eslint-disable-next-line */
             continue;
+        }
+
+        if (sprite.img.style.display !== 'block') {
+            sprite.visible = true;
+			sprite.img.style.display = 'block';
         }
 
 		// x-position on screen
@@ -66,13 +74,4 @@ export default () => {
 		const blockDist = (dbx * dbx) + (dby * dby);
 		img.style.zIndex = -Math.floor(blockDist * 1000);
 	}
-
-    // hide the sprites that are no longer visible
-	for (let i = 0; i < oldVisibleSprites.length; i++) {
-		const sprite = oldVisibleSprites[i];
-		if (visibleSprites.indexOf(sprite) === -1) {
-			sprite.visible = false;
-			sprite.img.style.display = 'none';
-		}
-    }
 };

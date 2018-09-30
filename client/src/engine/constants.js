@@ -98,33 +98,104 @@ export const WEAPON_SETTINGS = {
     [PISTOL]: {
         ammo: BULLETS,
         prefix: 'PIS',
+        fireFrames: [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+        ],
     },
     [SHOTGUN]: {
         ammo: SHELLS,
         prefix: 'SHT',
+        fireFrames: [
+            'A',
+            'A',
+            'B',
+            'C',
+            'D',
+        ],
+        flashFrames: [
+            'A',
+            'B',
+        ],
     },
     [SUPER_SHOTGUN]: {
         ammo: SHELLS,
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
+        fireFrames: [
+            'A',
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+        ],
+        flashFrames: [
+            'I',
+            'J',
+        ],
     },
     [CHAINGUN]: {
         ammo: BULLETS,
         prefix: 'CHG',
+        fireFrames: [
+            'B',
+            'A',
+        ],
+        flashFrames: [
+            'B',
+            'A',
+        ],
     },
     [ROCKET_LAUNCHER]: {
         ammo: ROCKETS,
         prefix: 'MIS',
+        fireFrames: [
+            'B',
+            'B',
+            'B',
+            'B',
+        ],
+        flashFrames: [
+            'A',
+            'B',
+            'C',
+            'D',
+        ],
     },
     [PLASMA_GUN]: {
         ammo: CELLS,
         prefix: 'PLS',
+        noFlashOverlay: true,
+        fireFrames: [
+            'FA',
+            'FB',
+        ],
+        releaseFrames: [
+            'B',
+        ],
     },
     [BFG9000]: {
         ammo: CELLS,
         usage: 40,
         prefix: 'BFG',
+        fireFrames: [
+            'B',
+            'C',
+            'C',
+        ],
+        flashFrames: [
+            null,
+            'A',
+            'B',
+        ],
     },
 };
 

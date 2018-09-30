@@ -21,6 +21,7 @@ export default (state) => {
         RIGHT, D,
         TAB,
         SHIFT,
+        CTRL,
         COMMAND,
         MINUS, NUMPAD_MINUS,
         EQUAL, NUMPAD_PLUS,
@@ -57,7 +58,7 @@ export default (state) => {
         V: 'toggle viewing cone (automap only)',
     });
 
-	document.onkeydown = (event) => {
+	document.onkeydown = event => {
         const { keyCode } = event;
         const {
             keyStrokes: { keyPressCount },
@@ -80,6 +81,7 @@ export default (state) => {
             dispatch({ type: 'INCREMENT_KEYPRESS_COUNT' });
         }
 
+        // keys allowed while the game is paused
         switch (keyCode) {
             default: break;
             case P: {
@@ -128,6 +130,7 @@ export default (state) => {
             return false;
         }
 
+        // keys allowed only when the game is not paused
         switch (keyCode) {
             default: break;
             case UP:
@@ -156,6 +159,10 @@ export default (state) => {
             }
             case SHIFT: {
                 dispatch({ type: 'START_PLAYER_STRAFE' });
+                break;
+            }
+            case CTRL: {
+                dispatch({ type: 'START_PLAYER_FIRE' });
                 break;
             }
             case ONE: {
@@ -219,7 +226,7 @@ export default (state) => {
         }
 	};
 
-	document.onkeyup = (event) => {
+	document.onkeyup = event => {
         const { keyCode } = event;
         event.preventDefault();
         
@@ -245,6 +252,10 @@ export default (state) => {
             }
             case SHIFT: {
                 dispatch({ type: 'STOP_PLAYER_STRAFE' });
+                break;
+            }
+            case CTRL: {
+                dispatch({ type: 'STOP_PLAYER_FIRE' });
                 break;
             }
 		}

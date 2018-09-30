@@ -1,1 +1,1 @@
-export default (id) => document.getElementById(id);
+export default id => document.getElementById(id);
