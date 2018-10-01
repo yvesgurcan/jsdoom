@@ -83,7 +83,14 @@ export const WEAPONS = {
 };
 
 export const WEAPON_SETTINGS = {
-    [FIST]: { prefix: 'PUN' },
+    [FIST]: {
+        prefix: 'PUN',
+        firingFrames: [
+            'B',
+            'C',
+            'D',
+        ],
+    },
     [CHAINSAW]: {
         prefix: 'SAW',
         raiseSound: 'DSSAWUP',
@@ -94,11 +101,15 @@ export const WEAPON_SETTINGS = {
         idleFrameInterval: 4,
         idleSound: 'DSSAWIDL',
         idleSoundInterval: 275,
+        firingFrames: [
+            'A',
+            'B',
+        ],
     },
     [PISTOL]: {
         ammo: BULLETS,
         prefix: 'PIS',
-        fireFrames: [
+        firingFrames: [
             'A',
             'B',
             'C',
@@ -112,7 +123,7 @@ export const WEAPON_SETTINGS = {
     [SHOTGUN]: {
         ammo: SHELLS,
         prefix: 'SHT',
-        fireFrames: [
+        firingFrames: [
             'A',
             'A',
             'B',
@@ -129,7 +140,7 @@ export const WEAPON_SETTINGS = {
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
-        fireFrames: [
+        firingFrames: [
             'A',
             'A',
             'B',
@@ -148,7 +159,7 @@ export const WEAPON_SETTINGS = {
     [CHAINGUN]: {
         ammo: BULLETS,
         prefix: 'CHG',
-        fireFrames: [
+        firingFrames: [
             'B',
             'A',
         ],
@@ -164,7 +175,7 @@ export const WEAPON_SETTINGS = {
     [ROCKET_LAUNCHER]: {
         ammo: ROCKETS,
         prefix: 'MIS',
-        fireFrames: [
+        firingFrames: [
             'B',
             'B',
             'B',
@@ -181,7 +192,7 @@ export const WEAPON_SETTINGS = {
         ammo: CELLS,
         prefix: 'PLS',
         noFlashOverlay: true,
-        fireFrames: [
+        firingFrames: [
             'FA',
             'FB',
         ],
@@ -193,7 +204,7 @@ export const WEAPON_SETTINGS = {
         ammo: CELLS,
         usage: 40,
         prefix: 'BFG',
-        fireFrames: [
+        firingFrames: [
             'B',
             'C',
             'C',

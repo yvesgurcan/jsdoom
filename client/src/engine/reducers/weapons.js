@@ -13,8 +13,8 @@ export default (prevState = initState, action) => {
         raiseWeaponDelay,
         idleFrameDelay,
         currentIdleFrame,
-        fireFrameDelay,
-        currentFireFrame,
+        firingFrameDelay,
+        currentFiringFrame,
     } = payload;
 
     switch (type) {
@@ -79,13 +79,13 @@ export default (prevState = initState, action) => {
         case 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY': {
             return {
                 ...prevState,
-                fireFrameDelay,
+                firingFrameDelay,
             };
         }
         case 'UPDATE_WEAPON_FIRE_FRAME': {
             return {
                 ...prevState,
-                currentFireFrame,
+                currentFiringFrame,
             };
         }
         case 'WAIT_FOR_WEAPON_ANIMATION_END': {
@@ -98,7 +98,7 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 waitForAnimationToEnd: false,
-                currentFireFrame,
+                currentFiringFrame,
             };
         }
     }
