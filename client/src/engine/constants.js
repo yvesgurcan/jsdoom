@@ -168,9 +168,14 @@ export const WEAPON_SETTINGS = {
         ],
         firingSounds: [
             'DSDSHTGN',
+            '',
             'DSDBCLS',
+            '',
             'DSDBLOAD',
+            '',
             'DSDBOPN',
+            '',
+            '',
 
         ],
     },
