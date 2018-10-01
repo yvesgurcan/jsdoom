@@ -1,5 +1,19 @@
 # Release Notes
 
+## v0.4.8 - 2018/09/30
+
+* Weapon sounds
+
+Here we are! Those weapon not only animate now but they also make the appropriate sound as the player is firing away. With a little effort, it was possible to recreate the original feel of the super shotgun reloading phase.
+
+I also added a little logic in order to adjust how much time each weapon takes to be ready to fire again.
+
+## v0.4.7 - 2018/09/30
+
+* Can't change weapon while animating
+
+There was a little oddity going on with the weapons. As soon as you stopped holding the fire key, the weapon animation stopped and was replaced by the idle frame. No, no, no! The animation has to complete! And now it does. Also, until the animation has finished, it is not possible to switch weapons. Just like in the original game. Yay!
+
 ## v0.4.6 -- 2018/09/29
 
 * Weapon firing animations

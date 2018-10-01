@@ -115,6 +115,7 @@ const initState = {
     },
     WEAPON_SETTINGS,
     WEAPON_SWITCH_TIME,
+    DEFAULT_FIRING_WEAPON_FRAME_DELAY: 4,
     AMMO,
     AMMO_MAX,
 };

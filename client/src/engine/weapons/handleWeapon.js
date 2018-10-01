@@ -5,7 +5,7 @@ import playIdleSound from './playIdleSound';
 import playSound from '../sound/playSound';
 import getElementById from '../getElementById';
 import { dispatch, getState } from '../store';
-import getFireFrame from './getFireFrame';
+import getFiringFrame from './getFiringFrame';
 
 const getFirstIdleSprite = (state, element) => {
     const firstIdleFrame = getIdleFrame(state, element, false);
@@ -86,9 +86,9 @@ export default (state) => {
 
     // firing
     if (firing) {
-        const fireFrame = getFireFrame(state, weapon);
-        if (fireFrame) {
-            weapon.src = fireFrame;
+        const firingFrame = getFiringFrame(state);
+        if (firingFrame) {
+            weapon.src = firingFrame;
         }
 
         return false;

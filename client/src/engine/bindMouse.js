@@ -1,5 +1,7 @@
+import startFiring from './weapons/startFiring';
+import stopFiring from './weapons/stopFiring';
 import getElementById from './getElementById';
-import { dispatch } from './store';
+import { getState, dispatch } from './store';
 
 export default state => {
     document.onclick = event => {
@@ -10,14 +12,35 @@ export default state => {
     };
 
     document.onmousedown = event => {
-        dispatch({ type: 'START_PLAYER_FIRE' });
+        const currentState = getState();
+        const { game: { paused } } = currentState;
+
+        if (paused) {
+            return false;
+        }
+
+        startFiring(currentState);
     };
 
     document.onmouseup = event => {
-        dispatch({ type: 'STOP_PLAYER_FIRE' });
+        const currentState = getState();
+        const { game: { paused } } = currentState;
+
+        if (paused) {
+            return false;
+        }
+
+        stopFiring(currentState);
     };
 
     document.onmousemove = event => {
+        const currentState = getState();
+        const { game: { paused } } = currentState;
+
+        if (paused) {
+            return false;
+        }
+
         const {
             movementX,
             movementY,

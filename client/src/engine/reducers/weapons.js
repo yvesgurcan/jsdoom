@@ -13,8 +13,8 @@ export default (prevState = initState, action) => {
         raiseWeaponDelay,
         idleFrameDelay,
         currentIdleFrame,
-        fireFrameDelay,
-        currentFireFrame,
+        currentFiringFrameDelay,
+        currentFiringFrame,
     } = payload;
 
     switch (type) {
@@ -79,26 +79,26 @@ export default (prevState = initState, action) => {
         case 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY': {
             return {
                 ...prevState,
-                fireFrameDelay,
+                currentFiringFrameDelay,
             };
         }
         case 'UPDATE_WEAPON_FIRE_FRAME': {
             return {
                 ...prevState,
-                currentFireFrame,
+                currentFiringFrame,
             };
         }
-        case 'SET_FIRE_WEAPON_SOUND': {
+        case 'WAIT_FOR_WEAPON_ANIMATION_END': {
             return {
                 ...prevState,
-                playingFireSound: true,
+                waitForAnimationToEnd: true,
             };
         }
-        case 'UNSET_FIRE_WEAPON_SOUND': {
+        case 'STOP_PLAYER_FIRE': {
             return {
                 ...prevState,
-                fireFrameDelay,
-                currentFireFrame,
+                waitForAnimationToEnd: false,
+                currentFiringFrame,
             };
         }
     }

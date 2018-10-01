@@ -4,11 +4,18 @@ import checkIfPlayerOwnsWeaponInSlot from './checkIfPlayerOwnsWeaponInSlot';
 export default (state, slot) => {
     const {
         constants: { WEAPONS: { FIST }, WEAPON_SLOTS },
-        weapons: { lowerWeaponDelay, raiseWeaponDelay },
-        player: { selectedWeapon, weapons },
+        weapons: {
+            lowerWeaponDelay,
+            raiseWeaponDelay,
+        },
+        player: {
+            selectedWeapon,
+            weapons,
+            firing,
+        },
     } = state;
 
-    if (lowerWeaponDelay || raiseWeaponDelay) {
+    if (firing || lowerWeaponDelay || raiseWeaponDelay) {
         return false;
     }
 

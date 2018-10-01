@@ -27,6 +27,9 @@ const initState = {
         SHOTGUN,
         SUPER_SHOTGUN,
         CHAINGUN,
+        ROCKET_LAUNCHER,
+        PLASMA_GUN,
+        BFG9000,
     ],
     ammo: {
         [BULLETS]: 50,
@@ -150,7 +153,6 @@ export default (prevState = initState, action) => {
                 firing: true,
             };
         }
-
         case 'STOP_PLAYER_FIRE': {
             return {
                 ...prevState,

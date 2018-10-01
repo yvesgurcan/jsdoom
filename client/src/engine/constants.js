@@ -83,7 +83,18 @@ export const WEAPONS = {
 };
 
 export const WEAPON_SETTINGS = {
-    [FIST]: { prefix: 'PUN' },
+    [FIST]: {
+        prefix: 'PUN',
+        firingFrames: [
+            'B',
+            'C',
+            'D',
+        ],
+        firingFrameDelay: 5,
+        firingSounds: [
+            'DSPUNCH',
+        ],
+    },
     [CHAINSAW]: {
         prefix: 'SAW',
         raiseSound: 'DSSAWUP',
@@ -94,22 +105,32 @@ export const WEAPON_SETTINGS = {
         idleFrameInterval: 4,
         idleSound: 'DSSAWIDL',
         idleSoundInterval: 275,
+        firingFrames: [
+            'A',
+            'B',
+        ],
+        firingFrameDelay: 1,
+        firingSounds: [
+            'DSSAWFUL',
+            '',
+        ],
     },
     [PISTOL]: {
         ammo: BULLETS,
         prefix: 'PIS',
-        fireFrames: [
+        firingFrames: [
             'A',
-            'B',
             'C',
-            'D',
             'E',
+        ],
+        firingSounds: [
+            'DSPISTOL',
         ],
     },
     [SHOTGUN]: {
         ammo: SHELLS,
         prefix: 'SHT',
-        fireFrames: [
+        firingFrames: [
             'A',
             'A',
             'B',
@@ -120,13 +141,16 @@ export const WEAPON_SETTINGS = {
             'A',
             'B',
         ],
+        firingSounds: [
+            'DSSHOTGN',
+        ]
     },
     [SUPER_SHOTGUN]: {
         ammo: SHELLS,
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
-        fireFrames: [
+        firingFrames: [
             'A',
             'A',
             'B',
@@ -137,15 +161,28 @@ export const WEAPON_SETTINGS = {
             'G',
             'H',
         ],
+        firingFrameDelay: 5,
         flashFrames: [
             'I',
             'J',
+        ],
+        firingSounds: [
+            'DSDSHTGN',
+            '',
+            'DSDBCLS',
+            '',
+            'DSDBLOAD',
+            '',
+            'DSDBOPN',
+            '',
+            '',
+
         ],
     },
     [CHAINGUN]: {
         ammo: BULLETS,
         prefix: 'CHG',
-        fireFrames: [
+        firingFrames: [
             'B',
             'A',
         ],
@@ -153,11 +190,15 @@ export const WEAPON_SETTINGS = {
             'B',
             'A',
         ],
+        firingSounds: [
+            'DSPISTOL',
+            'DSPISTOL',
+        ],
     },
     [ROCKET_LAUNCHER]: {
         ammo: ROCKETS,
         prefix: 'MIS',
-        fireFrames: [
+        firingFrames: [
             'B',
             'B',
             'B',
@@ -169,14 +210,21 @@ export const WEAPON_SETTINGS = {
             'C',
             'D',
         ],
+        firingSounds: [
+            'DSRLAUNC',
+        ],
     },
     [PLASMA_GUN]: {
         ammo: CELLS,
         prefix: 'PLS',
         noFlashOverlay: true,
-        fireFrames: [
+        firingFrames: [
             'FA',
             'FB',
+        ],
+        firingFrameDelay: 2,
+        firingSounds: [
+            'DSPLASMA',
         ],
         releaseFrames: [
             'B',
@@ -186,15 +234,19 @@ export const WEAPON_SETTINGS = {
         ammo: CELLS,
         usage: 40,
         prefix: 'BFG',
-        fireFrames: [
+        firingFrames: [
             'B',
             'C',
             'C',
         ],
+        firingFrameDelay: 15,
         flashFrames: [
             null,
             'A',
             'B',
+        ],
+        firingSounds: [
+            'DSBFG',
         ],
     },
 };
