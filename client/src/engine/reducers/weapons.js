@@ -13,7 +13,7 @@ export default (prevState = initState, action) => {
         raiseWeaponDelay,
         idleFrameDelay,
         currentIdleFrame,
-        firingFrameDelay,
+        currentFiringFrameDelay,
         currentFiringFrame,
     } = payload;
 
@@ -79,7 +79,7 @@ export default (prevState = initState, action) => {
         case 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY': {
             return {
                 ...prevState,
-                firingFrameDelay,
+                currentFiringFrameDelay,
             };
         }
         case 'UPDATE_WEAPON_FIRE_FRAME': {

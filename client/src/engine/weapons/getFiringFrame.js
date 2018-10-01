@@ -4,7 +4,7 @@ import { dispatch } from '../store';
 import playSound from '../sound/playSound';
 
 export default state => {
-    const { constants: { DEFAULT_WEAPON_FRAME_DELAY } } = state; 
+    const { constants: { DEFAULT_FIRING_WEAPON_FRAME_DELAY } } = state; 
     const weaponSettings = getWeaponSettings(state);
     if (!weaponSettings) {
         return false;
@@ -12,6 +12,7 @@ export default state => {
 
     const {
         firingFrames,
+        firingFrameDelay,
         flashFrames,
         noFlashOverlay,
         firingSounds,
@@ -22,17 +23,19 @@ export default state => {
     }
 
     const { weapons: {
-        firingFrameDelay = 0,
+        currentFiringFrameDelay = 0,
         currentFiringFrame = 0,
         waitForAnimationToEnd,
     } } = state;
 
-    const nextFiringFrameDelay = firingFrameDelay <= 0 ? DEFAULT_WEAPON_FRAME_DELAY : firingFrameDelay - 1;
+    const nextFiringFrameDelay = currentFiringFrameDelay <= 0 ? (firingFrameDelay || DEFAULT_FIRING_WEAPON_FRAME_DELAY) : currentFiringFrameDelay - 1;
+
+    console.log({ nextFiringFrameDelay });
     
     let firingFrame = false;
 
     // update weapon frame
-    if (firingFrameDelay <= 0) {
+    if (currentFiringFrameDelay <= 0) {
         const nextFiringFrame = currentFiringFrame <= 0 ? firingFrames.length - 1 : currentFiringFrame - 1;
         firingFrame = buildSpritePath(state, firingFrames[nextFiringFrame], noFlashOverlay);
 
@@ -46,7 +49,7 @@ export default state => {
         // can't do anything until the weapon animation has ended
         if (waitForAnimationToEnd) {
             if (nextFiringFrame === 0) {
-                dispatch({ type: 'STOP_PLAYER_FIRE', firingFrameDelay: firingFrames.length - 1 });
+                dispatch({ type: 'STOP_PLAYER_FIRE', currentFiringFrame: firingFrames.length - 1 });
                 
                 return firingFrame;    
             }
@@ -55,7 +58,7 @@ export default state => {
         dispatch({ type: 'UPDATE_WEAPON_FIRE_FRAME', payload: { currentFiringFrame: nextFiringFrame } });
     }
 
-    dispatch({ type: 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY', payload: { firingFrameDelay: nextFiringFrameDelay } });
+    dispatch({ type: 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY', payload: { currentFiringFrameDelay: nextFiringFrameDelay } });
 
     return firingFrame;
 };
