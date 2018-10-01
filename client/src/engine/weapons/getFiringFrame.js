@@ -29,8 +29,6 @@ export default state => {
     } } = state;
 
     const nextFiringFrameDelay = currentFiringFrameDelay <= 0 ? (firingFrameDelay || DEFAULT_FIRING_WEAPON_FRAME_DELAY) : currentFiringFrameDelay - 1;
-
-    console.log({ nextFiringFrameDelay });
     
     let firingFrame = false;
 
