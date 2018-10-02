@@ -190,6 +190,12 @@ export const WEAPON_SETTINGS = {
             'B',
             'A',
         ],
+        /*
+        flashFramePositions: [
+            { x: -25 },
+            { x: -25 },
+        ],
+        */
         firingSounds: [
             'DSPISTOL',
             'DSPISTOL',
@@ -235,15 +241,20 @@ export const WEAPON_SETTINGS = {
         usage: 40,
         prefix: 'BFG',
         firingFrames: [
+            'A',
+            'A',
             'B',
-            'C',
-            'C',
         ],
-        firingFrameDelay: 15,
+        firingFrameDelay: 20,
         flashFrames: [
             null,
             'A',
             'B',
+        ],
+        flashFramePositions: [
+            {},
+            { x: -45, width: 110 },
+            { x: -34, width: 130, height: 65 },
         ],
         firingSounds: [
             'DSBFG',

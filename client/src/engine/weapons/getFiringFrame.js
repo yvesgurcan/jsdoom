@@ -14,6 +14,7 @@ export default state => {
         firingFrames,
         firingFrameDelay,
         flashFrames,
+        flashFramePositions,
         noFlashOverlay,
         firingSounds,
     } = weaponSettings;
@@ -31,11 +32,21 @@ export default state => {
     const nextFiringFrameDelay = currentFiringFrameDelay <= 0 ? (firingFrameDelay || DEFAULT_FIRING_WEAPON_FRAME_DELAY) : currentFiringFrameDelay - 1;
     
     let firingFrame = false;
+    let flashFrame = false;
+    let flashFramePosition = {};
 
     // update weapon frame
     if (currentFiringFrameDelay <= 0) {
         const nextFiringFrame = currentFiringFrame <= 0 ? firingFrames.length - 1 : currentFiringFrame - 1;
-        firingFrame = buildSpritePath(state, firingFrames[nextFiringFrame], noFlashOverlay);
+        firingFrame = buildSpritePath(state, firingFrames[nextFiringFrame], { noFlashOverlay });
+
+        if (flashFrames && flashFrames[nextFiringFrame]) {
+            if (flashFramePositions && flashFramePositions[nextFiringFrame]) {
+                flashFrame = buildSpritePath(state, flashFrames[nextFiringFrame], { noFlashOverlay, flashSprite: true });
+                flashFramePosition = flashFramePositions[nextFiringFrame];
+            }
+        }
+
 
         if (firingSounds) {
             if (firingSounds[currentFiringFrame]) {
@@ -58,5 +69,9 @@ export default state => {
 
     dispatch({ type: 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY', payload: { currentFiringFrameDelay: nextFiringFrameDelay } });
 
-    return firingFrame;
+    return {
+        firingFrame,
+        flashFrame,
+        flashFramePosition,
+    };
 };

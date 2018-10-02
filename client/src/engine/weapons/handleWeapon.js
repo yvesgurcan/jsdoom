@@ -86,12 +86,40 @@ export default (state) => {
 
     // firing
     if (firing) {
-        const firingFrame = getFiringFrame(state);
+        const {
+            firingFrame,
+            flashFrame,
+            flashFramePosition,
+        } = getFiringFrame(state);
         if (firingFrame) {
             weapon.src = firingFrame;
         }
+        if (flashFrame) {
+            const flash = getElementById('weaponflash');
+            flash.src = flashFrame;
+            if (flashFramePosition) {
+                console.log(weapon.naturalWidth)
+                const {
+                    x = null,
+                    y = null,
+                    width = null,
+                    height = null,
+                } = flashFramePosition;
+                flash.style.top = x;
+                flash.style.left = y;
+                flash.style.width = width;
+                flash.style.height = height;
+            }
+        }
 
         return false;
+    }
+
+    if (!firing) {
+        const flash = getElementById('weaponflash');
+        if (flash.src) {
+            flash.removeAttribute('src');
+        }
     }
 
     // idle weapon
