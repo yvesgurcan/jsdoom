@@ -235,11 +235,11 @@ export const WEAPON_SETTINGS = {
         usage: 40,
         prefix: 'BFG',
         firingFrames: [
+            'A',
+            'A',
             'B',
-            'C',
-            'C',
         ],
-        firingFrameDelay: 15,
+        firingFrameDelay: 20,
         flashFrames: [
             null,
             'A',
