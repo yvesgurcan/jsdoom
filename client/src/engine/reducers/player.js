@@ -55,7 +55,11 @@ export default (prevState = initState, action) => {
         payload = {},
     } = action;
 
-    const { selectedWeapon } = payload;
+    const {
+        selectedWeapon,
+        ammoType,
+        ammoCount,
+    } = payload;
 
     switch (type) {
         default: return prevState;
@@ -157,6 +161,15 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 firing: false,
+            };
+        }
+        case 'UPDATE_AMMO_COUNT': {
+            return {
+                ...prevState,
+                ammo: {
+                    ...prevState.ammo,
+                    [ammoType]: ammoCount,
+                },
             };
         }
     }

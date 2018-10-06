@@ -16,9 +16,9 @@ export default (state) => {
         const weaponSetting = WEAPON_SETTINGS[selectedWeapon];
 
         // limited ammo
-        if (weaponSetting && weaponSetting.ammo) {
-            if (ammoElement.className !== weaponSetting.ammo) {
-                ammoElement.className = weaponSetting.ammo;
+        if (weaponSetting && weaponSetting.ammoType) {
+            if (ammoElement.className !== weaponSetting.ammoType) {
+                ammoElement.className = weaponSetting.ammoType;
             }
         // infinite ammo
         } else if (ammoElement.className !== 'null') {
@@ -34,8 +34,8 @@ export default (state) => {
         const element3 = getElementById('ammo3');
     
         let selectedAmmo = null;
-        if (ammoElement.className !== 'null' && ammo && ammo[weaponSetting.ammo] !== undefined) {
-            selectedAmmo = ammo[weaponSetting.ammo];
+        if (ammoElement.className !== 'null' && ammo && ammo[weaponSetting.ammoType] !== undefined) {
+            selectedAmmo = ammo[weaponSetting.ammoType];
         }
 
         const ammoQty = selectedAmmo === null ? null : String(selectedAmmo);

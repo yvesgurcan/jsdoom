@@ -116,7 +116,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [PISTOL]: {
-        ammo: BULLETS,
+        ammoType: BULLETS,
         prefix: 'PIS',
         firingFrames: [
             'A',
@@ -128,7 +128,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [SHOTGUN]: {
-        ammo: SHELLS,
+        ammoType: SHELLS,
         prefix: 'SHT',
         firingFrames: [
             'A',
@@ -146,7 +146,7 @@ export const WEAPON_SETTINGS = {
         ]
     },
     [SUPER_SHOTGUN]: {
-        ammo: SHELLS,
+        ammoType: SHELLS,
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
@@ -180,7 +180,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [CHAINGUN]: {
-        ammo: BULLETS,
+        ammoType: BULLETS,
         prefix: 'CHG',
         firingFrames: [
             'B',
@@ -196,7 +196,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [ROCKET_LAUNCHER]: {
-        ammo: ROCKETS,
+        ammoType: ROCKETS,
         prefix: 'MIS',
         firingFrames: [
             'B',
@@ -215,7 +215,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [PLASMA_GUN]: {
-        ammo: CELLS,
+        ammoType: CELLS,
         prefix: 'PLS',
         noFlashOverlay: true,
         firingFrames: [
@@ -231,7 +231,7 @@ export const WEAPON_SETTINGS = {
         ],
     },
     [BFG9000]: {
-        ammo: CELLS,
+        ammoType: CELLS,
         usage: 40,
         prefix: 'BFG',
         firingFrames: [
