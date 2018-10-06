@@ -25,7 +25,7 @@ export default (state, frame, doNotPrefix) => {
     const { prefix } = weaponSettings;
 
     // noFlashSpritePrefix || doNotPrefix ? '' : 'G';
-    const spriteInitial = getSpriteInitial(state, { doNotPrefix }, weaponSettings);
+    const spriteInitial = getSpriteInitial(state, doNotPrefix, weaponSettings);
     const spriteUrl = `${WEAPON_PATH}/${prefix}${spriteInitial}${frame}0${IMG_EXT}`;
     return spriteUrl;
 };
