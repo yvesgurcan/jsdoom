@@ -9,6 +9,7 @@ import initScreen from './initScreen';
 import initStatusBar from './statusBar/initStatusBar';
 import initPlayer from './initPlayer';
 import initDecorations from './decorations/initDecorations';
+import initItems from './items/initItems';
 import initEnemies from './enemies/initEnemies';
 import initAutomap from './automap/initAutomap';
 import gameCycle from './gameCycle';
@@ -26,7 +27,8 @@ export default () => {
     initStatusBar(state);
     initPlayer();
 	initDecorations(state);
-	initEnemies();
+	initItems(state);
+	initEnemies(state);
 	initAutomap();
 	gameCycle();
 	renderCycle();
