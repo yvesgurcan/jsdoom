@@ -11,6 +11,8 @@ export default state => {
     }
 
     const {
+        usage,
+        ammoType,
         firingFrames,
         firingFrameDelay,
         flashFrames,
@@ -44,8 +46,21 @@ export default state => {
             }
         }
 
+        let outOfAmmo = false;
+        if (nextFiringFrame === 0) {
+            if (ammoType) {
+                const { player: { ammo } } = state;
+                const currentAmmoCount = ammo[ammoType];
+                const ammoCount = Math.max(0, currentAmmoCount - (usage || 1));
+                dispatch({ type: 'UPDATE_AMMO_COUNT', payload: { ammoType, ammoCount } });
+                if (ammoCount <= 0) {
+                    outOfAmmo = true;
+                }
+            }
+        }
+
         // can't do anything until the weapon animation has ended
-        if (waitForAnimationToEnd) {
+        if (waitForAnimationToEnd || outOfAmmo) {
             if (nextFiringFrame === 0) {
                 dispatch({ type: 'STOP_PLAYER_FIRE', currentFiringFrame: firingFrames.length - 1 });
                 

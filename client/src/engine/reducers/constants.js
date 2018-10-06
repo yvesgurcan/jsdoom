@@ -118,6 +118,8 @@ const initState = {
     DEFAULT_FIRING_WEAPON_FRAME_DELAY: 4,
     AMMO,
     AMMO_MAX,
+    ITEM_PATH: `${ASSET_PATH}/items`,
+    DECORATION_PATH: `${ASSET_PATH}/decorations`,
 };
 
 export default (prevState = initState, action) => {
