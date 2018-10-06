@@ -2,7 +2,7 @@ import { MUGSHOT_TIME } from '../constants';
 
 const initState = {
     showFPS: true,
-    hideStatusBar: true,
+    hideStatusBar: false,
     nextMugShot: 0,
 };
 export default (prevState = initState, action) => {
