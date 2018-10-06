@@ -2,6 +2,7 @@ import { getState, dispatch } from './store';
 import updateAutomap from './automap/updateAutomap';
 import castRays from './castRays';
 import renderDecorations from './decorations/renderDecorations';
+import renderItems from './items/renderItems';
 import renderEnemies from './enemies/renderEnemies';
 import updateFPS from './updateFPS';
 
@@ -35,7 +36,8 @@ const renderCycle = () => {
         castRays();
     }
     if (!showAutomap) {
-        renderDecorations();
+        renderDecorations(state);
+        renderItems(state);
         renderEnemies();
     }
 
