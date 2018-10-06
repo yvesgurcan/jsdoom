@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.9 - 2018/10/05
+
+* Ammo
+
+Another little improvement: Ammunition is now subtracted from your ammo count as you fire. And the engine checks your ammo count, so no more infinite firing!
+
 ## v0.4.8 - 2018/09/30
 
 * Weapon sounds
