@@ -60,14 +60,16 @@ export default () => {
         const newState = getState();
         const { touch: touchStart } = newState;
 
+        const timeDiff = touchEnd.timestamp - touchStart.timestamp;
+
         dispatch({ type: 'UNREGISTER_TOUCH' });
 
-        /*
+        if (timeDiff < 200) {
             startFiring(newState);
             stopFiring(newState);
-        */
-
-        dispatch({ type: 'STOP_PLAYER_DIRECTION' });
-        dispatch({ type: 'STOP_PLAYER_SPEED' });
+        } else {
+            dispatch({ type: 'STOP_PLAYER_DIRECTION' });
+            dispatch({ type: 'STOP_PLAYER_SPEED' });
+        }
     };
 };
