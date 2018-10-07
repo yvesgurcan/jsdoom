@@ -1,12 +1,12 @@
-import { dispatch, getState } from './store';
-import checkForCheat from './checkForCheat';
-import adjustMusicVolume from './adjustMusicVolume';
-import adjustSoundVolume from './sound/adjustSoundVolume';
-import logAddEvent from './log/logAddEvent';
-import startMusic from './startMusic';
-import getNextWeaponFromSlot from './weapons/getNextWeaponFromSlot';
-import startFiring from './weapons/startFiring';
-import stopFiring from './weapons/stopFiring';
+import { dispatch, getState } from '../store';
+import checkForCheat from '../checkForCheat';
+import adjustMusicVolume from '../adjustMusicVolume';
+import adjustSoundVolume from '../sound/adjustSoundVolume';
+import logAddEvent from '../log/logAddEvent';
+import startMusic from '../startMusic';
+import getNextWeaponFromSlot from '../weapons/getNextWeaponFromSlot';
+import startFiring from '../weapons/startFiring';
+import stopFiring from '../weapons/stopFiring';
 
 export default (state) => {
     const {

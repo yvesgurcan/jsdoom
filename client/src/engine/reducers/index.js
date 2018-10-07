@@ -18,6 +18,7 @@ import visibleDecorations from './visibleDecorations';
 import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
+import touch from './touch';
 import music from './music';
 import sound from './sound';
 import log from './log';
@@ -42,6 +43,7 @@ export default combineReducers({
     view,
     automap,
     keyStrokes,
+    touch,
     music,
     sound,
     log,
