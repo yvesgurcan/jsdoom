@@ -2,7 +2,7 @@ import startFiring from '../weapons/startFiring';
 import stopFiring from '../weapons/stopFiring';
 import { getState, dispatch } from '../store';
 
-const TOUCH_OFFSET = 200;
+const TOUCH_OFFSET = 1;
 
 export default () => {
     document.ontouchstart = event => {
@@ -26,25 +26,27 @@ export default () => {
             timestamp: (new Date()).getTime(),
         };
 
-        console.log('touchMove', touchMove);
-
         const newState = getState();
         const { touch: touchStart } = newState;
 
         const diffX = touchMove.clientX - touchStart.clientX;
         const diffY = touchMove.clientY - touchStart.clientY;
         
-        if (diffX > 0 && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+        console.log({ diffX, diffY });
+
+        if (diffX > TOUCH_OFFSET && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
             dispatch({ type: 'ROTATE_PLAYER_RIGHT' });
-        } else if (diffX < 0 && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+        } else if (diffX < -TOUCH_OFFSET && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
             dispatch({ type: 'ROTATE_PLAYER_LEFT' });
         }
-
-        if (diffY < 0 && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+        
+        if (diffY < -TOUCH_OFFSET && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
             dispatch({ type: 'MOVE_PLAYER_FORWARD' });
-        } else if (diffY > 0 && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+        } else if (diffY > TOUCH_OFFSET && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
             dispatch({ type: 'MOVE_PLAYER_BACKWARD' });
         }
+
+        dispatch({ type: 'REGISTER_TOUCH', payload: { touch: touchMove } });
     };
 
     document.ontouchend = event => {
@@ -64,12 +66,7 @@ export default () => {
 
         dispatch({ type: 'UNREGISTER_TOUCH' });
 
-        if (timeDiff < 200) {
-            startFiring(newState);
-            stopFiring(newState);
-        } else {
-            dispatch({ type: 'STOP_PLAYER_DIRECTION' });
-            dispatch({ type: 'STOP_PLAYER_SPEED' });
-        }
+        dispatch({ type: 'STOP_PLAYER_DIRECTION' });
+        dispatch({ type: 'STOP_PLAYER_SPEED' });
     };
 };
