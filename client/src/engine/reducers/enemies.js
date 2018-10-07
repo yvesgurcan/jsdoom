@@ -86,7 +86,7 @@ export default (prevState = initState, action) => {
         case 'SET_ENEMY_ACTIVE_SOUND': {
             const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
             if (foundEnemy === undefined || foundIndex === null) {
-                console.error(`enemyMap reducer: Could not find enemy with id '${enemyId}'.`);
+                console.error(`enemies reducer: Could not find enemy with id '${enemyId}'.`);
                 return prevState;
             }
 
@@ -98,7 +98,7 @@ export default (prevState = initState, action) => {
         case 'UNSET_ENEMY_ACTIVE_SOUND': {
             const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
             if (foundEnemy === undefined || foundIndex === null) {
-                console.error(`enemyMap reducer: Could not find enemy with id '${enemyId}'.`);
+                console.error(`enemies reducer: Could not find enemy with id '${enemyId}'.`);
                 return prevState;
             }
 

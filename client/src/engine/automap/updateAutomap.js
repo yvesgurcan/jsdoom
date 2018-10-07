@@ -5,7 +5,7 @@ export default (state) => {
 
     const {
         player,
-        enemyMap: enemies,
+        enemies,
         decorations,
         automap: {
             scale,

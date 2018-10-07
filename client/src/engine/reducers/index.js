@@ -6,7 +6,7 @@ import map from './map';
 import wallMap from './wallMap';
 import wallTypes from './wallTypes';
 import enemyTypes from './enemyTypes';
-import enemyMap from './enemyMap';
+import enemies from './enemies';
 import decorationTypes from './decorationTypes';
 import decorations from './decorations';
 import decorationMapPlacement from './decorationMapPlacement';
@@ -30,7 +30,7 @@ export default combineReducers({
     wallMap,
     wallTypes,
     enemyTypes,
-    enemyMap,
+    enemies,
     decorationTypes,
     decorations,
     decorationMapPlacement,

@@ -2,8 +2,8 @@ import renderSprites from '../renderSprites';
 
 export default state => {
     const {
-        enemyMap: enemies,
         enemyTypes,
+        enemies,
     } = state;
 
 	renderSprites(state, enemies, enemyTypes, 'enemies');

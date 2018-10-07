@@ -54,10 +54,10 @@ const debugWeapons = {
 
 const debugEnemies = {
     pos: (index) => {
-        const { enemyMap } = getState();
-        const enemy = enemyMap[index - 1];
+        const { enemies } = getState();
+        const enemy = enemies[index - 1];
         if (!enemy) {
-            console.error(`Index ${index} is out of range (max: ${enemyMap.length})`);
+            console.error(`Index ${index} is out of range (max: ${enemies.length})`);
             return {};
         }
         return enemy;
