@@ -2,7 +2,9 @@ import startFiring from '../weapons/startFiring';
 import stopFiring from '../weapons/stopFiring';
 import { getState, dispatch } from '../store';
 
-export default state => {
+const TOUCH_OFFSET = 200;
+
+export default () => {
     document.ontouchstart = event => {
         const { clientX, clientY } = event.touches[0];
         const touch = {
@@ -35,6 +37,36 @@ export default state => {
         if (timeDiff < 200) {
             startFiring(newState);
             stopFiring(newState);
+        } else {
+            const diffX = touchEnd.clientX - touchStart.clientX;
+            const diffY = touchEnd.clientY - touchStart.clientY;
+
+
+            console.log({ diffX, diffY });
+
+            if (diffX > 0 && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+                dispatch({ type: 'ROTATE_PLAYER_RIGHT' });
+            } else if (diffX < 0 && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+                dispatch({ type: 'ROTATE_PLAYER_LEFT' });
+            }
+    
+            if (diffY < 0 && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+                dispatch({ type: 'MOVE_PLAYER_FORWARD' });
+            } else if (diffY > 0 && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+                dispatch({ type: 'MOVE_PLAYER_BACKWARD' });
+            }
+    
+            if (clientX !== 0) {
+                setTimeout(() => {
+                    dispatch({ type: 'STOP_PLAYER_DIRECTION' });
+                }, timeDiff / 1.5);
+            }
+    
+            if (clientY !== 0) {
+                setTimeout(() => {
+                    dispatch({ type: 'STOP_PLAYER_SPEED' });
+                }, timeDiff / 1.5);
+            }
         }
     };
 };
