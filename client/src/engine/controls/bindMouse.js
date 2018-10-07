@@ -1,7 +1,7 @@
-import startFiring from './weapons/startFiring';
-import stopFiring from './weapons/stopFiring';
-import getElementById from './getElementById';
-import { getState, dispatch } from './store';
+import startFiring from '../weapons/startFiring';
+import stopFiring from '../weapons/stopFiring';
+import getElementById from '../getElementById';
+import { getState, dispatch } from '../store';
 
 export default state => {
     document.onclick = event => {
