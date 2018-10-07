@@ -8,13 +8,12 @@ import wallTypes from './wallTypes';
 import enemyTypes from './enemyTypes';
 import enemyMap from './enemyMap';
 import decorationTypes from './decorationTypes';
-import decorationMap from './decorationMap';
+import decorations from './decorations';
 import decorationMapPlacement from './decorationMapPlacement';
 import itemTypes from './itemTypes';
 import items from './items';
 import game from './game';
 import hud from './hud';
-import visibleDecorations from './visibleDecorations';
 import view from './view';
 import automap from './automap';
 import keyStrokes from './keyStrokes';
@@ -33,13 +32,12 @@ export default combineReducers({
     enemyTypes,
     enemyMap,
     decorationTypes,
-    decorationMap,
+    decorations,
     decorationMapPlacement,
     itemTypes,
     items,
     game,
     hud,
-    visibleDecorations,
     view,
     automap,
     keyStrokes,

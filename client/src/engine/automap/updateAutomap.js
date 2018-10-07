@@ -6,7 +6,7 @@ export default (state) => {
     const {
         player,
         enemyMap: enemies,
-        decorationMap,
+        decorations,
         automap: {
             scale,
             showAutomap,
@@ -67,8 +67,8 @@ export default (state) => {
             );
         }
 
-        for (let i = 0; i < decorationMap.length; i++) {
-            const decoration = decorationMap[i];
+        for (let i = 0; i < decorations.length; i++) {
+            const decoration = decorations[i];
             const decorationSquare = {
                 x: decoration.x * scale,
                 y: decoration.y * scale,
