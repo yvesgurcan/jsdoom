@@ -1,5 +1,13 @@
 # Release Notes
 
+## v0.5.0 - 2018/10/06
+
+* Playable on mobile
+
+Since I started this project, I secretly dreamt of making the game playable on my tablet. It took me a few months but it is now possible :)
+
+Unfortunately, it does not seem that smaller devices handle the engine as well as laptops and desktop computers do. As a consequence, any movement on a mobile makes the framerate drop vertiginously. I guess my table is not top of the line, so this might not be a problem on the most recent devices. I'll take a look later on how to improve performances for machines with less CPU power.
+
 ## v0.4.9 - 2018/10/05
 
 * Ammo
