@@ -67,6 +67,7 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
                 speed: 0,
                 moveSpeed: spriteType.moveSpeed,
                 rotSpeed: spriteType.rotSpeed,
+                radius: spriteType.radius,
                 oldStyles: {
                     left: 0,
                     top: 0,
@@ -94,6 +95,7 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
                 updatedSprite = {
                     ...updatedSprite,
                     block: spriteType.block === true || spriteType.block === undefined,
+                    radius: spriteType.radius,
                 };
             }
 

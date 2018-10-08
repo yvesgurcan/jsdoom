@@ -1,16 +1,19 @@
+const FRAC_UNIT = 64;
+
 const blockedBy = (sourceId, things, { x, y }, checkBlockFlag = false) => {
     return !!things.find(thing => {
         if (!checkBlockFlag || (checkBlockFlag && thing.block)) {
             if (thing.id !== sourceId) {
-                const { x: thingX, y: thingY, radius = 1 } = thing;
-                const radiusModifier = radius;
-                if (thingX >= x - radiusModifier && thingX <= x + radiusModifier) {
-                    if (thingY >= y - radiusModifier && thingY <= y + radiusModifier) {
+                const { x: thingX, y: thingY, radius = FRAC_UNIT / 2 } = thing;
+                const convertedRadius = (radius * 2) / FRAC_UNIT;
+                if (thingX >= x - convertedRadius && thingX <= x + convertedRadius) {
+                    if (thingY >= y - convertedRadius && thingY <= y + convertedRadius) {
                         return true;
                     }
                 }
             }    
         }
+
         return false; 
     });
 };
