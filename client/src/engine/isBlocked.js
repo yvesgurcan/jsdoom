@@ -1,15 +1,16 @@
-const blockedBy = (sourceId, things, { x, y }) => {
+const blockedBy = (sourceId, things, { x, y }, checkBlockFlag = false) => {
     return !!things.find(thing => {
-        if (thing.id !== sourceId) {
-            const { x: thingX, y: thingY, radius = 1 } = thing;
-            const radiusModifier = radius;
-            if (thingX >= x - radiusModifier && thingX <= x + radiusModifier) {
-                if (thingY >= y - radiusModifier && thingY <= y + radiusModifier) {
-                    return true;
+        if (!checkBlockFlag || (checkBlockFlag && thing.block)) {
+            if (thing.id !== sourceId) {
+                const { x: thingX, y: thingY, radius = 1 } = thing;
+                const radiusModifier = radius;
+                if (thingX >= x - radiusModifier && thingX <= x + radiusModifier) {
+                    if (thingY >= y - radiusModifier && thingY <= y + radiusModifier) {
+                        return true;
+                    }
                 }
-            }
+            }    
         }
-
         return false; 
     });
 };
@@ -42,7 +43,7 @@ export default (state, id, x, y) => {
         return true;
     }
 
-    if (!blockedBy(id, decorations, targetCoordinates)) {
+    if (!blockedBy(id, decorations, targetCoordinates, true)) {
         if (!blockedBy(id, enemies, targetCoordinates)) {
             if (!blockedBy(id, [player], targetCoordinates)) {
                 return false; 

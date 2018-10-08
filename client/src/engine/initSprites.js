@@ -85,12 +85,21 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
             ];
         } else {
             img.src = `${path}/${spriteType.img}A0${IMG_EXT}`;
+
+            let updatedSprite = {
+                ...sprite,
+                id,
+            };
+            if (spriteCategory === 'decorations') {
+                updatedSprite = {
+                    ...updatedSprite,
+                    block: spriteType.block === true || spriteType.block === undefined,
+                };
+            }
+
             spriteList = [
                 ...spriteList,
-                {
-                    ...sprite,
-                    id,
-                },
+                { ...updatedSprite },
             ];
         }
 
