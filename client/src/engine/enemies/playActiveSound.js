@@ -22,10 +22,10 @@ const queueSound = (soundType, interval, selectedSound, enemyId) => {
 const handleSound = (selectedSound, enemyId, soundType) => {
     const {
         player,
-        enemyMap,
+        enemies,
     } = getState();
 
-    const enemy = enemyMap.find(e => e.id === enemyId);
+    const enemy = enemies.find(e => e.id === enemyId);
     if (enemy === undefined) {
         console.error(`playActiveSound(): Could not find enemy with id '${enemyId}'.`);
         return false;

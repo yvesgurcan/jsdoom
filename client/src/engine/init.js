@@ -27,7 +27,7 @@ export default () => {
     startMusic();
     initScreen();
     initStatusBar(state);
-    initPlayer();
+    initPlayer(state);
 	initDecorations(state);
 	initItems(state);
 	initEnemies(state);

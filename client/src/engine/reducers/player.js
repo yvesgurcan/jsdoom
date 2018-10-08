@@ -2,51 +2,17 @@ import {
     ALL_WEAPONS,
     ALL_AMMO,
     ALL_KEYS,
-    CHAINSAW,
-    PISTOL,
-    SHOTGUN,
-    SUPER_SHOTGUN,
-    CHAINGUN,
-    ROCKET_LAUNCHER,
-    PLASMA_GUN,
-    BFG9000,
-    BULLETS,
-    SHELLS,
-    ROCKETS,
-    CELLS,
 } from '../constants';
+
+import playerType from '../../types/player';
 import player from '../../maps/player';
 
 const initState = {
-    godMode: false,
-    strafe: false,
-    dead: false,
-    selectedWeapon: PISTOL,
-    weapons: [
-        CHAINSAW,
-        SHOTGUN,
-        SUPER_SHOTGUN,
-        CHAINGUN,
-        ROCKET_LAUNCHER,
-        PLASMA_GUN,
-        BFG9000,
-    ],
-    ammo: {
-        [BULLETS]: 50,
-        [SHELLS]: 0,
-        [ROCKETS]: 0,
-        [CELLS]: 0,
-    },
     x: 1,
     y: 1,
     rotDeg: 0,
     ...player,
-	moveSpeed: 0.2,
-    speed: 0,
-    rotSpeed: 4,
-    dir: 0,
-    health: 47,
-    armor: 143,
+    ...playerType,
 };
 
 export default (prevState = initState, action) => {

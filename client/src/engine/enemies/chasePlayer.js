@@ -5,7 +5,7 @@ import { dispatch, getState } from '../store';
 
 export default (timeDelta) => {
     const {
-        enemyMap: enemies,
+        enemies,
         enemyTypes,
         player,
     } = getState();

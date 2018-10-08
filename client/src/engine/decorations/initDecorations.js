@@ -4,17 +4,10 @@ import { dispatch } from '../store';
 export default state => {
     const {
         constants: { DECORATION_PATH },
-        wallMap: map,
         decorationTypes,
-        decorationMap: decorations,
+        decorations,
     } = state;
 
-    const spriteMap = [];
-    for (let y = 0; y < map.length; y++) {
-		spriteMap[y] = [];
-	}
-
-    const decorationList = initSprites(decorations, decorationTypes, DECORATION_PATH, state, 'decorations', spriteMap);
+    const decorationList = initSprites(decorations, decorationTypes, DECORATION_PATH, state, 'decorations');
     dispatch({ type: 'INIT_DECORATION_MAP', payload: decorationList });
-    dispatch({ type: 'PLACE_DECORATIONS', payload: spriteMap });
 };

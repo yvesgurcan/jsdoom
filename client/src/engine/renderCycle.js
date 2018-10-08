@@ -38,7 +38,7 @@ const renderCycle = () => {
     if (!showAutomap) {
         renderDecorations(state);
         renderItems(state);
-        renderEnemies();
+        renderEnemies(state);
     }
 
 	// time since last rendering

@@ -2,7 +2,7 @@ import uuid4 from 'uuid4';
 import createElement from './createElement';
 import getElementById from './getElementById';
 
-export default (sprites, spriteTypes, path, state, spriteCategory, spriteMap) => {
+export default (sprites, spriteTypes, path, state, spriteCategory) => {
     const { constants: { IMG_EXT } } = state;
 
     const screen = getElementById('screen');
@@ -67,6 +67,7 @@ export default (sprites, spriteTypes, path, state, spriteCategory, spriteMap) =>
                 speed: 0,
                 moveSpeed: spriteType.moveSpeed,
                 rotSpeed: spriteType.rotSpeed,
+                radius: spriteType.radius,
                 oldStyles: {
                     left: 0,
                     top: 0,
@@ -86,24 +87,25 @@ export default (sprites, spriteTypes, path, state, spriteCategory, spriteMap) =>
         } else {
             img.src = `${path}/${spriteType.img}A0${IMG_EXT}`;
 
+            let updatedSprite = {
+                ...sprite,
+                id,
+            };
             if (spriteCategory === 'decorations') {
-                sprite.block = spriteType.block;
-                sprite.img = img;
-                spriteMap[sprite.y][sprite.x] = sprite;
+                updatedSprite = {
+                    ...updatedSprite,
+                    block: spriteType.block === true || spriteType.block === undefined,
+                    radius: spriteType.radius,
+                };
             }
 
             spriteList = [
                 ...spriteList,
-                {
-                    ...sprite,
-                    id,
-                },
+                { ...updatedSprite },
             ];
         }
 
         screen.appendChild(img);
-
-
     }
 
     return spriteList;

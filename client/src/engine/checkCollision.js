@@ -1,37 +1,38 @@
-import isBlocking from './isBlocking';
+import isBlocked from './isBlocked';
 import { getState } from './store';
 
-export default (fromX, fromY, toX, toY, radius) => {
+export default ({ id, x, y }, { toX, toY }, radius) => {
+    const state = getState();
     const {
         map: {
             mapHeight,
             mapWidth,
         },
-    } = getState();
+    } = state;
 
 	const pos = {
-		x: fromX,
-		y: fromY
+		x,
+		y,
 	};
 
 	if (toY < 0 || toY >= mapHeight || toX < 0 || toX >= mapWidth) {
         return pos;
     }
 
-	const blockX = Math.floor(toX);
-	const blockY = Math.floor(toY);
+	const blockX = toX;
+	const blockY = toY;
 
-	if (isBlocking(blockX, blockY)) {
+	if (isBlocked(state, id, blockX, blockY)) {
 		return pos;
     }
 
 	pos.x = toX;
 	pos.y = toY;
 
-	const blockTop = isBlocking(blockX, blockY - 1);
-	const blockBottom = isBlocking(blockX, blockY + 1);
-	const blockLeft = isBlocking(blockX - 1, blockY);
-	const blockRight = isBlocking(blockX + 1, blockY);
+	const blockTop = isBlocked(state, id, blockX, blockY - 1);
+	const blockBottom = isBlocked(state, id, blockX, blockY + 1);
+	const blockLeft = isBlocked(state, id, blockX - 1, blockY);
+	const blockRight = isBlocked(state, id, blockX + 1, blockY);
 
 	if (blockTop !== 0 && toY - blockY < radius) {
 		toY = pos.y = blockY + radius;
@@ -47,7 +48,7 @@ export default (fromX, fromY, toX, toY, radius) => {
 	}
 
 	// is tile to the top-left a wall
-	if (isBlocking(blockX - 1, blockY - 1) !== 0 && !(blockTop !== 0 && blockLeft !== 0)) {
+	if (isBlocked(state, id, blockX - 1, blockY - 1) !== 0 && !(blockTop !== 0 && blockLeft !== 0)) {
 		const dx = toX - blockX;
 		const dy = toY - blockY;
 		if ((dx * dx) + (dy * dy) < radius * radius) {
@@ -59,7 +60,7 @@ export default (fromX, fromY, toX, toY, radius) => {
 		}
 	}
 	// is tile to the top-right a wall
-	if (isBlocking(blockX + 1, blockY - 1) !== 0 && !(blockTop !== 0 && blockRight !== 0)) {
+	if (isBlocked(state, id, blockX + 1, blockY - 1) !== 0 && !(blockTop !== 0 && blockRight !== 0)) {
 		const dx = toX - (blockX + 1);
 		const dy = toY - blockY;
 		if ((dx * dx) + (dy * dy) < radius * radius) {
@@ -71,7 +72,7 @@ export default (fromX, fromY, toX, toY, radius) => {
 		}
 	}
 	// is tile to the bottom-left a wall
-	if (isBlocking(blockX - 1, blockY + 1) !== 0 && !(blockBottom !== 0 && blockBottom !== 0)) {
+	if (isBlocked(state, id, blockX - 1, blockY + 1) !== 0 && !(blockBottom !== 0 && blockBottom !== 0)) {
 		const dx = toX - blockX;
 		const dy = toY - (blockY + 1);
 		if ((dx * dx) + (dy * dy) < radius * radius) {
@@ -83,7 +84,7 @@ export default (fromX, fromY, toX, toY, radius) => {
 		}
 	}
 	// is tile to the bottom-right a wall
-	if (isBlocking(blockX + 1, blockY + 1) !== 0 && !(blockBottom !== 0 && blockRight !== 0)) {
+	if (isBlocked(state, id, blockX + 1, blockY + 1) !== 0 && !(blockBottom !== 0 && blockRight !== 0)) {
 		const dx = toX - (blockX + 1);
 		const dy = toY - (blockY + 1);
 		if ((dx * dx) + (dy * dy) < radius * radius) {

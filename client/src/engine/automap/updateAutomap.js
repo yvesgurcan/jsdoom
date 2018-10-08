@@ -5,8 +5,8 @@ export default (state) => {
 
     const {
         player,
-        enemyMap: enemies,
-        decorationMap,
+        enemies,
+        decorations,
         automap: {
             scale,
             showAutomap,
@@ -43,8 +43,8 @@ export default (state) => {
     // draw a dot at the player position
     objectCtx.fillStyle = playerColor;
 	objectCtx.fillRect(		
-		playerSquare.x - (scale / 2), 
-		playerSquare.y - (scale / 2),
+		playerSquare.x, 
+		playerSquare.y,
         scale,
         scale,
 	);
@@ -60,15 +60,15 @@ export default (state) => {
 
             // draw a dot at the enemy position
             objectCtx.fillRect(
-                enemySquare.x - (scale / 2), 
-                enemySquare.y - (scale / 2),
+                enemySquare.x, 
+                enemySquare.y,
                 scale,
                 scale,
             );
         }
 
-        for (let i = 0; i < decorationMap.length; i++) {
-            const decoration = decorationMap[i];
+        for (let i = 0; i < decorations.length; i++) {
+            const decoration = decorations[i];
             const decorationSquare = {
                 x: decoration.x * scale,
                 y: decoration.y * scale,

@@ -5,7 +5,7 @@ export default state => {
     const {
         constants: { ITEM_PATH },
         enemyTypes,
-        enemyMap: enemies,
+        enemies,
     } = state;
 
     const enemyList = initSprites(enemies, enemyTypes, ITEM_PATH, state, 'enemies');
