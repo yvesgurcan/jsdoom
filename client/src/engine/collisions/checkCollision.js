@@ -1,5 +1,5 @@
 import isBlocked from './isBlocked';
-import { getState } from './store';
+import { getState } from '../store';
 
 export default ({ id, x, y }, { toX, toY }, radius) => {
     const state = getState();

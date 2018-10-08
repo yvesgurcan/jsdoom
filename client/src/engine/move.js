@@ -2,7 +2,7 @@ import {
     getState,
     dispatch,
 } from './store';
-import checkCollision from './checkCollision';
+import checkCollision from './collisions/checkCollision';
 
 export default (entityType, entity, timeDelta, index) => {
     const { game: { delay } } = getState();

@@ -1,6 +1,4 @@
 import {
-    wolfPath,
-    imgExt,
     stripWidth,
     twoPI,
 } from './constants';
@@ -9,7 +7,13 @@ import drawViewingCone from './drawViewingCone';
 import getElementById from './getElementById';
 
 export default (rayAngle, stripIdx) => {
+    const state = getState();
     const {
+        constants: {
+            IMG_EXT,
+            WOLF_PATH,
+            TEXTURE_PATH,
+        },
         player,
         map: {
             mapWidth,
@@ -20,7 +24,9 @@ export default (rayAngle, stripIdx) => {
             screenHeight,
             viewDist,
         },
-    } = getState();
+        wallTypes: wallTextures,
+        wallMap: map,
+    } = state;
 
 	// first make sure the angle is between 0 and 360 degrees
 	rayAngle %= twoPI;
@@ -60,11 +66,6 @@ export default (rayAngle, stripIdx) => {
 	let x = right ? Math.ceil(player.x) : Math.floor(player.x);	// starting horizontal position, at one of the edges of the current map block
 	let y = player.y + ((x - player.x) * slope);			// starting vertical position. We add the small horizontal step we just made, multiplied by the slope.
 
-    const {
-        wallTypes: wallTextures,
-        wallMap: map,
-    } = getState();
-
 	while (x > 0 && x < mapWidth && y > 0 && y < mapHeight) {
 		wallX = (x + (right ? 0 : -1)) >> 0;
 		wallY = (y) >> 0;
@@ -84,8 +85,9 @@ export default (rayAngle, stripIdx) => {
 			xWallHit = wallX;
 			yWallHit = wallY;
 
-			// make horizontal walls shaded
-			wallIsShaded = true;
+            // make horizontal walls shaded
+            // DEACTIVATED FOR NOW - should use a different method (CSS maybe?)
+			wallIsShaded = false;
 
 			break;
 		}
@@ -176,10 +178,19 @@ export default (rayAngle, stripIdx) => {
             return;
         }
 
-        const styleSrc = `${wolfPath}/${wallTexture}${imgExt}`;
-        if (oldStyles.src !== styleSrc) {
-            strip.src = styleSrc;
-            oldStyles.src = styleSrc;
+
+        let src = null;
+
+        // hardcoded: get wolfenstein textures from `wolf` folder
+        if (isNaN(wallType)) {
+            src = `${TEXTURE_PATH}/${wallTexture}${IMG_EXT}`;
+        } else {
+            src = `${TEXTURE_PATH}/${wallTexture}${IMG_EXT}`;
+        }
+
+        if (oldStyles.src !== src) {
+            strip.src = src;
+            oldStyles.src = src;
         }
 
         const styleHeight = height;
@@ -195,7 +206,7 @@ export default (rayAngle, stripIdx) => {
         }
 		texX += (wallIsShaded ? width : 0);
 
-		const styleWidth = (width * 2) >> 0;
+		const styleWidth = (width) >> 0;
 		if (oldStyles.width !== styleWidth) {
 			style.width = `${styleWidth}px`;
 			oldStyles.width = styleWidth;
