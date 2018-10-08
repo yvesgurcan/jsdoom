@@ -9,7 +9,6 @@ import enemyTypes from './enemyTypes';
 import enemies from './enemies';
 import decorationTypes from './decorationTypes';
 import decorations from './decorations';
-import decorationMapPlacement from './decorationMapPlacement';
 import itemTypes from './itemTypes';
 import items from './items';
 import game from './game';
@@ -33,7 +32,6 @@ export default combineReducers({
     enemies,
     decorationTypes,
     decorations,
-    decorationMapPlacement,
     itemTypes,
     items,
     game,

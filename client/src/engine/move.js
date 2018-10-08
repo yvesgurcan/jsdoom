@@ -20,8 +20,8 @@ export default (entityType, entity, timeDelta, index) => {
 	const mul = timeDelta / delay;
 	
     
-    let newX = updatedEntity.x;
-    let newY = updatedEntity.y;
+    let toX = updatedEntity.x;
+    let toY = updatedEntity.y;
     let moveStep = 0;
     let rotation = 0;
     if (entity.strafe) {
@@ -33,14 +33,14 @@ export default (entityType, entity, timeDelta, index) => {
         if (updatedEntity.dir !== 0) {
             moveStep = (mul * updatedEntity.dir * -1 * updatedEntity.moveSpeed * 1.2) / reduceSpeed;
 
-            newX += (Math.cos(updatedEntity.rot - (Math.PI / 2)) * moveStep);
-            newY += (Math.sin(updatedEntity.rot - (Math.PI / 2)) * moveStep);
+            toX += (Math.cos(updatedEntity.rot - (Math.PI / 2)) * moveStep);
+            toY += (Math.sin(updatedEntity.rot - (Math.PI / 2)) * moveStep);
         }
         if (updatedEntity.speed !== 0) {
             moveStep = (mul * updatedEntity.speed * updatedEntity.moveSpeed) / reduceSpeed;
             
-            newX += (Math.cos(updatedEntity.rot) * moveStep);
-            newY += (Math.sin(updatedEntity.rot) * moveStep);
+            toX += (Math.cos(updatedEntity.rot) * moveStep);
+            toY += (Math.sin(updatedEntity.rot) * moveStep);
         }
     } else {
         // entity will move this far along the current direction vector
@@ -62,11 +62,11 @@ export default (entityType, entity, timeDelta, index) => {
         updatedEntity.rot = (updatedEntity.rotDeg * Math.PI) / 180;
 
         // calculate new entity position with simple trigonometry
-        newX += (Math.cos(updatedEntity.rot) * moveStep);
-        newY += (Math.sin(updatedEntity.rot) * moveStep);
+        toX += (Math.cos(updatedEntity.rot) * moveStep);
+        toY += (Math.sin(updatedEntity.rot) * moveStep);
     }
 
-	const pos = checkCollision(updatedEntity.x, updatedEntity.y, newX, newY, 0.01);
+	const pos = checkCollision(updatedEntity, { toX, toY }, 0.01);
     
     // set new position
 	updatedEntity.x = pos.x; 

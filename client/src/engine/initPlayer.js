@@ -1,11 +1,13 @@
-import {
-    getState,
-    dispatch,
-} from './store';
+import uuid4 from 'uuid4';
+import { dispatch } from './store';
 
-export default () => {
-    const { player } = getState();
-    const updatedPlayer = { ...player };
+export default state => {
+    const { player } = state;
+    const updatedPlayer = {
+        ...player,
+        id: uuid4(),
+    };
+
     updatedPlayer.rotDeg %= 360;
 
 	if (updatedPlayer.rotDeg < -180) updatedPlayer.rotDeg += 360;
