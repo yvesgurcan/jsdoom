@@ -118,6 +118,8 @@ const initState = {
     DEFAULT_FIRING_WEAPON_FRAME_DELAY: 4,
     AMMO,
     AMMO_MAX,
+    WOLF_PATH: `${ASSET_PATH}/wolf`,
+    TEXTURE_PATH: `${ASSET_PATH}/textures`,
     ITEM_PATH: `${ASSET_PATH}/items`,
     DECORATION_PATH: `${ASSET_PATH}/decorations`,
 };
