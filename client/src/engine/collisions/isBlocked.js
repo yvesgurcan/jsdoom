@@ -35,14 +35,31 @@ export default (state, id, x, y) => {
 	if (y < 0 || y >= mapHeight || x < 0 || x >= mapWidth) {
         return true;
     }
-
-	const ix = x;
-    const iy = y;
     
-    const targetCoordinates = { x: ix, y: iy };
+    const targetCoordinates = { x, y };
+
+    const north = wallMap[Math.floor(y - 0.5)][Math.floor(x - 0.5)];
+    if (north !== 0) {
+        return true;
+    }
+
+    const south = wallMap[Math.floor(y + 0.5)][Math.floor(x + 0.5)];
+    if (south !== 0) {
+        return true;
+    }
+
+    const west = wallMap[Math.floor(y)][Math.floor(x - 0.5)];
+    if (west !== 0) {
+        return true;
+    }
+
+    const east = wallMap[Math.floor(y)][Math.floor(x + 0.5)];
+    if (east !== 0) {
+        return true;
+    }
 
     // return true if the map block is not 0, ie. if there is a blocking wall.
-	if (wallMap[Math.floor(iy)][Math.floor(ix)] !== 0) {
+	if (wallMap[Math.floor(y)][Math.floor(x)] !== 0) {
         return true;
     }
 
