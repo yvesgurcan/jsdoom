@@ -1,5 +1,15 @@
 # Release Notes
 
+## v 0.5.1 - 2018/10/07
+
+* Refactoring, collisions, and automap
+
+Since I started writing the Wolfenstein/Doom engine in JavaScript, I've learnt a lot about what it takes to create a game engine. Thankfully, I didn't have to start from scratch, thanks to [this article](https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-1). Partially rewriting the code from the get go allowed me to build on this great foundation. Also, I felt that using Redux to manage the state of the engine was an important move. However, as I added more and more features in order to have this project resemble the original games more closely, I got a better understanding of the code I used as a basis. Therefore, it was time to refactor. As a result, I got rid of a good chunk of code and harmonized how different parts of the engine work. HUGE WIN!
+
+Also, as I am slowly introducing a new category of things in the game (items that can be picked up), I took the time to review how the logic for collision detection works: I introduced the possiblity to have things of different sizes in the engine. Tada! 
+
+And I realized that the automap had some inconsistencies that bothered me. Fixed too :)
+
 ## v0.5.0 - 2018/10/06
 
 * Playable on mobile
