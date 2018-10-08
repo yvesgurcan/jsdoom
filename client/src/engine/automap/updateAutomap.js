@@ -43,8 +43,8 @@ export default (state) => {
     // draw a dot at the player position
     objectCtx.fillStyle = playerColor;
 	objectCtx.fillRect(		
-		playerSquare.x - (scale / 2), 
-		playerSquare.y - (scale / 2),
+		playerSquare.x, 
+		playerSquare.y,
         scale,
         scale,
 	);
@@ -60,8 +60,8 @@ export default (state) => {
 
             // draw a dot at the enemy position
             objectCtx.fillRect(
-                enemySquare.x - (scale / 2), 
-                enemySquare.y - (scale / 2),
+                enemySquare.x, 
+                enemySquare.y,
                 scale,
                 scale,
             );

@@ -1,5 +1,17 @@
 const blockedBy = (sourceId, things, { x, y }) => {
-    return things.find(thing => thing.id !== sourceId && Math.floor(thing.x) === x && Math.floor(thing.y) === y);
+    return !!things.find(thing => {
+        if (thing.id !== sourceId) {
+            const { x: thingX, y: thingY, radius = 1 } = thing;
+            const radiusModifier = radius;
+            if (thingX >= x - radiusModifier && thingX <= x + radiusModifier) {
+                if (thingY >= y - radiusModifier && thingY <= y + radiusModifier) {
+                    return true;
+                }
+            }
+        }
+
+        return false; 
+    });
 };
 
 export default (state, id, x, y) => {
@@ -11,6 +23,7 @@ export default (state, id, x, y) => {
         wallMap,
         decorations,
         enemies,
+        player,
     } = state;
 
 
@@ -19,19 +32,21 @@ export default (state, id, x, y) => {
         return true;
     }
 
-	const ix = Math.floor(x);
-    const iy = Math.floor(y);
+	const ix = x;
+    const iy = y;
     
     const targetCoordinates = { x: ix, y: iy };
 
     // return true if the map block is not 0, ie. if there is a blocking wall.
-	if (wallMap[iy][ix] !== 0) {
+	if (wallMap[Math.floor(iy)][Math.floor(ix)] !== 0) {
         return true;
     }
 
     if (!blockedBy(id, decorations, targetCoordinates)) {
         if (!blockedBy(id, enemies, targetCoordinates)) {
-            return false;
+            if (!blockedBy(id, [player], targetCoordinates)) {
+                return false; 
+            }
         }
     }
 

@@ -19,8 +19,8 @@ export default ({ id, x, y }, { toX, toY }, radius) => {
         return pos;
     }
 
-	const blockX = Math.floor(toX);
-	const blockY = Math.floor(toY);
+	const blockX = toX;
+	const blockY = toY;
 
 	if (isBlocked(state, id, blockX, blockY)) {
 		return pos;

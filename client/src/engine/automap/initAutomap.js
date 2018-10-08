@@ -79,8 +79,8 @@ export default () => {
 			if (wall !== 0) {
                 automapCanvas.fillStyle = wallColor;
 				automapCanvas.fillRect(				
-					x * scale,
-					y * scale,
+					(x * scale) + 14,
+					(y * scale) + 14,
                     scale + 1,
                     scale + 1,
 				);

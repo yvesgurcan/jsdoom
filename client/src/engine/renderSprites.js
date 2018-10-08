@@ -84,8 +84,8 @@ export default (state, sprites, spriteTypes, spriteCategory) => {
         const img = getElementById(sprite.id);
 
         // translate position to viewer space
-        const dx = (sprite.x + 0.5) - player.x;
-        const dy = (sprite.y + 0.5) - player.y;
+        const dx = sprite.x - player.x;
+        const dy = sprite.y - player.y;
 
         // distance to sprite
 		const dist = Math.sqrt((dx * dx) + (dy * dy));

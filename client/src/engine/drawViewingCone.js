@@ -19,12 +19,12 @@ export default (rayX, rayY) => {
 
 
 	objectCtx.strokeStyle = 'rgba(0,100,0,0.3)';
-	objectCtx.lineWidth = 0.5;
+	objectCtx.lineWidth = 10;
 	objectCtx.beginPath();
-	objectCtx.moveTo(player.x * scale, player.y * scale);
+	objectCtx.moveTo((player.x * scale) + 14, (player.y * scale) + 14);
 	objectCtx.lineTo(
-		rayX * scale,
-		rayY * scale
+		(rayX * scale) + 14,
+		(rayY * scale) + 14,
 	);
 	objectCtx.closePath();
     objectCtx.stroke();
