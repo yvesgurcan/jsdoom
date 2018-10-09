@@ -20,10 +20,10 @@ const drawMaxAmmo = (state, ammoType) => {
     const {
         constants,
         constants: { AMMO_MAX },
-        player: { backpack },
+        player: { doubleMaxAmmo },
     } = state;
 
-    const ammoQty = String((AMMO_MAX[ammoType] || 0) * (!!backpack + 1));
+    const ammoQty = String((AMMO_MAX[ammoType] || 0) * (!!doubleMaxAmmo + 1));
     return drawAmmo(state, `max${ammoType}`, ammoQty, constants);
 };
 

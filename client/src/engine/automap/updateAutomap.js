@@ -1,5 +1,28 @@
 import getElementById from '../getElementById';
 
+const drawThings = (state, things, color) => {
+    const { automap: { scale } } = state;
+	const miniMapObjects = getElementById('minimapobjects');
+    const objectCtx = miniMapObjects.getContext('2d');
+
+    for (let i = 0; i < things.length; i++) {
+        const thing = things[i];
+        const square = {
+            x: thing.x * scale,
+            y: thing.y * scale,
+        };
+        objectCtx.fillStyle = color;
+
+        // draw a dot at the enemy position
+        objectCtx.fillRect(
+            square.x, 
+            square.y,
+            scale,
+            scale,
+        );
+    }
+};
+
 export default (state) => {
 	const miniMapObjects = getElementById('minimapobjects');
 
@@ -7,6 +30,7 @@ export default (state) => {
         player,
         enemies,
         decorations,
+        items,
         automap: {
             scale,
             showAutomap,
@@ -14,6 +38,7 @@ export default (state) => {
             revealThings,
             playerColor,
             enemyColor,
+            itemColor,
             decorationColor,
         },
     } = state;
@@ -50,39 +75,9 @@ export default (state) => {
 	);
 
     if (revealThings) {
-        for (let i = 0; i < enemies.length; i++) {
-            const enemy = enemies[i];
-            const enemySquare = {
-                x: enemy.x * scale,
-                y: enemy.y * scale,
-            };
-            objectCtx.fillStyle = enemyColor;
-
-            // draw a dot at the enemy position
-            objectCtx.fillRect(
-                enemySquare.x, 
-                enemySquare.y,
-                scale,
-                scale,
-            );
-        }
-
-        for (let i = 0; i < decorations.length; i++) {
-            const decoration = decorations[i];
-            const decorationSquare = {
-                x: decoration.x * scale,
-                y: decoration.y * scale,
-            };
-            objectCtx.fillStyle = decorationColor;
-
-            // draw a dot at the decoration position
-            objectCtx.fillRect(
-                decorationSquare.x,
-                decorationSquare.y,
-                scale,
-                scale,
-            );
-        }
+        drawThings(state, enemies, enemyColor);
+        drawThings(state, decorations, decorationColor);
+        drawThings(state, items, itemColor);
     }
 
     const grid = getElementById('grid');

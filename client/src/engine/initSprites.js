@@ -85,7 +85,7 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
                 element,
             ];
         } else {
-            img.src = `${path}/${spriteType.img}A0${IMG_EXT}`;
+            img.src = `${path}/${spriteType.prefix}A0${IMG_EXT}`;
 
             let updatedSprite = {
                 ...sprite,

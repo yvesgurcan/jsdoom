@@ -6,4 +6,5 @@ export default {
     playerColor: 'white',
     enemyColor: 'blue',
     decorationColor: 'green',
+    itemColor: 'green',
 };

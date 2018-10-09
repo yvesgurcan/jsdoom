@@ -44,7 +44,7 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 health: 100,
                 armor: 200,
-                backpack: true,
+                doubleMaxAmmo: true,
                 weapons: ALL_WEAPONS,
                 ammo: ALL_AMMO,
             };
@@ -54,7 +54,7 @@ export default (prevState = initState, action) => {
                 ...prevState,
                 health: 100,
                 armor: 200,
-                backpack: true,
+                doubleMaxAmmo: true,
                 weapons: ALL_WEAPONS,
                 ammo: ALL_AMMO,
                 keys: ALL_KEYS,
