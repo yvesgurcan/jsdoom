@@ -275,3 +275,6 @@ export const ALL_AMMO = {
     rockets: 100,
     cells: 600,
 };
+
+export const GREEN_ARMOR = 'green';
+export const BLUE_ARMOR = 'blue';
