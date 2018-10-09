@@ -9,7 +9,6 @@ const {
 } = DIRECTIONS;
 
 export default [
-	{ type: 'imp', x: 8, y: 10, rotDeg: NORTH },
-	// { type: 'imp', x: 18, y: 10, rotDeg: EAST },
-	// { type: 'baronOfHell', x: 18, y: 11, rotDeg: SOUTH },
+	{ type: 'imp', x: 20, y: 30, rotDeg: NORTH },
+	{ type: 'revenant', x: 34, y: 48.5, rotDeg: SOUTH },
 ];
