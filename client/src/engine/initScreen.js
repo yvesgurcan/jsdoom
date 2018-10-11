@@ -1,7 +1,7 @@
 import {
     stripWidth,
 } from './constants';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 import createElement from './createElement';
 import { getState } from './store';
 

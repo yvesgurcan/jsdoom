@@ -1,7 +1,7 @@
 import { dispatch, getState } from './store';
 import initScreen from './initScreen';
 import initAutomap from './automap/initAutomap';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 
 const resizeView = () => {
     const screenWidth = document.body.clientWidth;

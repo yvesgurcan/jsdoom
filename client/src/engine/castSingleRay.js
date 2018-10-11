@@ -4,14 +4,13 @@ import {
 } from './constants';
 import { getState } from './store';
 import drawViewingCone from './drawViewingCone';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 
 export default (rayAngle, stripIdx) => {
     const state = getState();
     const {
         constants: {
             IMG_EXT,
-            WOLF_PATH,
             TEXTURE_PATH,
         },
         player,

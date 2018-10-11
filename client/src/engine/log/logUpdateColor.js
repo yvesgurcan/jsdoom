@@ -1,4 +1,4 @@
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import { getState } from '../store';
 
 export default () => {

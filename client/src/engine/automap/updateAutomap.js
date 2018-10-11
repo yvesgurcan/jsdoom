@@ -1,4 +1,4 @@
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 
 const drawThings = (state, things, color) => {
     const { automap: { scale } } = state;

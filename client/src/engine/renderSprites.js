@@ -1,5 +1,5 @@
 import { ANGLE_DIFF } from './constants';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 import convertLetterToNumber from './util/convertLetterToNumber';
 import convertNumberToLetter from './util/convertNumberToLetter';
 import convertRadianToDegree from './util/convertRadianToDegree';

@@ -1,4 +1,4 @@
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import drawSmallDigit from './drawSmallDigit';
 
 export default (state) => {
