@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.5.2 - 2018/10/10
+
+* Items
+
+What would be Doom without items to pick up? Well, it would be pretty boring. So, here they are. They actually can not be picked up yet, but at least they animate :)
+
 ## v 0.5.1 - 2018/10/07
 
 * Refactoring, collisions, and automap
