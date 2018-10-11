@@ -128,6 +128,7 @@ export default {
     // health
     vial: {
         prefix: 'BON1',
+        endFrame: 'D',
         pickup: {
             extraHealth: 1,
         }
@@ -147,6 +148,7 @@ export default {
     // armor
     helmet: {
         prefix: 'BON2',
+        endFrame: 'D',
         pickup: {
             extraArmor: 1,
             armorType: GREEN_ARMOR,
@@ -155,6 +157,7 @@ export default {
     },
     greenArmor: {
         prefix: 'ARM1',
+        endFrame: 'B',
         pickup: {
             setArmor: 100,
             armorType: GREEN_ARMOR,
@@ -162,6 +165,7 @@ export default {
     },
     blueArmor: {
         prefix: 'ARM2',
+        endFrame: 'B',
         pickup: {
             setArmor: 200,
             armorType: BLUE_ARMOR,
@@ -177,16 +181,52 @@ export default {
     },
     soulSphere: {
         prefix: 'SOUL',
+        endFrame: 'D',
         pickup: {
             extraHealth: 100,
         },
     },
     megasphere: {
         prefix: 'MEGA',
+        endFrame: 'D',
         pickup: {
             setHealth: 200,
             setArmor: 200,
             armorType: BLUE_ARMOR,
+        },
+    },
+    invulnerability: {
+        prefix: 'PINV',
+        endFrame: 'D',
+        pickup: {
+            invulnerable: 30,
+        },
+    },
+    invisibility: {
+        prefix: 'PINS',
+        endFrame: 'D',
+        pickup: {
+            invisible: 60,
+        }
+    },
+    computerMap: {
+        prefix: 'PMAP',
+        endFrame: 'D',
+        pickup: {
+            revealMapUnexplored: true,
+        },
+    },
+    visor: {
+        prefix: 'PVIS',
+        endFrame: 'B',
+        pickup: {
+            lightAmplification: 120,
+        },
+    },
+    radSuit: {
+        prefix: 'SUIT',
+        pickup: {
+            radiationShield: 120,
         },
     },
 };

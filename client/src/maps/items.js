@@ -24,4 +24,11 @@ export default [
     { type: 'rocketLauncher', x: 30, y: 7 },
     { type: 'plasmaGun', x: 30, y: 6 },
     { type: 'bfg9000', x: 30, y: 5 },
+    { type: 'invulnerability', x: 29, y: 13 },
+    { type: 'invisibility', x: 29, y: 14 },
+    { type: 'computerMap', x: 29, y: 11.5 },
+    { type: 'visor', x: 28, y: 10 },
+    { type: 'radSuit', x: 28, y: 9 },
+    { type: 'helmet', x: 28, y: 8 },
+    { type: 'soulSphere', x: 27, y: 8 },
 ];
