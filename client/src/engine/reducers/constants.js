@@ -33,10 +33,8 @@ const initState = {
     ON: 'ON',
     OFF: 'OFF',
     // overlay colors
-    OPACITY_BASE: 0,
     OPACITY_INCREMENT: 0.15,
-    OPACITY_DECREMENT: 0.15,
-    OPACITY_DURATION: 15,
+    OPACITY_DURATION: 30,
     PICK_UP_OVERLAY: '210, 210, 100',
     // asset paths
     ALPHANUMERIC_PATH: `${ASSET_PATH}/alphanumeric`,
