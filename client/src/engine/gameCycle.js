@@ -1,6 +1,7 @@
 import { getState, dispatch } from './store';
 import updatePauseState from './updatePauseState';
 import move from './move';
+import pickUpItems from './items/pickUpItems';
 import chasePlayer from './enemies/chasePlayer';
 import logUpdateColor from './log/logUpdateColor';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
@@ -38,6 +39,8 @@ const gameCycle = () => {
     if (player.speed !== 0 || player.dir !== 0) {
         move('player', player, timeDelta);
     }
+
+    pickUpItems(state);
 
     chasePlayer(timeDelta);
 

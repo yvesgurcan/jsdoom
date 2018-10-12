@@ -138,5 +138,10 @@ export default (prevState = initState, action) => {
                 },
             };
         }
+
+        case 'PICK_UP_ITEMS': {
+            console.log('picked up');
+            return prevState;
+        }
     }
 };

@@ -30,6 +30,7 @@ const initState = {
     IMG_EXT: '.png',
     ON: 'ON',
     OFF: 'OFF',
+    FRAC_UNIT: 64,
     KEYBOARD: {
         UP: 38,
         DOWN: 40,
