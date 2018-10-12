@@ -10,6 +10,11 @@
                 overscroll-behavior: contain;
             }
 
+            #overlay {
+                height: 100%;
+                width: 100%;
+            }
+
             #viewport {
                 position: absolute;
                 background: black;
@@ -218,109 +223,111 @@
     </head>
     <body>
 
-        <div id="viewport">
-            <div id="hud">
-                <div id="log"></div>
-                <div id="pause"></div>
-                <div id="fps"></div>
-                <div id="selectedweaponcontainer">
-                    <img id="weapon">
-                </div>
-                <div id="statusbarcontainer">
-                    <div id="statusbar">
-                        <div id="statusbargrid">
-                            <div id="selectedammocontainer">
-                                <img id="ammo1">
-                                <img id="ammo2">
-                                <img id="ammo3">
-                            </div>
-                            <div id="healthcontainer">
-                                <img id="health1">
-                                <img id="health2">
-                                <img id="health3">
-                                <img id="healthpercent">
-                            </div>
-                            <div id="weaponsandfragcontainer">
-                                <div id="weaponscontainer">
-                                    <img id="weapon2">
-                                    <img id="weapon3">
-                                    <img id="weapon4">
-                                    <img id="weapon5">
-                                    <img id="weapon6">
-                                    <img id="weapon7">
+        <div id="overlay">
+            <div id="viewport">
+                <div id="hud">
+                    <div id="log"></div>
+                    <div id="pause"></div>
+                    <div id="fps"></div>
+                    <div id="selectedweaponcontainer">
+                        <img id="weapon">
+                    </div>
+                    <div id="statusbarcontainer">
+                        <div id="statusbar">
+                            <div id="statusbargrid">
+                                <div id="selectedammocontainer">
+                                    <img id="ammo1">
+                                    <img id="ammo2">
+                                    <img id="ammo3">
                                 </div>
-                            </div>
-                            <div id="mugshotcontainer">
-                                <img id="mugshot">
-                            </div>
-                            <div id="armorcontainer">
-                                <img id="armor1">
-                                <img id="armor2">
-                                <img id="armor3">
-                                <img id="armorpercent">            
-                            </div>
-                            <div id="keyscontainer">
-                                <img id="bluekey">
-                                <img id="yellowkey">
-                                <img id="redkey">
-                            </div>
-                            <div id="ammocontainer">
-                                <div class="ammo" id="bullets">
-                                    <img id="bullets1">
-                                    <img id="bullets2">
-                                    <img id="bullets3">
+                                <div id="healthcontainer">
+                                    <img id="health1">
+                                    <img id="health2">
+                                    <img id="health3">
+                                    <img id="healthpercent">
                                 </div>
-                                <div class="ammo" id="maxbullets">
-                                    <img id="maxbullets1">
-                                    <img id="maxbullets2">
-                                    <img id="maxbullets3">
+                                <div id="weaponsandfragcontainer">
+                                    <div id="weaponscontainer">
+                                        <img id="weapon2">
+                                        <img id="weapon3">
+                                        <img id="weapon4">
+                                        <img id="weapon5">
+                                        <img id="weapon6">
+                                        <img id="weapon7">
+                                    </div>
                                 </div>
-                                <div class="ammo" id="shells">
-                                    <img id="shells1">
-                                    <img id="shells2">
-                                    <img id="shells3">
+                                <div id="mugshotcontainer">
+                                    <img id="mugshot">
                                 </div>
-                                <div class="ammo" id="maxshells">
-                                    <img id="maxshells1">
-                                    <img id="maxshells2">
-                                    <img id="maxshells3">
+                                <div id="armorcontainer">
+                                    <img id="armor1">
+                                    <img id="armor2">
+                                    <img id="armor3">
+                                    <img id="armorpercent">            
                                 </div>
-                                <div class="ammo" id="rockets">
-                                    <img id="rockets1">
-                                    <img id="rockets2">
-                                    <img id="rockets3">
+                                <div id="keyscontainer">
+                                    <img id="bluekey">
+                                    <img id="yellowkey">
+                                    <img id="redkey">
                                 </div>
-                                <div class="ammo" id="maxrockets">
-                                    <img id="maxrockets1">
-                                    <img id="maxrockets2">
-                                    <img id="maxrockets3">
-                                </div>
-                                <div class="ammo" id="cells">
-                                    <img id="cells1">
-                                    <img id="cells2">
-                                    <img id="cells3">
-                                </div>
-                                <div class="ammo" id="maxcells">
-                                    <img id="maxcells1">
-                                    <img id="maxcells2">
-                                    <img id="maxcells3">
+                                <div id="ammocontainer">
+                                    <div class="ammo" id="bullets">
+                                        <img id="bullets1">
+                                        <img id="bullets2">
+                                        <img id="bullets3">
+                                    </div>
+                                    <div class="ammo" id="maxbullets">
+                                        <img id="maxbullets1">
+                                        <img id="maxbullets2">
+                                        <img id="maxbullets3">
+                                    </div>
+                                    <div class="ammo" id="shells">
+                                        <img id="shells1">
+                                        <img id="shells2">
+                                        <img id="shells3">
+                                    </div>
+                                    <div class="ammo" id="maxshells">
+                                        <img id="maxshells1">
+                                        <img id="maxshells2">
+                                        <img id="maxshells3">
+                                    </div>
+                                    <div class="ammo" id="rockets">
+                                        <img id="rockets1">
+                                        <img id="rockets2">
+                                        <img id="rockets3">
+                                    </div>
+                                    <div class="ammo" id="maxrockets">
+                                        <img id="maxrockets1">
+                                        <img id="maxrockets2">
+                                        <img id="maxrockets3">
+                                    </div>
+                                    <div class="ammo" id="cells">
+                                        <img id="cells1">
+                                        <img id="cells2">
+                                        <img id="cells3">
+                                    </div>
+                                    <div class="ammo" id="maxcells">
+                                        <img id="maxcells1">
+                                        <img id="maxcells2">
+                                        <img id="maxcells3">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="screen">
-                <div id="floor"></div>
-                <div id="ceiling"></div>
-                <div id="strips"></div>
-            </div>
+                <div id="screen">
+                    <div id="floor"></div>
+                    <div id="ceiling"></div>
+                    <div id="strips"></div>
+                </div>
 
-            <div id="automapcontainer">
-                <canvas id="minimap"></canvas>
-                <canvas id="grid"></canvas>
-                <canvas id="minimapobjects"></canvas>
+                <div id="automapcontainer">
+                    <canvas id="minimap"></canvas>
+                    <canvas id="grid"></canvas>
+                    <canvas id="minimapobjects"></canvas>
+                </div>
             </div>
         </div>
 

@@ -151,7 +151,6 @@ export default {
         endFrame: 'D',
         pickup: {
             extraArmor: 1,
-            armorType: GREEN_ARMOR,
             doNotOverrideArmorType: true,
         }
     },

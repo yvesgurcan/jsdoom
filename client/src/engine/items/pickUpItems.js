@@ -1,39 +1,18 @@
 import { dispatch } from '../store';
+import giveHealth from './giveHealth';
+import giveArmor from './giveArmor';
 import deleteElementById from '../util/deleteElementById';
-
-const checkMax = () => {
-
-};
-
-const giveHealth = (player, item, itemTypes) => {
-    const itemType = itemTypes[item.type];
-    if (!itemType.pickup) {
-        return false;
-    }
-
-    const { setHealth, extraHealth, addHealth } = itemType.pickup;
-    if (setHealth) {
-        if (player.health < setHealth) {
-            const health = setHealth;
-            dispatch({ type: 'SET_PLAYER_HEALTH', payload: { health } });
-            return true;
-        }
-
-        return false;
-    }
-
-    return false;
-};
+import setColorMap from './setOverlay';
 
 const applyItemEffectsToPlayer = (state, item) => {
-    const {
-        player,
-        itemTypes,
-    } = state;
+    const pickedUpHealth = giveHealth(state, item);
+    const pickedUpArmor = giveArmor(state, item);
 
-    const healthPickedUp = giveHealth(player, item, itemTypes);
+    const pickedUp = pickedUpHealth || pickedUpArmor;
+    if (pickedUp) {
+        setColorMap(state);
+    }
 
-    const pickedUp = healthPickedUp;
     return pickedUp;
 };
 
