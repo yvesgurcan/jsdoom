@@ -1,6 +1,12 @@
 import { dispatch } from '../store';
 import deleteElementById from '../util/deleteElementById';
 
+const applyItemEffectsToPlayer = (state, item) => {
+    const { player } = state;
+    let pickedUp = true;
+    return pickedUp;
+};
+
 const touchItems = state => {
     const {
         constants: { FRAC_UNIT },
@@ -23,9 +29,20 @@ const touchItems = state => {
 export default state => {
     const items = touchItems(state);
     if (items.length > 0) {
-        dispatch({ type: 'PICK_UP_ITEMS', payload: { items } });
+        let itemsToPickUp = [];
         for (let i = 0; i < items.length; i++) {
-            deleteElementById(items[i].id);
+            const pickedUp = applyItemEffectsToPlayer(state, items[i]);
+            if (pickedUp) {
+                itemsToPickUp = [
+                    ...itemsToPickUp,
+                    items[i],
+                ];
+                deleteElementById(items[i].id);
+            }
+        }
+
+        if (itemsToPickUp.length > 0) {
+            dispatch({ type: 'PICK_UP_ITEMS', payload: { items: itemsToPickUp } });
         }
     }
 };
