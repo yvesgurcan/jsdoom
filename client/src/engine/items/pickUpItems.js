@@ -1,9 +1,39 @@
 import { dispatch } from '../store';
 import deleteElementById from '../util/deleteElementById';
 
+const checkMax = () => {
+
+};
+
+const giveHealth = (player, item, itemTypes) => {
+    const itemType = itemTypes[item.type];
+    if (!itemType.pickup) {
+        return false;
+    }
+
+    const { setHealth, extraHealth, addHealth } = itemType.pickup;
+    if (setHealth) {
+        if (player.health < setHealth) {
+            const health = setHealth;
+            dispatch({ type: 'SET_PLAYER_HEALTH', payload: { health } });
+            return true;
+        }
+
+        return false;
+    }
+
+    return false;
+};
+
 const applyItemEffectsToPlayer = (state, item) => {
-    const { player } = state;
-    let pickedUp = true;
+    const {
+        player,
+        itemTypes,
+    } = state;
+
+    const healthPickedUp = giveHealth(player, item, itemTypes);
+
+    const pickedUp = healthPickedUp;
     return pickedUp;
 };
 

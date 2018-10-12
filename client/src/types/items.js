@@ -136,13 +136,13 @@ export default {
     stimpack: {
         prefix: 'STIM',
         pickup: {
-            health: 10,
+            addHealth: 10,
         },
     },
     medikit: {
         prefix: 'MEDI',
         pickup: {
-            health: 25,
+            addHealth: 25,
         },
     },
     // armor

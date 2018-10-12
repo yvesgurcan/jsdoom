@@ -25,6 +25,7 @@ export default (prevState = initState, action) => {
         selectedWeapon,
         ammoType,
         ammoCount,
+        health,
     } = payload;
 
     switch (type) {
@@ -139,9 +140,11 @@ export default (prevState = initState, action) => {
             };
         }
 
-        case 'PICK_UP_ITEMS': {
-            console.log('picked up');
-            return prevState;
+        case 'SET_PLAYER_HEALTH': {
+            return {
+                ...prevState,
+                health,
+            };
         }
     }
 };
