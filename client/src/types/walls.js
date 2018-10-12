@@ -1,6 +1,7 @@
 export default {
 	
-    ASHWALL3: 'ASHWALL3',
+	ASHWALL3: 'ASHWALL3',
+	
     BIGBRIK1: 'BIGBRIK1',
     BIGDOOR1: 'BIGDOOR1',
     BIGDOOR2: 'BIGDOOR2',
