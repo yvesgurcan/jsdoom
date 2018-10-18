@@ -1,16 +1,24 @@
 import { dispatch } from '../store';
 import giveHealth from './giveHealth';
 import giveArmor from './giveArmor';
+import giveAmmo from './giveAmmo';
+import logAddEvent from '../log/logAddEvent';
 import deleteElementById from '../util/deleteElementById';
 import setColorMap from './setOverlay';
 
 const applyItemEffectsToPlayer = (state, item) => {
     const pickedUpHealth = giveHealth(state, item);
     const pickedUpArmor = giveArmor(state, item);
+    const pickedUpAmmo = giveAmmo(state, item);
 
-    const pickedUp = pickedUpHealth || pickedUpArmor;
+    const pickedUp = pickedUpHealth || pickedUpArmor || pickedUpAmmo;
     if (pickedUp) {
         setColorMap(state);
+        const { itemTypes } = state;
+        const itemType = itemTypes[item.type];
+        if (itemType.message) {
+            logAddEvent(itemType.message);
+        }
     }
 
     return pickedUp;
