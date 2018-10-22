@@ -1,4 +1,4 @@
-<div style="background: rgb(200, 100, 100); border: 1px solid rgb(100, 0, 0); border-radius: 4px; padding: 5px">Due to <a href="https://status.github.com/messages">GitHub Pages and Webhooks malfunctions</a>, the build of this project is currently offline. We apologize and suggest to run the <a href="#setup">Setup</a> and <a href="development">Development</a> steps explained below to run the application locally -- message posted at 10/22/2018 8:14 PT.</div>
+**Due to <a href="https://status.github.com/messages">GitHub Pages and Webhooks malfunctions</a>, the build of this project at <https://doom.yvesgurcan.com> is currently offline. We apologize and suggest to run the <a href="#setup">Setup</a> and <a href="development">Development</a> steps explained below to run the application locally. Sorry for the inconvenience -- message posted at 10/22/2018 8:14 PT.**
 
 # Doom.js
 
