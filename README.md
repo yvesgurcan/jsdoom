@@ -4,8 +4,6 @@
 
 ## [Release Notes](NOTES.md)
 
-## [How enemey sprites work](ENEMY_SPRITES.md)
-
 ## [Differences with the Doom engine](VANILLA.md)
 
 ## Setup
