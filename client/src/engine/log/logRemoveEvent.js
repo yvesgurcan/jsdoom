@@ -1,4 +1,4 @@
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import { getState, dispatch } from '../store';
 
 const logRemoveEvent = id => {

@@ -25,6 +25,10 @@ export default (prevState = initState, action) => {
         selectedWeapon,
         ammoType,
         ammoCount,
+        health,
+        armor,
+        armorType = 'green',
+        doNotOverrideArmorType,
     } = payload;
 
     switch (type) {
@@ -136,6 +140,28 @@ export default (prevState = initState, action) => {
                     ...prevState.ammo,
                     [ammoType]: ammoCount,
                 },
+            };
+        }
+        case 'SET_PLAYER_HEALTH': {
+            return {
+                ...prevState,
+                health,
+            };
+        }
+        case 'SET_PLAYER_ARMOR': {
+            if (prevState.armorType) {
+                if (doNotOverrideArmorType) {
+                    return {
+                        ...prevState,
+                        armor,
+                    };
+                }
+            }
+            
+            return {
+                ...prevState,
+                armor,
+                armorType,
             };
         }
     }

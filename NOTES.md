@@ -1,6 +1,20 @@
 # Release Notes
 
-## v 0.5.1 - 2018/10/07
+## v0.5.3 - 2018/10/12
+
+* "Color Map"
+
+I'm pretty proud of this one. I've added this lightly flash that happens on your screen when you pick up items on the ground. I feel like I'm already there--at the point where this project is exactly like Doom :)
+
+Also, health and armor items now do provide armor and health to the player, as they should.
+
+## v0.5.2 - 2018/10/10
+
+* Items
+
+What would be Doom without items to pick up? Well, it would be pretty boring. So, here they are. They actually can not be picked up yet, but at least they animate :)
+
+## v0.5.1 - 2018/10/07
 
 * Refactoring, collisions, and automap
 

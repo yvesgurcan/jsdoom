@@ -3,7 +3,7 @@ import getIdleFrame from './getIdleFrame';
 import buildSpritePath from './buildSpritePath';
 import playIdleSound from './playIdleSound';
 import playSound from '../sound/playSound';
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import { dispatch, getState } from '../store';
 import getFiringFrame from './getFiringFrame';
 

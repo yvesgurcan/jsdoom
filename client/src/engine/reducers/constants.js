@@ -27,9 +27,29 @@ const CHEAT_MAP = 'IDDT';
 const CHEAT_MUSIC = 'IDMUS';
 
 const initState = {
+    // util
+    FRAC_UNIT: 64,
     IMG_EXT: '.png',
     ON: 'ON',
     OFF: 'OFF',
+    // overlay colors
+    OPACITY_INCREMENT: 0.15,
+    OPACITY_DURATION: 30,
+    PICK_UP_OVERLAY: '210, 210, 100',
+    // asset paths
+    ALPHANUMERIC_PATH: `${ASSET_PATH}/alphanumeric`,
+    STATUS_BAR_PATH: `${ASSET_PATH}/hud`,
+    WEAPON_PATH: `${ASSET_PATH}/weapons`,
+    ENEMY_PATH: `${ASSET_PATH}/monsters`,
+    WOLF_PATH: `${ASSET_PATH}/wolf`,
+    TEXTURE_PATH: `${ASSET_PATH}/textures`,
+    ITEM_PATH: `${ASSET_PATH}/items`,
+    DECORATION_PATH: `${ASSET_PATH}/decorations`,
+    // player
+    PLAYER_MAX_NORMAL_HEALTH: 100,
+    PLAYER_MAX_IMPROVED_HEALTH: 200,
+    PLAYER_MAX_IMPROVED_ARMOR: 200,
+    // keyboard keys
     KEYBOARD: {
         UP: 38,
         DOWN: 40,
@@ -62,6 +82,7 @@ const initState = {
         V: 86,
         W: 87,
     },
+    // cheats
     CHEATS: [
         CHEAT_GOD,
         CHEAT_AMMO,
@@ -69,8 +90,7 @@ const initState = {
         CHEAT_MAP,
         CHEAT_MUSIC,
     ],
-    ALPHANUMERIC_PATH: `${ASSET_PATH}/alphanumeric`,
-    STATUS_BAR_PATH: `${ASSET_PATH}/hud`,
+    // status bar
     STATUS_BAR_FILLER: `${ASSET_PATH}/textures/ROCK2.png`,
     STATUS_BAR_NUM_PREFIX: 'STT',
     STATUS_BAR_NUM_GREY_PREFIX: 'STGNUM',
@@ -96,7 +116,7 @@ const initState = {
         THRESHOLD3: 3,
         THRESHOLD4: 4,
     },
-    WEAPON_PATH: `${ASSET_PATH}/weapons`,
+    // weapons
     WEAPONS,
     WEAPON_SLOTS: {
         1: [
@@ -116,12 +136,9 @@ const initState = {
     WEAPON_SETTINGS,
     WEAPON_SWITCH_TIME,
     DEFAULT_FIRING_WEAPON_FRAME_DELAY: 4,
+    // ammo
     AMMO,
     AMMO_MAX,
-    WOLF_PATH: `${ASSET_PATH}/wolf`,
-    TEXTURE_PATH: `${ASSET_PATH}/textures`,
-    ITEM_PATH: `${ASSET_PATH}/items`,
-    DECORATION_PATH: `${ASSET_PATH}/decorations`,
 };
 
 export default (prevState = initState, action) => {

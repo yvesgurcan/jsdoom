@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4';
 import createElement from './createElement';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 
 export default (sprites, spriteTypes, path, state, spriteCategory) => {
     const { constants: { IMG_EXT } } = state;

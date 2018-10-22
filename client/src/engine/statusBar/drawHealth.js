@@ -1,5 +1,5 @@
 import { getState } from '../store';
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import drawNumber from './drawNumber';
 import drawPercentage from './drawPercentage';
 

@@ -1,5 +1,5 @@
 import { getState, dispatch } from '../store';
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 
 export default () => {
     const {

@@ -1,4 +1,4 @@
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 import logAddEvent from './log/logAddEvent';
 import logRemoveEvent from './log/logRemoveEvent';
 import { getState, dispatch } from './store';

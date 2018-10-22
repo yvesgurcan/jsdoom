@@ -1,4 +1,4 @@
-import getElementById from '../getElementById';
+import getElementById from '../util/getElementById';
 import initWeapons from './initWeapons';
 
 export default (state) => {

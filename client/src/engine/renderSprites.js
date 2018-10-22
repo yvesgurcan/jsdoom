@@ -1,9 +1,5 @@
-import {
-    enemyPath,
-    imgExt,
-    ANGLE_DIFF,
-} from './constants';
-import getElementById from './getElementById';
+import { ANGLE_DIFF } from './constants';
+import getElementById from './util/getElementById';
 import convertLetterToNumber from './util/convertLetterToNumber';
 import convertNumberToLetter from './util/convertNumberToLetter';
 import convertRadianToDegree from './util/convertRadianToDegree';
@@ -66,6 +62,11 @@ const getMirroredAngleFilename = (frame, spriteAngle, prefix, reversedAngles = f
 
 export default (state, sprites, spriteTypes, spriteCategory) => {
     const {
+        constants: {
+            IMG_EXT,
+            ENEMY_PATH,
+            ITEM_PATH,
+        },
         player,
         view: {
             screenHeight,
@@ -118,6 +119,18 @@ export default (state, sprites, spriteTypes, spriteCategory) => {
 			img.style.display = 'block';
         }
 
+        if (spriteCategory === 'items') {
+            const { type } = sprite;
+            const spriteType = { ...spriteTypes[type] };
+            const { endFrame, prefix } = spriteType;
+            if (endFrame) {
+                const endFrameNumber = convertLetterToNumber(endFrame) + 1;
+                const animationFrame = Math.floor((new Date() % (endFrameNumber * 250)) / ((endFrameNumber * 250) / endFrameNumber)) + 1;
+                const newFrameLetter = convertNumberToLetter(animationFrame);
+                img.src = `${ITEM_PATH}/${prefix}${newFrameLetter}0${IMG_EXT}`;
+            }
+        }
+
         if (spriteCategory === 'enemies') {
             const {
                 type,
@@ -152,7 +165,7 @@ export default (state, sprites, spriteTypes, spriteCategory) => {
                 if (mirroredFrames || (mirroredFramesAnglesNotShared && (spriteAngle === 1 || spriteAngle === 5))) {
                     const delimiter = (count / 2) + 1;
                     const filename = getMirroredFrameFilename(walkFrame, frame, spriteAngle, delimiter, prefix, mirroredFramesAnglesNotShared);
-                    img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                    img.src = `${ENEMY_PATH}/${prefix}/${filename}${IMG_EXT}`; 
                     if (walkFrame < delimiter) {
                         img.style.transform = 'scaleX(1)';
                     } else { 
@@ -162,7 +175,7 @@ export default (state, sprites, spriteTypes, spriteCategory) => {
                 // or sprite uses mirrored angles for the same frame (A1, A2A8, A3A7, A4A6, A5)
                 } else if (mirroredFramesAnglesNotShared || mirroredAngles) {
                     const filename = getMirroredAngleFilename(frame, spriteAngle, prefix, reversedAngles);
-                    img.src = `${enemyPath}/${prefix}/${filename}${imgExt}`; 
+                    img.src = `${ENEMY_PATH}/${prefix}/${filename}${IMG_EXT}`; 
                     if ((reversedAngles && spriteAngle > 5) || (!reversedAngles && spriteAngle < 5)) {
                         img.style.transform = 'scaleX(1)';
                     } else { 
@@ -170,7 +183,7 @@ export default (state, sprites, spriteTypes, spriteCategory) => {
                     }
                 // regular sprite (A1, A2, A3, A4, A5, A6, A7, A8)
                 } else {
-                    img.src = `${enemyPath}/${prefix}/${prefix}${frame}${spriteAngle}${imgExt}`;
+                    img.src = `${ENEMY_PATH}/${prefix}/${prefix}${frame}${spriteAngle}${IMG_EXT}`;
                 }
             }
         }

@@ -1,6 +1,6 @@
 import { getState, dispatch } from './store';
 import handleAutomapVisibility from './automap/handleAutomapVisibility';
-import getElementById from './getElementById';
+import getElementById from './util/getElementById';
 import updateFPS from './updateFPS';
 import logUpdateColor from './log/logUpdateColor';
 
