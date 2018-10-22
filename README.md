@@ -2,8 +2,6 @@
 
 ## [Play](http://doom.yvesgurcan.com)
 
-## [TODO](TODO)
-
 ## [Release Notes](NOTES.md)
 
 ## [How enemey sprites work](ENEMY_SPRITES.md)
