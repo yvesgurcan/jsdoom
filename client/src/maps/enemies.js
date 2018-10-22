@@ -10,5 +10,6 @@ const {
 
 export default [
 	{ type: 'imp', x: 20, y: 30, rotDeg: NORTH },
-	{ type: 'revenant', x: 34, y: 48.5, rotDeg: SOUTH },
+    { type: 'revenant', x: 34, y: 18.5, rotDeg: SOUTH },
+    { type: 'zombieman', x: 12, y: 12, rotDeg: EAST },
 ];
