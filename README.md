@@ -1,10 +1,8 @@
 # Doom.js
 
-## [Play](http://doom.yvesgurcan.com)
+## [Play](https://doom.yvesgurcan.com)
 
 ## [Release Notes](NOTES.md)
-
-## [How enemey sprites work](ENEMY_SPRITES.md)
 
 ## [Differences with the Doom engine](VANILLA.md)
 
