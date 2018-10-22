@@ -1,6 +1,6 @@
 # Doom.js
 
-## [Play](http://doom.yvesgurcan.com)
+## [Play](https://doom.yvesgurcan.com)
 
 ## [Release Notes](NOTES.md)
 
