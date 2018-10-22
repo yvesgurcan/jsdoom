@@ -1,6 +1,8 @@
+<p style="background: rgb(200, 100, 100); border: 1px solid rgb(100, 0, 0); border-radius: 4px; padding: 5px">Due to <a href="https://status.github.com/messages">GitHub Pages and Webhooks malfunctions</a>, the build of this project is currently offline. We apologize and suggest to run the <a href="#setup">Setup</a> and <a href="development">Development</a> steps explained below to run the application locally -- message posted at 10/22/2018 8:14 PT.</p>
+
 # Doom.js
 
-## [Play](https://doom.yvesgurcan.com)
+## [Play Doom.js](https://doom.yvesgurcan.com)
 
 ## [Release Notes](NOTES.md)
 
