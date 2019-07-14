@@ -1,5 +1,3 @@
-**Due to <a href="https://status.github.com/messages">GitHub Pages and Webhooks malfunctions</a>, the build of this project at <https://doom.yvesgurcan.com> is currently offline. We apologize and suggest to run the <a href="#setup">Setup</a> and <a href="development">Development</a> steps explained below to run the application locally. Sorry for the inconvenience -- message posted at 10/22/2018 8:14 PT.**
-
 # Doom.js
 
 ## [Play Doom.js](https://doom.yvesgurcan.com)
