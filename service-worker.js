@@ -17,11 +17,9 @@ importScripts(
   "precache-manifest.fad9420e0d9764a663fd280de4e5f334.js"
 );
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
+workbox.core.skipWaiting();
+
+workbox.core.clientsClaim();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
@@ -31,4 +29,4 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerRoute(/(?:)/, new workbox.strategies.CacheFirst(), 'GET');
+workbox.routing.registerRoute(/(?:)/, new workbox.strategies.NetworkFirst(), 'GET');

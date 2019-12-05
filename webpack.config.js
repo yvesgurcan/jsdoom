@@ -20,11 +20,12 @@ module.exports = {
             template: './src/index.html'
         }),
         new GenerateSW({
+            skipWaiting: true,
             clientsClaim: true,
             runtimeCaching: [
                 {
                     urlPattern: new RegExp(''),
-                    handler: 'CacheFirst'
+                    handler: 'NetworkFirst'
                 }
             ]
         })
