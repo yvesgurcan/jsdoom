@@ -1,7 +1,7 @@
 import getElementById from './util/getElementById';
 import { getState, dispatch } from './store';
 
-export default (timeDelta) => {
+export default timeDelta => {
     const {
         hud: { showFPS },
         automap: { showAutomap },
@@ -12,8 +12,8 @@ export default (timeDelta) => {
             compareFPSInterval,
             lastFPSLog,
             lastFPSCompare,
-            lastFPSCompareValue,
-        },
+            lastFPSCompareValue
+        }
     } = getState();
     const framerate = getElementById('fps');
 
@@ -31,13 +31,19 @@ export default (timeDelta) => {
                 if (now - lastFPSCompare > compareFPSInterval) {
                     if (lastFPSCompareValue) {
                         delta = Number((fps - lastFPSCompareValue).toFixed(1));
-                        compare = `(${delta > 0 ? `+${delta}` : delta})`;    
+                        compare = `(${delta > 0 ? `+${delta}` : delta})`;
                     }
 
                     dispatch({ type: 'LAST_FPS_COMPARE', payload: { fps } });
                 }
 
-                console.log(`fps: %c${Number(fps.toFixed(1))} %c${compare}`, `color: ${fps < 15 ? 'red' : fps < 20 ? 'orange' : 'green'}`, `color: ${delta < 0 ? 'red' : 'green'}`);
+                console.log(
+                    `fps: %c${Number(fps.toFixed(1))} %c${compare}`,
+                    `color: ${
+                        fps < 15 ? 'red' : fps < 20 ? 'orange' : 'green'
+                    }`,
+                    `color: ${delta < 0 ? 'red' : 'green'}`
+                );
             }
 
             dispatch({ type: 'LAST_FPS_LOG' });
@@ -55,11 +61,11 @@ export default (timeDelta) => {
         }
 
         if (!paused) {
-            framerate.innerHTML = fps.toFixed(1);    
+            framerate.innerHTML = fps.toFixed(1);
         }
 
         return true;
-	} else if (!showFPS) {
+    } else if (!showFPS) {
         if (framerate.style.display !== 'none') {
             framerate.style.display = 'none';
         }

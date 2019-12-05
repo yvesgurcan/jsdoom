@@ -13,7 +13,9 @@ export default state => {
 
     document.onmousedown = event => {
         const currentState = getState();
-        const { game: { paused } } = currentState;
+        const {
+            game: { paused }
+        } = currentState;
 
         if (paused) {
             return false;
@@ -24,7 +26,9 @@ export default state => {
 
     document.onmouseup = event => {
         const currentState = getState();
-        const { game: { paused } } = currentState;
+        const {
+            game: { paused }
+        } = currentState;
 
         if (paused) {
             return false;
@@ -35,16 +39,15 @@ export default state => {
 
     document.onmousemove = event => {
         const currentState = getState();
-        const { game: { paused } } = currentState;
+        const {
+            game: { paused }
+        } = currentState;
 
         if (paused) {
             return false;
         }
 
-        const {
-            movementX,
-            movementY,
-        } = event;
+        const { movementX, movementY } = event;
 
         if (movementX > 0) {
             dispatch({ type: 'ROTATE_PLAYER_RIGHT' });

@@ -20,12 +20,12 @@ export const DIRECTIONS = {
     NORTH: -90,
     EAST: 0,
     SOUTH: 90,
-    WEST: -180,
+    WEST: -180
 };
 
 export const ANGLE_COUNT = 8;
 
-export const ANGLE_DIFF = (360 / 8) / 2;
+export const ANGLE_DIFF = 360 / 8 / 2;
 
 export const MOVE_TIME = 450;
 
@@ -33,9 +33,8 @@ export const MOVE = {
     FORWARD: 'FORWARD',
     LEFT: 'LEFT',
     RIGHT: 'RIGHT',
-    BACKWARD: 'BACKWARD',
+    BACKWARD: 'BACKWARD'
 };
-
 
 /* cannot be moved to a reducer */
 
@@ -50,14 +49,14 @@ export const AMMO = {
     BULLETS,
     SHELLS,
     ROCKETS,
-    CELLS,
+    CELLS
 };
 
 export const AMMO_MAX = {
     [BULLETS]: 200,
     [SHELLS]: 50,
     [ROCKETS]: 50,
-    [CELLS]: 300,
+    [CELLS]: 300
 };
 
 export const FIST = 'fist';
@@ -79,93 +78,48 @@ export const WEAPONS = {
     CHAINGUN,
     ROCKET_LAUNCHER,
     PLASMA_GUN,
-    BFG9000,
+    BFG9000
 };
 
 export const WEAPON_SETTINGS = {
     [FIST]: {
         prefix: 'PUN',
-        firingFrames: [
-            'B',
-            'C',
-            'D',
-        ],
+        firingFrames: ['B', 'C', 'D'],
         firingFrameDelay: 5,
-        firingSounds: [
-            'DSPUNCH',
-        ],
+        firingSounds: ['DSPUNCH']
     },
     [CHAINSAW]: {
         prefix: 'SAW',
         raiseSound: 'DSSAWUP',
-        idleFrames: [
-            'C',
-            'D',
-        ],
+        idleFrames: ['C', 'D'],
         idleFrameInterval: 4,
         idleSound: 'DSSAWIDL',
         idleSoundInterval: 275,
-        firingFrames: [
-            'A',
-            'B',
-        ],
+        firingFrames: ['A', 'B'],
         firingFrameDelay: 1,
-        firingSounds: [
-            'DSSAWFUL',
-            '',
-        ],
+        firingSounds: ['DSSAWFUL', '']
     },
     [PISTOL]: {
         ammoType: BULLETS,
         prefix: 'PIS',
-        firingFrames: [
-            'A',
-            'C',
-            'E',
-        ],
-        firingSounds: [
-            'DSPISTOL',
-        ],
+        firingFrames: ['A', 'C', 'E'],
+        firingSounds: ['DSPISTOL']
     },
     [SHOTGUN]: {
         ammoType: SHELLS,
         prefix: 'SHT',
-        firingFrames: [
-            'A',
-            'A',
-            'B',
-            'C',
-            'D',
-        ],
-        flashFrames: [
-            'A',
-            'B',
-        ],
-        firingSounds: [
-            'DSSHOTGN',
-        ]
+        firingFrames: ['A', 'A', 'B', 'C', 'D'],
+        flashFrames: ['A', 'B'],
+        firingSounds: ['DSSHOTGN']
     },
     [SUPER_SHOTGUN]: {
         ammoType: SHELLS,
         usage: 2,
         prefix: 'SHT2',
         noFlashSpritePrefix: true,
-        firingFrames: [
-            'A',
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-            'G',
-            'H',
-        ],
+        firingFrames: ['A', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
         firingFrameDelay: 5,
-        flashFrames: [
-            'I',
-            'J',
-        ],
+        flashFrames: ['I', 'J'],
         firingSounds: [
             'DSDSHTGN',
             '',
@@ -175,82 +129,42 @@ export const WEAPON_SETTINGS = {
             '',
             'DSDBOPN',
             '',
-            '',
-
-        ],
+            ''
+        ]
     },
     [CHAINGUN]: {
         ammoType: BULLETS,
         prefix: 'CHG',
-        firingFrames: [
-            'B',
-            'A',
-        ],
-        flashFrames: [
-            'B',
-            'A',
-        ],
-        firingSounds: [
-            'DSPISTOL',
-            'DSPISTOL',
-        ],
+        firingFrames: ['B', 'A'],
+        flashFrames: ['B', 'A'],
+        firingSounds: ['DSPISTOL', 'DSPISTOL']
     },
     [ROCKET_LAUNCHER]: {
         ammoType: ROCKETS,
         prefix: 'MIS',
-        firingFrames: [
-            'B',
-            'B',
-            'B',
-            'B',
-        ],
-        flashFrames: [
-            'A',
-            'B',
-            'C',
-            'D',
-        ],
-        firingSounds: [
-            'DSRLAUNC',
-        ],
+        firingFrames: ['B', 'B', 'B', 'B'],
+        flashFrames: ['A', 'B', 'C', 'D'],
+        firingSounds: ['DSRLAUNC']
     },
     [PLASMA_GUN]: {
         ammoType: CELLS,
         prefix: 'PLS',
         noFlashOverlay: true,
-        firingFrames: [
-            'FA',
-            'FB',
-        ],
+        firingFrames: ['FA', 'FB'],
         firingFrameDelay: 2,
-        firingSounds: [
-            'DSPLASMA',
-        ],
-        releaseFrames: [
-            'B',
-        ],
+        firingSounds: ['DSPLASMA'],
+        releaseFrames: ['B']
     },
     [BFG9000]: {
         ammoType: CELLS,
         usage: 40,
         prefix: 'BFG',
-        firingFrames: [
-            'A',
-            'A',
-            'B',
-        ],
+        firingFrames: ['A', 'A', 'B'],
         firingFrameDelay: 20,
-        flashFrames: [
-            null,
-            'A',
-            'B',
-        ],
-        firingSounds: [
-            'DSBFG',
-        ],
-    },
+        flashFrames: [null, 'A', 'B'],
+        firingSounds: ['DSBFG']
+    }
 };
-
 
 export const WEAPON_SWITCH_TIME = 7;
 
@@ -260,20 +174,20 @@ export const ALL_WEAPONS = [
     CHAINGUN,
     ROCKET_LAUNCHER,
     PLASMA_GUN,
-    BFG9000,
+    BFG9000
 ];
 
 export const ALL_KEYS = {
     blue: 'skull',
     yellow: 'skull',
-    red: 'skull',
+    red: 'skull'
 };
 
 export const ALL_AMMO = {
     bullets: 400,
     shells: 100,
     rockets: 100,
-    cells: 600,
+    cells: 600
 };
 
 export const GREEN_ARMOR = 'green';

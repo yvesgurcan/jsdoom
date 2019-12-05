@@ -28,10 +28,10 @@ export default () => {
     initScreen();
     initStatusBar(state);
     initPlayer(state);
-	initDecorations(state);
-	initItems(state);
-	initEnemies(state);
-	initAutomap();
-	gameCycle();
-	renderCycle();
+    initDecorations(state);
+    initItems(state);
+    initEnemies(state);
+    initAutomap();
+    gameCycle();
+    renderCycle();
 };

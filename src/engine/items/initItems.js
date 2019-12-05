@@ -5,7 +5,7 @@ export default state => {
     const {
         constants: { ITEM_PATH },
         itemTypes,
-        items,
+        items
     } = state;
 
     const itemList = initSprites(items, itemTypes, ITEM_PATH, state);

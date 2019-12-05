@@ -1,9 +1,13 @@
 import { getState, dispatch } from './store';
 
-export default (volume) => {
-    const { music: { song } } = getState();
+export default volume => {
+    const {
+        music: { song }
+    } = getState();
     if (!song) {
-        console.error('adjustMusicVolume(): It looks like there isn\'t any song to update.');
+        console.error(
+            "adjustMusicVolume(): It looks like there isn't any song to update."
+        );
         return false;
     }
 

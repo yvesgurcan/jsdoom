@@ -1,20 +1,17 @@
 import getWeaponSettings from './getWeaponSettings';
 
 const getSpriteInitial = (state, doNotPrefix, weaponSettings) => {
-     const { noFlashSpritePrefix } = weaponSettings;
-     if (noFlashSpritePrefix || doNotPrefix) {
+    const { noFlashSpritePrefix } = weaponSettings;
+    if (noFlashSpritePrefix || doNotPrefix) {
         return '';
     }
-    
+
     return 'G';
 };
 
 export default (state, frame, doNotPrefix) => {
     const {
-        constants: {
-            IMG_EXT,
-            WEAPON_PATH,
-        },
+        constants: { IMG_EXT, WEAPON_PATH }
     } = state;
 
     const weaponSettings = getWeaponSettings(state);

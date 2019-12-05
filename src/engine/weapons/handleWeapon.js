@@ -17,33 +17,34 @@ const getIdleSprite = (state, element) => {
     return buildSpritePath(state, idleFrame);
 };
 
-export default (state) => {
+export default state => {
     const {
         constants: { WEAPON_SWITCH_TIME },
-        weapons: {
-            nextWeapon,
-            lowerWeaponDelay,
-            raiseWeaponDelay,
-        },
-        player: {
-            selectedWeapon,
-            firing,
-        },
+        weapons: { nextWeapon, lowerWeaponDelay, raiseWeaponDelay },
+        player: { selectedWeapon, firing }
     } = state;
 
     // lowering current weapon
     if (lowerWeaponDelay) {
-        dispatch({ type: 'UPDATE_LOWER_WEAPON', payload: { lowerWeaponDelay: lowerWeaponDelay - 1 } });
+        dispatch({
+            type: 'UPDATE_LOWER_WEAPON',
+            payload: { lowerWeaponDelay: lowerWeaponDelay - 1 }
+        });
 
         const weapon = getElementById('weapon');
         const imageHeight = weapon.offsetHeight;
-        weapon.style.bottom = -(imageHeight / WEAPON_SWITCH_TIME) * (WEAPON_SWITCH_TIME - lowerWeaponDelay);
+        weapon.style.bottom =
+            -(imageHeight / WEAPON_SWITCH_TIME) *
+            (WEAPON_SWITCH_TIME - lowerWeaponDelay);
 
         return false;
     }
 
     if (lowerWeaponDelay <= 0 && nextWeapon && selectedWeapon !== nextWeapon) {
-        dispatch({ type: 'STOP_LOWER_WEAPON', payload: { selectedWeapon: nextWeapon } });
+        dispatch({
+            type: 'STOP_LOWER_WEAPON',
+            payload: { selectedWeapon: nextWeapon }
+        });
 
         const weapon = getElementById('weapon');
         const newState = getState();
@@ -61,11 +62,15 @@ export default (state) => {
 
     // raising next weapon
     if (raiseWeaponDelay) {
-        dispatch({ type: 'UPDATE_RAISE_WEAPON', payload: { raiseWeaponDelay: raiseWeaponDelay - 1 } });
+        dispatch({
+            type: 'UPDATE_RAISE_WEAPON',
+            payload: { raiseWeaponDelay: raiseWeaponDelay - 1 }
+        });
 
         const weapon = getElementById('weapon');
         const imageHeight = weapon.offsetHeight;
-        weapon.style.bottom = -(imageHeight / WEAPON_SWITCH_TIME) * raiseWeaponDelay;
+        weapon.style.bottom =
+            -(imageHeight / WEAPON_SWITCH_TIME) * raiseWeaponDelay;
 
         return false;
     }

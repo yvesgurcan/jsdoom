@@ -3,7 +3,9 @@ import getElementById from '../util/getElementById';
 import initAutomap from './initAutomap';
 
 export default () => {
-    const { automap: { showAutomap } } = getState();
+    const {
+        automap: { showAutomap }
+    } = getState();
     const automapContainer = getElementById('automapcontainer');
     const screen = getElementById('screen');
     if (showAutomap && automapContainer.style.display !== 'block') {

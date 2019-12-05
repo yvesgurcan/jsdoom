@@ -9,7 +9,7 @@ const drawAmmoInterval = (state, ammoType) => {
 const drawCurrentAmmo = (state, ammoType) => {
     const {
         constants,
-        player: { ammo },
+        player: { ammo }
     } = state;
 
     const ammoQty = ammo ? String(ammo[ammoType] || 0) : '0';
@@ -20,7 +20,7 @@ const drawMaxAmmo = (state, ammoType) => {
     const {
         constants,
         constants: { AMMO_MAX },
-        player: { doubleMaxAmmo },
+        player: { doubleMaxAmmo }
     } = state;
 
     const ammoQty = String((AMMO_MAX[ammoType] || 0) * (!!doubleMaxAmmo + 1));
@@ -32,10 +32,14 @@ const drawAmmo = (state, ammoType, ammoQty, constants) => {
     const element2 = getElementById(`${ammoType}2`);
     const element3 = getElementById(`${ammoType}3`);
 
-    return drawSmallNumber(ammoQty, { element1, element2, element3 }, constants);
+    return drawSmallNumber(
+        ammoQty,
+        { element1, element2, element3 },
+        constants
+    );
 };
 
-export default (state) => {
+export default state => {
     drawAmmoInterval(state, 'bullets');
     drawAmmoInterval(state, 'shells');
     drawAmmoInterval(state, 'rockets');

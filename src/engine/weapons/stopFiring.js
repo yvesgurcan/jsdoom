@@ -2,7 +2,9 @@ import getWeaponSettings from './getWeaponSettings';
 import { dispatch } from '../store';
 
 export default state => {
-    const { weapons: { currentFiringFrame } } = state;
+    const {
+        weapons: { currentFiringFrame }
+    } = state;
 
     if (currentFiringFrame !== 0) {
         dispatch({ type: 'WAIT_FOR_WEAPON_ANIMATION_END' });
@@ -15,5 +17,8 @@ export default state => {
     }
 
     const { firingFrames } = weaponSettings;
-    dispatch({ type: 'STOP_PLAYER_FIRE', currentFiringFrame: firingFrames.length - 1 });
+    dispatch({
+        type: 'STOP_PLAYER_FIRE',
+        currentFiringFrame: firingFrames.length - 1
+    });
 };

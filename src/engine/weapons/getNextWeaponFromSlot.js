@@ -1,18 +1,13 @@
 import checkIfPlayerOwnsWeaponInSlot from './checkIfPlayerOwnsWeaponInSlot';
 
-
 export default (state, slot) => {
     const {
-        constants: { WEAPONS: { FIST }, WEAPON_SLOTS },
-        weapons: {
-            lowerWeaponDelay,
-            raiseWeaponDelay,
+        constants: {
+            WEAPONS: { FIST },
+            WEAPON_SLOTS
         },
-        player: {
-            selectedWeapon,
-            weapons,
-            firing,
-        },
+        weapons: { lowerWeaponDelay, raiseWeaponDelay },
+        player: { selectedWeapon, weapons, firing }
     } = state;
 
     if (firing || lowerWeaponDelay || raiseWeaponDelay) {
@@ -26,7 +21,9 @@ export default (state, slot) => {
 
     const weaponsInSlot = WEAPON_SLOTS[slot];
     if (!weaponsInSlot) {
-        console.error(`getWeaponFromSlot(): No weapon found for slot number ${slot}.`);
+        console.error(
+            `getWeaponFromSlot(): No weapon found for slot number ${slot}.`
+        );
         return false;
     }
 
@@ -59,7 +56,6 @@ export default (state, slot) => {
             }
         }
 
-
         // switch to whichever weapon is owned
         if (weapons.indexOf(WEAPON_SLOTS[slot][0]) > -1) {
             if (selectedWeapon !== WEAPON_SLOTS[slot][0]) {
@@ -81,6 +77,8 @@ export default (state, slot) => {
         return false;
     }
 
-    console.error(`getWeaponFromSlot(): ${WEAPON_SLOTS.length} weapons found for slot ${slot}. Maximum weapon per slot authorized is 2.`);
+    console.error(
+        `getWeaponFromSlot(): ${WEAPON_SLOTS.length} weapons found for slot ${slot}. Maximum weapon per slot authorized is 2.`
+    );
     return false;
 };

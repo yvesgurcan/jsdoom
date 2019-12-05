@@ -22,7 +22,7 @@ const debugPlayer = {
             x,
             y,
             rotDeg,
-            rot,
+            rot
         };
 
         dispatch({ type: 'SET_PLAYER_COORDINATES', payload: updatedPlayer });
@@ -40,7 +40,7 @@ const debugWeapons = {
         const { weapons } = getState();
         return weapons;
     },
-    switch: (slot) => {
+    switch: slot => {
         const state = getState();
         const nextWeapon = getNextWeaponFromSlot(state, slot);
         if (nextWeapon !== false) {
@@ -53,11 +53,13 @@ const debugWeapons = {
 };
 
 const debugEnemies = {
-    pos: (index) => {
+    pos: index => {
         const { enemies } = getState();
         const enemy = enemies[index - 1];
         if (!enemy) {
-            console.error(`Index ${index} is out of range (max: ${enemies.length})`);
+            console.error(
+                `Index ${index} is out of range (max: ${enemies.length})`
+            );
             return {};
         }
         return enemy;
@@ -66,19 +68,20 @@ const debugEnemies = {
 
 const debugLog = {
     add: logAddEvent,
-    remove: logRemoveEvent,
+    remove: logRemoveEvent
 };
 
 const debugPause = () => updatePauseState(true);
 
-const debugCheat = (input) => (input.toUpperCase ? checkForCheat(input.toUpperCase()) : false);
+const debugCheat = input =>
+    input.toUpperCase ? checkForCheat(input.toUpperCase()) : false;
 
 const debugSong = {
     get: () => {
         const { music } = getState();
         return music;
     },
-    random: () => startMusic(true),
+    random: () => startMusic(true)
 };
 
 export default () => {
@@ -90,7 +93,7 @@ export default () => {
         log: debugLog,
         pause: debugPause,
         cheat: debugCheat,
-        song: debugSong,
+        song: debugSong
     });
 
     window.getElementById = getElementById;

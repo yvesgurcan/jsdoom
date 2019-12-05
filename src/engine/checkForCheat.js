@@ -10,20 +10,24 @@ export default (externalInput, state = getState()) => {
                 CHEAT_AMMO,
                 CHEAT_AMMO_KEY,
                 CHEAT_MAP,
-                CHEAT_MUSIC,
+                CHEAT_MUSIC
             ],
             ON,
-            OFF,
+            OFF
         },
         keyStrokes: { history }
     } = state;
-    const input = externalInput || history.map(key => String.fromCharCode(key)).join('');
+    const input =
+        externalInput || history.map(key => String.fromCharCode(key)).join('');
     const match = CHEATS.find(cheat => input.indexOf(cheat) > -1);
     switch (match) {
-        default: return false;
+        default:
+            return false;
         case CHEAT_GOD: {
             dispatch({ type: 'TOGGLE_GODMODE' });
-            const { player: { godMode } } = getState();
+            const {
+                player: { godMode }
+            } = getState();
             logAddEvent(`Degreelessness mode ${godMode ? ON : OFF}.`);
             break;
         }
@@ -41,15 +45,12 @@ export default (externalInput, state = getState()) => {
             const {
                 automap: {
                     revealMap: prevRevealMap,
-                    revealThings: prevRevealThings,
+                    revealThings: prevRevealThings
                 }
             } = getState();
             dispatch({ type: 'TOGGLE_CHEAT_AUTOMAP' });
             const {
-                automap: {
-                    revealMap,
-                    revealThings,
-                }
+                automap: { revealMap, revealThings }
             } = getState();
             if (prevRevealMap === false && revealMap === true) {
                 logAddEvent('Reveal map.');

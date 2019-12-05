@@ -1,12 +1,8 @@
 import { getState } from '../store';
 
-export default (percent) => {
+export default percent => {
     const {
-        constants: {
-            ALPHANUMERIC_PATH,
-            STATUS_BAR_NUM_PREFIX,
-            IMG_EXT,
-        },
+        constants: { ALPHANUMERIC_PATH, STATUS_BAR_NUM_PREFIX, IMG_EXT }
     } = getState();
 
     percent.src = `${ALPHANUMERIC_PATH}/${STATUS_BAR_NUM_PREFIX}/${STATUS_BAR_NUM_PREFIX}PRCNT${IMG_EXT}`;

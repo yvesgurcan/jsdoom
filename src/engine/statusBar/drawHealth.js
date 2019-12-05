@@ -6,9 +6,7 @@ import drawPercentage from './drawPercentage';
 export default () => {
     const {
         constants,
-        player: {
-            health,
-        }
+        player: { health }
     } = getState();
     const element1 = getElementById('health1');
     const element2 = getElementById('health2');

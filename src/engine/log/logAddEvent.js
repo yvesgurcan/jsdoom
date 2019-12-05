@@ -6,7 +6,7 @@ export default (message = '') => {
     dispatch({ type: 'ADD_LOG_EVENT', payload: message });
     const {
         log,
-        game: { paused },
+        game: { paused }
     } = getState();
 
     if (paused) {
@@ -23,6 +23,6 @@ export default (message = '') => {
 
     const loggedMessage = log[length - 1];
     setTimeout(() => logRemoveEvent(loggedMessage.id), 3000);
-    
+
     return true;
 };

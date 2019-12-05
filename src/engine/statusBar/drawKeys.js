@@ -2,11 +2,7 @@ import getElementById from '../util/getElementById';
 
 const drawKey = (state, key, elementName, index) => {
     const {
-        constants: {
-            STATUS_BAR_PATH,
-            STATUS_BAR_KEY_PREFIX,
-            IMG_EXT,
-        },
+        constants: { STATUS_BAR_PATH, STATUS_BAR_KEY_PREFIX, IMG_EXT }
     } = state;
     if (key) {
         const element = getElementById(elementName);
@@ -18,13 +14,11 @@ const drawKey = (state, key, elementName, index) => {
     }
 };
 
-export default (state) => {
-    const { player: { keys = {} } } = state;
+export default state => {
     const {
-        red,
-        blue,
-        yellow,
-    } = keys;
+        player: { keys = {} }
+    } = state;
+    const { red, blue, yellow } = keys;
 
     drawKey(state, blue, 'bluekey', 0);
     drawKey(state, yellow, 'yellowkey', 1);

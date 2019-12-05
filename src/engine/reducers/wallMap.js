@@ -2,10 +2,7 @@ import { wallMap } from '../../maps/walls';
 
 const initState = [...wallMap];
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     const nextState = [...prevState];
     switch (type) {

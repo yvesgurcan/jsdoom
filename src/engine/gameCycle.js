@@ -11,16 +11,14 @@ import handleWeapon from './weapons/handleWeapon';
 const gameCycle = () => {
     const state = getState();
     const {
-        game: {
-            delay,
-            lastCycle,
-            paused,
-        },
-        player,
+        game: { delay, lastCycle, paused },
+        player
     } = state;
 
     if (delay <= 0) {
-        console.error('Invalid value: gameCycle.delay should be a number greater than zero.');
+        console.error(
+            'Invalid value: gameCycle.delay should be a number greater than zero.'
+        );
         return false;
     }
 
@@ -35,7 +33,7 @@ const gameCycle = () => {
 
     // time since last game logic
     const timeDelta = now - lastCycle;
-    
+
     if (player.speed !== 0 || player.dir !== 0) {
         move('player', player, timeDelta);
     }
@@ -54,7 +52,7 @@ const gameCycle = () => {
 
     // the timer will likely not run that fast due to the rendering cycle hogging the cpu
     // so figure out how much time was lost since last cycle
-    let cycleDelay = delay; 
+    let cycleDelay = delay;
     if (timeDelta > cycleDelay) {
         cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
     }

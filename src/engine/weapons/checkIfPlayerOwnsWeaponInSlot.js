@@ -1,7 +1,9 @@
 export default (state, weaponsInSlot) => {
     const {
-        constants: { WEAPONS: { FIST, PISTOL } },
-        player: { weapons = null },
+        constants: {
+            WEAPONS: { FIST, PISTOL }
+        },
+        player: { weapons = null }
     } = state;
 
     if (weaponsInSlot.some(weapon => weapon === FIST || weapon === PISTOL)) {

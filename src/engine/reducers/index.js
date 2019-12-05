@@ -42,5 +42,5 @@ export default combineReducers({
     touch,
     music,
     sound,
-    log,
+    log
 });

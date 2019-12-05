@@ -24,9 +24,9 @@ const letter = [
     'W',
     'X',
     'Y',
-    'Z',
+    'Z'
 ];
 
-export default (index) => {
+export default index => {
     return letter[index - 1];
 };

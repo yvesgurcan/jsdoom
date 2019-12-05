@@ -9,19 +9,14 @@ import updateFPS from './updateFPS';
 const renderCycle = () => {
     const state = getState();
     const {
-        game: {
-            delay,
-            lastRender,
-            paused,
-        },
-        automap: {
-            showAutomap,
-            showViewingCone,
-        },
+        game: { delay, lastRender, paused },
+        automap: { showAutomap, showViewingCone }
     } = state;
 
     if (delay <= 0) {
-        console.error('Invalid value: game.delay should be a number greater than zero.');
+        console.error(
+            'Invalid value: game.delay should be a number greater than zero.'
+        );
         return false;
     }
 
@@ -31,7 +26,7 @@ const renderCycle = () => {
     }
 
     updateAutomap(state);
-    
+
     if (!showAutomap || (showAutomap && showViewingCone)) {
         castRays();
     }
@@ -41,18 +36,18 @@ const renderCycle = () => {
         renderEnemies(state);
     }
 
-	// time since last rendering
-	const now = new Date().getTime();
-	const timeDelta = now - lastRender;
-	let cycleDelay = delay;
-	if (timeDelta > cycleDelay) {
-		cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
+    // time since last rendering
+    const now = new Date().getTime();
+    const timeDelta = now - lastRender;
+    let cycleDelay = delay;
+    if (timeDelta > cycleDelay) {
+        cycleDelay = Math.max(1, cycleDelay - (timeDelta - cycleDelay));
     }
-    
+
     dispatch({ type: 'SET_LAST_RENDER_CYCLE_TIME', payload: now });
 
     setTimeout(renderCycle, cycleDelay);
-    
+
     updateFPS(timeDelta);
 };
 

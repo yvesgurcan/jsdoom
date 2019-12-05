@@ -3,10 +3,7 @@ import decorationTypes from '../../types/decorations';
 const initState = { ...decorationTypes };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     const nextState = { ...prevState };
     switch (type) {

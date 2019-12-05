@@ -2,10 +2,7 @@ import { WEAPON_SWITCH_TIME } from '../constants';
 
 const initState = {};
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-    } = action;
+    const { type, payload = {} } = action;
 
     const {
         nextWeapon,
@@ -14,91 +11,92 @@ export default (prevState = initState, action) => {
         idleFrameDelay,
         currentIdleFrame,
         currentFiringFrameDelay,
-        currentFiringFrame,
+        currentFiringFrame
     } = payload;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'START_LOWER_WEAPON': {
             return {
                 ...prevState,
                 nextWeapon,
-                lowerWeaponDelay: WEAPON_SWITCH_TIME,
+                lowerWeaponDelay: WEAPON_SWITCH_TIME
             };
         }
         case 'UPDATE_LOWER_WEAPON': {
             return {
                 ...prevState,
-                lowerWeaponDelay,
+                lowerWeaponDelay
             };
         }
         case 'STOP_LOWER_WEAPON': {
             return {
                 ...prevState,
                 nextWeapon: undefined,
-                lowerWeaponDelay: undefined,
+                lowerWeaponDelay: undefined
             };
         }
         case 'START_RAISE_WEAPON': {
             return {
                 ...prevState,
-                raiseWeaponDelay: WEAPON_SWITCH_TIME,
+                raiseWeaponDelay: WEAPON_SWITCH_TIME
             };
         }
         case 'UPDATE_RAISE_WEAPON': {
             return {
                 ...prevState,
-                raiseWeaponDelay,
+                raiseWeaponDelay
             };
         }
         case 'STOP_RAISE_WEAPON': {
             return {
                 ...prevState,
-                raiseWeaponDelay: undefined,
+                raiseWeaponDelay: undefined
             };
         }
         case 'UPDATE_WEAPON_ANIMATION_DELAY': {
             return {
                 ...prevState,
                 idleFrameDelay,
-                currentIdleFrame,
+                currentIdleFrame
             };
         }
         case 'SET_IDLE_WEAPON_SOUND': {
             return {
                 ...prevState,
-                playingIdleSound: true,
+                playingIdleSound: true
             };
         }
         case 'UNSET_IDLE_WEAPON_SOUND': {
             return {
                 ...prevState,
-                playingIdleSound: false,
+                playingIdleSound: false
             };
         }
         case 'UPDATE_WEAPON_FIRE_ANIMATION_DELAY': {
             return {
                 ...prevState,
-                currentFiringFrameDelay,
+                currentFiringFrameDelay
             };
         }
         case 'UPDATE_WEAPON_FIRE_FRAME': {
             return {
                 ...prevState,
-                currentFiringFrame,
+                currentFiringFrame
             };
         }
         case 'WAIT_FOR_WEAPON_ANIMATION_END': {
             return {
                 ...prevState,
-                waitForAnimationToEnd: true,
+                waitForAnimationToEnd: true
             };
         }
         case 'STOP_PLAYER_FIRE': {
             return {
                 ...prevState,
                 waitForAnimationToEnd: false,
-                currentFiringFrame,
+                currentFiringFrame
             };
         }
     }

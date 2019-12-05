@@ -40,5 +40,5 @@ export default [
     { type: 'vial', x: 25, y: 16.5 },
     { type: 'vial', x: 25, y: 17 },
     { type: 'vial', x: 25, y: 17.5 },
-    { type: 'vial', x: 25, y: 18 },
+    { type: 'vial', x: 25, y: 18 }
 ];

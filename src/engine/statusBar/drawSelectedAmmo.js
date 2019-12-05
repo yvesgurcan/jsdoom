@@ -1,14 +1,11 @@
 import getElementById from '../util/getElementById';
 import drawNumber from './drawNumber';
 
-export default (state) => {
+export default state => {
     const {
         constants,
         constants: { WEAPON_SETTINGS },
-        player: {
-            selectedWeapon,
-            ammo,
-        }
+        player: { selectedWeapon, ammo }
     } = state;
     const ammoElement = getElementById('selectedammocontainer');
 
@@ -20,7 +17,7 @@ export default (state) => {
             if (ammoElement.className !== weaponSetting.ammoType) {
                 ammoElement.className = weaponSetting.ammoType;
             }
-        // infinite ammo
+            // infinite ammo
         } else if (ammoElement.className !== 'null') {
             ammoElement.className = 'null';
         }
@@ -32,9 +29,13 @@ export default (state) => {
         const element1 = getElementById('ammo1');
         const element2 = getElementById('ammo2');
         const element3 = getElementById('ammo3');
-    
+
         let selectedAmmo = null;
-        if (ammoElement.className !== 'null' && ammo && ammo[weaponSetting.ammoType] !== undefined) {
+        if (
+            ammoElement.className !== 'null' &&
+            ammo &&
+            ammo[weaponSetting.ammoType] !== undefined
+        ) {
             selectedAmmo = ammo[weaponSetting.ammoType];
         }
 

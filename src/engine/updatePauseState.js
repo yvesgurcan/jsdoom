@@ -4,10 +4,10 @@ import getElementById from './util/getElementById';
 import updateFPS from './updateFPS';
 import logUpdateColor from './log/logUpdateColor';
 
-export default (togglePause) => {
+export default togglePause => {
     const {
         game: { paused },
-        automap: { showAutomap },
+        automap: { showAutomap }
     } = getState();
 
     if (togglePause) {
