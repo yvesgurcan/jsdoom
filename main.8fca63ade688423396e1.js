@@ -2520,18 +2520,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sto
 
 /***/ }),
 
-/***/ "./src/engine/index.js":
-/*!*****************************!*\
-  !*** ./src/engine/index.js ***!
-  \*****************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./init */ \"./src/engine/init.js\");\n\n\nsetTimeout(_init__WEBPACK_IMPORTED_MODULE_0__[\"default\"], 1);\n\n\n//# sourceURL=webpack:///./src/engine/index.js?");
-
-/***/ }),
-
 /***/ "./src/engine/init.js":
 /*!****************************!*\
   !*** ./src/engine/init.js ***!
@@ -3468,6 +3456,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _get
 
 /***/ }),
 
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _engine_init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine/init */ \"./src/engine/init.js\");\n\n\nsetTimeout(_engine_init__WEBPACK_IMPORTED_MODULE_0__[\"default\"], 1);\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
 /***/ "./src/maps/automap.js":
 /*!*****************************!*\
   !*** ./src/maps/automap.js ***!
@@ -3613,13 +3613,13 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost:8080 ./src/engine/index.js ***!
-  \*************************************************************************************/
+/*!*********************************************************************!*\
+  !*** multi (webpack)-dev-server/client?http://localhost:8080 ./src ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! /Users/owner/Projects/jsdoom/node_modules/webpack-dev-server/client/index.js?http://localhost:8080 */\"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080\");\nmodule.exports = __webpack_require__(/*! ./src/engine/index.js */\"./src/engine/index.js\");\n\n\n//# sourceURL=webpack:///multi_(webpack)-dev-server/client?");
+eval("__webpack_require__(/*! /Users/owner/Projects/jsdoom/node_modules/webpack-dev-server/client/index.js?http://localhost:8080 */\"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080\");\nmodule.exports = __webpack_require__(/*! ./src */\"./src/index.js\");\n\n\n//# sourceURL=webpack:///multi_(webpack)-dev-server/client?");
 
 /***/ }),
 

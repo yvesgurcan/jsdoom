@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.6.0 - 2019/12/04
+
+* Maintenance
+
+It's been over a year. It was time to give this project a little love. Updated dependencies, removed the Node server, and stuff like that.
+
 ## v0.5.3 - 2018/10/12
 
 * "Color Map"
