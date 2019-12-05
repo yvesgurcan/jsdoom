@@ -2,7 +2,7 @@ export default {
     zombieman: {
         name: 'Zombieman',
         prefix: 'POSS',
-	health: 20,
+        health: 20,
         moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
@@ -12,13 +12,13 @@ export default {
             count: 4,
             mirroredAngles: true,
             soundRandom: ['DSPOSACT'],
-            soundBaseInterval: 3000,
-        },
+            soundBaseInterval: 3000
+        }
     },
     shotgunGuy: {
         name: 'Shotgun Guy',
         prefix: 'SPOS',
-	health: 30,
+        health: 30,
         moveSpeed: 0.03,
         rotSpeed: 3,
         walk: {
@@ -28,8 +28,8 @@ export default {
             count: 4,
             mirroredAngles: true,
             soundRandom: ['DSPOSACT'],
-            soundBaseInterval: 3000,
-        },
+            soundBaseInterval: 3000
+        }
     },
     chaingunner: {
         name: 'Heavy Weapon Dude',
@@ -43,8 +43,8 @@ export default {
             end: 'D',
             count: 4,
             soundRandom: ['DSPOSACT'],
-            soundBaseInterval: 3000,
-        },
+            soundBaseInterval: 3000
+        }
     },
     imp: {
         name: 'Imp',
@@ -58,8 +58,8 @@ export default {
             count: 4,
             mirroredAngles: true,
             soundRandom: ['DSBGACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     demon: {
         name: 'Demon',
@@ -73,8 +73,8 @@ export default {
             count: 4,
             mirroredAngles: true,
             soundRandom: ['DSDMACT'],
-            soundBaseInterval: 4000,
-        },      
+            soundBaseInterval: 4000
+        }
     },
     lostSoul: {
         name: 'Lost Soul',
@@ -89,8 +89,8 @@ export default {
             mirroredAngles: true,
             reversedAngles: true,
             soundRandom: ['DSDMACT'],
-            soundBaseInterval: 5000,
-        },       
+            soundBaseInterval: 5000
+        }
     },
     cacodemon: {
         name: 'Cacodemon',
@@ -104,8 +104,8 @@ export default {
             count: 1,
             mirroredAngles: true,
             soundRandom: ['DSDMACT'],
-            soundBaseInterval: 5000,
-        },       
+            soundBaseInterval: 5000
+        }
     },
     hellKnight: {
         name: 'Hell Knight',
@@ -119,8 +119,8 @@ export default {
             count: 4,
             mirroredFrames: true,
             soundRandom: ['DSDMACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     baronOfHell: {
         name: 'Baron of Hell',
@@ -134,8 +134,8 @@ export default {
             count: 4,
             mirroredAngles: true,
             soundRandom: ['DSDMACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     arachnotron: {
         name: 'Arachnotron',
@@ -151,8 +151,8 @@ export default {
             soundFixed: ['DSBSPWLK'],
             soundRandom: ['DSBSPACT'],
             soundFixedInterval: 550,
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     painElemental: {
         name: 'Pain Elemental',
@@ -164,8 +164,8 @@ export default {
             start: 'A',
             end: 'C',
             count: 3,
-            mirroredAngles: true,
-        },
+            mirroredAngles: true
+        }
     },
     revenant: {
         name: 'Revenant',
@@ -179,8 +179,8 @@ export default {
             count: 6,
             mirroredFrames: true,
             soundRandom: ['DSSKEACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     mancubus: {
         name: 'Mancubus',
@@ -194,8 +194,8 @@ export default {
             count: 6,
             mirroredAngles: true,
             soundRandom: ['DSPOSACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     archVile: {
         name: 'Arch-Vile',
@@ -209,8 +209,8 @@ export default {
             count: 6,
             mirroredFrames: true,
             soundRandom: ['DSVILACT'],
-            soundBaseInterval: 5000,
-        },
+            soundBaseInterval: 5000
+        }
     },
     spiderMastermind: {
         name: 'The Spider Mastermind',
@@ -224,8 +224,8 @@ export default {
             count: 6,
             mirroredFramesAnglesNotShared: true,
             soundFixed: ['DSMETAL'],
-            soundFixedInterval: 425,
-        },
+            soundFixedInterval: 425
+        }
     },
     cyberdemon: {
         name: 'Cyberdemon',
@@ -238,8 +238,8 @@ export default {
             end: 'D',
             count: 4,
             soundFixed: ['DSHOOF'],
-            soundFixedInterval: 900,
-        },
+            soundFixedInterval: 900
+        }
     },
     ss: {
         name: '',
@@ -250,7 +250,7 @@ export default {
             cycle: 700,
             start: 'A',
             end: 'D',
-            count: 4,
-        },
-    },
+            count: 4
+        }
+    }
 };

@@ -7,7 +7,9 @@ import drawKeys from './drawKeys';
 import drawAmmo from './drawAmmo';
 
 export default state => {
-    const { hud: { hideStatusBar } } = state;
+    const {
+        hud: { hideStatusBar }
+    } = state;
     if (hideStatusBar) {
         return false;
     }

@@ -1,30 +1,27 @@
 import getElementById from '../util/getElementById';
 
 const drawThings = (state, things, color) => {
-    const { automap: { scale } } = state;
-	const miniMapObjects = getElementById('minimapobjects');
+    const {
+        automap: { scale }
+    } = state;
+    const miniMapObjects = getElementById('minimapobjects');
     const objectCtx = miniMapObjects.getContext('2d');
 
     for (let i = 0; i < things.length; i++) {
         const thing = things[i];
         const square = {
             x: thing.x * scale,
-            y: thing.y * scale,
+            y: thing.y * scale
         };
         objectCtx.fillStyle = color;
 
         // draw a dot at the enemy position
-        objectCtx.fillRect(
-            square.x, 
-            square.y,
-            scale,
-            scale,
-        );
+        objectCtx.fillRect(square.x, square.y, scale, scale);
     }
 };
 
-export default (state) => {
-	const miniMapObjects = getElementById('minimapobjects');
+export default state => {
+    const miniMapObjects = getElementById('minimapobjects');
 
     const {
         player,
@@ -39,8 +36,8 @@ export default (state) => {
             playerColor,
             enemyColor,
             itemColor,
-            decorationColor,
-        },
+            decorationColor
+        }
     } = state;
 
     const weapon = getElementById('weapon');
@@ -57,22 +54,17 @@ export default (state) => {
         weapon.style.display = 'none';
     }
 
-	const objectCtx = miniMapObjects.getContext('2d');
-	miniMapObjects.width = miniMapObjects.width;
+    const objectCtx = miniMapObjects.getContext('2d');
+    miniMapObjects.width = miniMapObjects.width;
 
     const playerSquare = {
         x: player.x * scale,
-        y: player.y * scale,
+        y: player.y * scale
     };
 
     // draw a dot at the player position
     objectCtx.fillStyle = playerColor;
-	objectCtx.fillRect(		
-		playerSquare.x, 
-		playerSquare.y,
-        scale,
-        scale,
-	);
+    objectCtx.fillRect(playerSquare.x, playerSquare.y, scale, scale);
 
     if (revealThings) {
         drawThings(state, enemies, enemyColor);

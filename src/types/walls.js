@@ -26,5 +26,5 @@ export default {
     ZZZFACE6: 'ZZZFACE6',
     ZZZFACE7: 'ZZZFACE7',
     ZZZFACE8: 'ZZZFACE8',
-    ZZZFACE9: 'ZZZFACE9',
+    ZZZFACE9: 'ZZZFACE9'
 };

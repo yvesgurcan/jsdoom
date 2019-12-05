@@ -22,23 +22,18 @@ export default () => {
                 THRESHOLD1,
                 THRESHOLD2,
                 THRESHOLD3,
-                THRESHOLD4,
-            },
+                THRESHOLD4
+            }
         },
-        hud: {
-            nextMugShot, 
-        },
-        player: {
-            dead,
-            godMode,
-            health,
-        }
+        hud: { nextMugShot },
+        player: { dead, godMode, health }
     } = getState();
-    
+
     const mugShot = getElementById('mugshot');
     const mugShotContainer = getElementById('mugshotcontainer');
     const statusBar = getElementById('statusbar');
-    mugShot.style.height = statusBar.offsetHeight - (mugShotContainer.offsetHeight * 0.12);
+    mugShot.style.height =
+        statusBar.offsetHeight - mugShotContainer.offsetHeight * 0.12;
 
     if (dead) {
         mugShot.src = `${STATUS_BAR_PATH}/${PREFIX}${DEAD}${THRESHOLD0}${IMG_EXT}`;
@@ -65,7 +60,7 @@ export default () => {
     }
 
     let healthLevel = THRESHOLD0;
-    
+
     if (health < 20) {
         healthLevel = THRESHOLD4;
     } else if (health < 40) {

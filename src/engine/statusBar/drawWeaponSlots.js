@@ -14,11 +14,10 @@ const updateWeaponStatus = (state, slotNumber, weaponSlot) => {
     }
 };
 
-
-export default (state) => {
+export default state => {
     const {
         constants: { WEAPON_SLOTS },
-        game: { singlePlayer },
+        game: { singlePlayer }
     } = state;
     if (singlePlayer) {
         updateWeaponStatus(state, 3, WEAPON_SLOTS[3]);

@@ -1,11 +1,6 @@
-export default (state) => {
+export default state => {
     const {
-        game: {
-            name,
-            description,
-            version,
-            issues,
-        },
+        game: { name, description, version, issues }
     } = state;
     console.info({ name });
     console.info({ description });

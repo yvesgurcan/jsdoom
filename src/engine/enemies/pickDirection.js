@@ -1,11 +1,6 @@
 import { MOVE } from '../constants';
 
-const {
-    FORWARD,
-    LEFT,
-    RIGHT,
-    BACKWARD,
-} = MOVE;
+const { FORWARD, LEFT, RIGHT, BACKWARD } = MOVE;
 
 export default (enemy, player) => {
     // console.log(enemy.nextMotion);
@@ -35,20 +30,21 @@ export default (enemy, player) => {
     const angleModifier = Math.random();
     if (direction === BACKWARD) {
         rot -= Math.PI * angleModifier;
-    } if (direction === LEFT) {
+    }
+    if (direction === LEFT) {
         speed = 0.5;
         rot += Math.PI / 2;
     } else if (direction === RIGHT) {
         speed = 0.5;
         rot -= Math.PI / 2;
     }
-    
+
     const rotDeg = (rot * 180) / Math.PI;
 
     return {
         rot,
         rotDeg,
         speed,
-        direction,
+        direction
     };
 };

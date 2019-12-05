@@ -1,7 +1,5 @@
 import enemyMap from '../../maps/enemies';
-import {
-    MOVE_TIME,
-} from '../constants';
+import { MOVE_TIME } from '../constants';
 
 const findEnemy = (enemies, enemyId) => {
     let foundIndex = null;
@@ -15,27 +13,25 @@ const findEnemy = (enemies, enemyId) => {
 
     return {
         foundEnemy,
-        foundIndex,
+        foundIndex
     };
 };
 
 const updateEnemySoundQueue = (enemy, soundType, newValue) => {
-    const fixedSoundQueued = soundType === 'fixedInterval' ? newValue : enemy.fixedSoundQueued;
-    const randomSoundQueued = soundType === 'randomInterval' ? newValue : enemy.randomSoundQueued;
+    const fixedSoundQueued =
+        soundType === 'fixedInterval' ? newValue : enemy.fixedSoundQueued;
+    const randomSoundQueued =
+        soundType === 'randomInterval' ? newValue : enemy.randomSoundQueued;
     return {
         ...enemy,
         fixedSoundQueued,
-        randomSoundQueued,
+        randomSoundQueued
     };
 };
 
 const initState = [...enemyMap];
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-        index,
-    } = action;
+    const { type, payload = {}, index } = action;
 
     const {
         x,
@@ -46,7 +42,7 @@ export default (prevState = initState, action) => {
         walkFrame,
         direction,
         enemyId,
-        soundType,
+        soundType
     } = payload;
 
     switch (type) {
@@ -59,7 +55,7 @@ export default (prevState = initState, action) => {
                     return {
                         ...enemy,
                         x,
-                        y,
+                        y
                     };
                 }
                 return enemy;
@@ -76,17 +72,22 @@ export default (prevState = initState, action) => {
                         rot,
                         walkFrame,
                         direction,
-                        nextMotion: !enemy.nextMotion || enemy.nextMotion <= 0 ? MOVE_TIME + MOVE_TIME * Math.random() : enemy.nextMotion - 100,
+                        nextMotion:
+                            !enemy.nextMotion || enemy.nextMotion <= 0
+                                ? MOVE_TIME + MOVE_TIME * Math.random()
+                                : enemy.nextMotion - 100
                     };
                 }
                 return enemy;
             });
-            return nextState;           
+            return nextState;
         }
         case 'SET_ENEMY_ACTIVE_SOUND': {
             const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
             if (foundEnemy === undefined || foundIndex === null) {
-                console.error(`enemies reducer: Could not find enemy with id '${enemyId}'.`);
+                console.error(
+                    `enemies reducer: Could not find enemy with id '${enemyId}'.`
+                );
                 return prevState;
             }
 
@@ -98,7 +99,9 @@ export default (prevState = initState, action) => {
         case 'UNSET_ENEMY_ACTIVE_SOUND': {
             const { foundEnemy, foundIndex } = findEnemy(prevState, enemyId);
             if (foundEnemy === undefined || foundIndex === null) {
-                console.error(`enemies reducer: Could not find enemy with id '${enemyId}'.`);
+                console.error(
+                    `enemies reducer: Could not find enemy with id '${enemyId}'.`
+                );
                 return prevState;
             }
 
@@ -113,7 +116,7 @@ export default (prevState = initState, action) => {
                     return {
                         ...enemy,
                         state: 0,
-                        speed: 0,
+                        speed: 0
                     };
                 }
                 return enemy;

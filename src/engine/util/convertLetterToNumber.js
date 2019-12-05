@@ -24,9 +24,9 @@ const number = {
     W: 23,
     X: 24,
     Y: 25,
-    Z: 26,
+    Z: 26
 };
 
-export default (index) => {
+export default index => {
     return number[index] - 1;
 };

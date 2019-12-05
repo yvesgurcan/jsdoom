@@ -3,7 +3,9 @@ import createElement from './createElement';
 import getElementById from './util/getElementById';
 
 export default (sprites, spriteTypes, path, state, spriteCategory) => {
-    const { constants: { IMG_EXT } } = state;
+    const {
+        constants: { IMG_EXT }
+    } = state;
 
     const screen = getElementById('screen');
 
@@ -12,13 +14,18 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
         const sprite = { ...sprites[i] };
 
         if (!sprite.type) {
-            console.error(`initSprites(): Could not find sprite type '${sprite.type}' for sprite at {x: ${sprite.x}, y: ${sprite.y}}`);
+            console.error(
+                `initSprites(): Could not find sprite type '${sprite.type}' for sprite at {x: ${sprite.x}, y: ${sprite.y}}`
+            );
             /* eslint-disable-next-line */
             continue;
         }
 
         if (isNaN(sprite.x) || isNaN(sprite.y)) {
-            console.error('initSprites(): x and/or y coordinates are undefined. Entity will not be placed on the map.', { entity: sprite });
+            console.error(
+                'initSprites(): x and/or y coordinates are undefined. Entity will not be placed on the map.',
+                { entity: sprite }
+            );
             /* eslint-disable-next-line */
             continue;
         }
@@ -26,20 +33,29 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
         const spriteType = spriteTypes[sprite.type];
 
         if (!spriteType) {
-            console.error(`initSprites(): Sprite type '${sprite.type}' is undefined. Entity will not be placed on the map.`, { entity: sprite, spriteType });
+            console.error(
+                `initSprites(): Sprite type '${sprite.type}' is undefined. Entity will not be placed on the map.`,
+                { entity: sprite, spriteType }
+            );
             /* eslint-disable-next-line */
             continue;
         }
 
         if (spriteCategory === 'enemies') {
             if (!spriteType.prefix) {
-                console.error('initSprites(): Sprite type is missing a prefix for image filenames. Entity will not be placed on the map.', { entity: sprite, spriteType });
+                console.error(
+                    'initSprites(): Sprite type is missing a prefix for image filenames. Entity will not be placed on the map.',
+                    { entity: sprite, spriteType }
+                );
                 /* eslint-disable-next-line */
                 continue;
             }
-    
+
             if (!spriteType.moveSpeed || !spriteType.rotSpeed) {
-                console.error('initSprites(): moveSpeed and/or rotSpeed of sprite type is undefined. Entity will not be placed on the map.', { entity: sprite, spriteType });
+                console.error(
+                    'initSprites(): moveSpeed and/or rotSpeed of sprite type is undefined. Entity will not be placed on the map.',
+                    { entity: sprite, spriteType }
+                );
                 /* eslint-disable-next-line */
                 continue;
             }
@@ -77,32 +93,28 @@ export default (sprites, spriteTypes, path, state, spriteCategory) => {
                     display: 'none',
                     zIndex: 0
                 },
-                img,
+                img
             };
 
-            spriteList = [
-                ...spriteList,
-                element,
-            ];
+            spriteList = [...spriteList, element];
         } else {
             img.src = `${path}/${spriteType.prefix}A0${IMG_EXT}`;
 
             let updatedSprite = {
                 ...sprite,
-                id,
+                id
             };
             if (spriteCategory === 'decorations') {
                 updatedSprite = {
                     ...updatedSprite,
-                    block: spriteType.block === true || spriteType.block === undefined,
-                    radius: spriteType.radius,
+                    block:
+                        spriteType.block === true ||
+                        spriteType.block === undefined,
+                    radius: spriteType.radius
                 };
             }
 
-            spriteList = [
-                ...spriteList,
-                { ...updatedSprite },
-            ];
+            spriteList = [...spriteList, { ...updatedSprite }];
         }
 
         screen.appendChild(img);

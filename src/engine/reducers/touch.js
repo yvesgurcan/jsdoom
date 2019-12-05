@@ -1,20 +1,18 @@
 const initState = {
-    volume: 0,
+    volume: 0
 };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-    } = action;
+    const { type, payload = {} } = action;
     const { touch } = payload;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'REGISTER_TOUCH': {
             return {
                 ...prevState,
-                ...touch,
+                ...touch
             };
         }
         case 'UNREGISTER_TOUCH': {

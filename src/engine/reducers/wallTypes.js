@@ -3,10 +3,7 @@ import wallTypes from '../../types/walls';
 const initState = { ...wallTypes };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     const nextState = { ...prevState };
     switch (type) {

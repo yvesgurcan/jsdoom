@@ -1,13 +1,13 @@
 import getElementById from '../util/getElementById';
 import initWeapons from './initWeapons';
 
-export default (state) => {
+export default state => {
     const {
         constants: {
             IMG_EXT,
             STATUS_BAR_PATH,
             STATUS_BAR_FILENAME,
-            STATUS_BAR_FILLER,
+            STATUS_BAR_FILLER
         },
         hud: { hideStatusBar }
     } = state;
@@ -27,7 +27,6 @@ export default (state) => {
         const statusBarContainer = getElementById('statusbarcontainer');
         statusBarContainer.style.backgroundImage = `url('${STATUS_BAR_FILLER}')`;
         statusBarContainer.style.height = statusBarBackground.offsetHeight;
-
 
         const statusBarGrid = getElementById('statusbargrid');
         statusBarGrid.height = statusBarBackground.height;

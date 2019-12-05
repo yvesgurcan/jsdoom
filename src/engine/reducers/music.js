@@ -1,34 +1,28 @@
 const initState = {
     volume: 0,
     song: null,
-    playlistMode: true,
+    playlistMode: true
 };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-    } = action;
-    const {
-        song,
-        songName,
-        volume,
-    } = payload;
+    const { type, payload = {} } = action;
+    const { song, songName, volume } = payload;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'SET_MUSIC': {
             return {
                 ...prevState,
                 song,
                 songName,
-                volume: volume || prevState.volume,
+                volume: volume || prevState.volume
             };
         }
         case 'SET_MUSIC_VOLUME': {
             return {
                 ...prevState,
-                volume,
+                volume
             };
         }
         case 'TOGGLE_PLAYLIST_MODE': {
@@ -41,7 +35,7 @@ export default (prevState = initState, action) => {
             }
             return {
                 ...prevState,
-                playlistMode: !prevState.playlistMode,
+                playlistMode: !prevState.playlistMode
             };
         }
     }

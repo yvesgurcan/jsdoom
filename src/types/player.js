@@ -11,12 +11,12 @@ import {
     BULLETS,
     SHELLS,
     ROCKETS,
-    CELLS,
+    CELLS
 } from '../engine/constants';
 
 export default {
     selectedWeapon: PISTOL,
-	moveSpeed: 0.2,
+    moveSpeed: 0.2,
     rotSpeed: 4,
     speed: 0,
     dir: 0,
@@ -25,7 +25,7 @@ export default {
         // debug
         [SHELLS]: 23,
         [ROCKETS]: 11,
-        [CELLS]: 212,
+        [CELLS]: 212
     },
 
     // debug
@@ -36,11 +36,11 @@ export default {
         CHAINGUN,
         ROCKET_LAUNCHER,
         PLASMA_GUN,
-        BFG9000,
+        BFG9000
     ],
     health: 2,
     armor: 0,
     godMode: false,
     strafe: false,
-    dead: false,
+    dead: false
 };

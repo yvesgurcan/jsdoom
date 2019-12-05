@@ -9,8 +9,10 @@ const resizeView = () => {
     dispatch({ type: 'SET_VIEW_SIZE', payload: { screenWidth, screenHeight } });
 };
 
-const adjustStatusBarFiller = (state) => {
-    const { constants: { STATUS_BAR_FILLER } } = state;
+const adjustStatusBarFiller = state => {
+    const {
+        constants: { STATUS_BAR_FILLER }
+    } = state;
     const statusBarBackground = getElementById('statusbar');
     const statusBarContainer = getElementById('statusbarcontainer');
     statusBarContainer.style.backgroundImage = `url('${STATUS_BAR_FILLER}')`;
@@ -20,16 +22,18 @@ const adjustStatusBarFiller = (state) => {
 export default () => {
     resizeView();
 
-	window.onresize = function () {
+    window.onresize = function() {
         resizeView();
         initScreen();
 
         const state = getState();
-        const { automap: { showAutomap } } = state;
+        const {
+            automap: { showAutomap }
+        } = state;
         adjustStatusBarFiller(state);
 
         if (showAutomap) {
             initAutomap();
         }
-	};
+    };
 };

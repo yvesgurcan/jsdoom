@@ -3,10 +3,7 @@ import enemyTypes from '../../types/enemies';
 const initState = { ...enemyTypes };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     const nextState = { ...prevState };
     switch (type) {

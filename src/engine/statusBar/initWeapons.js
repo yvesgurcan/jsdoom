@@ -1,15 +1,11 @@
 import getElementById from '../util/getElementById';
 import drawSmallDigit from './drawSmallDigit';
 
-export default (state) => {
+export default state => {
     const {
         game: { singlePlayer },
         constants,
-        constants: {
-            IMG_EXT,
-            STATUS_BAR_PATH,
-            STATUS_BAR_WEAPON_FILENAME,
-        },
+        constants: { IMG_EXT, STATUS_BAR_PATH, STATUS_BAR_WEAPON_FILENAME }
     } = state;
     if (singlePlayer) {
         const weapons = getElementById('weaponsandfragcontainer');

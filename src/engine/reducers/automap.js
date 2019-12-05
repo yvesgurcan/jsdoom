@@ -6,44 +6,40 @@ const initState = {
     showViewingCone: true,
     revealMap: false,
     revealThings: false,
-    ...automapSettings,
+    ...automapSettings
 };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-    } = action;
+    const { type, payload = {} } = action;
 
-    const {
-        scale,
-    } = payload;
+    const { scale } = payload;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'SET_AUTOMAP_SCALE': {
             return {
                 ...prevState,
-                scale,
+                scale
             };
         }
         case 'TOGGLE_AUTOMAP': {
             return {
                 ...prevState,
-                showAutomap: !prevState.showAutomap,
+                showAutomap: !prevState.showAutomap
             };
         }
         case 'TOGGLE_AUTOMAP_GRID': {
             return {
                 ...prevState,
-                showGrid: !prevState.showGrid,
+                showGrid: !prevState.showGrid
             };
         }
         case 'TOGGLE_VIEWING_CONE': {
             if (prevState.showAutomap) {
                 return {
                     ...prevState,
-                    showViewingCone: !prevState.showViewingCone,
+                    showViewingCone: !prevState.showViewingCone
                 };
             }
             return prevState;
@@ -54,21 +50,21 @@ export default (prevState = initState, action) => {
                 return {
                     ...prevState,
                     revealMap: false,
-                    revealThings: false,
+                    revealThings: false
                 };
             }
             if (prevState.revealMap) {
                 return {
                     ...prevState,
                     revealMap: true,
-                    revealThings: true,
+                    revealThings: true
                 };
             }
             return {
                 ...prevState,
                 revealMap: true,
-                revealThings: false,
-            };         
+                revealThings: false
+            };
         }
     }
 };

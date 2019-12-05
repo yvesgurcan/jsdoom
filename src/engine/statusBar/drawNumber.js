@@ -1,6 +1,11 @@
 import drawBigDigit from './drawBigDigit';
 
-export default (number, { element1, element2, element3 }, constants, alternativeWidth = false) => {
+export default (
+    number,
+    { element1, element2, element3 },
+    constants,
+    alternativeWidth = false
+) => {
     if (number === null) {
         drawBigDigit(element1, undefined, constants, alternativeWidth);
         drawBigDigit(element2, undefined, constants, alternativeWidth);

@@ -2,17 +2,16 @@ import getWeaponSettings from './getWeaponSettings';
 import { dispatch } from '../store';
 
 export default state => {
-    const { player: { ammo } } = state;
+    const {
+        player: { ammo }
+    } = state;
 
     const weaponSettings = getWeaponSettings(state);
     if (!weaponSettings) {
         return false;
     }
 
-    const {
-        ammoType,
-        usage = 1,
-    } = weaponSettings;
+    const { ammoType, usage = 1 } = weaponSettings;
     if (ammoType) {
         if (!ammo || ammo[ammoType] < usage) {
             return false;

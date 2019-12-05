@@ -8,7 +8,7 @@ export default () => {
         const touch = {
             clientX,
             clientY,
-            timestamp: (new Date()).getTime(),
+            timestamp: new Date().getTime()
         };
 
         dispatch({ type: 'REGISTER_TOUCH', payload: { touch } });
@@ -19,33 +19,49 @@ export default () => {
         const touchMove = {
             clientX,
             clientY,
-            timestamp: (new Date()).getTime(),
+            timestamp: new Date().getTime()
         };
 
         const newState = getState();
         const {
             player: { dir, speed },
-            touch: touchStart,
+            touch: touchStart
         } = newState;
 
         const diffX = touchMove.clientX - touchStart.clientX;
         const diffY = touchMove.clientY - touchStart.clientY;
 
-        if (diffX > TOUCH_OFFSET && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+        if (
+            diffX > TOUCH_OFFSET &&
+            diffY > -TOUCH_OFFSET &&
+            diffY < TOUCH_OFFSET
+        ) {
             if (dir !== 1) {
                 dispatch({ type: 'ROTATE_PLAYER_RIGHT' });
             }
-        } else if (diffX < -TOUCH_OFFSET && diffY > -TOUCH_OFFSET && diffY < TOUCH_OFFSET) {
+        } else if (
+            diffX < -TOUCH_OFFSET &&
+            diffY > -TOUCH_OFFSET &&
+            diffY < TOUCH_OFFSET
+        ) {
             if (dir !== -1) {
                 dispatch({ type: 'ROTATE_PLAYER_LEFT' });
             }
         }
-        
-        if (diffY < -TOUCH_OFFSET && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+
+        if (
+            diffY < -TOUCH_OFFSET &&
+            diffX > -TOUCH_OFFSET &&
+            diffX < TOUCH_OFFSET
+        ) {
             if (speed !== 1) {
                 dispatch({ type: 'MOVE_PLAYER_FORWARD' });
             }
-        } else if (diffY > TOUCH_OFFSET && diffX > -TOUCH_OFFSET && diffX < TOUCH_OFFSET) {
+        } else if (
+            diffY > TOUCH_OFFSET &&
+            diffX > -TOUCH_OFFSET &&
+            diffX < TOUCH_OFFSET
+        ) {
             if (speed !== -1) {
                 dispatch({ type: 'MOVE_PLAYER_BACKWARD' });
             }

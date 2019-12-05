@@ -1,9 +1,5 @@
 export default (element, digit, constants = {}, alternativeWidth = false) => {
-    const {
-        ALPHANUMERIC_PATH,
-        STATUS_BAR_NUM_PREFIX,
-        IMG_EXT,
-    } = constants;
+    const { ALPHANUMERIC_PATH, STATUS_BAR_NUM_PREFIX, IMG_EXT } = constants;
     if (digit === undefined) {
         element.removeAttribute('src');
         element.style = undefined;

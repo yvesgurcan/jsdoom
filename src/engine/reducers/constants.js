@@ -3,7 +3,7 @@ import {
     WEAPON_SETTINGS,
     WEAPON_SWITCH_TIME,
     AMMO,
-    AMMO_MAX,
+    AMMO_MAX
 } from '../constants';
 
 const {
@@ -15,7 +15,7 @@ const {
     CHAINGUN,
     ROCKET_LAUNCHER,
     PLASMA_GUN,
-    BFG9000,
+    BFG9000
 } = WEAPONS;
 
 const ASSET_PATH = 'assets';
@@ -80,16 +80,10 @@ const initState = {
         R: 82,
         S: 83,
         V: 86,
-        W: 87,
+        W: 87
     },
     // cheats
-    CHEATS: [
-        CHEAT_GOD,
-        CHEAT_AMMO,
-        CHEAT_AMMO_KEY,
-        CHEAT_MAP,
-        CHEAT_MUSIC,
-    ],
+    CHEATS: [CHEAT_GOD, CHEAT_AMMO, CHEAT_AMMO_KEY, CHEAT_MAP, CHEAT_MUSIC],
     // status bar
     STATUS_BAR_FILLER: `${ASSET_PATH}/textures/ROCK2.png`,
     STATUS_BAR_NUM_PREFIX: 'STT',
@@ -114,45 +108,37 @@ const initState = {
         THRESHOLD1: 1,
         THRESHOLD2: 2,
         THRESHOLD3: 3,
-        THRESHOLD4: 4,
+        THRESHOLD4: 4
     },
     // weapons
     WEAPONS,
     WEAPON_SLOTS: {
-        1: [
-            CHAINSAW,
-            FIST,
-        ],
+        1: [CHAINSAW, FIST],
         2: [PISTOL],
-        3: [
-            SUPER_SHOTGUN,
-            SHOTGUN,
-        ],
+        3: [SUPER_SHOTGUN, SHOTGUN],
         4: [CHAINGUN],
         5: [ROCKET_LAUNCHER],
         6: [PLASMA_GUN],
-        7: [BFG9000],
+        7: [BFG9000]
     },
     WEAPON_SETTINGS,
     WEAPON_SWITCH_TIME,
     DEFAULT_FIRING_WEAPON_FRAME_DELAY: 4,
     // ammo
     AMMO,
-    AMMO_MAX,
+    AMMO_MAX
 };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'UPDATE_CONSTANT': {
             return {
                 ...prevState,
-                ...payload,
+                ...payload
             };
         }
     }

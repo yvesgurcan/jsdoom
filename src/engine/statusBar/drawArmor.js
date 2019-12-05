@@ -6,9 +6,7 @@ import drawPercentage from './drawPercentage';
 export default () => {
     const {
         constants,
-        player: {
-            armor,
-        }
+        player: { armor }
     } = getState();
     const element1 = getElementById('armor1');
     const element2 = getElementById('armor2');

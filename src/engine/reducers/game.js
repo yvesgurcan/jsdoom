@@ -4,7 +4,7 @@ const {
     name,
     description,
     version,
-    bugs: { url: issues },
+    bugs: { url: issues }
 } = packageData;
 
 const initState = {
@@ -23,28 +23,26 @@ const initState = {
     compareFPSInterval: 4000,
     lastFPSLog: null,
     lastFPSCompare: null,
-    lastFPSCompareValue: 0,
+    lastFPSCompareValue: 0
 };
 
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload = {},
-    } = action;
+    const { type, payload = {} } = action;
     const { fps } = payload;
 
     switch (type) {
-        default: return prevState;
+        default:
+            return prevState;
         case 'SET_LAST_GAME_CYCLE_TIME': {
             return {
                 ...prevState,
-                lastCycle: payload,
+                lastCycle: payload
             };
         }
         case 'SET_LAST_RENDER_CYCLE_TIME': {
             return {
                 ...prevState,
-                lastRender: payload,
+                lastRender: payload
             };
         }
         case 'TOGGLE_PAUSE': {
@@ -52,14 +50,14 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 paused: !prevState.paused,
-                lastCycle: now,
+                lastCycle: now
             };
         }
         case 'LAST_FPS_LOG': {
             const now = new Date().getTime();
             return {
                 ...prevState,
-                lastFPSLog: now,
+                lastFPSLog: now
             };
         }
         case 'LAST_FPS_COMPARE': {
@@ -67,7 +65,7 @@ export default (prevState = initState, action) => {
             return {
                 ...prevState,
                 lastFPSCompare: now,
-                lastFPSCompareValue: fps,
+                lastFPSCompareValue: fps
             };
         }
     }

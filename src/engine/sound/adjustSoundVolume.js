@@ -1,6 +1,6 @@
 import { dispatch } from '../store';
 
-export default (volume) => {
+export default volume => {
     const adjustedVolume = Math.max(0, Math.min(1, volume));
 
     console.log(`adjustSoundVolume(): ${adjustedVolume.toFixed(2)}`);

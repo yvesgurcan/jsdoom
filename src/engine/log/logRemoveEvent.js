@@ -8,7 +8,7 @@ const logRemoveEvent = id => {
 
     const logMessages = getElementById('log');
     logMessages.innerHTML = log.map(item => item.message).join('<br/>');
-    
+
     return true;
 };
 

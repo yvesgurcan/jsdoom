@@ -4,16 +4,13 @@ import { dispatch, getState } from '../store';
 
 let idleSoundInstance = null;
 
-export default (state) => {
+export default state => {
     const weaponSettings = getWeaponSettings(state);
     if (!weaponSettings) {
         return false;
     }
 
-    const {
-        idleSound,
-        idleSoundInterval,
-    } = weaponSettings;
+    const { idleSound, idleSoundInterval } = weaponSettings;
     if (!idleSound || !idleSoundInterval) {
         clearInterval(idleSoundInstance);
         dispatch({ type: 'UNSET_IDLE_WEAPON_SOUND' });
@@ -25,20 +22,27 @@ export default (state) => {
 };
 
 const queueIdleSound = (state, idleSound, idleSoundInterval) => {
-    const { weapons: { playingIdleSound } } = state;
+    const {
+        weapons: { playingIdleSound }
+    } = state;
     if (!playingIdleSound) {
-        idleSoundInstance = setInterval(() => handleIdleSound(idleSound), idleSoundInterval);
+        idleSoundInstance = setInterval(
+            () => handleIdleSound(idleSound),
+            idleSoundInterval
+        );
         dispatch({ type: 'SET_IDLE_WEAPON_SOUND' });
-        return true;    
+        return true;
     }
 };
 
-const handleIdleSound = (idleSound) => {
-    const { game: { paused } } = getState();
+const handleIdleSound = idleSound => {
+    const {
+        game: { paused }
+    } = getState();
     if (paused) {
         return false;
     }
-    
+
     playSound(idleSound, 1);
     return true;
 };

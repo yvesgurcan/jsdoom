@@ -1,17 +1,11 @@
-import {
-    mapWidth,
-    mapHeight,
-} from '../../maps/walls';
+import { mapWidth, mapHeight } from '../../maps/walls';
 
 const initState = {
     mapWidth,
-    mapHeight,
+    mapHeight
 };
 export default (prevState = initState, action) => {
-    const {
-        type,
-        payload,
-    } = action;
+    const { type, payload } = action;
 
     const nextState = { ...prevState };
     switch (type) {

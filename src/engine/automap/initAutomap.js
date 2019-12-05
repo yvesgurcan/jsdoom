@@ -3,15 +3,8 @@ import { getState, dispatch } from '../store';
 
 export default () => {
     const {
-        automap: {
-            backgroundColor,
-            wallColor,
-            gridColor,
-        },
-        map: {
-            mapWidth,
-            mapHeight,
-        },
+        automap: { backgroundColor, wallColor, gridColor },
+        map: { mapWidth, mapHeight }
     } = getState();
 
     // grab elements
@@ -31,11 +24,11 @@ export default () => {
     automap.style.height = '';
 
     // resize the grid canvas
-	grid.width = automap.width;
+    grid.width = automap.width;
     grid.height = automap.height;
 
     // resize the object canvas
-	autmapObjects.width = automap.width;
+    autmapObjects.width = automap.width;
     autmapObjects.height = automap.height;
 
     // set the scale to keep the same ratio for the drawing (everything should be square)
@@ -56,53 +49,38 @@ export default () => {
     const scale = scaleX;
     dispatch({ type: 'SET_AUTOMAP_SCALE', payload: { scale } });
 
-	const automapCanvas = automap.getContext('2d');
+    const automapCanvas = automap.getContext('2d');
     const gridCanvas = grid.getContext('2d');
 
     // set the background
-	automapCanvas.fillStyle = backgroundColor;
-	automapCanvas.fillRect(
-        0,
-        0,
-        automap.width,
-        automap.height,
-    );
+    automapCanvas.fillStyle = backgroundColor;
+    automapCanvas.fillRect(0, 0, automap.width, automap.height);
 
     const { wallMap: map } = getState();
 
-	// loop through all blocks on the map
-	for (let y = 0; y < mapHeight; y++) {
-		for (let x = 0; x < mapWidth; x++) {
-			const wall = map[y][x];
+    // loop through all blocks on the map
+    for (let y = 0; y < mapHeight; y++) {
+        for (let x = 0; x < mapWidth; x++) {
+            const wall = map[y][x];
 
             // draw a block on the minimap if there is a wall block at these coordinates
-			if (wall !== 0) {
+            if (wall !== 0) {
                 automapCanvas.fillStyle = wallColor;
-				automapCanvas.fillRect(				
-					(x * scale) + (scale / 2),
-					(y * scale) + (scale / 2),
+                automapCanvas.fillRect(
+                    x * scale + scale / 2,
+                    y * scale + scale / 2,
                     scale + 1,
-                    scale + 1,
-				);
+                    scale + 1
+                );
             }
-            
+
             // grid
             gridCanvas.fillStyle = gridColor;
-            gridCanvas.fillRect(
-                x * scale,
-                1,
-                1,
-                (mapHeight * scale) - 1,
-            );
+            gridCanvas.fillRect(x * scale, 1, 1, mapHeight * scale - 1);
         }
 
         // grid
         gridCanvas.fillStyle = gridColor;
-        gridCanvas.fillRect(
-            1,
-            y * scale,
-            (mapWidth * scale) - 1,
-            1,
-        );
-	}
+        gridCanvas.fillRect(1, y * scale, mapWidth * scale - 1, 1);
+    }
 };
