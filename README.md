@@ -2,7 +2,8 @@
 
 * [Play JSDoom](https://doom.yvesgurcan.com)
 * [Release Notes](RELEASE_NOTES.md)
-* [Differences with the Doom engine](VANILLA.md)
+* [Differences with the actual Doom engine](VANILLA.md)
+* [WadJS](https://github.com/yvesgurcan/wadjs)
 
 ## Setup
 
