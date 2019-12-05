@@ -19,7 +19,15 @@ module.exports = {
             filename: 'index.html',
             template: './src/index.html'
         }),
-        new GenerateSW()
+        new GenerateSW({
+            clientsClaim: true,
+            runtimeCaching: [
+                {
+                    urlPattern: new RegExp(''),
+                    handler: 'CacheFirst'
+                }
+            ]
+        })
     ],
     watch: true,
     devServer: {
