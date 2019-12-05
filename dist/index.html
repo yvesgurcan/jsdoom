@@ -1,0 +1,335 @@
+<html>
+    <head>
+        <title>JSDoom</title>
+
+        <style>
+            body {
+                margin: 0;
+                user-select: none;
+                /* prevent Android phones to refresh page on touch */
+                overscroll-behavior: contain;
+            }
+
+            #overlay {
+                height: 100%;
+                width: 100%;
+            }
+
+            #viewport {
+                position: absolute;
+                background: black;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+            }
+
+            #log {
+                position: absolute;
+                width: calc(100% - 50px);
+                padding: 5px;
+                font-family: lucida console, courier new;
+                z-index: 1;
+            }
+
+            #pause {
+                position: absolute;
+                color: red;
+                margin-top: 20%;
+                padding: 5px;
+                width: 100%;
+                text-align: center;
+                z-index: 1;
+            }
+
+            #fps {
+                position: absolute;
+                flex-direction: row-reverse;
+                padding: 5px;
+                right: 7px;
+                font-family: lucida console, courier new;
+                font-size: 10px;
+                z-index: 1;
+            }
+
+            #statusbarcontainer {
+                display: flex;
+                justify-content: center;
+                position: absolute;
+                width: 100%;
+                bottom: 0;
+                z-index: 1;
+            }
+
+            #statusbar {
+                position: fixed;
+                width: 100%;
+                bottom: 0px;
+                z-index: 500;
+                max-width: 1200px;
+            }
+
+            #selectedweaponcontainer {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                bottom: 0;
+                width: 100%;
+                z-index: -1;
+            }
+
+            #weapon {
+                height: 42%;
+                position: relative;
+                z-index: 1000;
+                bottom: 0;
+            }
+
+            #statusbargrid {
+                position: absolute;
+                display: grid;
+                width: 102%;
+                z-index: 501;
+                grid-template-columns: 14.5% 17.3% 12.3% 10.2% 18% 3.75% 21.8%;
+            }
+
+            #stbar {
+                min-height: 28px;
+            }
+
+            #selectedammocontainer {
+                padding-top: 4%;
+                padding-right: 7%;
+                display: flex;
+                justify-content: flex-end;
+                height: 59%;
+            }
+
+            #healthcontainer, #armorcontainer {
+                padding-top: 4%;
+                padding-right: 1.8%;
+                display: flex;
+                justify-content: flex-end;
+                height: 59%;
+            }
+
+            #arms {
+                z-index: 503;
+            }
+
+            #weaponscontainer {
+                position: absolute;
+                display: grid;
+                width: 12.3%;
+                height: 65%;
+                padding-top: 0.7%;
+                padding-left: 1.1%;
+                padding-right: 0.6%;
+                grid-template-columns: 29% 29% 29%;
+                grid-column-gap: 6%;
+                grid-row-gap: 10%;
+                justify-content: center;
+                z-index: 504;
+                box-sizing: border-box;
+            }
+
+            #weapon2, #weapon3, #weapon4, #weapon5, #weapon6, #weapon7 {
+                width: 45%;
+                margin: auto;
+            }
+
+            #mugshotcontainer {
+                padding-top: 6%;
+                text-align: center;
+            }
+
+            #mugshot {
+                width: 70%;
+            }
+
+            #keyscontainer {
+                padding-top: 24%;
+                padding-left: 3%;
+                width: 100%;
+                display: grid;
+                justify-content: center;
+                align-items: center;
+                grid-template-columns: 64%;
+                grid-row-gap: 10%;
+                grid-template-rows: 24% 24% 24%;
+            }
+
+            #redkey, #bluekey, #yellowkey {
+                width: 90%;
+            }
+
+            #ammocontainer {
+                display: grid;
+                padding-top: 6%;
+                padding-left: 30%;
+                padding-right: 5%;
+                grid-template-columns: 38% 38%;
+                grid-column-gap: 24%;
+                grid-template-rows: 22% 22% 22% 22%;
+                grid-row-gap: 1%;
+            }
+
+            .ammo {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .ammo img[src] {
+                width: 20%;
+            }
+
+            #screen {
+                position: relative;
+                width: calc(100% - 2px);
+                height: 100%;
+                border: 1px solid black;
+                overflow: hidden;
+            }
+
+            #floor {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(128,128,128);
+                z-index: -10000000;
+            }
+
+            #ceiling {
+                position: absolute;
+                width: 100%;
+                height: 50%;
+                background-color: rgb(80,80,80);
+                z-index: -10000000;
+            }
+            
+            #minimap {
+                position: absolute;
+            }
+            
+            #grid {
+                position: absolute;
+            }
+
+            #minimapobjects {
+                position: absolute;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="overlay">
+            <div id="viewport">
+                <div id="hud">
+                    <div id="log"></div>
+                    <div id="pause"></div>
+                    <div id="fps"></div>
+                    <div id="selectedweaponcontainer">
+                        <img id="weapon">
+                    </div>
+                    <div id="statusbarcontainer">
+                        <div id="statusbar">
+                            <div id="statusbargrid">
+                                <div id="selectedammocontainer">
+                                    <img id="ammo1">
+                                    <img id="ammo2">
+                                    <img id="ammo3">
+                                </div>
+                                <div id="healthcontainer">
+                                    <img id="health1">
+                                    <img id="health2">
+                                    <img id="health3">
+                                    <img id="healthpercent">
+                                </div>
+                                <div id="weaponsandfragcontainer">
+                                    <div id="weaponscontainer">
+                                        <img id="weapon2">
+                                        <img id="weapon3">
+                                        <img id="weapon4">
+                                        <img id="weapon5">
+                                        <img id="weapon6">
+                                        <img id="weapon7">
+                                    </div>
+                                </div>
+                                <div id="mugshotcontainer">
+                                    <img id="mugshot">
+                                </div>
+                                <div id="armorcontainer">
+                                    <img id="armor1">
+                                    <img id="armor2">
+                                    <img id="armor3">
+                                    <img id="armorpercent">            
+                                </div>
+                                <div id="keyscontainer">
+                                    <img id="bluekey">
+                                    <img id="yellowkey">
+                                    <img id="redkey">
+                                </div>
+                                <div id="ammocontainer">
+                                    <div class="ammo" id="bullets">
+                                        <img id="bullets1">
+                                        <img id="bullets2">
+                                        <img id="bullets3">
+                                    </div>
+                                    <div class="ammo" id="maxbullets">
+                                        <img id="maxbullets1">
+                                        <img id="maxbullets2">
+                                        <img id="maxbullets3">
+                                    </div>
+                                    <div class="ammo" id="shells">
+                                        <img id="shells1">
+                                        <img id="shells2">
+                                        <img id="shells3">
+                                    </div>
+                                    <div class="ammo" id="maxshells">
+                                        <img id="maxshells1">
+                                        <img id="maxshells2">
+                                        <img id="maxshells3">
+                                    </div>
+                                    <div class="ammo" id="rockets">
+                                        <img id="rockets1">
+                                        <img id="rockets2">
+                                        <img id="rockets3">
+                                    </div>
+                                    <div class="ammo" id="maxrockets">
+                                        <img id="maxrockets1">
+                                        <img id="maxrockets2">
+                                        <img id="maxrockets3">
+                                    </div>
+                                    <div class="ammo" id="cells">
+                                        <img id="cells1">
+                                        <img id="cells2">
+                                        <img id="cells3">
+                                    </div>
+                                    <div class="ammo" id="maxcells">
+                                        <img id="maxcells1">
+                                        <img id="maxcells2">
+                                        <img id="maxcells3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="screen">
+                    <div id="floor"></div>
+                    <div id="ceiling"></div>
+                    <div id="strips"></div>
+                </div>
+
+                <div id="automapcontainer">
+                    <canvas id="minimap"></canvas>
+                    <canvas id="grid"></canvas>
+                    <canvas id="minimapobjects"></canvas>
+                </div>
+            </div>
+        </div>
+        
+    <script type="text/javascript" src="bundle.js"></script></body>
+</html>

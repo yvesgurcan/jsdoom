@@ -19,7 +19,7 @@ const startMusic = (log = true) => {
     const songName = songs[songNames[randomIndex]];
     const songNameFormatted = songName.replace(/ /g, '_').replace(/'/g, '_').replace(/\./g, '_');
 
-    const song = new Audio(`/client/assets/music/${songNameFormatted}.mp3`);
+    const song = new Audio(`/assets/music/${songNameFormatted}.mp3`);
     song.volume = volume;
     song.loop = !playlistMode;
 

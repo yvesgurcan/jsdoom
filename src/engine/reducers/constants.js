@@ -18,7 +18,7 @@ const {
     BFG9000,
 } = WEAPONS;
 
-const ASSET_PATH = 'client/assets';
+const ASSET_PATH = 'assets';
 
 const CHEAT_GOD = 'IDDQD';
 const CHEAT_AMMO = 'IDFA';

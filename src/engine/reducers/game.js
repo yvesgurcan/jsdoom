@@ -1,4 +1,4 @@
-import packageData from '../../../../package.json';
+import packageData from '../../../package.json';
 
 const {
     name,

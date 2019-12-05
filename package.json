@@ -1,7 +1,7 @@
 {
-    "name": "wolfendoomjs",
-    "version": "0.5.4",
-    "description": "A Wolfenstein engine running Doom game logic in the browser.",
+    "name": "jsdoom",
+    "version": "0.6.0",
+    "description": "Doom in the browser.",
     "keywords": [
         "Doom",
         "Wolfenstein",
@@ -16,27 +16,19 @@
         "email": "ygurcan@cbtnuggets.com",
         "url": "http://www.yvesgurcan.com"
     },
-    "config": {
-        "host": "localhost",
-        "port": "3001"
-    },
     "scripts": {
-        "start": "node server",
-        "dev": "npm run dev:server & npm run dev:client",
-        "dev:server": "nodemon server",
-        "dev:client": "webpack --mode development --watch --config client/webpack.config.js",
-        "build": "npm run build:client",
-        "build:client": "webpack --mode production --config client/webpack.config.js"
+        "start": "webpack-dev-server"
     },
     "devDependencies": {
         "babel-eslint": "^8.2.6",
+        "clean-webpack-plugin": "^3.0.0",
         "eslint-config-cbtnuggets": "^7.0.5",
+        "html-webpack-plugin": "^3.2.0",
         "nodemon": "^1.18.3",
-        "webpack": "^4.16.5",
-        "webpack-cli": "^3.1.0"
-    },
-    "dependencies": {
         "redux": "^4.0.0",
-        "uuid4": "^1.0.0"
+        "uuid4": "^1.0.0",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.10",
+        "webpack-dev-server": "^3.9.0"
     }
 }

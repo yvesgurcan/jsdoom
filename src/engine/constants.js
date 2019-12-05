@@ -1,4 +1,4 @@
-const assetPath = 'client/assets';
+const assetPath = 'assets';
 
 export const wolfPath = `${assetPath}/wolf`;
 export const imgExt = '.png';
