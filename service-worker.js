@@ -14,12 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.9ae1829380e73946e3a3bd39b62dad0d.js"
+  "precache-manifest.864597e682ff7b8f3114342419187595.js"
 );
 
 workbox.core.skipWaiting();
-
-workbox.core.clientsClaim();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
@@ -28,5 +26,3 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
-workbox.routing.registerRoute(/(?:)/, new workbox.strategies.NetworkFirst(), 'GET');
