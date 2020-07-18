@@ -1,7 +1,7 @@
 {
     "name": "jsdoom",
     "version": "0.6.0",
-    "description": "Doom in the browser.",
+    "description": "🎮 Doom in JavaScript!",
     "keywords": [
         "Doom",
         "Wolfenstein",
@@ -17,9 +17,12 @@
         "url": "http://www.yvesgurcan.com"
     },
     "scripts": {
-        "start": "webpack-dev-server",
-        "lint": "prettier --write 'src/**/*.js'",
-        "test": "jest"
+        "start": "npm run network-info; webpack-dev-server",
+        "build": "webpack --mode production",
+        "test": "jest",
+        "preversion": "npm run test",
+        "postversion": "npm run build && git add . && git commit -m 'New build' && git push",
+        "network-info": "echo \"ℹ ｢wds｣ Running on local network at http:/\" | tr \"\n\" \"/\"; ifconfig | grep \"inet \" | grep -Fv 127.0.0.1 | awk '{print $2}'"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",
