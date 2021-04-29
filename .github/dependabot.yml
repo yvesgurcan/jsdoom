@@ -1,0 +1,34 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "06:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+  - dependency-name: workbox-webpack-plugin
+    versions:
+    - 6.0.2
+    - 6.1.0
+    - 6.1.1
+    - 6.1.2
+  - dependency-name: webpack-cli
+    versions:
+    - 4.4.0
+    - 4.5.0
+  - dependency-name: html-webpack-plugin
+    versions:
+    - 4.5.1
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
+  - dependency-name: redux
+    versions:
+    - 4.0.5
